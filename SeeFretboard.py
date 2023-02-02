@@ -7,13 +7,18 @@ class SeeFretboard():
         self.tuning = ['E','A','D','G','B','E']
         self.strings = strings
         self.frets = frets
+        
         self.showTuning = showTuning
+        self.showFretboardNumber = True
+        self.showStringNumber = True
         
         self.distanceBetweenFrets = 2
         self.distanceBetweenStrings = 2
         self.fretColor = "black"
         self.stringsColor = "black"
-    
+        self.fretOpacity = 0.3
+        self.stringsOpactiy=1
+        
         self.circleRadius = 0.5
         self.circleFaceColor = "blue"
         self.circleEdgeColor = "black"
@@ -24,7 +29,7 @@ class SeeFretboard():
     def drawHorizontalImg(self):
         x =[0,self.distanceBetweenFrets*self.frets]
         y=[0,0]
-        plt.plot(x,y,color=self.stringsColor)
+        plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (horizontal line)
@@ -33,7 +38,7 @@ class SeeFretboard():
             y=[distanceStrings,distanceStrings]
             
             distanceStrings+=self.distanceBetweenStrings
-            plt.plot(x,y,color=self.stringsColor)
+            plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
         
         
         distanceBetweenFrets = 0
@@ -43,7 +48,7 @@ class SeeFretboard():
             y=[distanceBetweenFrets,distanceBetweenFrets]
             
             distanceBetweenFrets+=self.distanceBetweenFrets
-            plt.plot(y,x,color=self.fretColor)
+            plt.plot(y,x,color=self.fretColor, alpha=self.fretOpacity)
         
         plt.axis('off')
         plt.show()
@@ -51,7 +56,7 @@ class SeeFretboard():
     def drawVerticalImg(self):
         x =[0,0]
         y=[0,self.distanceBetweenFrets*self.frets]
-        plt.plot(x,y,color=self.stringsColor)
+        plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (horizontal line)
@@ -60,7 +65,7 @@ class SeeFretboard():
             y=[0,self.distanceBetweenFrets*self.frets]
             
             distanceStrings+=self.distanceBetweenStrings
-            plt.plot(x,y,color=self.stringsColor)
+            plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
         
         
         distanceBetweenFrets = 0
@@ -70,7 +75,7 @@ class SeeFretboard():
             y=[distanceBetweenFrets,distanceBetweenFrets]
             
             distanceBetweenFrets+=self.distanceBetweenFrets
-            plt.plot(x,y,color=self.stringsColor)
+            plt.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
         
         plt.axis('off')
         plt.show()
@@ -169,3 +174,15 @@ class SeeFretboard():
     
     def setStringsColor(self, stringsColor):
         self.stringsColor = stringsColor
+    
+    def getFretOpacity(self):
+        return self.fretOpacity
+    
+    def setFretOpacity(self, fretOpacity):
+        self.fretOpacity = fretOpacity
+    
+    def getStringsOpactiy(self):  
+        return self.stringsOpactiy
+    
+    def setStringsOpacity(self, stringsOpactiy):
+        self.stringsOpactiy = stringsOpactiy
