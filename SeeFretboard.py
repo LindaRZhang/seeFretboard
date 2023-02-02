@@ -82,9 +82,9 @@ class SeeFretboard():
     #string123456 = 'E','A','D','G','B','E'
     def addCircle(self, string, fret, hV):
         if(hV=="h"):
-            circle = plt.Circle((fret+1,string-1), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
+            circle = plt.Circle(((fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(string-1)*self.distanceBetweenStrings), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
         else:
-            circle = plt.Circle((string-1,self.distanceBetweenStrings*self.frets - (fret+1)), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
+            circle = plt.Circle(((string-1)*self.distanceBetweenStrings,self.distanceBetweenStrings*self.frets - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
 
         plt.gca().add_artist(circle)
     
