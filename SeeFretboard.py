@@ -19,6 +19,8 @@ class SeeFretboard():
         self.stringsColor = "black"
         self.fretOpacity = 0.3
         self.stringsOpactiy=1
+
+        self.fretboardMarkerColor = "#DCDCDC"
         
         self.circleRadius = 0.5
         self.circleFaceColor = "blue"
@@ -50,6 +52,17 @@ class SeeFretboard():
             
             distanceBetweenFrets+=self.distanceBetweenFrets
             plt.plot(y,x,color=self.fretColor, alpha=self.fretOpacity)
+        
+        #draw 3,5,7,9 marker
+        markerFret3 = plt.Circle(((3)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(self.stringsLength-1)*self.distanceBetweenStrings/2), self.circleRadius, facecolor=self.fretboardMarkerColor, linewidth = self.circleLineWidth, fill=self.circleFill)
+        markerFret5 = plt.Circle(((5)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(self.stringsLength-1)*self.distanceBetweenStrings/2), self.circleRadius, facecolor=self.fretboardMarkerColor, linewidth = self.circleLineWidth, fill=self.circleFill)
+        markerFret7 = plt.Circle(((7)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(self.stringsLength-1)*self.distanceBetweenStrings/2), self.circleRadius, facecolor=self.fretboardMarkerColor, linewidth = self.circleLineWidth, fill=self.circleFill)
+        markerFret9 = plt.Circle(((9)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(self.stringsLength-1)*self.distanceBetweenStrings/2), self.circleRadius, facecolor=self.fretboardMarkerColor, linewidth = self.circleLineWidth, fill=self.circleFill)
+
+        plt.gca().add_artist(markerFret3)
+        plt.gca().add_artist(markerFret5)
+        plt.gca().add_artist(markerFret7)
+        plt.gca().add_artist(markerFret9)
         
         plt.axis('off')
         figureWin = plt.gcf()
@@ -84,6 +97,17 @@ class SeeFretboard():
             distanceBetweenFrets+=self.distanceBetweenFrets
             plt.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
         
+        #draw 3,5,7,9 marker
+        markerFret3 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (3-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.fretboardMarkerColor,linewidth = self.circleLineWidth, fill=self.circleFill)
+        markerFret5 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (5-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.fretboardMarkerColor,linewidth = self.circleLineWidth, fill=self.circleFill)
+        markerFret7 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (7-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.fretboardMarkerColor,linewidth = self.circleLineWidth, fill=self.circleFill)
+        markerFret9 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (9-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.fretboardMarkerColor,linewidth = self.circleLineWidth, fill=self.circleFill)
+
+        plt.gca().add_artist(markerFret3)
+        plt.gca().add_artist(markerFret5)
+        plt.gca().add_artist(markerFret7)
+        plt.gca().add_artist(markerFret9)
+
 
         plt.axis('off')
         figureWin = plt.gcf()

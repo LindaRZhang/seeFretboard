@@ -23,5 +23,9 @@ f.drawHorizontalImg()
 
 # f.drawVerticalImg()
 
-f.addNotesAllString("1,0,1,1,0,0","v")
-f.drawVerticalImg()
+f.addNotesAllString("1,0,1,1,0,0","h")
+f.drawHorizontalImg()
+
+
+# f.addNotesAllString("1,0,1,1,0,0","v")
+# f.drawVerticalImg()
