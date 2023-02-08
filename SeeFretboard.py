@@ -30,7 +30,7 @@ class SeeFretboard():
         self.circleFill = True
         
     #preview
-    def drawHorizontalImg(self):
+    def drawHorizontalFretboard(self):
         x =[0,self.distanceBetweenFrets*self.fretsLength]
         y=[0,0]
         plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
@@ -78,7 +78,7 @@ class SeeFretboard():
         ax.set_aspect("equal")
         plt.show()
     
-    def drawVerticalImg(self):
+    def drawVerticalFretboard(self):
         x =[0,0]
         y=[0,self.distanceBetweenFrets*self.fretsLength]
         plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
@@ -113,6 +113,9 @@ class SeeFretboard():
         plt.gca().add_artist(markerFret7)
         plt.gca().add_artist(markerFret9)
 
+        #draw circles/notes
+        for circle in self.circles:
+            plt.gca().add_artist(circle)
 
         plt.axis('off')
         figureWin = plt.gcf()
@@ -122,7 +125,11 @@ class SeeFretboard():
         ax.margins(y=0,x=self.circleRadius/5)
         ax.set_aspect("equal")
         plt.show()
-    
+        
+    def clearFretboard(self):
+        # plt.clf()
+        pass
+
     #saveAsImg
     def saveImg(self):
         pass

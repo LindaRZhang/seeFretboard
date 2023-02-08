@@ -26,8 +26,7 @@ f.drawHorizontalImg()
 f.addNotesAllString("1,0,1,1,0,0","h")
 f.addCircle(5, 5,"h")
 
-f.drawHorizontalImg()
-
+f.drawHorizontalFretboard()
 
 # f.addNotesAllString("1,0,1,1,0,0","v")
 # f.drawVerticalImg()
