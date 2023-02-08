@@ -6,8 +6,8 @@ class SeeFretboard():
     #default values
     def __init__(self, strings=6, frets=12, showTuning=True):
         self.tuning = ['E','A','D','G','B','E']
-        self.strings = strings
-        self.frets = frets
+        self.stringsLength = strings
+        self.fretsLength = frets
         
         self.showTuning = showTuning
         self.showFretboardNumber = True
@@ -28,14 +28,14 @@ class SeeFretboard():
         
     #preview
     def drawHorizontalImg(self):
-        x =[0,self.distanceBetweenFrets*self.frets]
+        x =[0,self.distanceBetweenFrets*self.fretsLength]
         y=[0,0]
         plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (horizontal line)
-        for i in range(0,self.strings-1):
-            x=[0,self.distanceBetweenFrets*self.frets]
+        for i in range(0,self.stringsLength-1):
+            x=[0,self.distanceBetweenFrets*self.fretsLength]
             y=[distanceStrings,distanceStrings]
             
             distanceStrings+=self.distanceBetweenStrings
@@ -44,8 +44,8 @@ class SeeFretboard():
         
         distanceBetweenFrets = 0
         #draw frets (vertical line)
-        for i in range(0,self.frets):
-            x=[0,self.distanceBetweenStrings*(self.strings-1)]
+        for i in range(0,self.fretsLength):
+            x=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
             y=[distanceBetweenFrets,distanceBetweenFrets]
             
             distanceBetweenFrets+=self.distanceBetweenFrets
@@ -62,28 +62,29 @@ class SeeFretboard():
     
     def drawVerticalImg(self):
         x =[0,0]
-        y=[0,self.distanceBetweenFrets*self.frets]
+        y=[0,self.distanceBetweenFrets*self.fretsLength]
         plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
-        #draw strings (horizontal line)
-        for i in range(0,self.strings-1):
+        #draw strings (vertical line)
+        for i in range(0,self.stringsLength-1):
             x=[distanceStrings,distanceStrings]
-            y=[0,self.distanceBetweenFrets*self.frets]
+            y=[0,self.distanceBetweenFrets*self.fretsLength]
             
             distanceStrings+=self.distanceBetweenStrings
             plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
         
         
         distanceBetweenFrets = 0
-        #draw frets (vertical line)
-        for i in range(0,self.frets+1):
-            x=[0,self.distanceBetweenStrings*(self.strings-1)]
+        #draw frets (horizontal line)
+        for i in range(0,self.fretsLength+1):
+            x=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
             y=[distanceBetweenFrets,distanceBetweenFrets]
             
             distanceBetweenFrets+=self.distanceBetweenFrets
             plt.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
         
+
         plt.axis('off')
         figureWin = plt.gcf()
         figureWin.set_figwidth(3)
@@ -97,12 +98,17 @@ class SeeFretboard():
     def saveImg(self):
         pass
     
-    #string123456 = 'E','A','D','G','B','E'
+    #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
+    def addNotesAllString(self,notes,hv):
+        notes = [int(x.strip()) for x in notes.split(',')]
+        for i in range (1,self.stringsLength+1):
+            self.addCircle(i,notes[i-1],hv)
+
     def addCircle(self, string, fret, hV):
         if(hV=="h"):
             circle = plt.Circle(((fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(string-1)*self.distanceBetweenStrings), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
         else:
-            circle = plt.Circle(((string-1)*self.distanceBetweenStrings,self.distanceBetweenFrets*self.frets - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
+            circle = plt.Circle(((string-1)*self.distanceBetweenStrings,self.distanceBetweenFrets*self.fretsLength - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
 
         plt.gca().add_artist(circle)
     
@@ -147,16 +153,16 @@ class SeeFretboard():
         self.tuning = tuning
     
     def getStrings(self):
-        return self.strings
+        return self.stringsLength
     
     def setStrings(self, strings):
-        self.strings = strings
+        self.stringsLength = strings
     
     def getFrets(self):
-        return self.frets
+        return self.fretsLength
     
     def setFrets(self, frets):
-        self.frets = frets
+        self.fretsLength = frets
         
     def getShowTuning(self):
         return self.showTuning

@@ -14,10 +14,14 @@ f.addCircle(4, 4,"h")
 
 f.drawHorizontalImg()
 '''
-f.addCircle(1, 2,"v")
-f.addCircle(3, 4,"v")
-f.addCircle(6, 2,"v")
-f.addCircle(5, 4,"v")
-f.addCircle(4, 4,"v")
 
+# f.addCircle(1, 2,"v")
+# f.addCircle(3, 4,"v")
+# f.addCircle(6, 2,"v")
+# f.addCircle(5, 4,"v")
+# f.addCircle(4, 4,"v")
+
+# f.drawVerticalImg()
+
+f.addNotesAllString("1,0,1,1,0,0","v")
 f.drawVerticalImg()
