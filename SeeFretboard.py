@@ -22,6 +22,7 @@ class SeeFretboard():
 
         self.fretboardMarkerColor = "#DCDCDC"
         
+        self.circles = []
         self.circleRadius = 0.5
         self.circleFaceColor = "blue"
         self.circleEdgeColor = "black"
@@ -64,6 +65,10 @@ class SeeFretboard():
         plt.gca().add_artist(markerFret7)
         plt.gca().add_artist(markerFret9)
         
+        #draw circles/notes
+        for circle in self.circles:
+            plt.gca().add_artist(circle)
+
         plt.axis('off')
         figureWin = plt.gcf()
         figureWin.set_figwidth(self.distanceBetweenFrets*2)
@@ -133,9 +138,8 @@ class SeeFretboard():
             circle = plt.Circle(((fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(string-1)*self.distanceBetweenStrings), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
         else:
             circle = plt.Circle(((string-1)*self.distanceBetweenStrings,self.distanceBetweenFrets*self.fretsLength - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
-
-        plt.gca().add_artist(circle)
-    
+        
+        self.circles.append(circle)
     
     def removeCircle(self):
         pass    

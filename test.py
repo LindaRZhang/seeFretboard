@@ -24,6 +24,8 @@ f.drawHorizontalImg()
 # f.drawVerticalImg()
 
 f.addNotesAllString("1,0,1,1,0,0","h")
+f.addCircle(5, 5,"h")
+
 f.drawHorizontalImg()
 
 
