@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import figure
 
 class SeeFretboard():
     
@@ -12,7 +13,7 @@ class SeeFretboard():
         self.showFretboardNumber = True
         self.showStringNumber = True
         
-        self.distanceBetweenFrets = 2
+        self.distanceBetweenFrets = 5
         self.distanceBetweenStrings = 2
         self.fretColor = "black"
         self.stringsColor = "black"
@@ -51,6 +52,12 @@ class SeeFretboard():
             plt.plot(y,x,color=self.fretColor, alpha=self.fretOpacity)
         
         plt.axis('off')
+        figureWin = plt.gcf()
+        figureWin.set_figwidth(self.distanceBetweenFrets*2)
+        figureWin.set_figheight(self.distanceBetweenStrings*3/2)
+        ax = plt.gca()
+        ax.margins(x=0,y=self.circleRadius/5)
+        ax.set_aspect("equal")
         plt.show()
     
     def drawVerticalImg(self):
@@ -78,6 +85,12 @@ class SeeFretboard():
             plt.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
         
         plt.axis('off')
+        figureWin = plt.gcf()
+        figureWin.set_figwidth(3)
+        figureWin.set_figheight(8)
+        ax = plt.gca()
+        ax.margins(y=0,x=self.circleRadius/5)
+        ax.set_aspect("equal")
         plt.show()
     
     #saveAsImg
@@ -89,7 +102,7 @@ class SeeFretboard():
         if(hV=="h"):
             circle = plt.Circle(((fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(string-1)*self.distanceBetweenStrings), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
         else:
-            circle = plt.Circle(((string-1)*self.distanceBetweenStrings,self.distanceBetweenStrings*self.frets - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
+            circle = plt.Circle(((string-1)*self.distanceBetweenStrings,self.distanceBetweenFrets*self.frets - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
 
         plt.gca().add_artist(circle)
     

@@ -3,8 +3,8 @@ from SeeFretboard import SeeFretboard
 #f = SeeFretboard(7)
 f = SeeFretboard()
 
-'''
 
+'''
 f.addCircle(1, 2,"h")
 f.addCircle(3, 4,"h")
 f.addCircle(6, 2,"h")
@@ -13,7 +13,6 @@ f.addCircle(4, 4,"h")
 
 
 f.drawHorizontalImg()
-
 '''
 f.addCircle(1, 2,"v")
 f.addCircle(3, 4,"v")
