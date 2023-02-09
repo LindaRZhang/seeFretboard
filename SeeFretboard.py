@@ -4,7 +4,7 @@ from matplotlib.pyplot import figure
 class SeeFretboard():
     
     #default values
-    def __init__(self, strings=6, frets=12, showTuning=True):
+    def __init__(self, hv="h", strings=6, frets=12, showTuning=True):
         self.tuning = ['E','A','D','G','B','E']
         self.stringsLength = strings
         self.fretsLength = frets
@@ -23,6 +23,8 @@ class SeeFretboard():
 
         self.fretboardMarkerColor = "#DCDCDC"
         
+        self.fig, self.ax = plt.subplots()
+
         #note sparameter
         self.circles = []
         self.circleRadius = 0.5
@@ -33,11 +35,14 @@ class SeeFretboard():
         
         self.pathName = "default.svg"
 
+        #horizontal or vertical fretboard
+        self.hv = hv
+
     #preview
     def drawHorizontalFretboard(self):
         x =[0,self.distanceBetweenFrets*self.fretsLength]
         y=[0,0]
-        plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
+        self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (horizontal line)
@@ -46,7 +51,7 @@ class SeeFretboard():
             y=[distanceStrings,distanceStrings]
             
             distanceStrings+=self.distanceBetweenStrings
-            plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
+            self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
         
         
         distanceBetweenFrets = 0
@@ -56,7 +61,7 @@ class SeeFretboard():
             y=[distanceBetweenFrets,distanceBetweenFrets]
             
             distanceBetweenFrets+=self.distanceBetweenFrets
-            plt.plot(y,x,color=self.fretColor, alpha=self.fretOpacity)
+            self.ax.plot(y,x,color=self.fretColor, alpha=self.fretOpacity)
         
         #draw 3,5,7,9 marker
         markerFret3 = plt.Circle(((3)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(self.stringsLength-1)*self.distanceBetweenStrings/2), self.circleRadius, facecolor=self.fretboardMarkerColor, linewidth = self.circleLineWidth, fill=self.circleFill)
@@ -64,28 +69,27 @@ class SeeFretboard():
         markerFret7 = plt.Circle(((7)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(self.stringsLength-1)*self.distanceBetweenStrings/2), self.circleRadius, facecolor=self.fretboardMarkerColor, linewidth = self.circleLineWidth, fill=self.circleFill)
         markerFret9 = plt.Circle(((9)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(self.stringsLength-1)*self.distanceBetweenStrings/2), self.circleRadius, facecolor=self.fretboardMarkerColor, linewidth = self.circleLineWidth, fill=self.circleFill)
 
-        plt.gca().add_artist(markerFret3)
-        plt.gca().add_artist(markerFret5)
-        plt.gca().add_artist(markerFret7)
-        plt.gca().add_artist(markerFret9)
+        self.ax.add_artist(markerFret3)
+        self.ax.add_artist(markerFret5)
+        self.ax.add_artist(markerFret7)
+        self.ax.add_artist(markerFret9)
         
         #draw circles/notes
         for circle in self.circles:
-            plt.gca().add_artist(circle)
+            self.ax.add_artist(circle)
 
         plt.axis('off')
-        figureWin = plt.gcf()
-        figureWin.set_figwidth(self.distanceBetweenFrets*2)
-        figureWin.set_figheight(self.distanceBetweenStrings*3/2)
-        ax = plt.gca()
-        ax.margins(x=0,y=self.circleRadius/5)
-        ax.set_aspect("equal")
-        plt.show()
+        
+        self.fig.set_figwidth(self.distanceBetweenFrets*2)
+        self.fig.set_figheight(self.distanceBetweenStrings*3/2)
+        
+        self.ax.margins(x=0,y=self.circleRadius/5)
+        self.ax.set_aspect("equal")
     
     def drawVerticalFretboard(self):
         x =[0,0]
         y=[0,self.distanceBetweenFrets*self.fretsLength]
-        plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
+        self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (vertical line)
@@ -94,7 +98,7 @@ class SeeFretboard():
             y=[0,self.distanceBetweenFrets*self.fretsLength]
             
             distanceStrings+=self.distanceBetweenStrings
-            plt.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
+            self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
         
         
         distanceBetweenFrets = 0
@@ -104,7 +108,7 @@ class SeeFretboard():
             y=[distanceBetweenFrets,distanceBetweenFrets]
             
             distanceBetweenFrets+=self.distanceBetweenFrets
-            plt.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
+            self.ax.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
         
         #draw 3,5,7,9 marker
         markerFret3 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (3-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.fretboardMarkerColor,linewidth = self.circleLineWidth, fill=self.circleFill)
@@ -112,26 +116,30 @@ class SeeFretboard():
         markerFret7 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (7-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.fretboardMarkerColor,linewidth = self.circleLineWidth, fill=self.circleFill)
         markerFret9 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (9-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.fretboardMarkerColor,linewidth = self.circleLineWidth, fill=self.circleFill)
 
-        plt.gca().add_artist(markerFret3)
-        plt.gca().add_artist(markerFret5)
-        plt.gca().add_artist(markerFret7)
-        plt.gca().add_artist(markerFret9)
+        self.ax.add_artist(markerFret3)
+        self.ax.add_artist(markerFret5)
+        self.ax.add_artist(markerFret7)
+        self.ax.add_artist(markerFret9)
 
         #draw circles/notes
         for circle in self.circles:
-            plt.gca().add_artist(circle)
+            self.ax.add_artist(circle)
 
         plt.axis('off')
-        figureWin = plt.gcf()
-        figureWin.set_figwidth(3)
-        figureWin.set_figheight(8)
-        ax = plt.gca()
-        ax.margins(y=0,x=self.circleRadius/5)
-        ax.set_aspect("equal")
+
+        self.fig.set_figwidth(3)
+        self.fig.set_figheight(8)
+
+        self.ax.margins(y=0,x=self.circleRadius/5)
+        self.ax.set_aspect("equal")
+    
+    def showFretboard(self):
         plt.show()
-        
+
+    def closeFretboard(self):
+        plt.close('all')
+    
     def clearFretboard(self):
-        ax = plt.gca()
         self.circles = []
 
     def getPathName(self):
@@ -145,19 +153,21 @@ class SeeFretboard():
         pass
     
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
-    def addNotesAllString(self,notes,hv):
+    def addNotesAllString(self,notes):
         notes = [int(x.strip()) for x in notes.split(',')]
         for i in range (1,self.stringsLength+1):
-            self.addCircle(i,notes[i-1],hv)
+            self.addCircle(i,notes[i-1])
 
-    def addCircle(self, string, fret, hV):
-        if(hV=="h"):
+    def addCircle(self, string, fret):
+        if(self.hv=="h"):
             circle = plt.Circle(((fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,(string-1)*self.distanceBetweenStrings), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
         else:
             circle = plt.Circle(((string-1)*self.distanceBetweenStrings,self.distanceBetweenFrets*self.fretsLength - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.circleRadius, facecolor=self.circleFaceColor,edgecolor=self.circleEdgeColor, linewidth = self.circleLineWidth, zorder = 12,fill=self.circleFill)
         
+        self.ax.add_artist(circle)
         self.circles.append(circle)
-    
+        
+
     def removeCircle(self):
         pass    
     
