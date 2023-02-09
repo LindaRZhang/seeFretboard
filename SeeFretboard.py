@@ -13,6 +13,7 @@ class SeeFretboard():
         self.showFretboardNumber = True
         self.showStringNumber = True
         
+       # fretboard parameters
         self.distanceBetweenFrets = 5
         self.distanceBetweenStrings = 2
         self.fretColor = "black"
@@ -22,6 +23,7 @@ class SeeFretboard():
 
         self.fretboardMarkerColor = "#DCDCDC"
         
+        #note sparameter
         self.circles = []
         self.circleRadius = 0.5
         self.circleFaceColor = "blue"
@@ -29,6 +31,8 @@ class SeeFretboard():
         self.circleLineWidth = 2
         self.circleFill = True
         
+        self.pathName = "default.svg"
+
     #preview
     def drawHorizontalFretboard(self):
         x =[0,self.distanceBetweenFrets*self.fretsLength]
@@ -127,8 +131,14 @@ class SeeFretboard():
         plt.show()
         
     def clearFretboard(self):
-        # plt.clf()
-        pass
+        ax = plt.gca()
+        self.circles = []
+
+    def getPathName(self):
+        return self.pathName
+
+    def setPathName(self,path):
+        self.pathName = path
 
     #saveAsImg
     def saveImg(self):
