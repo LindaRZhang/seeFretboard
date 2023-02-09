@@ -12,7 +12,6 @@ class SeeFretboard():
         
         self.showTuning = showTuning
         self.showFretboardNumber = True
-        self.showStringNumber = True
         
        # fretboard parameters
         self.distanceBetweenFrets = 5
@@ -44,6 +43,7 @@ class SeeFretboard():
         x =[0,self.distanceBetweenFrets*self.fretsLength]
         y=[0,0]
         self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
+        self.ax.text(-1, 0-self.distanceBetweenStrings/5, self.tuning[0], ha='left')
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (horizontal line)
@@ -51,16 +51,21 @@ class SeeFretboard():
             x=[0,self.distanceBetweenFrets*self.fretsLength]
             y=[distanceStrings,distanceStrings]
             
+            if(self.showTuning):
+                self.ax.text(-1, distanceStrings-self.distanceBetweenStrings/5, self.tuning[i+1], ha='left')
+
             distanceStrings+=self.distanceBetweenStrings
             self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
         
-        
         distanceBetweenFrets = 0
         #draw frets (vertical line)
-        for i in range(0,self.fretsLength):
+        for j in range(0,self.fretsLength):
             x=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
             y=[distanceBetweenFrets,distanceBetweenFrets]
-            
+
+            if(self.showFretboardNumber):
+                self.ax.text(distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, 0-self.circleRadius*4, j+1)
+
             distanceBetweenFrets+=self.distanceBetweenFrets
             self.ax.plot(y,x,color=self.fretColor, alpha=self.fretOpacity)
         
@@ -74,7 +79,7 @@ class SeeFretboard():
         self.ax.add_artist(markerFret5)
         self.ax.add_artist(markerFret7)
         self.ax.add_artist(markerFret9)
-        
+
         #draw circles/notes
         for circle in self.circles:
             self.ax.add_artist(circle)
@@ -91,23 +96,32 @@ class SeeFretboard():
         x =[0,0]
         y=[0,self.distanceBetweenFrets*self.fretsLength]
         self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
+        self.ax.text(-0.5,self.distanceBetweenFrets*self.fretsLength+1, self.tuning[0], ha='left')
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (vertical line)
         for i in range(0,self.stringsLength-1):
             x=[distanceStrings,distanceStrings]
             y=[0,self.distanceBetweenFrets*self.fretsLength]
-            
+
+            if(self.showTuning):
+                self.ax.text(distanceStrings-self.distanceBetweenStrings/5,self.distanceBetweenFrets*self.fretsLength+1, self.tuning[i+1], ha='left')
+
             distanceStrings+=self.distanceBetweenStrings
             self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
         
         
         distanceBetweenFrets = 0
         #draw frets (horizontal line)
-        for i in range(0,self.fretsLength+1):
+        fretlength = self.fretsLength
+        for j in range(0,self.fretsLength):
             x=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
             y=[distanceBetweenFrets,distanceBetweenFrets]
             
+            if(self.showFretboardNumber):
+                self.ax.text(-self.circleRadius*4,distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, fretlength)
+
+            fretlength-=1
             distanceBetweenFrets+=self.distanceBetweenFrets
             self.ax.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
         
