@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import figure
+from matplotlib.pyplot import figure, Artist
+from matplotlib import patches
 import os
 from Note import Note
 
@@ -34,6 +35,8 @@ class SeeFretboard():
 
         #horizontal or vertical fretboard
         self.hv = hv
+
+        plt.ion()
 
     #preview
     def drawHorizontalFretboard(self):
@@ -76,10 +79,6 @@ class SeeFretboard():
         self.ax.add_artist(markerFret5)
         self.ax.add_artist(markerFret7)
         self.ax.add_artist(markerFret9)
-
-        #draw circles/notes
-        for circle in self.notes:
-            self.ax.add_artist(circle)
 
         plt.axis('off')
         
@@ -133,10 +132,6 @@ class SeeFretboard():
         self.ax.add_artist(markerFret7)
         self.ax.add_artist(markerFret9)
 
-        #draw circles/notes
-        for circle in self.notes:
-            self.ax.add_artist(circle)
-
         plt.axis('off')
 
         self.fig.set_figwidth(3)
@@ -152,7 +147,9 @@ class SeeFretboard():
         plt.close('all')
     
     def clearFretboard(self):
-        self.notes = []
+        print(len(self.notes))
+        for note in self.notes:
+            note.remove()
 
     def getPathName(self):
         return self.pathName
