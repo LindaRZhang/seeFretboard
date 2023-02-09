@@ -33,7 +33,7 @@ class SeeFretboard():
         self.circleLineWidth = 2
         self.circleFill = True
         
-        self.pathName = "default.svg"
+        self.pathName = "default"
 
         #horizontal or vertical fretboard
         self.hv = hv
@@ -149,8 +149,8 @@ class SeeFretboard():
         self.pathName = path
 
     #saveAsImg
-    def saveImg(self):
-        pass
+    def saveImg(self,meta):
+        plt.savefig(self.pathName+"."+meta, format=meta)
     
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self,notes):

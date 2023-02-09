@@ -10,8 +10,8 @@ f.addNotesAllString("1,0,1,1,0,0")
 f.addCircle(2, 2)
 
 f.drawHorizontalFretboard()
-
+#f.saveImg("png")
 
 #f.drawVerticalFretboard()
-f.showFretboard()
+#f.showFretboard()
 
