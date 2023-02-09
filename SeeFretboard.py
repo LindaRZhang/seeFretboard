@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
+import os
 
 class SeeFretboard():
     
@@ -33,7 +34,7 @@ class SeeFretboard():
         self.circleLineWidth = 2
         self.circleFill = True
         
-        self.pathName = "default"
+        self.pathName = os.path.expanduser("default")
 
         #horizontal or vertical fretboard
         self.hv = hv
@@ -149,7 +150,7 @@ class SeeFretboard():
         self.pathName = path
 
     #saveAsImg
-    def saveImg(self,meta):
+    def saveAs(self,meta):
         plt.savefig(self.pathName+"."+meta, format=meta)
     
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
