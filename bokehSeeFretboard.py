@@ -38,16 +38,23 @@ class SeeFretboard():
         #horizontal or vertical fretboard
         self.hv = hv
 
-        self.button = Button(label="Toggle Fretboard Number",button_type="success")
+        self.tuningLabelbutton = Button(label="Toggle Tuning",button_type="success")
+        self.fretLabelbutton = Button(label="Toggle Fretboard Number",button_type="success")
 
 
+    def drawTuningLabel(self, distanceStrings,i):
+        string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings/2, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
+        string_label.visible = self.showTuning
+        self.fig.add_layout(string_label)
+        
+        self.tuningLabelbutton.js_on_event(ButtonClick, CustomJS(args=dict(stringLabel=string_label),code="""stringLabel.visible = !stringLabel.visible"""))
 
     def drawFretLabel(self, distanceBetweenFrets,j):
         fret_label = Label(x=distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, y=-self.note.noteRadius, text=str(j+1), text_align='center', text_font_size='10pt')
         fret_label.visible = self.showFretboardNumber
         self.fig.add_layout(fret_label)
         
-        self.button.js_on_event(ButtonClick, CustomJS(args=dict(fretLabels=fret_label),code="""fretLabels.visible = !fretLabels.visible"""))
+        self.fretLabelbutton.js_on_event(ButtonClick, CustomJS(args=dict(fretLabel=fret_label),code="""fretLabel.visible = !fretLabel.visible"""))
 
         
     #preview
@@ -63,10 +70,8 @@ class SeeFretboard():
         for i in range(0,self.stringsLength-1):
             x=[0,self.distanceBetweenFrets*self.fretsLength]
             y=[distanceStrings,distanceStrings]
-            
-            # if(self.showTuning):
-            #     string_label = Label(x=-1, y=distanceStrings-self.distanceBetweenStrings/5, text=self.tuning[i+1], text_align='left', text_font_size='10pt')
-            #     self.fig.add_layout(string_label)
+
+            self.drawTuningLabel(distanceStrings,i)            
             
             distanceStrings+=self.distanceBetweenStrings
             self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)
@@ -77,10 +82,9 @@ class SeeFretboard():
             fx=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
             fy=[distanceBetweenFrets,distanceBetweenFrets]
 
-            # if(self.showFretboardNumber):
-            #     fret_label = Label(x=distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, y=-self.note.noteRadius, text=str(j+1), text_align='center', text_font_size='10pt')
-            #     self.fig.add_layout(fret_label)
-            self.drawFretLabel(distanceBetweenFrets,j)
+            if(j!=self.fretsLength):
+                self.drawFretLabel(distanceBetweenFrets,j)
+
             distanceBetweenFrets+=self.distanceBetweenFrets
             self.fig.line(x=fy, y=fx, line_color=self.fretColor, line_alpha=self.fretOpacity)
         
@@ -168,7 +172,7 @@ class SeeFretboard():
         self.ax.set_aspect("equal")
     
     def showFretboard(self):
-        layoutF = layout(self.fig,self.button)
+        layoutF = layout(self.fig,[self.tuningLabelbutton,self.fretLabelbutton])
         show(layoutF)
 
     def closeFretboard(self):
