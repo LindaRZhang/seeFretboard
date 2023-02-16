@@ -44,7 +44,7 @@ class SeeFretboard():
 
     def drawTuningLabel(self, distanceStrings,i,vh):
         if(vh == "h"):
-            string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings/2, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
+            string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
         else:
             string_label = Label(x=distanceStrings, y=self.distanceBetweenFrets*self.fretsLength+1, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
 
@@ -71,6 +71,8 @@ class SeeFretboard():
         x =[0,self.distanceBetweenFrets*self.fretsLength]
         y=[0,0]
 
+        self.drawTuningLabel(self.distanceBetweenStrings,-1,"h")            
+
         self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
@@ -79,7 +81,7 @@ class SeeFretboard():
             x=[0,self.distanceBetweenFrets*self.fretsLength]
             y=[distanceStrings,distanceStrings]
 
-            self.drawTuningLabel(distanceStrings,i,"h")            
+            self.drawTuningLabel(distanceStrings+self.distanceBetweenStrings,i,"h")            
             
             distanceStrings+=self.distanceBetweenStrings
             self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)
