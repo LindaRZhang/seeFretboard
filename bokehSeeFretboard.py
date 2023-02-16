@@ -37,16 +37,16 @@ class SeeFretboard():
 
         #horizontal or vertical fretboard
         self.hv = hv
+
         self.button = Button(label="Toggle Fretboard Number",button_type="success")
-        self.fretLabels = []
 
 
 
     def drawFretLabel(self, distanceBetweenFrets,j):
         fret_label = Label(x=distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, y=-self.note.noteRadius, text=str(j+1), text_align='center', text_font_size='10pt')
         fret_label.visible = self.showFretboardNumber
-        self.fretLabels.append(fret_label)
         self.fig.add_layout(fret_label)
+        
         self.button.js_on_event(ButtonClick, CustomJS(args=dict(fretLabels=fret_label),code="""fretLabels.visible = !fretLabels.visible"""))
 
         
@@ -84,7 +84,6 @@ class SeeFretboard():
             distanceBetweenFrets+=self.distanceBetweenFrets
             self.fig.line(x=fy, y=fx, line_color=self.fretColor, line_alpha=self.fretOpacity)
         
-
         #draw 3,5,7,9 marker
         markerFret3 = self.fig.circle(x=3*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
                      y=(self.stringsLength-1)*self.distanceBetweenStrings/2,
