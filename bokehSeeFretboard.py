@@ -42,15 +42,23 @@ class SeeFretboard():
         self.fretLabelbutton = Button(label="Toggle Fretboard Number",button_type="success")
 
 
-    def drawTuningLabel(self, distanceStrings,i):
-        string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings/2, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
+    def drawTuningLabel(self, distanceStrings,i,vh):
+        if(vh == "h"):
+            string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings/2, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
+        else:
+            string_label = Label(x=distanceStrings, y=self.distanceBetweenFrets*self.fretsLength+1, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
+
         string_label.visible = self.showTuning
         self.fig.add_layout(string_label)
         
         self.tuningLabelbutton.js_on_event(ButtonClick, CustomJS(args=dict(stringLabel=string_label),code="""stringLabel.visible = !stringLabel.visible"""))
 
-    def drawFretLabel(self, distanceBetweenFrets,j):
-        fret_label = Label(x=distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, y=-self.note.noteRadius, text=str(j+1), text_align='center', text_font_size='10pt')
+    def drawFretLabel(self, distanceBetweenFrets,j,vh):
+        if(vh == "h"):
+            fret_label = Label(x=distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, y=-self.note.noteRadius, text=str(j+1), text_align='center', text_font_size='10pt')
+        else:
+            fret_label = Label(x=-self.note.noteRadius*2, y=distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, text=str(j), text_align='center', text_font_size='10pt')
+
         fret_label.visible = self.showFretboardNumber
         self.fig.add_layout(fret_label)
         
@@ -71,7 +79,7 @@ class SeeFretboard():
             x=[0,self.distanceBetweenFrets*self.fretsLength]
             y=[distanceStrings,distanceStrings]
 
-            self.drawTuningLabel(distanceStrings,i)            
+            self.drawTuningLabel(distanceStrings,i,"h")            
             
             distanceStrings+=self.distanceBetweenStrings
             self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)
@@ -83,7 +91,7 @@ class SeeFretboard():
             fy=[distanceBetweenFrets,distanceBetweenFrets]
 
             if(j!=self.fretsLength):
-                self.drawFretLabel(distanceBetweenFrets,j)
+                self.drawFretLabel(distanceBetweenFrets,j,"h")
 
             distanceBetweenFrets+=self.distanceBetweenFrets
             self.fig.line(x=fy, y=fx, line_color=self.fretColor, line_alpha=self.fretOpacity)
@@ -122,8 +130,10 @@ class SeeFretboard():
     def drawVerticalFretboard(self):
         x =[0,0]
         y=[0,self.distanceBetweenFrets*self.fretsLength]
-        self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
-        self.ax.text(-0.5,self.distanceBetweenFrets*self.fretsLength+1, self.tuning[0], ha='left')
+        
+        self.drawTuningLabel(0,-1,"v")            
+
+        self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (vertical line)
@@ -131,45 +141,45 @@ class SeeFretboard():
             x=[distanceStrings,distanceStrings]
             y=[0,self.distanceBetweenFrets*self.fretsLength]
 
-            if(self.showTuning):
-                self.ax.text(distanceStrings-self.distanceBetweenStrings/5,self.distanceBetweenFrets*self.fretsLength+1, self.tuning[i+1], ha='left')
+            self.drawTuningLabel(distanceStrings,i,"v")
 
             distanceStrings+=self.distanceBetweenStrings
-            self.ax.plot(x,y,color=self.stringsColor,alpha=self.stringsOpactiy)
-        
+            self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)        
         
         distanceBetweenFrets = 0
+        fx=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
+        fy=[self.fretsLength*self.distanceBetweenFrets,self.fretsLength*self.distanceBetweenFrets]
+        self.fig.line(x=fx, y=fy, line_color=self.fretColor, line_alpha=self.fretOpacity)
+            
         #draw frets (horizontal line)
         fretlength = self.fretsLength
+
         for j in range(0,self.fretsLength):
-            x=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
-            y=[distanceBetweenFrets,distanceBetweenFrets]
+            fx=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
+            fy=[distanceBetweenFrets,distanceBetweenFrets]
             
-            if(self.showFretboardNumber):
-                self.ax.text(-self.note.noteRadius*4,distanceBetweenFrets+self.distanceBetweenFrets-self.distanceBetweenFrets/1.7, fretlength)
+            self.drawFretLabel(distanceBetweenFrets,fretlength,"v")
 
             fretlength-=1
             distanceBetweenFrets+=self.distanceBetweenFrets
-            self.ax.plot(x,y,color=self.fretColor,alpha=self.fretOpacity)
+            self.fig.line(x=fx, y=fy, line_color=self.fretColor, line_alpha=self.fretOpacity)
         
         #draw 3,5,7,9 marker
-        markerFret3 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (3-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
-        markerFret5 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (5-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
-        markerFret7 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (7-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
-        markerFret9 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (9-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
+        markerFret3 = self.fig.circle(x=(self.stringsLength-1)*self.distanceBetweenStrings/2,
+                     y= self.distanceBetweenFrets*self.fretsLength - (3-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
+                     radius=self.note.noteRadius,
+                     fill_color=self.fretboardMarkerColor,
+                     line_width=self.note.noteLineWidth,
+                     fill_alpha=self.note.noteFill)
+        # markerFret3 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (3-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
+        # markerFret5 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (5-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
+        # markerFret7 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (7-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
+        # markerFret9 = plt.Circle(((self.stringsLength-1)*self.distanceBetweenStrings/2, self.distanceBetweenFrets*self.fretsLength - (9-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2), self.note.noteRadius, facecolor=self.fretboardMarkerColor,linewidth = self.note.noteLineWidth, fill=self.note.noteFill)
 
-        self.ax.add_artist(markerFret3)
-        self.ax.add_artist(markerFret5)
-        self.ax.add_artist(markerFret7)
-        self.ax.add_artist(markerFret9)
 
-        plt.axis('off')
-
-        self.fig.set_figwidth(3)
-        self.fig.set_figheight(8)
-
-        self.ax.margins(y=0,x=self.note.noteRadius/5)
-        self.ax.set_aspect("equal")
+        self.fig.axis.visible = False
+        self.fig.xgrid.visible = False
+        self.fig.ygrid.visible = False
     
     def showFretboard(self):
         layoutF = layout(self.fig,[self.tuningLabelbutton,self.fretLabelbutton])

@@ -10,9 +10,9 @@ f = SeeFretboard()
 #f.addNote(2, 2)
 #f.addNote(5, 2)
 
-f.drawHorizontalFretboard()
+#f.drawHorizontalFretboard()
 #f.saveAs("png")
 
-#f.drawVerticalFretboard()
+f.drawVerticalFretboard()
 f.showFretboard()
 
