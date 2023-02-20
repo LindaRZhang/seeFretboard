@@ -1,5 +1,5 @@
-from bokeh.plotting import figure, show
-from bokeh.models import Circle,Label, Button,Toggle,CustomJS
+from bokeh.plotting import figure, show, curdoc
+from bokeh.models import Circle,Label, Button,CustomJS, Slider
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
 from bokeh.io import export_png, export_svg
@@ -228,7 +228,7 @@ class SeeFretboard():
         show(layoutF)
 
     def closeFretboard(self):
-        self.fig.close('all')
+        pass
     
     def clearFretboard(self):
         print(len(self.notes))
