@@ -2,8 +2,12 @@ from bokehSeeFretboard import SeeFretboard
 
 #f = SeeFretboard(7)
 #f = SeeFretboard()
+#f= SeeFretboard("h", 6, 3, 12)
+#f= SeeFretboard("h", 6, 5, 9)
 
-f = SeeFretboard("v",6,4)
+
+#f = SeeFretboard("v",6,3,9)
+f = SeeFretboard("v",6,5,9)
 
 
 f.addNotesAllString("1,0,1,1,0,0")
