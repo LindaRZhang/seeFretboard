@@ -16,7 +16,7 @@ f.addNotesAllString("5,0,5,5,0,0")
 
 f.drawHorizontalFretboard()
 #f.saveAs("png")
-
+f.clearFretboard()
 #f.drawVerticalFretboard()
 f.showFretboard()
 

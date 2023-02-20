@@ -52,6 +52,8 @@ class SeeFretboard():
         self.fretLabelbutton = Button(label="Toggle Fretboard Number",button_type="success")
 
 
+        self.render = ""
+
     def drawTuningLabel(self, distanceStrings,i):
         if(self.hv == "h"):
             string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
@@ -231,7 +233,7 @@ class SeeFretboard():
     def clearFretboard(self):
         print(len(self.notes))
         for note in self.notes:
-            note.remove()
+            self.fig.renderers.remove(note)
 
     def getPathName(self):
         return self.pathName
@@ -258,7 +260,7 @@ class SeeFretboard():
         
 
         if(self.hv=="h"):
-            self.fig.circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+            self.render = self.fig.circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
                      radius=self.note.noteRadius,
                      fill_color=self.note.noteFaceColor,
@@ -267,7 +269,7 @@ class SeeFretboard():
                      line_color=self.note.noteEdgeColor
                      )
         else:
-            self.fig.circle(x=(string-1)*self.distanceBetweenStrings, 
+            self.render = self.fig.circle(x=(string-1)*self.distanceBetweenStrings, 
                             y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
                      radius=self.note.noteRadius/2,
                      fill_color=self.note.noteFaceColor,
@@ -276,6 +278,7 @@ class SeeFretboard():
                      line_color=self.note.noteEdgeColor,
                      )
         
+        self.notes.append(self.render)
     def removeNote(self):
         pass    
     
