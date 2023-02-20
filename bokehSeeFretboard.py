@@ -253,6 +253,10 @@ class SeeFretboard():
             self.addNote(i,notes[i-1])
     
     def addNote(self, string, fret):
+        if(fret != 0):
+            fret = fret-self.fretFrom+1
+        
+
         if(self.hv=="h"):
             self.fig.circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
