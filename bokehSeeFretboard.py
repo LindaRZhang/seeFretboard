@@ -2,14 +2,18 @@ from bokeh.plotting import figure, show
 from bokeh.models import Circle,Label, Button,Toggle,CustomJS
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
+from bokeh.io import export_png, export_svg
 
 import os
-from Note import Note
+from bokehNote import Note
 
 class SeeFretboard():
     
     #default values
     def __init__(self, hv="h", strings=6, frets=12, showTuning=True):
+        #horizontal or vertical fretboard
+        self.hv = hv
+
         self.tuning = ['E','A','D','G','B','E']
         self.stringsLength = strings
         self.fretsLength = frets
@@ -27,16 +31,20 @@ class SeeFretboard():
 
         self.fretboardMarkerColor = "#DCDCDC"
         
+        #figure attribute
         self.fig = figure()
-        
+        if(self.hv == "h"):
+            self.fig.width = 800
+            self.fig.height = 400
+        else:
+            self.fig.width = 400
+            self.fig.height = 800
+
         #note
         self.note = Note()
         self.notes = []
         
         self.pathName = os.path.expanduser("default")
-
-        #horizontal or vertical fretboard
-        self.hv = hv
 
         self.tuningLabelbutton = Button(label="Toggle Tuning",button_type="success")
         self.fretLabelbutton = Button(label="Toggle Fretboard Number",button_type="success")
@@ -225,31 +233,36 @@ class SeeFretboard():
 
     #saveAsImg
     def saveAs(self,meta):
-        plt.savefig(self.pathName+"."+meta, format=meta)
+        if(meta=="png"):
+            export_png(self.fig, filename=self.pathName+"."+meta)
+        elif(meta=="svg"):
+            export_svg(self.fig, filename=self.pathName+"."+meta)
     
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
-    # def addNotesAllString(self,notes):
-    #     notes = [int(x.strip()) for x in notes.split(',')]
-    #     for i in range (1,self.stringsLength+1):
-    #         self.addNote(i,notes[i-1])
+    def addNotesAllString(self,notes):
+        notes = [int(x.strip()) for x in notes.split(',')]
+        for i in range (1,self.stringsLength+1):
+            self.addNote(i,notes[i-1])
     
     def addNote(self, string, fret):
         if(self.hv=="h"):
             self.fig.circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
                      radius=self.note.noteRadius,
-                     fill_color=self.fretboardMarkerColor,
+                     fill_color=self.note.noteFaceColor,
                      line_width=self.note.noteLineWidth,
                      fill_alpha=self.note.noteFill,
-                     line_color=self.note.noteEdgeColor)
+                     line_color=self.note.noteEdgeColor
+                     )
         else:
             self.fig.circle(x=(string-1)*self.distanceBetweenStrings, 
                             y=self.distanceBetweenFrets*self.fretsLength - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
-                     radius=self.note.noteRadius,
-                     fill_color=self.fretboardMarkerColor,
+                     radius=self.note.noteRadius/2,
+                     fill_color=self.note.noteFaceColor,
                      line_width=self.note.noteLineWidth,
                      fill_alpha=self.note.noteFill,
-                     line_color=self.note.noteEdgeColor)
+                     line_color=self.note.noteEdgeColor,
+                     )
         
         #self.notes.append(circle)
 
@@ -315,3 +328,15 @@ class SeeFretboard():
     
     def setStringsOpacity(self, stringsOpactiy):
         self.stringsOpactiy = stringsOpactiy
+
+    def getFigWidth(self):  
+        return self.fig.width
+    
+    def setFigWidth(self, width):
+        self.fig.width = width
+
+    def getFigHeight(self):  
+        return self.fig.height
+    
+    def setFigHeight(self, height):
+        self.fig.height = height
