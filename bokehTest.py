@@ -1,4 +1,4 @@
-from bokehSeeFretboard import SeeFretboard
+from SeeFretboard import SeeFretboard
 
 #f = SeeFretboard(7)
 #f = SeeFretboard()
@@ -17,8 +17,8 @@ f.addNotesAllString("5,0,5,5,0,0")
 f.drawHorizontalFretboard()
 #f.saveAs("png")
 #f.drawVerticalFretboard()
-f.showFretboard()
 
-f.saveAs("png")
+f.showFretboard()
+#f.saveAs("svg")
 
 

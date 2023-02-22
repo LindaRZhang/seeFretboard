@@ -1,11 +1,17 @@
-from bokeh.plotting import figure, show, curdoc
+from bokeh.plotting import figure, show
 from bokeh.models import Circle,Label, Button,CustomJS, Slider
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
-from bokeh.io import export_png, export_svg
+from bokeh.io import export_png, export_svg, curdoc
+from bokeh.layouts import row
+from bokeh.document import without_document_lock
 
 import os
-from bokehNote import Note
+
+from Note import Note
+from Video import Video
+
+
 
 class SeeFretboard():
     
@@ -48,12 +54,43 @@ class SeeFretboard():
         
         self.pathName = os.path.expanduser("default")
 
+        #buttons
         self.tuningLabelbutton = Button(label="Toggle Tuning",button_type="success")
         self.fretLabelbutton = Button(label="Toggle Fretboard Number",button_type="success")
+        self.toggleButtons = row(self.tuningLabelbutton,self.fretLabelbutton)
+        
+        #video parameter
+        self.video = Video()
+        self.videoFrames = self.video.frames
 
+        self.timeslider = Slider(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep, title="Time")
+        self.playButton = Button(label="Play")
+        self.playButton.on_click(self.playButtonClicked)
+        self.playing = False
 
         self.render = ""
 
+    #video related
+    def playButtonClicked(self):
+        if(self.playing):
+            self.playButton.label = "Play"
+            self.playing = False
+        else:
+            self.playButton.label = "Pause"
+            self.playing = True
+            self.updatingFretboardAnimation()
+    
+    @without_document_lock
+    def updatingFretboardAnimation(self):
+        pass
+    
+    def setVideo(self, video):
+        self.video = video
+    
+    def getVideo(self):
+        return self.video
+        
+    #fretboard relate
     def drawTuningLabel(self, distanceStrings,i):
         if(self.hv == "h"):
             string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
@@ -224,16 +261,20 @@ class SeeFretboard():
         #                 line_color=self.note.noteEdgeColor)
 
     def showFretboard(self):
-        layoutF = layout(self.fig,[self.tuningLabelbutton,self.fretLabelbutton])
-        show(layoutF)
+        layoutF = layout(self.fig,self.timeslider, self.playButton, self.toggleButtons)
+        curdoc().add_root(layoutF)
+        #show(layoutF)
 
     def closeFretboard(self):
         pass
     
     def clearFretboard(self):
-        print(len(self.notes))
         for note in self.notes:
             self.fig.renderers.remove(note)
+
+    def updateFretboard(self, notes):
+        self.clearFretboard()
+        self.addNotesAllString(notes)
 
     def getPathName(self):
         return self.pathName
@@ -279,6 +320,7 @@ class SeeFretboard():
                      )
         
         self.notes.append(self.render)
+    
     def removeNote(self):
         pass    
     
