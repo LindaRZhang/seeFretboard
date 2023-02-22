@@ -60,7 +60,7 @@ class SeeFretboard():
         self.toggleButtons = row(self.tuningLabelbutton,self.fretLabelbutton)
         
         #video parameter
-        self.video = Video()
+        self.video = Video(0,10,0,0.1)
         self.videoFrames = self.video.frames
 
         self.timeslider = Slider(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep, title="Time")
@@ -78,14 +78,27 @@ class SeeFretboard():
         else:
             self.playButton.label = "Pause"
             self.playing = True
-            self.updatingFretboardAnimation()
+            while(self.playing != False):
+                self.updatingFretboardAnimation()
     
     @without_document_lock
     def updatingFretboardAnimation(self):
-        pass
-    
+        if (self.video.currentFrame >= self.video.endFrame):
+            self.playButton.label = "Play"
+            self.playing = False
+            self.video.currentFrame = 0
+            self.updateFretboard(list(self.video.frames.items())[0])
+            return
+        #if in the frame there is a chord draw chord
+        if(self.video.currentFrame in self.video.frames.keys()):
+            currentChord = self.video.frames[self.video.currentFrame]
+            self.updateFretboard(currentChord)
+        self.video.currentFrame += self.video.frameStep
+        print(self.video.currentFrame)
+
     def setVideo(self, video):
         self.video = video
+        self.timeslider.update(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep)
     
     def getVideo(self):
         return self.video

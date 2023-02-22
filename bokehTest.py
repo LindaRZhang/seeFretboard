@@ -1,5 +1,5 @@
 from SeeFretboard import SeeFretboard
-
+from Video import Video
 #f = SeeFretboard(7)
 #f = SeeFretboard()
 #f= SeeFretboard("h", 6, 3, 12)
@@ -11,14 +11,21 @@ f= SeeFretboard("h", 6, 5, 9)
 
 
 f.addNotesAllString("5,0,5,5,0,0")
+f.drawHorizontalFretboard()
+f.showFretboard()
+
+v = Video(0,2,0,0.1)
+v.addFrame(0,"5,0,5,5,0,0")
+v.addFrame(1,"0,0,7,7,7,0")
+v.addFrame(2,"0,0,7,7,7,5")
+f.setVideo(v)
+
 #f.addNote(2, 2)
 #f.addNote(5, 2)
 
-f.drawHorizontalFretboard()
 #f.saveAs("png")
 #f.drawVerticalFretboard()
 
-f.showFretboard()
 #f.saveAs("svg")
 
 

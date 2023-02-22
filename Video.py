@@ -1,10 +1,10 @@
 class Video():
-    def __init__(self):
-        self.frames = []
-        self.startFrame=0
-        self.endFrame=0
-        self.currentFrame = 0
-        self.frameStep=.1
+    def __init__(self, startFrame, endFrame, currentFrame, frameStep):
+        self.frames = {}
+        self.startFrame=startFrame
+        self.endFrame=endFrame
+        self.currentFrame = currentFrame
+        self.frameStep=frameStep
 
     def addFrame(self, timeFrame , notes):
         self.frames[timeFrame] = notes
@@ -12,6 +12,9 @@ class Video():
     def removeFrame(self, timeFrame):
         del self.frames[timeFrame]
     
+    def getFrame(self, frame):
+        return self.frames[frame]
+
     def getFrames(self):
         return self.frames
 
