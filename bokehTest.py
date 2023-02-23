@@ -10,8 +10,9 @@ f= SeeFretboard("h", 6, 5, 9)
 #f = SeeFretboard("v",6,5,9)
 
 
-f.addNotesAllString("5,0,5,5,0,0")
+f.addNotesAllString("x,0,5,5,0,0")
 f.drawHorizontalFretboard()
+
 # f.updateFretboard("5,0,9,9,9,0")
 # f.updateFretboard("5,0,9,9,9,9")
 

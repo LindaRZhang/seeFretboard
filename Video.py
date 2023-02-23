@@ -23,6 +23,15 @@ class Video():
     def getFrames(self):
         return self.frames
 
+    def getFramesLength(self):
+        return len(self.frames)
+    
+    def getFramesKeys(self):
+        return self.frames.keys()
+    
+    def getFramesValues(self):
+        return self.frames.values()
+
     def saveVideo(self):
         pass
 

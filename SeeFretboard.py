@@ -1,5 +1,5 @@
 from bokeh.plotting import figure, show
-from bokeh.models import Circle,Label, Button,CustomJS, Slider
+from bokeh.models import Text, Circle,Label, Button,CustomJS, Slider
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
 from bokeh.io import export_png, export_svg, curdoc
@@ -65,6 +65,8 @@ class SeeFretboard():
         self.videoFrames = self.video.frames
 
         self.timeslider = Slider(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep, title="Time")
+        self.timeslider.on_change('value', self.sliderTimeCallback)
+        
         self.playButton = Button(label="Play")
         self.playButton.on_click(self.playButtonClicked)
         self.playing = False
@@ -98,6 +100,12 @@ class SeeFretboard():
 
         self.timeslider.update(start=self.video.startFrame, end=self.video.endFrame, value=self.video.getCurrentFrame(), step=self.video.frameStep)
 
+    def sliderTimeCallback(self, attr, old, new):
+        self.video.setCurrentFrame(self.timeslider.value)
+        for i in range(self.video.getFramesLength):
+            key1, key2 = list(self.video.getFramesKeys)[i:i+2]
+            if (self.timeslider.value > key1 and self.timeslider.value < key2 ):
+                self.updateFretboard(self.video.getFrame(key1))
 
     def setVideo(self, video):
         self.video = video
@@ -109,7 +117,7 @@ class SeeFretboard():
     #fretboard relate
     def drawTuningLabel(self, distanceStrings,i):
         if(self.hv == "h"):
-            string_label = Label(x=-2, y=distanceStrings-self.distanceBetweenStrings, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
+            string_label = Label(x=-1, y=distanceStrings-self.distanceBetweenStrings, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
         else:
             string_label = Label(x=distanceStrings, y=self.distanceBetweenFrets*self.fretTo+1, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
 
@@ -318,35 +326,60 @@ class SeeFretboard():
 
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self,notes):
-        notes = [int(x.strip()) for x in notes.split(',')]
+        notes = [(x.strip()) for x in notes.split(',')]
         for i in range (1,self.stringsLength+1):
             self.addNote(i,notes[i-1])
     
     def addNote(self, string, fret):
-        if(fret != 0):
-            fret = fret-self.fretFrom+1
-        
+        print(fret)
+        if(fret != 0 and fret != "x"):
+            fret = int(fret)-self.fretFrom+1
 
         if(self.hv=="h"):
-            circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+            if(fret == "0"):
+               fret = int(fret)
+               circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+                            y=(string-1)*self.distanceBetweenStrings,
+                     radius=self.note.noteRadius,
+                     line_width=self.note.noteLineWidth,
+                     line_color=self.note.noteEdgeColor,
+                     fill_alpha=0,
+                     name="circleNote"
+                     )
+            elif(fret == "x"):
+                print("x")
+                fret = 0
+                circleNote = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+                            y=(string-1)*self.distanceBetweenStrings, text='fwefx', text_color="#000000")
+            else:
+                fret = int(fret)
+                circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
                      radius=self.note.noteRadius,
                      fill_color=self.note.noteFaceColor,
                      line_width=self.note.noteLineWidth,
-                     fill_alpha=self.note.noteFill,
                      line_color=self.note.noteEdgeColor,
                      name="circleNote"
                      )
         else:
-            circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
-                            y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
-                     radius=self.note.noteRadius/2,
-                     fill_color=self.note.noteFaceColor,
-                     line_width=self.note.noteLineWidth,
-                     fill_alpha=self.note.noteFill,
-                     line_color=self.note.noteEdgeColor,
-                    name="circleNote"
-                     )
+            if(fret == 0):
+                circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
+                                y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
+                        radius=self.note.noteRadius/2,
+                        line_width=self.note.noteLineWidth,
+                        line_color=self.note.noteEdgeColor,
+                        fill_alpha=0,
+                        name="circleNote"
+                        )
+            else:
+                circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
+                                y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
+                        radius=self.note.noteRadius/2,
+                        fill_color=self.note.noteFaceColor,
+                        line_width=self.note.noteLineWidth,
+                        line_color=self.note.noteEdgeColor,
+                        name="circleNote"
+                        )
 
         self.notes.append(self.fig.add_glyph(circleNote))
     
