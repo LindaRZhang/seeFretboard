@@ -1,12 +1,17 @@
 class Video():
     def __init__(self, startFrame, endFrame, currentFrame, frameStep):
+        #format = {{time:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
         self.frames = {}
-        self.startFrame=startFrame
-        self.endFrame=endFrame
-        self.currentFrame = currentFrame
+
+        #all these are digits or the keys
+        self.startFrame=round(startFrame,2)
+        self.endFrame=round(endFrame,2)
+        self.currentFrame = round(currentFrame,2)
+
         self.frameStep=frameStep
 
     def addFrame(self, timeFrame , notes):
+        timeFrame = round(timeFrame,2)
         self.frames[timeFrame] = notes
     
     def removeFrame(self, timeFrame):
@@ -25,22 +30,22 @@ class Video():
         return self.startFrame
     
     def setStartFrame(self, frame):
-        self.startFrame = frame
+        self.startFrame = round(frame,2)
 
     def getEndFrame(self):
         return self.endFrame
     
     def setEndFrame(self, frame):
-        self.endFrame = frame
+        self.endFrame = round(frame,2)
 
     def getCurrentFrame(self):
         return self.currentFrame
     
     def setCurrentFrame(self, frame):
-        self.currentFrame = frame
+        self.currentFrame = round(frame,2)
 
     def getFrameStep(self):
         return self.frameStep
     
     def setFrameStep(self, step):
-        self.frameStep = step
+        self.frameStep = round(step,2)

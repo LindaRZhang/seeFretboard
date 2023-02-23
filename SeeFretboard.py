@@ -68,8 +68,6 @@ class SeeFretboard():
         self.playButton.on_click(self.playButtonClicked)
         self.playing = False
 
-        self.render = ""
-
     #video related
     def playButtonClicked(self):
         if(self.playing):
@@ -84,17 +82,24 @@ class SeeFretboard():
     @without_document_lock
     def updatingFretboardAnimation(self):
         if (self.video.currentFrame >= self.video.endFrame):
+            print("here")
             self.playButton.label = "Play"
             self.playing = False
             self.video.currentFrame = 0
-            self.updateFretboard(list(self.video.frames.items())[0])
+            print(list(self.video.frames.values()))
+            print(list(self.video.frames.values())[0])
+            self.updateFretboard(str(list(self.video.frames.values())[0]))
             return
         #if in the frame there is a chord draw chord
-        if(self.video.currentFrame in self.video.frames.keys()):
+        if(self.video.getCurrentFrame() in self.video.frames.keys()):
             currentChord = self.video.frames[self.video.currentFrame]
+            print("curChord")
+            print(currentChord)
             self.updateFretboard(currentChord)
-        self.video.currentFrame += self.video.frameStep
-        print(self.video.currentFrame)
+            print(self.notes)
+        newCurrentFrame = self.video.getCurrentFrame()+self.video.getFrameStep()
+        self.video.setCurrentFrame(newCurrentFrame)
+        print(self.video.getCurrentFrame())
 
     def setVideo(self, video):
         self.video = video
@@ -282,8 +287,14 @@ class SeeFretboard():
         pass
     
     def clearFretboard(self):
-        for note in self.notes:
-            self.fig.renderers.remove(note)
+        print("wfekfnwieufhwebiub")
+        print(self.notes)
+        print(self.fig.renderers)
+        
+        circleNoteGlyph = [glyph for glyph in self.fig.renderers if glyph.name == "circleNote"]
+        for glyph in circleNoteGlyph:
+            self.fig.renderers.remove(glyph)
+            print("renive")
 
     def updateFretboard(self, notes):
         self.clearFretboard()
@@ -302,6 +313,9 @@ class SeeFretboard():
         elif(meta=="svg"):
             export_svg(self.fig, filename=self.pathName+"."+meta)
     
+    def setNoteObject(self,note):
+        self.note = note
+
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self,notes):
         notes = [int(x.strip()) for x in notes.split(',')]
@@ -314,7 +328,7 @@ class SeeFretboard():
         
 
         if(self.hv=="h"):
-            self.render = self.fig.circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+            circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
                      radius=self.note.noteRadius,
                      fill_color=self.note.noteFaceColor,
@@ -323,7 +337,7 @@ class SeeFretboard():
                      line_color=self.note.noteEdgeColor
                      )
         else:
-            self.render = self.fig.circle(x=(string-1)*self.distanceBetweenStrings, 
+            circleNote = self.fig.circle(x=(string-1)*self.distanceBetweenStrings, 
                             y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
                      radius=self.note.noteRadius/2,
                      fill_color=self.note.noteFaceColor,
@@ -331,8 +345,7 @@ class SeeFretboard():
                      fill_alpha=self.note.noteFill,
                      line_color=self.note.noteEdgeColor,
                      )
-        
-        self.notes.append(self.render)
+        self.notes.append(self.fig.add_glyph(circleNote))
     
     def removeNote(self):
         pass    
