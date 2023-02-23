@@ -290,31 +290,13 @@ class SeeFretboard():
     def closeFretboard(self):
         pass
     
-    def clearFretboard(self):
-        # print("wfekfnwieufhwebiub")
-        # print("self.notes")
-        # print(self.notes)
-        # print("self.fig render")
-        # print(self.fig.renderers)
+    def clearFretboard(self):        
+        notesCopy = list(self.notes)
         
-        
-        # for note in self.notes:
-        #     self.fig.renderers.remove(note)
-        #     print("renive!!!!!  ")
-        
-       callback =  CustomJS(args=dict(plot=self.fig), code="""
-            var to_remove = [];
-            for (var i = 0; i < plot.renderers.length; i++) {
-                var glyph = plot.renderers[i];
-                if (glyph.name === "circleNote") {
-                    to_remove.push(glyph);
-                }
-            }
-            for (var i = 0; i < to_remove.length; i++) {
-                plot.renderers.splice(plot.renderers.indexOf(to_remove[i]), 1);
-            }
-        """)
-
+        for note in notesCopy:
+            self.fig.renderers.remove(note)
+            self.notes.remove(note)
+            print("remove!!!!!  ")
 
     def updateFretboard(self, notes):
         
@@ -349,7 +331,7 @@ class SeeFretboard():
         
 
         if(self.hv=="h"):
-            circleNote = self.fig.circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+            circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
                      radius=self.note.noteRadius,
                      fill_color=self.note.noteFaceColor,
@@ -359,7 +341,7 @@ class SeeFretboard():
                      name="circleNote"
                      )
         else:
-            circleNote = self.fig.circle(x=(string-1)*self.distanceBetweenStrings, 
+            circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
                             y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
                      radius=self.note.noteRadius/2,
                      fill_color=self.note.noteFaceColor,
@@ -369,7 +351,7 @@ class SeeFretboard():
                     name="circleNote"
                      )
 
-        self.notes.append(circleNote)
+        self.notes.append(self.fig.add_glyph(circleNote))
     
     def removeNote(self):
         pass    
