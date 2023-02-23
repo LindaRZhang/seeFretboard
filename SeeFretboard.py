@@ -57,7 +57,8 @@ class SeeFretboard():
         #buttons
         self.tuningLabelbutton = Button(label="Toggle Tuning",button_type="success")
         self.fretLabelbutton = Button(label="Toggle Fretboard Number",button_type="success")
-        self.toggleButtons = row(self.tuningLabelbutton,self.fretLabelbutton)
+        self.fretBoardDirectionButton = Button(label="Toggle Fretboard Direction",button_type="success")
+        self.toggleButtons = row(self.fretBoardDirectionButton, self.tuningLabelbutton,self.fretLabelbutton)
         
         #video parameter
         self.video = Video(0,10,0,0.1)
@@ -96,7 +97,6 @@ class SeeFretboard():
             print("curChord")
             print(currentChord)
             self.updateFretboard(currentChord)
-            print(self.notes)
         newCurrentFrame = self.video.getCurrentFrame()+self.video.getFrameStep()
         self.video.setCurrentFrame(newCurrentFrame)
         print(self.video.getCurrentFrame())
@@ -131,6 +131,10 @@ class SeeFretboard():
         
         self.fretLabelbutton.js_on_event(ButtonClick, CustomJS(args=dict(fretLabel=fret_label),code="""fretLabel.visible = !fretLabel.visible"""))
 
+    def drawToggleFretboardDirection(self):
+        pass
+        # self.clearFretboard()
+        # self.fretBoardDirectionButton.js_on_event(ButtonClick, CustomJS(args=dict(hv=self.hv, drawV = self.drawVerticalFretboard, drawH = self.drawHorizontalFretboard),code="""if (hv=="h"){  drawV()} else{ drawH()}"""))
         
     #preview
     def drawHorizontalFretboard(self):
@@ -287,16 +291,33 @@ class SeeFretboard():
         pass
     
     def clearFretboard(self):
-        print("wfekfnwieufhwebiub")
-        print(self.notes)
-        print(self.fig.renderers)
+        # print("wfekfnwieufhwebiub")
+        # print("self.notes")
+        # print(self.notes)
+        # print("self.fig render")
+        # print(self.fig.renderers)
         
-        circleNoteGlyph = [glyph for glyph in self.fig.renderers if glyph.name == "circleNote"]
-        for glyph in circleNoteGlyph:
-            self.fig.renderers.remove(glyph)
-            print("renive")
+        
+        # for note in self.notes:
+        #     self.fig.renderers.remove(note)
+        #     print("renive!!!!!  ")
+        
+       callback =  CustomJS(args=dict(plot=self.fig), code="""
+            var to_remove = [];
+            for (var i = 0; i < plot.renderers.length; i++) {
+                var glyph = plot.renderers[i];
+                if (glyph.name === "circleNote") {
+                    to_remove.push(glyph);
+                }
+            }
+            for (var i = 0; i < to_remove.length; i++) {
+                plot.renderers.splice(plot.renderers.indexOf(to_remove[i]), 1);
+            }
+        """)
+
 
     def updateFretboard(self, notes):
+        
         self.clearFretboard()
         self.addNotesAllString(notes)
 
@@ -328,13 +349,14 @@ class SeeFretboard():
         
 
         if(self.hv=="h"):
-            circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+            circleNote = self.fig.circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
                      radius=self.note.noteRadius,
                      fill_color=self.note.noteFaceColor,
                      line_width=self.note.noteLineWidth,
                      fill_alpha=self.note.noteFill,
-                     line_color=self.note.noteEdgeColor
+                     line_color=self.note.noteEdgeColor,
+                     name="circleNote"
                      )
         else:
             circleNote = self.fig.circle(x=(string-1)*self.distanceBetweenStrings, 
@@ -344,8 +366,10 @@ class SeeFretboard():
                      line_width=self.note.noteLineWidth,
                      fill_alpha=self.note.noteFill,
                      line_color=self.note.noteEdgeColor,
+                    name="circleNote"
                      )
-        self.notes.append(self.fig.add_glyph(circleNote))
+
+        self.notes.append(circleNote)
     
     def removeNote(self):
         pass    
