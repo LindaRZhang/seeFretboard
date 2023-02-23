@@ -83,23 +83,21 @@ class SeeFretboard():
     @without_document_lock
     def updatingFretboardAnimation(self):
         if (self.video.currentFrame >= self.video.endFrame):
-            print("here")
             self.playButton.label = "Play"
             self.playing = False
             self.video.currentFrame = 0
-            print(list(self.video.frames.values()))
-            print(list(self.video.frames.values())[0])
+            
             self.updateFretboard(str(list(self.video.frames.values())[0]))
             return
         #if in the frame there is a chord draw chord
         if(self.video.getCurrentFrame() in self.video.frames.keys()):
             currentChord = self.video.frames[self.video.currentFrame]
-            print("curChord")
-            print(currentChord)
             self.updateFretboard(currentChord)
         newCurrentFrame = self.video.getCurrentFrame()+self.video.getFrameStep()
         self.video.setCurrentFrame(newCurrentFrame)
-        print(self.video.getCurrentFrame())
+
+        self.timeslider.update(start=self.video.startFrame, end=self.video.endFrame, value=self.video.getCurrentFrame(), step=self.video.frameStep)
+
 
     def setVideo(self, video):
         self.video = video
@@ -296,7 +294,6 @@ class SeeFretboard():
         for note in notesCopy:
             self.fig.renderers.remove(note)
             self.notes.remove(note)
-            print("remove!!!!!  ")
 
     def updateFretboard(self, notes):
         
