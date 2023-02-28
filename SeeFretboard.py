@@ -332,11 +332,16 @@ class SeeFretboard():
     
     def addNote(self, string, fret):
         print(fret)
-        if(fret != 0 and fret != "x"):
+        textX = ""
+        circleNote = ""
+        
+        if(fret != "0" and fret != "x"):
             fret = int(fret)-self.fretFrom+1
 
         if(self.hv=="h"):
             if(fret == "0"):
+               print("this is 0")
+               print(fret)
                fret = int(fret)
                circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
@@ -347,10 +352,11 @@ class SeeFretboard():
                      name="circleNote"
                      )
             elif(fret == "x"):
-                print("x")
+                print("x??")
                 fret = 0
-                circleNote = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
-                            y=(string-1)*self.distanceBetweenStrings, text='fwefx', text_color="#000000")
+                textX = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
+                            y=(string-1)*self.distanceBetweenStrings, text='X', text_color="#000000",name="circleNote")
+                self.fig.add_layout(textX)
             else:
                 fret = int(fret)
                 circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
@@ -363,6 +369,8 @@ class SeeFretboard():
                      )
         else:
             if(fret == 0):
+                print("this is noteee")
+                print(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
                                 y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
                         radius=self.note.noteRadius/2,
@@ -380,8 +388,8 @@ class SeeFretboard():
                         line_color=self.note.noteEdgeColor,
                         name="circleNote"
                         )
-
-        self.notes.append(self.fig.add_glyph(circleNote))
+        if(textX == ""):
+            self.notes.append(self.fig.add_glyph(circleNote))
     
     def removeNote(self):
         pass    
