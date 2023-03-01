@@ -1,5 +1,6 @@
 from bokeh.plotting import figure, show
 from bokeh.models import Text, Circle,Label, Button,CustomJS, Slider
+from bokeh.models.widgets import TextInput
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
 from bokeh.io import export_png, export_svg, curdoc
@@ -55,11 +56,18 @@ class SeeFretboard():
         self.pathName = os.path.expanduser("default")
 
         #buttons
-        self.tuningLabelbutton = Button(label="Toggle Tuning",button_type="success")
-        self.fretLabelbutton = Button(label="Toggle Fretboard Number",button_type="success")
+        self.tuningLabelButton = Button(label="Toggle Tuning",button_type="success")
+        self.fretLabelButton = Button(label="Toggle Fretboard Number",button_type="success")
         self.fretBoardDirectionButton = Button(label="Toggle Fretboard Direction",button_type="success")
-        self.toggleButtons = row(self.fretBoardDirectionButton, self.tuningLabelbutton,self.fretLabelbutton)
-        
+        self.toggleButtons = row(self.fretBoardDirectionButton, self.tuningLabelButton,self.fretLabelButton)
+        self.inputChordInput = TextInput(value="X,0,2,2,0,0", title="Enter Notes Fret:")
+        self.inputChordButton = Button(label="ENTER ",button_type="success")
+        self.clearFretboardButton = Button(label="Clear Fretboard ",button_type="success")
+        self.notesOptions =row(self.inputChordInput,self.inputChordButton,self.clearFretboardButton)
+
+        self.inputChordButton.on_click(self.inputChordButtonClicked)
+        self.clearFretboardButton.on_click(self.clearFretboard) 
+
         #video parameter
         self.video = Video(0,10,0,0.1)
         self.videoFrames = self.video.frames
@@ -70,6 +78,9 @@ class SeeFretboard():
         self.playButton = Button(label="Play")
         self.playButton.on_click(self.playButtonClicked)
         self.playing = False
+
+    def inputChordButtonClicked(self):
+        self.updateFretboard(self.inputChordInput.value)
 
     #video related
     def playButtonClicked(self):
@@ -124,7 +135,7 @@ class SeeFretboard():
         string_label.visible = self.showTuning
         self.fig.add_layout(string_label)
         
-        self.tuningLabelbutton.js_on_event(ButtonClick, CustomJS(args=dict(stringLabel=string_label),code="""stringLabel.visible = !stringLabel.visible"""))
+        self.tuningLabelButton.js_on_event(ButtonClick, CustomJS(args=dict(stringLabel=string_label),code="""stringLabel.visible = !stringLabel.visible"""))
 
     def drawFretLabel(self, distanceBetweenFrets,j):
         if(self.hv == "h"):
@@ -135,7 +146,7 @@ class SeeFretboard():
         fret_label.visible = self.showFretboardNumber
         self.fig.add_layout(fret_label)
         
-        self.fretLabelbutton.js_on_event(ButtonClick, CustomJS(args=dict(fretLabel=fret_label),code="""fretLabel.visible = !fretLabel.visible"""))
+        self.fretLabelButton.js_on_event(ButtonClick, CustomJS(args=dict(fretLabel=fret_label),code="""fretLabel.visible = !fretLabel.visible"""))
 
     def drawToggleFretboardDirection(self):
         pass
@@ -289,7 +300,7 @@ class SeeFretboard():
         #                 line_color=self.note.noteEdgeColor)
 
     def showFretboard(self):
-        layoutF = layout(self.fig,self.timeslider, self.playButton, self.toggleButtons)
+        layoutF = layout(self.fig,self.timeslider, self.playButton, self.toggleButtons, self.notesOptions)
         curdoc().add_root(layoutF)
         #show(layoutF)
 
@@ -302,9 +313,14 @@ class SeeFretboard():
         for note in notesCopy:
             self.fig.renderers.remove(note)
             self.notes.remove(note)
+        
+        for r in self.fig.renderers:
+            if isinstance(r, Label) and r.name == "xNote":
+                self.fig.remove(r)
 
     def updateFretboard(self, notes):
-        
+        print("fewiyfgewiyg")
+        print(notes)
         self.clearFretboard()
         self.addNotesAllString(notes)
 
@@ -327,15 +343,18 @@ class SeeFretboard():
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self,notes):
         notes = [(x.strip()) for x in notes.split(',')]
-        for i in range (1,self.stringsLength+1):
-            self.addNote(i,notes[i-1])
-    
+        if(len(notes) == self.stringsLength):
+            for i in range (1,self.stringsLength+1):
+                self.addNote(i,notes[i-1])
+        else:
+            print("ERROR, WRONG FORMAT.")    
+        
     def addNote(self, string, fret):
         print(fret)
         textX = ""
         circleNote = ""
         
-        if(fret != "0" and fret != "x"):
+        if(fret != "0" and fret.lower() != "x"):
             fret = int(fret)-self.fretFrom+1
 
         if(self.hv=="h"):
@@ -351,11 +370,11 @@ class SeeFretboard():
                      fill_alpha=0,
                      name="circleNote"
                      )
-            elif(fret == "x"):
+            elif(fret == "x" or fret == "X"):
                 print("x??")
                 fret = 0
                 textX = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
-                            y=(string-1)*self.distanceBetweenStrings, text='X', text_color="#000000",name="circleNote")
+                            y=(string-1)*self.distanceBetweenStrings, text='X', text_color="#000000",name="xNote")
                 self.fig.add_layout(textX)
             else:
                 fret = int(fret)
@@ -368,9 +387,8 @@ class SeeFretboard():
                      name="circleNote"
                      )
         else:
-            if(fret == 0):
-                print("this is noteee")
-                print(fret)
+            if(fret == "0"):
+                fret = int(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
                                 y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
                         radius=self.note.noteRadius/2,
@@ -379,7 +397,13 @@ class SeeFretboard():
                         fill_alpha=0,
                         name="circleNote"
                         )
+            elif(fret == "x" or fret == "X"):
+                fret = 0
+                textX = Label(x=(string-1)*self.distanceBetweenStrings, 
+                                y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2, text='X', text_color="#000000",name="circleNote")
+                self.fig.add_layout(textX)
             else:
+                fret = int(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
                                 y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
                         radius=self.note.noteRadius/2,
