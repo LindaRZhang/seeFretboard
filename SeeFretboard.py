@@ -8,6 +8,7 @@ from bokeh.layouts import row
 from bokeh.document import without_document_lock
 
 import os
+import time
 
 from Note import Note
 from Video import Video
@@ -69,7 +70,7 @@ class SeeFretboard():
         self.clearFretboardButton.on_click(self.clearFretboard) 
 
         #video parameter
-        self.video = Video(0,10,0,0.1)
+        self.video = Video(0,10,0,0.1,30)
         self.videoFrames = self.video.frames
 
         self.timeslider = Slider(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep, title="Time")
@@ -91,10 +92,12 @@ class SeeFretboard():
             self.playButton.label = "Pause"
             self.playing = True
             while(self.playing != False):
+                print(self.video.frames.keys())
                 self.updatingFretboardAnimation()
     
     @without_document_lock
     def updatingFretboardAnimation(self):
+        print(self.video.getCurrentFrame())
         if (self.video.currentFrame >= self.video.endFrame):
             self.playButton.label = "Play"
             self.playing = False
@@ -102,21 +105,18 @@ class SeeFretboard():
             
             self.updateFretboard(str(list(self.video.frames.values())[0]))
             return
+
         #if in the frame there is a chord draw chord
         if(self.video.getCurrentFrame() in self.video.frames.keys()):
             currentChord = self.video.frames[self.video.currentFrame]
             self.updateFretboard(currentChord)
+
         newCurrentFrame = self.video.getCurrentFrame()+self.video.getFrameStep()
         self.video.setCurrentFrame(newCurrentFrame)
 
-        self.timeslider.update(start=self.video.startFrame, end=self.video.endFrame, value=self.video.getCurrentFrame(), step=self.video.frameStep)
+        self.timeslider.update(start=0, end=3, value=self.video.getCurrentSecond(), step=self.video.frameStep)
 
-    def sliderTimeCallback(self, attr, old, new):
-        self.video.setCurrentFrame(self.timeslider.value)
-        for i in range(self.video.getFramesLength):
-            key1, key2 = list(self.video.getFramesKeys)[i:i+2]
-            if (self.timeslider.value > key1 and self.timeslider.value < key2 ):
-                self.updateFretboard(self.video.getFrame(key1))
+        time.sleep(self.video.framePeriod)
 
     def setVideo(self, video):
         self.video = video
