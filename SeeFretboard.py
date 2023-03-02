@@ -54,7 +54,8 @@ class SeeFretboard():
         self.note = Note()
         self.notes = []
         
-        self.pathName = os.path.expanduser("default")
+        self.pathName = "./Image/"
+        self.imageName = "default"
 
         #buttons
         self.tuningLabelButton = Button(label="Toggle Tuning",button_type="success")
@@ -74,7 +75,7 @@ class SeeFretboard():
         self.videoFrames = self.video.frames
 
         self.timeslider = Slider(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep, title="Time")
-        self.timeslider.on_change('value', self.sliderTimeCallback)
+        #self.timeslider.on_change('value', self.sliderTimeCallback)
         
         self.playButton = Button(label="Play")
         self.playButton.on_click(self.playButtonClicked)
@@ -92,12 +93,10 @@ class SeeFretboard():
             self.playButton.label = "Pause"
             self.playing = True
             while(self.playing != False):
-                print(self.video.frames.keys())
                 self.updatingFretboardAnimation()
     
     @without_document_lock
     def updatingFretboardAnimation(self):
-        print(self.video.getCurrentFrame())
         if (self.video.currentFrame >= self.video.endFrame):
             self.playButton.label = "Play"
             self.playing = False
@@ -118,12 +117,22 @@ class SeeFretboard():
 
         time.sleep(self.video.framePeriod)
 
+    # def sliderTimeCallback(self, attr, old, new):
+    #     self.video.setCurrentFrame(self.timeslider.value)
+    #     for i in range(self.video.getFramesLength):
+    #         key1, key2 = list(self.video.getFramesKeys)[i:i+2]
+    #         if (self.timeslider.value > key1 and self.timeslider.value < key2 ):
+    #             self.updateFretboard(self.video.getFrame(key1))
+
     def setVideo(self, video):
         self.video = video
         self.timeslider.update(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep)
     
     def getVideo(self):
         return self.video
+    
+    def saveImagesForVideo(self):
+        self.video.get
         
     #fretboard relate
     def drawTuningLabel(self, distanceStrings,i):
@@ -319,8 +328,6 @@ class SeeFretboard():
                 self.fig.remove(r)
 
     def updateFretboard(self, notes):
-        print("fewiyfgewiyg")
-        print(notes)
         self.clearFretboard()
         self.addNotesAllString(notes)
 
@@ -332,11 +339,17 @@ class SeeFretboard():
 
     #saveAsImg
     def saveAs(self,meta):
-        if(meta=="png"):
-            export_png(self.fig, filename=self.pathName+"."+meta)
-        elif(meta=="svg"):
-            export_svg(self.fig, filename=self.pathName+"."+meta)
+        if(meta.lower()=="png"):
+            export_png(self.fig, filename=self.pathName + self.getImageName() +"."+meta)
+        elif(meta.lower()=="svg"):
+            export_svg(self.fig, filename=self.pathName + self.getImageName() +"."+meta)
     
+    def getImageName(self):
+        return self.imageName
+    
+    def setImageName(self,name):
+        self.imageName = name
+
     def setNoteObject(self,note):
         self.note = note
 
@@ -350,7 +363,6 @@ class SeeFretboard():
             print("ERROR, WRONG FORMAT.")    
         
     def addNote(self, string, fret):
-        print(fret)
         textX = ""
         circleNote = ""
         
@@ -359,8 +371,6 @@ class SeeFretboard():
 
         if(self.hv=="h"):
             if(fret == "0"):
-               print("this is 0")
-               print(fret)
                fret = int(fret)
                circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings,
@@ -371,7 +381,6 @@ class SeeFretboard():
                      name="circleNote"
                      )
             elif(fret == "x" or fret == "X"):
-                print("x??")
                 fret = 0
                 textX = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings, text='X', text_color="#000000",name="xNote")
