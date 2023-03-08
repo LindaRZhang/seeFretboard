@@ -1,5 +1,5 @@
 from bokeh.plotting import figure, show
-from bokeh.models import Text, Circle,Label, Button,CustomJS, Slider
+from bokeh.models import Text, Circle,Label, Button,CustomJS, Slider, Range1d
 from bokeh.models.widgets import TextInput
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
@@ -26,10 +26,10 @@ class SeeFretboard():
         self.hv = hv
 
         self.tuning = ['E','A','D','G','B','E']
-        self.stringsLength = strings
+        self.numOfStrings = strings
         self.fretFrom = fretFrom
         self.fretTo = fretsTo
-        self.fretLength = self.fretTo - self.fretFrom
+        self.numOfFrets = self.fretTo - self.fretFrom
         
         self.showTuning = showTuning
         self.showFretboardNumber = True
@@ -43,19 +43,29 @@ class SeeFretboard():
         self.stringsOpactiy=1
 
         self.fretboardMarkerColor = "#DCDCDC"
-        
-        #figure attribute
-        self.fig = figure()
-        if(self.hv == "h"):
-            self.fig.width = 800
-            self.fig.height = 400
-        else:
-            self.fig.width = 400
-            self.fig.height = 800
-
         #note
         self.note = Note()
         self.notes = []
+
+        #figure attribute
+        self.fig = figure()
+        self.figHorXRange = Range1d(-8*self.note.getNoteRadius(), (self.getNumOfFrets()+1.3)*self.distanceBetweenFrets)
+        self.figHorYRange = Range1d(-3*self.note.getNoteRadius(), self.distanceBetweenStrings*self.numOfStrings)
+        self.figVerXRange = Range1d(-3*self.note.getNoteRadius(), self.distanceBetweenStrings*self.numOfStrings)
+        self.figVerYRange = Range1d(-8*self.note.getNoteRadius(), (self.getNumOfFrets()+1.3)*self.distanceBetweenFrets)
+        
+        if(self.hv == "h"):
+            self.fig.width = 800
+            self.fig.height = 400
+            self.fig.x_range = self.figHorXRange
+            self.fig.y_range = self.figHorYRange
+
+        else:
+            self.fig.width = 400
+            self.fig.height = 800
+            self.fig.x_range = self.figVerXRange
+            self.fig.y_range = self.figVerYRange
+
         
         self.imagePathName = os.path.join(os.getcwd(), 'Image')
         print(self.imagePathName)
@@ -166,9 +176,6 @@ class SeeFretboard():
 
         videoWriter = cv2.VideoWriter(os.path.join(self.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension()), fourcc, self.video.getFrameRate(), frameSize)
 
-        print("weffwehuhfwiuefh")
-        print(os.path.join(self.getVideoPathName(),self.video.getName(),self.video.getFileExtension()))
-
         for image in images:
             frame = cv2.imread(os.path.join(self.getImagePathName(),image))
             videoWriter.write(frame)
@@ -218,7 +225,7 @@ class SeeFretboard():
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (horizontal line)
-        for i in range(0,self.stringsLength-1):
+        for i in range(0,self.numOfStrings-1):
             x=[0,self.distanceBetweenFrets*(self.fretTo-self.fretFrom+1)]
             y=[distanceStrings,distanceStrings]
 
@@ -230,7 +237,7 @@ class SeeFretboard():
         distanceBetweenFrets = 0
         #draw frets (vertical line)
         for j in range(self.fretFrom-1,self.fretTo+1):
-            fx=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
+            fx=[0,self.distanceBetweenStrings*(self.numOfStrings-1)]
             fy=[distanceBetweenFrets,distanceBetweenFrets]
 
             if(j!=self.fretTo):
@@ -256,7 +263,7 @@ class SeeFretboard():
 
         distanceStrings = self.distanceBetweenStrings
         #draw strings (vertical line)
-        for i in range(0,self.stringsLength-1):
+        for i in range(0,self.numOfStrings-1):
             x=[distanceStrings,distanceStrings]
             y=[self.distanceBetweenFrets*self.fretFrom-self.distanceBetweenFrets,self.distanceBetweenFrets*(self.fretTo)]
 
@@ -266,7 +273,7 @@ class SeeFretboard():
             self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)        
         
         distanceBetweenFrets = self.fretTo*self.distanceBetweenFrets
-        fx=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
+        fx=[0,self.distanceBetweenStrings*(self.numOfStrings-1)]
         fy=[self.fretTo*self.distanceBetweenFrets,self.fretTo*self.distanceBetweenFrets]
         self.fig.line(x=fx, y=fy, line_color=self.fretColor, line_alpha=self.fretOpacity)
             
@@ -274,7 +281,7 @@ class SeeFretboard():
         fretlength = self.fretFrom-1
 
         for j in range(self.fretFrom,self.fretTo+2):
-            fx=[0,self.distanceBetweenStrings*(self.stringsLength-1)]
+            fx=[0,self.distanceBetweenStrings*(self.numOfStrings-1)]
             fy=[distanceBetweenFrets,distanceBetweenFrets]
             
             if(j!=self.fretFrom):
@@ -408,8 +415,8 @@ class SeeFretboard():
     #user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self,notes):
         notes = [(x.strip()) for x in notes.split(',')]
-        if(len(notes) == self.stringsLength):
-            for i in range (1,self.stringsLength+1):
+        if(len(notes) == self.numOfStrings):
+            for i in range (1,self.numOfStrings+1):
                 self.addNote(i,notes[i-1])
         else:
             print("ERROR, WRONG FORMAT.")    
@@ -485,11 +492,11 @@ class SeeFretboard():
     def setTuning(self, tuning):
         self.tuning = tuning
     
-    def getStrings(self):
-        return self.stringsLength
+    def getNumOfStrings(self):
+        return self.numOfStrings
     
-    def setStrings(self, strings):
-        self.stringsLength = strings
+    def setNumOfStrings(self, strings):
+        self.numOfStrings = strings
     
     def getFretFrom(self):
         return self.fretFrom
@@ -503,11 +510,11 @@ class SeeFretboard():
     def setFretTo(self, frets):
         self.fretTo = frets
 
-    def getFretLength(self):
-        return self.fretLength
+    def getNumOfFrets(self):
+        return self.fretTo-self.fretFrom
     
-    def setFretLength(self, l):
-        self.fretTo = l
+    def setNumOfFrets(self, l):
+        self.numOfFrets = l
         
     def getShowTuning(self):
         return self.showTuning
@@ -562,3 +569,27 @@ class SeeFretboard():
     
     def setFigHeight(self, height):
         self.fig.height = height
+
+    def getFigHorXRange(self):
+        return self.figHorXRange
+
+    def setFigHorXRange(self, value):
+        self.figHorXRange = value
+
+    def getFigHorYRange(self):
+        return self.figHorYRange
+
+    def setFigHorYRange(self, value):
+        self.figHorYRange = value
+
+    def getFigVerXRange(self):
+        return self.figVerXRange
+
+    def setFigVerXRange(self, value):
+        self.figVerXRange = value
+
+    def getFigVerYRange(self):
+        return self.figVerYRange
+
+    def setFigVerYRange(self, value):
+        self.figVerYRange = value
