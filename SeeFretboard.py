@@ -164,10 +164,12 @@ class SeeFretboard():
         fourcc = cv2.VideoWriter_fourcc(*self.video.getCodec())
         frameSize = (self.fig.width,self.fig.height)
 
-        videoWriter = cv2.VideoWriter(os.path.join(self.getVideoPathName()+self.video.getName()), fourcc, self.video.getFrameRate(), frameSize)
+        videoWriter = cv2.VideoWriter(os.path.join(self.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension()), fourcc, self.video.getFrameRate(), frameSize)
+
+        print("weffwehuhfwiuefh")
+        print(os.path.join(self.getVideoPathName(),self.video.getName(),self.video.getFileExtension()))
 
         for image in images:
-            print(os.path.join(self.getImagePathName(),image))
             frame = cv2.imread(os.path.join(self.getImagePathName(),image))
             videoWriter.write(frame)
             

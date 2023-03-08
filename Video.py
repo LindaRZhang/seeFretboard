@@ -1,6 +1,6 @@
 class Video():
 
-    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate, name="defaultVid", codec="MPEG"):
+    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate, name="defaultVid", fileExtension = ".avi", codec="PIM1"):
         #format = {{frameNumber:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
         self.frames = {}
 
@@ -17,6 +17,7 @@ class Video():
 
         self.currentAddTabFrames = 0
         self.name = name
+        self.fileExtension = fileExtension
         self.codec = codec
 
     def getCurrentSecond(self):
@@ -69,8 +70,14 @@ class Video():
     def getCodec(self):
         return self.codec
 
-    def seCodec(self, codec):
+    def setCodec(self, codec):
         self.codec = codec
+
+    def getFileExtension(self):
+        return self.fileExtension
+
+    def setFileExtension(self, ext):
+        self.fileExtension = ext
 
     def saveVideo(self):
         pass
@@ -103,4 +110,4 @@ class Video():
         return self.name
     
     def setName(self, name):
-        self.name = rname
+        self.name = name
