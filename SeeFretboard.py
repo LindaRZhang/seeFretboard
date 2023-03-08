@@ -9,10 +9,13 @@ from bokeh.document import without_document_lock
 
 import os
 import time
+import glob
+import re
+
+import cv2
 
 from Note import Note
 from Video import Video
-
 
 
 class SeeFretboard():
@@ -54,7 +57,9 @@ class SeeFretboard():
         self.note = Note()
         self.notes = []
         
-        self.pathName = "./Image/"
+        self.imagePathName = os.path.join(os.getcwd(), 'Image')
+        print(self.imagePathName)
+        self.videoPathName = os.getcwd()
         self.imageName = "default"
 
         #buttons
@@ -62,7 +67,7 @@ class SeeFretboard():
         self.fretLabelButton = Button(label="Toggle Fretboard Number",button_type="success")
         self.fretBoardDirectionButton = Button(label="Toggle Fretboard Direction",button_type="success")
         self.toggleButtons = row(self.fretBoardDirectionButton, self.tuningLabelButton,self.fretLabelButton)
-        self.inputChordInput = TextInput(value="X,0,2,2,0,0", title="Enter Notes Fret:")
+        self.inputChordInput = TextInput(value="X,0,5,5,0,0", title="Enter Notes Fret:")
         self.inputChordButton = Button(label="ENTER ",button_type="success")
         self.clearFretboardButton = Button(label="Clear Fretboard ",button_type="success")
         self.notesOptions =row(self.inputChordInput,self.inputChordButton,self.clearFretboardButton)
@@ -74,7 +79,7 @@ class SeeFretboard():
         self.video = Video(0,10,0,0.1,30)
         self.videoFrames = self.video.frames
 
-        self.timeslider = Slider(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep, title="Time")
+        self.timeslider = Slider(start=self.video.startTime, end=self.video.endTime, value=self.video.currentFrame, step=self.video.frameStep, title="Time")
         #self.timeslider.on_change('value', self.sliderTimeCallback)
         
         self.playButton = Button(label="Play")
@@ -97,7 +102,8 @@ class SeeFretboard():
     
     @without_document_lock
     def updatingFretboardAnimation(self):
-        if (self.video.currentFrame >= self.video.endFrame):
+        
+        if (self.video.currentFrame >= self.video.endTime):
             self.playButton.label = "Play"
             self.playing = False
             self.video.currentFrame = 0
@@ -115,8 +121,6 @@ class SeeFretboard():
 
         self.timeslider.update(start=0, end=3, value=self.video.getCurrentSecond(), step=self.video.frameStep)
 
-        time.sleep(self.video.framePeriod)
-
     # def sliderTimeCallback(self, attr, old, new):
     #     self.video.setCurrentFrame(self.timeslider.value)
     #     for i in range(self.video.getFramesLength):
@@ -126,13 +130,51 @@ class SeeFretboard():
 
     def setVideo(self, video):
         self.video = video
-        self.timeslider.update(start=self.video.startFrame, end=self.video.endFrame, value=self.video.currentFrame, step=self.video.frameStep)
+        self.timeslider.update(start=self.video.getStartTime(), end=self.video.getEndTime(), value=self.video.getCurrentFrame(), step=self.video.getFrameStep())
     
     def getVideo(self):
         return self.video
     
-    def saveImagesForVideo(self):
-        self.video.get
+    def saveAsVideoImages(self):
+        oriImgName = self.imageName
+        print(oriImgName)
+        for k, v in self.video.getFramesItems():
+            self.updateFretboard(v)
+            self.setImageName(str(k)+oriImgName)
+            self.saveAs("png")
+            print("saving"+self.getImageName())
+        print("done")
+
+    def deleteAllImages(self):
+        files = glob.glob(self.imagePathName)
+        for f in files:
+            os.remove(f)
+        print("All Images Delete")
+
+    def saveAsVideoImagesFromCurrentFrame(self):
+        pass
+
+    def saveAsVideoImagesFrom(self,frameFrom,frameTo):
+        pass
+    
+    def saveAsVideo(self):
+        images = os.listdir(self.imagePathName)
+        images = sorted(images, key=lambda s: [int(x) if x.isdigit() else x for x in re.split('(\d+)', s)])
+
+        fourcc = cv2.VideoWriter_fourcc(*self.video.getCodec())
+        frameSize = (self.fig.width,self.fig.height)
+
+        videoWriter = cv2.VideoWriter(os.path.join(self.getVideoPathName()+self.video.getName()), fourcc, self.video.getFrameRate(), frameSize)
+
+        for image in images:
+            print(os.path.join(self.getImagePathName(),image))
+            frame = cv2.imread(os.path.join(self.getImagePathName(),image))
+            videoWriter.write(frame)
+            
+        cv2.destroyAllWindows()
+        videoWriter.release()
+
+        print("video saved at "+self.videoPathName)
         
     #fretboard relate
     def drawTuningLabel(self, distanceStrings,i):
@@ -331,18 +373,26 @@ class SeeFretboard():
         self.clearFretboard()
         self.addNotesAllString(notes)
 
-    def getPathName(self):
-        return self.pathName
+    def getImagePathName(self):
+        return self.imagePathName
 
-    def setPathName(self,path):
-        self.pathName = path
+    def setImagePathName(self,path):
+        self.imagePathName = path
+
+    def getVideoPathName(self):
+        return self.videoPathName
+
+    def setVideoPathName(self,path):
+        self.videoPathName = path
 
     #saveAsImg
     def saveAs(self,meta):
+        fileName = os.path.join(self.imagePathName, self.getImageName() +"."+meta)
         if(meta.lower()=="png"):
-            export_png(self.fig, filename=self.pathName + self.getImageName() +"."+meta)
+            export_png(self.fig, filename=fileName)
+
         elif(meta.lower()=="svg"):
-            export_svg(self.fig, filename=self.pathName + self.getImageName() +"."+meta)
+            export_svg(self.fig, filename=fileName)
     
     def getImageName(self):
         return self.imageName
