@@ -573,23 +573,23 @@ class SeeFretboard():
     def getFigHorXRange(self):
         return self.figHorXRange
 
-    def setFigHorXRange(self, value):
-        self.figHorXRange = value
+    def setFigHorXRange(self, v1,v2):
+        self.figHorXRange = Range1d(v1,v2)
 
     def getFigHorYRange(self):
         return self.figHorYRange
 
-    def setFigHorYRange(self, value):
-        self.figHorYRange = value
+    def setFigHorYRange(self, v1,v2):
+        self.figHorYRange = Range1d(v1,v2)
 
     def getFigVerXRange(self):
         return self.figVerXRange
 
-    def setFigVerXRange(self, value):
-        self.figVerXRange = value
+    def setFigVerXRange(self, v1,v2):
+        self.figVerXRange = Range1d(v1,v2)
 
     def getFigVerYRange(self):
         return self.figVerYRange
 
-    def setFigVerYRange(self, value):
-        self.figVerYRange = value
+    def setFigVerYRange(self, v1,v2):
+        self.figVerYRange = Range1d(v1,v2)
