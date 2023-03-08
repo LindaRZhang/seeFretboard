@@ -1,12 +1,12 @@
 class Video():
 
-    def __init__(self, startFrame, endFrame, currentFrame, frameStep, frameRate):
-        #format = {{time:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
+    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate, name="defaultVid", fileExtension = ".avi", codec="PIM1"):
+        #format = {{frameNumber:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
         self.frames = {}
 
         #all these are digits or the keys
-        self.startFrame=round(startFrame,2)
-        self.endFrame=round(endFrame,2)
+        self.startTime=round(startTime,2)
+        self.endTime=round(endTime,2)
         self.currentFrame = round(currentFrame,2)
 
         self.frameStep=frameStep
@@ -16,6 +16,9 @@ class Video():
         self.framePeriod = 1/self.frameRate
 
         self.currentAddTabFrames = 0
+        self.name = name
+        self.fileExtension = fileExtension
+        self.codec = codec
 
     def getCurrentSecond(self):
         return self.currentFrame/self.frameRate
@@ -39,6 +42,9 @@ class Video():
 
     def getFrames(self):
         return self.frames
+    
+    def getFramesItems(self):
+        return self.frames.items()
 
     def getFramesLength(self):
         return len(self.frames)
@@ -48,21 +54,45 @@ class Video():
     
     def getFramesValues(self):
         return self.frames.values()
+    
+    def getFrameRate(self):
+        return self.frameRate
+    
+    def setFrameRate(self, fr):
+        self.frameRate = fr
+    
+    def getFramePeriod(self):
+        return self.framePeriod
+
+    def setFramePeriod(self, fp):
+        self.framePeriod = fp
+
+    def getCodec(self):
+        return self.codec
+
+    def setCodec(self, codec):
+        self.codec = codec
+
+    def getFileExtension(self):
+        return self.fileExtension
+
+    def setFileExtension(self, ext):
+        self.fileExtension = ext
 
     def saveVideo(self):
         pass
 
-    def getStartFrame(self):
-        return self.startFrame
+    def getStartTime(self):
+        return self.startTime
     
-    def setStartFrame(self, frame):
-        self.startFrame = round(frame,2)
+    def setStartTime(self, frame):
+        self.startTime = round(frame,2)
 
-    def getEndFrame(self):
-        return self.endFrame
+    def getEndTime(self):
+        return self.endTime
     
-    def setEndFrame(self, frame):
-        self.endFrame = round(frame,2)
+    def setEndTime(self, frame):
+        self.endTime = round(frame,2)
 
     def getCurrentFrame(self):
         return self.currentFrame
@@ -75,3 +105,9 @@ class Video():
     
     def setFrameStep(self, step):
         self.frameStep = round(step,2)
+
+    def getName(self):
+        return self.name
+    
+    def setName(self, name):
+        self.name = name
