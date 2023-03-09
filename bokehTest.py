@@ -6,8 +6,8 @@ from Video import Video
 # f= SeeFretboard("h", 6, 5, 12)
 
 
-# f = SeeFretboard("v",6,3,12)
-f = SeeFretboard("v",6,5,9)
+f = SeeFretboard("v",6,3,12)
+# f = SeeFretboard("v",6,5,9)
 
 
 f.addNotesAllString("x,0,5,5,0,0")
