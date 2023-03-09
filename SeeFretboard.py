@@ -272,8 +272,6 @@ class SeeFretboard():
             distanceStrings+=self.distanceBetweenStrings
             self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)        
         
-        self.drawTuningLabel(distanceStrings,i)
-
         distanceBetweenFrets = (self.getNumOfFrets()+1)*self.distanceBetweenFrets
         
         fx=[0,self.distanceBetweenStrings*(self.numOfStrings-1)]
@@ -294,6 +292,8 @@ class SeeFretboard():
             distanceBetweenFrets-=self.distanceBetweenFrets
             self.fig.line(x=fx, y=fy, line_color=self.fretColor, line_alpha=self.fretOpacity)
         
+        self.drawFretLabel(distanceBetweenFrets,fretlength)
+
         self.drawInlay()
 
         self.fig.axis.visible = False
