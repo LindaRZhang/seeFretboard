@@ -3,16 +3,16 @@ from Video import Video
 #f = SeeFretboard(7)
 #f = SeeFretboard()
 #f= SeeFretboard("h", 6, 3, 12)
-# f= SeeFretboard("h", 6, 5, 12)
+f= SeeFretboard("h", 6, 3, 7)
 
 
-f = SeeFretboard("v",6,3,12)
-#f = SeeFretboard("v",6,5,9)
+# f = SeeFretboard("v",6,3,12)
+# f = SeeFretboard("v",6,5,9)
 
 
 f.addNotesAllString("x,0,5,5,0,0")
-# f.drawHorizontalFretboard()
-f.drawVerticalFretboard()
+f.drawHorizontalFretboard()
+# f.drawVerticalFretboard()
 
 
 # v = Video(0,30,0,1,30)

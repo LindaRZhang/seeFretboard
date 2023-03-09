@@ -52,7 +52,7 @@ class SeeFretboard():
         self.figHorXRange = Range1d(-8*self.note.getNoteRadius(), (self.getNumOfFrets()+1.3)*self.distanceBetweenFrets)
         self.figHorYRange = Range1d(-3*self.note.getNoteRadius(), self.distanceBetweenStrings*self.numOfStrings)
         self.figVerXRange = Range1d(-3*self.note.getNoteRadius(), self.distanceBetweenStrings*self.numOfStrings)
-        self.figVerYRange = Range1d(self.getNumOfFrets(), (self.getNumOfFrets())*self.distanceBetweenFrets*1.45)
+        self.figVerYRange = Range1d(-8*self.note.getNoteRadius(), (self.getNumOfFrets()+2)*self.distanceBetweenFrets)
         
         if(self.hv == "h"):
             self.fig.width = 800
@@ -190,7 +190,7 @@ class SeeFretboard():
         if(self.hv == "h"):
             string_label = Label(x=-1, y=distanceStrings-self.distanceBetweenStrings, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
         else:
-            string_label = Label(x=distanceStrings, y=self.distanceBetweenFrets*self.fretTo+1, text=self.tuning[i+1], text_align='center', text_font_size='10pt')
+            string_label = Label(x=distanceStrings, y=self.distanceBetweenFrets*(self.getNumOfFrets()+1), text=self.tuning[i+1], text_align='center', text_font_size='10pt')
 
         string_label.visible = self.showTuning
         self.fig.add_layout(string_label)
@@ -255,7 +255,7 @@ class SeeFretboard():
     
     def drawVerticalFretboard(self):
         x =[0,0]
-        y=[self.distanceBetweenFrets*self.fretFrom-self.distanceBetweenFrets,self.distanceBetweenFrets*(self.fretTo)]
+        y=[0,self.distanceBetweenFrets*(self.getNumOfFrets()+1)]
         
         self.drawTuningLabel(0,-1)            
 
@@ -265,22 +265,25 @@ class SeeFretboard():
         #draw strings (vertical line)
         for i in range(0,self.numOfStrings-1):
             x=[distanceStrings,distanceStrings]
-            y=[self.distanceBetweenFrets*self.fretFrom-self.distanceBetweenFrets,self.distanceBetweenFrets*(self.fretTo)]
+            y=[0,self.distanceBetweenFrets*(self.getNumOfFrets()+1)]
 
             self.drawTuningLabel(distanceStrings,i)
 
             distanceStrings+=self.distanceBetweenStrings
             self.fig.line(x=x, y=y, line_color=self.stringsColor, line_alpha=self.stringsOpactiy)        
         
-        distanceBetweenFrets = self.fretTo*self.distanceBetweenFrets
+        self.drawTuningLabel(distanceStrings,i)
+
+        distanceBetweenFrets = (self.getNumOfFrets()+1)*self.distanceBetweenFrets
+        
         fx=[0,self.distanceBetweenStrings*(self.numOfStrings-1)]
-        fy=[self.fretTo*self.distanceBetweenFrets,self.fretTo*self.distanceBetweenFrets]
+        fy=[0,0]
         self.fig.line(x=fx, y=fy, line_color=self.fretColor, line_alpha=self.fretOpacity)
             
         #draw frets (horizontal line)
         fretlength = self.fretFrom-1
 
-        for j in range(self.fretFrom,self.fretTo+2):
+        for j in range(self.fretFrom,self.fretTo+1):
             fx=[0,self.distanceBetweenStrings*(self.numOfStrings-1)]
             fy=[distanceBetweenFrets,distanceBetweenFrets]
             
@@ -349,23 +352,23 @@ class SeeFretboard():
                         fill_alpha=self.note.noteFill,
                         line_color=self.note.noteEdgeColor)
             
-        else:
-            if(self.fretFrom <=3<= self.fretTo):
-                markerFret3 = self.fig.circle(x=(self.numOfStrings-1)*self.distanceBetweenStrings/2,
-                            y=self.distanceBetweenFrets*(self.getNumOfFrets()+2.5),
-                            radius=self.note.noteRadius/2,
-                            fill_color=self.fretboardMarkerColor,
-                            line_width=self.note.noteLineWidth,
-                            fill_alpha=self.note.noteFill,
-                            line_color=self.note.noteEdgeColor)
-            if(self.fretFrom <=5<= self.fretTo):
-                markerFret5 = self.fig.circle(x=(self.numOfStrings-1)*self.distanceBetweenStrings/2,
-                            y=self.distanceBetweenFrets*(self.getNumOfFrets()),
-                            radius=self.note.noteRadius/2,
-                            fill_color=self.fretboardMarkerColor,
-                            line_width=self.note.noteLineWidth,
-                            fill_alpha=self.note.noteFill,
-                            line_color=self.note.noteEdgeColor)
+        # else:
+        #     if(self.fretFrom <=3<= self.fretTo):
+        #         markerFret3 = self.fig.circle(x=(self.numOfStrings-1)*self.distanceBetweenStrings/2,
+        #                     y=self.distanceBetweenFrets*(self.getNumOfFrets()+2.5),
+        #                     radius=self.note.noteRadius/2,
+        #                     fill_color=self.fretboardMarkerColor,
+        #                     line_width=self.note.noteLineWidth,
+        #                     fill_alpha=self.note.noteFill,
+        #                     line_color=self.note.noteEdgeColor)
+        #     if(self.fretFrom <=5<= self.fretTo):
+        #         markerFret5 = self.fig.circle(x=(self.numOfStrings-1)*self.distanceBetweenStrings/2,
+        #                     y=self.distanceBetweenFrets*(self.getNumOfFrets()),
+        #                     radius=self.note.noteRadius/2,
+        #                     fill_color=self.fretboardMarkerColor,
+        #                     line_width=self.note.noteLineWidth,
+        #                     fill_alpha=self.note.noteFill,
+        #                     line_color=self.note.noteEdgeColor)
             # if(self.fretFrom <=7<= self.fretTo):
             #     markerFret7 = self.fig.circle(x=(self.numOfStrings-1)*self.distanceBetweenStrings/2,
             #                 y=self.distanceBetweenFrets*(self.getNumOfFrets()-6.5),
@@ -483,7 +486,7 @@ class SeeFretboard():
             if(fret == "0"):
                 fret = int(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
-                                y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
+                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.getDistanceBetweenFrets()/4,
                         radius=self.note.noteRadius/2,
                         line_width=self.note.noteLineWidth,
                         line_color=self.note.noteEdgeColor,
@@ -493,12 +496,12 @@ class SeeFretboard():
             elif(fret == "x" or fret == "X"):
                 fret = 0
                 textX = Label(x=(string-1)*self.distanceBetweenStrings, 
-                                y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2, text='X', text_color="#000000",name="circleNote")
+                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.getDistanceBetweenFrets()/4, text='X', text_color="#000000",name="circleNote")
                 self.fig.add_layout(textX)
             else:
                 fret = int(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
-                                y=self.distanceBetweenFrets*self.fretTo - (fret-1)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
+                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+2) - (fret)*self.distanceBetweenFrets - self.distanceBetweenFrets/2,
                         radius=self.note.noteRadius/2,
                         fill_color=self.note.noteFaceColor,
                         line_width=self.note.noteLineWidth,
