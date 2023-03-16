@@ -196,25 +196,13 @@ class SeeFretboard():
         print("video saved at "+self.video.getVideoPathName())
     
     def saveAsVideoWithAudio(self):
-        # self.saveAsVideo()
+        self.saveAsVideo()
 
         videoPath = ffmpeg.input(os.path.join(self.video.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension()))
         audioPath = ffmpeg.input(self.video.getAudioPathName())
     
-        # #sampling rate
-        # video = mp.VideoFileClip(videoPath)
-        # audio = mp.AudioFileClip(audioPath)
-
-        # if(audio.duration > video.duration):
-        #     audio = audio.set_duration(video.duration)
-        # else:
-        #     video = video.set_duration(audio.duration)
-        
-        # combine = video.set_audio(audio)
-
-        # combine.write_videofile("output.mp4")
         ffmpeg.concat(videoPath, audioPath, v=1, a=1).output("test.mp4").run(overwrite_output=True)
-        print("done")
+        print("video save with audio done")
 
     #fretboard relate
     def drawTuningLabel(self, distanceStrings,i):
