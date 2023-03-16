@@ -155,6 +155,16 @@ class SeeFretboard():
             print("saving"+self.getImageName())
         print("done")
 
+    #for guitarset n other data where num of second is not defined
+    def saveAsVideoImagesNoSeconds(self):
+        oriImgName = self.imageName
+        for i in range(len(self.video.getFrames())):
+            self.updateFretboard(self.video.getFrames()[i])
+            self.setImageName(str(i)+oriImgName)
+            self.saveAs("png")
+            print("saving"+self.getImageName())
+        print("done")
+
     def deleteAllImages(self):
         files = glob.glob(self.imagePathName)
         for f in files:
@@ -502,7 +512,7 @@ class SeeFretboard():
             if(fret == "0"):
                 fret = int(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
-                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.getDistanceBetweenFrets()/4,
+                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.note.getNoteRadius()*4,
                         radius=self.note.noteRadius/2,
                         line_width=self.note.noteLineWidth,
                         line_color=self.note.noteEdgeColor,
@@ -511,9 +521,17 @@ class SeeFretboard():
                         )
             elif(fret == "x" or fret == "X"):
                 fret = 0
-                textX = Label(x=(string-1)*self.distanceBetweenStrings, 
-                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.getDistanceBetweenFrets()/4, text='X', text_color="#000000",name="circleNote")
-                self.fig.add_layout(textX)
+                circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
+                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.note.getNoteRadius()*4,
+                        radius=self.note.noteRadius/2,
+                        line_width=self.note.noteLineWidth,
+                        line_color=self.note.noteEdgeColor,
+                        fill_alpha=0,
+                        name="circleNote"
+                        )
+                textX = Text(x=(string-1)*self.distanceBetweenStrings, 
+                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.note.getNoteRadius()*4, text='X', text_color="#000000",name="circleNote")
+                self.fig.add_glyph(circleNote,textX)
             else:
                 fret = int(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 

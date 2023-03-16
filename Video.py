@@ -1,6 +1,6 @@
 class Video():
 
-    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate, name="defaultVid", fileExtension = ".avi", codec="PIM1"):
+    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate, name="defaultVid", fileExtension = "mpeg", codec="PIM1"):
         #format = {{frameNumber:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
         self.frames = {}
 
@@ -42,6 +42,9 @@ class Video():
 
     def getFrames(self):
         return self.frames
+    
+    def setFrames(self, frames):
+        self.frames = frames
     
     def getFramesItems(self):
         return self.frames.items()
