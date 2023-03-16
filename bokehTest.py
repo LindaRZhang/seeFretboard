@@ -33,7 +33,7 @@ f.setVideo(v)
 
 # f.deleteAllImages()
 # f.saveAsVideoImagesNoSeconds()
-f.saveAsVideo()
+f.saveAsVideoWithAudio()
 
 f.showFretboard()
 

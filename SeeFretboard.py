@@ -6,6 +6,7 @@ from bokeh.events import ButtonClick
 from bokeh.io import export_png, export_svg, curdoc
 from bokeh.layouts import row
 from bokeh.document import without_document_lock
+import moviepy.editor as mp
 
 import os
 import time
@@ -21,7 +22,7 @@ from Video import Video
 class SeeFretboard():
     
     #default values
-    def __init__(self, hv="h", strings=6, fretFrom=0, fretsTo=12, showTuning=True):
+    def __init__(self, hv="h", strings=6, fretFrom=1, fretsTo=12, showTuning=True):
         #horizontal or vertical fretboard
         self.hv = hv
 
@@ -69,7 +70,11 @@ class SeeFretboard():
         
         self.imagePathName = os.path.join(os.getcwd(), 'Image')
         print(self.imagePathName)
+
+        #move these to video.py
         self.videoPathName = os.getcwd()
+        self.AudioPathName = os.path.join(os.getcwd(), '00_BN1-129-Eb_comp_hex.wav')
+
         self.imageName = "default"
 
         #buttons
@@ -194,7 +199,22 @@ class SeeFretboard():
         videoWriter.release()
 
         print("video saved at "+self.videoPathName)
-        
+    
+    def saveAsVideoWithAudio(self):
+        self.saveAsVideo()
+        videoPath = os.path.join(self.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension())
+        audioPath = self.AudioPathName
+        print(videoPath)
+        print(audioPath)
+
+        clip = mp.VideoFileClip(videoPath)
+
+        audio = mp.AudioFileClip(audioPath)
+
+        combine = clip.set_audio(audio)
+
+        combine.write_videofile("output.mp4")
+
     #fretboard relate
     def drawTuningLabel(self, distanceStrings,i):
         if(self.hv == "h"):
