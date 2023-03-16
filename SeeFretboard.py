@@ -9,7 +9,6 @@ from bokeh.document import without_document_lock
 import moviepy.editor as mp
 
 import os
-import time
 import glob
 import re
 
@@ -69,11 +68,6 @@ class SeeFretboard():
 
         
         self.imagePathName = os.path.join(os.getcwd(), 'Image')
-        print(self.imagePathName)
-
-        #move these to video.py
-        self.videoPathName = os.getcwd()
-        self.AudioPathName = os.path.join(os.getcwd(), '00_BN1-129-Eb_comp_hex.wav')
 
         self.imageName = "default"
 
@@ -189,7 +183,7 @@ class SeeFretboard():
         fourcc = cv2.VideoWriter_fourcc(*self.video.getCodec())
         frameSize = (self.fig.width,self.fig.height)
 
-        videoWriter = cv2.VideoWriter(os.path.join(self.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension()), fourcc, self.video.getFrameRate(), frameSize)
+        videoWriter = cv2.VideoWriter(os.path.join(self.video.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension()), fourcc, self.video.getFrameRate(), frameSize)
 
         for image in images:
             frame = cv2.imread(os.path.join(self.getImagePathName(),image))
@@ -198,20 +192,26 @@ class SeeFretboard():
         cv2.destroyAllWindows()
         videoWriter.release()
 
-        print("video saved at "+self.videoPathName)
+        print("video saved at "+self.video.getVideoPathName())
     
     def saveAsVideoWithAudio(self):
-        self.saveAsVideo()
-        videoPath = os.path.join(self.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension())
-        audioPath = self.AudioPathName
+        #self.saveAsVideo()
+        videoPath = os.path.join(self.video.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension())
+        audioPath = self.video.getAudioPathName()
         print(videoPath)
         print(audioPath)
-
-        clip = mp.VideoFileClip(videoPath)
-
+        print("weifuhweifewhiu")
+        video = mp.VideoFileClip(videoPath)
         audio = mp.AudioFileClip(audioPath)
-
-        combine = clip.set_audio(audio)
+        print(audio.duration)
+        print(video.duration)
+        if(audio.duration > video.duration):
+            audio = audio.set_duration(video.duration)
+        else:
+            video = video.set_duration(audio.duration)
+        print(audio.duration)
+        print(video.duration)
+        combine = video.set_audio(audio)
 
         combine.write_videofile("output.mp4")
 
@@ -461,12 +461,6 @@ class SeeFretboard():
 
     def setImagePathName(self,path):
         self.imagePathName = path
-
-    def getVideoPathName(self):
-        return self.videoPathName
-
-    def setVideoPathName(self,path):
-        self.videoPathName = path
 
     #saveAsImg
     def saveAs(self,meta):

@@ -1,6 +1,8 @@
+import os
+
 class Video():
 
-    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate, name="defaultVid", fileExtension = "mp4", codec="X264"):
+    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate, name="defaultVid", fileExtension = "mp4", codec="mp4v"):
         #format = {{frameNumber:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
         self.frames = {}
 
@@ -19,6 +21,22 @@ class Video():
         self.name = name
         self.fileExtension = fileExtension
         self.codec = codec
+
+        #paths
+        self.videoPathName = os.getcwd()
+        self.audioPathName = os.path.join(os.getcwd(), '00_BN1-129-Eb_comp_hex.wav')
+
+    def getVideoPathName(self):
+        return self.videoPathName
+
+    def setVideoPathName(self,path):
+        self.videoPathName = path
+
+    def getAudioPathName(self):
+        return self.audioPathName
+
+    def setAudioPathName(self,path):
+        self.audioPathName = path
 
     def getCurrentSecond(self):
         return self.currentFrame/self.frameRate
