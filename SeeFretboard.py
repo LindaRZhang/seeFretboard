@@ -12,6 +12,7 @@ import os
 import glob
 import re
 
+import ffmpeg
 import cv2
 
 from Note import Note
@@ -195,25 +196,25 @@ class SeeFretboard():
         print("video saved at "+self.video.getVideoPathName())
     
     def saveAsVideoWithAudio(self):
-        #self.saveAsVideo()
-        videoPath = os.path.join(self.video.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension())
-        audioPath = self.video.getAudioPathName()
-        print(videoPath)
-        print(audioPath)
-        print("weifuhweifewhiu")
-        video = mp.VideoFileClip(videoPath)
-        audio = mp.AudioFileClip(audioPath)
-        print(audio.duration)
-        print(video.duration)
-        if(audio.duration > video.duration):
-            audio = audio.set_duration(video.duration)
-        else:
-            video = video.set_duration(audio.duration)
-        print(audio.duration)
-        print(video.duration)
-        combine = video.set_audio(audio)
+        # self.saveAsVideo()
 
-        combine.write_videofile("output.mp4")
+        videoPath = ffmpeg.input(os.path.join(self.video.getVideoPathName(),self.video.getName()+"."+self.video.getFileExtension()))
+        audioPath = ffmpeg.input(self.video.getAudioPathName())
+    
+        # #sampling rate
+        # video = mp.VideoFileClip(videoPath)
+        # audio = mp.AudioFileClip(audioPath)
+
+        # if(audio.duration > video.duration):
+        #     audio = audio.set_duration(video.duration)
+        # else:
+        #     video = video.set_duration(audio.duration)
+        
+        # combine = video.set_audio(audio)
+
+        # combine.write_videofile("output.mp4")
+        ffmpeg.concat(videoPath, audioPath, v=1, a=1).output("test.mp4").run(overwrite_output=True)
+        print("done")
 
     #fretboard relate
     def drawTuningLabel(self, distanceStrings,i):
