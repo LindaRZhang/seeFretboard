@@ -47,6 +47,7 @@ class SeeFretboard():
         #note
         self.note = Note()
         self.notes = []
+        self.xNotes = []
 
         #figure attribute
         self.fig = figure()
@@ -77,7 +78,7 @@ class SeeFretboard():
         self.fretLabelButton = Button(label="Toggle Fretboard Number",button_type="success")
         self.fretBoardDirectionButton = Button(label="Toggle Fretboard Direction",button_type="success")
         self.toggleButtons = row(self.fretBoardDirectionButton, self.tuningLabelButton,self.fretLabelButton)
-        self.inputChordInput = TextInput(value="X,0,5,5,0,0", title="Enter Notes Fret:")
+        self.inputChordInput = TextInput(value="-1,0,5,5,0,0", title="Enter Notes Fret:")
         self.inputChordButton = Button(label="ENTER ",button_type="success")
         self.clearFretboardButton = Button(label="Clear Fretboard ",button_type="success")
         self.notesOptions =row(self.inputChordInput,self.inputChordButton,self.clearFretboardButton)
@@ -432,14 +433,13 @@ class SeeFretboard():
     
     def clearFretboard(self):        
         notesCopy = list(self.notes)
-        
+
         for note in notesCopy:
             self.fig.renderers.remove(note)
             self.notes.remove(note)
         
-        for r in self.fig.renderers:
-            if isinstance(r, Label) and r.name == "xNote":
-                self.fig.remove(r)
+        #couldnt find way to remove x
+        
 
     def updateFretboard(self, notes):
         self.clearFretboard()
@@ -477,12 +477,13 @@ class SeeFretboard():
                 self.addNote(i,notes[i-1])
         else:
             print("ERROR, WRONG FORMAT.")    
-        
+    
+    #-1 = x
     def addNote(self, string, fret):
         textX = ""
         circleNote = ""
         
-        if(fret != "0" and fret.lower() != "x"):
+        if(fret != "0" and fret != "-1"):
             fret = int(fret)-self.fretFrom+1
 
         if(self.hv=="h"):
@@ -496,7 +497,7 @@ class SeeFretboard():
                      fill_alpha=0,
                      name="circleNote"
                      )
-            elif(fret == "x" or fret == "X"):
+            elif(fret == "-1"):
                 fret = 0
                 textX = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2, 
                             y=(string-1)*self.distanceBetweenStrings, text='X', text_color="#000000",name="xNote")
@@ -522,19 +523,12 @@ class SeeFretboard():
                         fill_alpha=0,
                         name="circleNote"
                         )
-            elif(fret == "x" or fret == "X"):
+            elif(fret == "-1"):
                 fret = 0
-                circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 
-                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.note.getNoteRadius()*4,
-                        radius=self.note.noteRadius/2,
-                        line_width=self.note.noteLineWidth,
-                        line_color=self.note.noteEdgeColor,
-                        fill_alpha=0,
-                        name="circleNote"
-                        )
-                textX = Text(x=(string-1)*self.distanceBetweenStrings, 
-                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.note.getNoteRadius()*4, text='X', text_color="#000000",name="circleNote")
-                self.fig.add_glyph(circleNote,textX)
+                textX = Label(x=(string-1)*self.distanceBetweenStrings, 
+                                y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.note.getNoteRadius()*4, text='X', text_color="black", name="xNote")
+                self.fig.add_layout(textX)
+
             else:
                 fret = int(fret)
                 circleNote = Circle(x=(string-1)*self.distanceBetweenStrings, 

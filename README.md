@@ -27,3 +27,5 @@ And ran executable in /opt/homebrew/Caskroom/chromedriver/110.0.5481.77
 
 <br />
 mac sometime permission issue: chmod 777 seeFretboard
+
+conda list shows dependiences

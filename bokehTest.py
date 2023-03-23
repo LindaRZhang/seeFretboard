@@ -10,7 +10,7 @@ f = SeeFretboard("v",6,1,12)
 # f = SeeFretboard("v",6,5,9)
 
 
-f.addNotesAllString("x,0,5,5,0,0")
+f.addNotesAllString("-1,0,5,5,0,0")
 # f.drawHorizontalFretboard()
 f.drawVerticalFretboard()
 
@@ -33,7 +33,7 @@ f.setVideo(v)
 
 # f.deleteAllImages()
 # f.saveAsVideoImagesNoSeconds()
-f.saveAsVideoWithAudio()
+# f.saveAsVideoWithAudio()
 
 f.showFretboard()
 
