@@ -1,4 +1,5 @@
 # seeFretboard
+
 To show with curdoc need to run server at directory of bokehTest.py<br />
 bokeh serve --show bokehTest.py<br /><br />
 
@@ -8,6 +9,7 @@ bokeh serve --show bokehTest.py<br /><br />
 *selenium, firefox or chrome driver
 *opencv
 *ffmpeg
+*mirdata only versions >=3.7,<3.11 are supported as of 2023
 
 <br />
 <br />

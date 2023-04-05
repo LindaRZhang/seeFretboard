@@ -47,7 +47,6 @@ class SeeFretboard():
         #note
         self.note = Note()
         self.notes = []
-        self.xNotes = []
 
         #figure attribute
         self.fig = figure()
