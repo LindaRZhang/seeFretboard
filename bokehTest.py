@@ -22,21 +22,21 @@ f.drawVerticalFretboard()
 # v.addTab(1,"0,0,7,7,7,5")
 # f.setVideo(v)
 
-# 00_BN1-129-Eb_comp
-
-# v = Video(0, 30, 0, 1, 30)
-# v.setFrames(guitarSetSongString)
-# f.setVideo(v)
 
 tabS = TabSequence(0)
-tabS.setFrameType("midi")
+tabS.setFrameType("fret")
 tabS.makingFrames()
-frame = tabS.getFrames()
+frame = tabS.getFramesAsString()
+
+v = Video(0, 30, 0, 1, 70)
+v.setFrames(frame)
+# f.setVideo(v)
+
 # print(frame)
 # f.deleteAllImages()
+# f.setVideo(v)
 # f.saveAsVideoImagesNoSeconds()
 # f.saveAsVideoWithAudio()
-f.saveMidi(frame)
 f.showFretboard()
 
 # f.addNote(2, 2)

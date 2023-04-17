@@ -1,12 +1,18 @@
 from bokeh.plotting import figure, show
-from bokeh.models import Text, Circle, Label, Button, CustomJS, Slider, Range1d
+from bokeh.models import Line, Circle, Label, Button, CustomJS, Slider, Range1d, ColumnDataSource
 from bokeh.models.widgets import TextInput
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
 from bokeh.io import export_png, export_svg, curdoc
 from bokeh.layouts import row
 from bokeh.document import without_document_lock
+
 import pretty_midi
+import librosa
+import tempfile
+import sox
+import soundfile as sf
+# fluidsunth n pyfluidsynth
 
 import os
 import glob
@@ -96,7 +102,7 @@ class SeeFretboard():
         self.clearFretboardButton.on_click(self.clearFretboard)
 
         # video parameter
-        self.video = Video(0, 10, 0, 0.1, 30)
+        self.video = Video(0, 10, 0, 0.1, 70)
         self.videoFrames = self.video.frames
 
         self.timeslider = Slider(start=self.video.startTime, end=self.video.endTime,
@@ -171,10 +177,12 @@ class SeeFretboard():
                                          pitch=note, start=time,
                                          end=time + self.video.getFramePeriod()
                                          )
+
                     inst.notes.append(n)
             time += self.video.getFramePeriod()
         midi.instruments.append(inst)
-        midi.write('00_BN1-129-Eb_comp_hex.mid')
+
+        return midi
 
     def saveAsVideoImages(self):
         oriImgName = self.imageName
@@ -185,6 +193,25 @@ class SeeFretboard():
             self.saveAs("png")
             print("saving"+self.getImageName())
         print("done")
+
+    def sonifyJams(self, frames):
+        midi = self.saveMidi(frames)
+        signal_out = midi.fluidsynth(fs=44100.0)
+        path = os.path.join(
+            os.getcwd(), "testmidiAudio.wav")
+        self.saveSmallWav(path, signal_out, 44100)
+        return signal_out, 44100
+
+    def saveSmallWav(self, out_path, y, fs):
+        fhandle, tmp_file = tempfile.mkstemp(suffix='.wav')
+
+        sf.write(tmp_file, y, fs)
+
+        tfm = sox.Transformer()
+        tfm.convert(bitdepth=16)
+        tfm.build(tmp_file, out_path)
+        os.close(fhandle)
+        os.remove(tmp_file)
 
     # for guitarset n other data where num of second is not defined
     def saveAsVideoImagesNoSeconds(self):
@@ -499,8 +526,6 @@ class SeeFretboard():
             self.fig.renderers.remove(note)
             self.notes.remove(note)
 
-        # couldnt find way to remove x
-
     def updateFretboard(self, notes):
         self.clearFretboard()
         self.addNotesAllString(notes)
@@ -541,8 +566,7 @@ class SeeFretboard():
 
     # -1 = x
     def addNote(self, string, fret):
-        textX = ""
-        circleNote = ""
+        note = ""
 
         if (fret != "0" and fret != "-1"):
             fret = int(fret)-self.fretFrom+1
@@ -550,14 +574,14 @@ class SeeFretboard():
         if (self.hv == "h"):
             if (fret == "0"):
                 fret = int(fret)
-                circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                                    y=(string-1)*self.distanceBetweenStrings,
-                                    radius=self.note.noteRadius,
-                                    line_width=self.note.noteLineWidth,
-                                    line_color=self.note.noteEdgeColor,
-                                    fill_alpha=0,
-                                    name="circleNote"
-                                    )
+                note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
+                              y=(string-1)*self.distanceBetweenStrings,
+                              radius=self.note.noteRadius,
+                              fill_color=self.note.noteFaceColor,
+                              line_width=self.note.noteLineWidth,
+                              line_color=self.note.noteEdgeColor,
+                              name="circleNote"
+                              )
             elif (fret == "-1"):
                 fret = 0
                 textX = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
@@ -565,47 +589,65 @@ class SeeFretboard():
                 self.fig.add_layout(textX)
             else:
                 fret = int(fret)
-                circleNote = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                                    y=(string-1)*self.distanceBetweenStrings,
-                                    radius=self.note.noteRadius,
-                                    fill_color=self.note.noteFaceColor,
-                                    line_width=self.note.noteLineWidth,
-                                    line_color=self.note.noteEdgeColor,
-                                    name="circleNote"
-                                    )
+                note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
+                              y=(string-1)*self.distanceBetweenStrings,
+                              radius=self.note.noteRadius,
+                              fill_color=self.note.noteFaceColor,
+                              line_width=self.note.noteLineWidth,
+                              line_color=self.note.noteEdgeColor,
+                              name="circleNote"
+                              )
         else:
             if (fret == "0"):
                 fret = int(fret)
-                circleNote = Circle(x=(string-1)*self.distanceBetweenStrings,
-                                    y=self.distanceBetweenFrets *
-                                    (self.getNumOfFrets()+1) +
-                                    self.note.getNoteRadius()*4,
-                                    radius=self.note.noteRadius/2,
-                                    line_width=self.note.noteLineWidth,
-                                    line_color=self.note.noteEdgeColor,
-                                    fill_alpha=0,
-                                    name="circleNote"
-                                    )
+                note = Circle(x=(string-1)*self.distanceBetweenStrings,
+                              y=self.distanceBetweenFrets *
+                              (self.getNumOfFrets()+1) +
+                              self.note.getNoteRadius()*4,
+                              radius=self.note.noteRadius/2,
+                              fill_color=self.note.noteFaceColor,
+                              line_width=self.note.noteLineWidth,
+                              line_color=self.note.noteEdgeColor,
+                              name="circleNote"
+                              )
             elif (fret == "-1"):
                 fret = 0
-                textX = Label(x=(string-1)*self.distanceBetweenStrings,
-                              y=self.distanceBetweenFrets*(self.getNumOfFrets()+1)+self.note.getNoteRadius()*4, text='X', text_color="black", name="xNote")
-                self.fig.add_layout(textX)
+                xPos = (string-1)*self.distanceBetweenStrings
+                yPos = self.distanceBetweenFrets * \
+                    (self.getNumOfFrets()+1)+self.note.getNoteRadius()*5
+                symbolSize = self.distanceBetweenStrings/8
 
+                xCor = [xPos - symbolSize, xPos + symbolSize]
+                yCor = [yPos - symbolSize*4, yPos + symbolSize]
+                source = ColumnDataSource(data=dict(x=xCor, y=yCor))
+
+                lineOne = Line(x="x",
+                               y="y", line_width=3)
+                yCorFlip = yCor[::-1]
+                lineTwo = Line(x="x",
+                               y="yFlip", line_width=3)
+
+                source.data["yFlip"] = yCorFlip
+
+                self.notes.append(self.fig.add_glyph(
+                    source, lineOne))
+                self.notes.append(self.fig.add_glyph(
+                    source, lineTwo))
+                print("draw x ok")
             else:
                 fret = int(fret)
-                circleNote = Circle(x=(string-1)*self.distanceBetweenStrings,
-                                    y=self.distanceBetweenFrets *
-                                    (self.getNumOfFrets()+2) - (fret) *
-                                    self.distanceBetweenFrets - self.distanceBetweenFrets/2,
-                                    radius=self.note.noteRadius/2,
-                                    fill_color=self.note.noteFaceColor,
-                                    line_width=self.note.noteLineWidth,
-                                    line_color=self.note.noteEdgeColor,
-                                    name="circleNote"
-                                    )
-        if (textX == ""):
-            self.notes.append(self.fig.add_glyph(circleNote))
+                note = Circle(x=(string-1)*self.distanceBetweenStrings,
+                              y=self.distanceBetweenFrets *
+                              (self.getNumOfFrets()+2) - (fret) *
+                              self.distanceBetweenFrets - self.distanceBetweenFrets/2,
+                              radius=self.note.noteRadius/2,
+                              fill_color=self.note.noteFaceColor,
+                              line_width=self.note.noteLineWidth,
+                              line_color=self.note.noteEdgeColor,
+                              name="circleNote"
+                              )
+        if (note != ""):
+            self.notes.append(self.fig.add_glyph(note))
 
     def removeNote(self):
         pass

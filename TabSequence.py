@@ -16,7 +16,7 @@ class TabSequence():
         self.guitarsetIds = self.guitarset.track_ids  # the list of guitar's track ids
         self.guitarsetData = self.guitarset.load_tracks()  # Load all tracks in the dataset
         # Get the first track
-        self.exampleTrack = self.guitarsetData[self.guitarsetIds[trackNum]]
+        self.track = self.guitarsetData[self.guitarsetIds[trackNum]]
         # trackNum starts at 0
 
         # strings and their Midi
@@ -28,31 +28,31 @@ class TabSequence():
         self.EHigh = 64
 
         self.EStringFrets = self.midiToFret(
-            self.Elow, self.exampleTrack.notes["E"].pitches)
-        self.ETimeStamp = self.exampleTrack.notes['E'].intervals
+            self.Elow, self.track.notes["E"].pitches)
+        self.ETimeStamp = self.track.notes['E'].intervals
         self.AStringFrets = self.midiToFret(
-            self.A, self.exampleTrack.notes["A"].pitches)
-        self.ATimeStamp = self.exampleTrack.notes['A'].intervals
+            self.A, self.track.notes["A"].pitches)
+        self.ATimeStamp = self.track.notes['A'].intervals
         self.DStringFrets = self.midiToFret(
-            self.D, self.exampleTrack.notes["D"].pitches)
-        self.DTimeStamp = self.exampleTrack.notes['D'].intervals
+            self.D, self.track.notes["D"].pitches)
+        self.DTimeStamp = self.track.notes['D'].intervals
         self.GStringFrets = self.midiToFret(
-            self.G, self.exampleTrack.notes["G"].pitches)
-        self.GTimeStamp = self.exampleTrack.notes['G'].intervals
+            self.G, self.track.notes["G"].pitches)
+        self.GTimeStamp = self.track.notes['G'].intervals
         self.BStringFrets = self.midiToFret(
-            self.B, self.exampleTrack.notes["B"].pitches)
-        self.BTimeStamp = self.exampleTrack.notes['B'].intervals
+            self.B, self.track.notes["B"].pitches)
+        self.BTimeStamp = self.track.notes['B'].intervals
         self.eStringFrets = self.midiToFret(
-            self.EHigh, self.exampleTrack.notes["e"].pitches)
-        self.eTimeStamp = self.exampleTrack.notes['e'].intervals
+            self.EHigh, self.track.notes["e"].pitches)
+        self.eTimeStamp = self.track.notes['e'].intervals
 
         # guitarSet is automatically in midi notes
-        self.EMidiNotes = self.exampleTrack.notes["E"].pitches
-        self.AMidiNotes = self.exampleTrack.notes["A"].pitches
-        self.DMidiNotes = self.exampleTrack.notes["D"].pitches
-        self.GMidiNotes = self.exampleTrack.notes["G"].pitches
-        self.BMidiNotes = self.exampleTrack.notes["B"].pitches
-        self.eMidiNotes = self.exampleTrack.notes["e"].pitches
+        self.EMidiNotes = self.track.notes["E"].pitches
+        self.AMidiNotes = self.track.notes["A"].pitches
+        self.DMidiNotes = self.track.notes["D"].pitches
+        self.GMidiNotes = self.track.notes["G"].pitches
+        self.BMidiNotes = self.track.notes["B"].pitches
+        self.eMidiNotes = self.track.notes["e"].pitches
 
         self.maxEndTime = max(self.ETimeStamp[-1][-1], self.ATimeStamp[-1][-1],
                               self.DTimeStamp[-1][-1], self.GTimeStamp[-1][-1], self.BTimeStamp[-1][-1], self.eTimeStamp[-1][-1])
@@ -115,16 +115,23 @@ class TabSequence():
                 for frame in range(startFrame, endFrame):
                     frames[frame][i] = note[j]
 
-        if (type == "fret"):
-            makeFramesStrings = [
-                ",".join([str(num) for num in sublist]) for sublist in frames]
-        else:
-            makeFramesStrings = frames
+        self.setFrames(frames)
 
-        self.setFrames(makeFramesStrings)
+    def addTab(self, seconds, tab):
+        frames = seconds * self.framesPerSeconds
+        for i in range(1, frames+1):
+            self.addFrame(tab)
 
     def getFrames(self):
         return self.frames
+
+    def getFramesAsString(self):
+        stringFrames = [",".join([str(num) for num in sublist])
+                        for sublist in self.frames]
+        return stringFrames
+
+    def addFrame(self, frame):
+        self.frames.append(frame)
 
     def setFrames(self, frames):
         self.frames = frames
