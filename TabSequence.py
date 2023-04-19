@@ -62,7 +62,6 @@ class TabSequence(Frame):
         self.maxEndTime = max(self.ETimeStamp[-1][-1], self.ATimeStamp[-1][-1],
                               self.DTimeStamp[-1][-1], self.GTimeStamp[-1][-1], self.BTimeStamp[-1][-1], self.eTimeStamp[-1][-1])
 
-        self.frameRate = 70
         self.numOfStrings = 6
         self.maxFrames = math.ceil(self.maxEndTime) * self.frameRate
 

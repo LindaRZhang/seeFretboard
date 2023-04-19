@@ -100,7 +100,7 @@ class SeeFretboard():
         self.clearFretboardButton.on_click(self.clearFretboard)
 
         # video parameter
-        self.video = Video(0, 10, 0, 0.1, 70)
+        self.video = Video(0, 10, 0, 0.1)
         self.videoFrames = self.video.frames
 
         self.timeslider = Slider(start=self.video.startTime, end=self.video.endTime,
@@ -262,7 +262,7 @@ class SeeFretboard():
         audioPath = ffmpeg.input(self.video.getAudioPathName())
 
         ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
-            "test.mp4").run(overwrite_output=True)
+            "defaultWithAudio.mp4").run(overwrite_output=True)
         print("video save with audio done")
 
     # fretboard relate
