@@ -8,11 +8,9 @@ from bokeh.layouts import row
 from bokeh.document import without_document_lock
 
 import pretty_midi
-import librosa
 import tempfile
 import sox
 import soundfile as sf
-# fluidsunth n pyfluidsynth
 
 import os
 import glob
@@ -184,16 +182,6 @@ class SeeFretboard():
 
         return midi
 
-    def saveAsVideoImages(self):
-        oriImgName = self.imageName
-        print(oriImgName)
-        for k, v in self.video.getFramesItems():
-            self.updateFretboard(v)
-            self.setImageName(str(k)+oriImgName)
-            self.saveAs("png")
-            print("saving"+self.getImageName())
-        print("done")
-
     def sonifyJams(self, frames):
         midi = self.saveMidi(frames)
         signal_out = midi.fluidsynth(fs=44100.0)
@@ -212,6 +200,16 @@ class SeeFretboard():
         tfm.build(tmp_file, out_path)
         os.close(fhandle)
         os.remove(tmp_file)
+
+    def saveAsVideoImages(self):
+        oriImgName = self.imageName
+        print(oriImgName)
+        for k, v in self.video.getFramesItems():
+            self.updateFretboard(v)
+            self.setImageName(str(k)+oriImgName)
+            self.saveAs("png")
+            print("saving"+self.getImageName())
+        print("done")
 
     # for guitarset n other data where num of second is not defined
     def saveAsVideoImagesNoSeconds(self):
@@ -242,7 +240,8 @@ class SeeFretboard():
 
         fourcc = cv2.VideoWriter_fourcc(*self.video.getCodec())
         frameSize = (self.fig.width, self.fig.height)
-
+        print(self.video.getFrameRate())
+        print("self.video.getFrameRate()")
         videoWriter = cv2.VideoWriter(os.path.join(self.video.getVideoPathName(), self.video.getName(
         )+"."+self.video.getFileExtension()), fourcc, self.video.getFrameRate(), frameSize)
 
@@ -633,7 +632,6 @@ class SeeFretboard():
                     source, lineOne))
                 self.notes.append(self.fig.add_glyph(
                     source, lineTwo))
-                print("draw x ok")
             else:
                 fret = int(fret)
                 note = Circle(x=(string-1)*self.distanceBetweenStrings,

@@ -11,6 +11,14 @@ bokeh serve --show bokehTest.py<br /><br />
 *ffmpeg
 *mirdata only versions >=3.7,<3.11 are supported as of 2023
 \*pretty_midi
+*fluidSynth
+*pyfluidsynth
+*tempfile
+*sox
+\*soundfile
+*os
+*glob
+\*re
 
 <br />
 <br />

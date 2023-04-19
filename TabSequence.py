@@ -3,12 +3,17 @@
 import mirdata
 import math
 import os
+from Frame import Frame
 
 # set for 6 string in standard tuning for now
 
+# tab consist of many frames or the frames in certain period
 
-class TabSequence():
-    def __init__(self, trackNum, filePath=os.path.join(os.getcwd(), 'GuitarSet')):
+
+class TabSequence(Frame):
+    def __init__(self, trackNum, frameRate=10, filePath=os.path.join(os.getcwd(), 'GuitarSet')):
+        super().__init__(frameRate)
+
         self.filePath = filePath
         self.guitarset = mirdata.initialize(
             'guitarset', data_home=self.filePath)
@@ -57,18 +62,12 @@ class TabSequence():
         self.maxEndTime = max(self.ETimeStamp[-1][-1], self.ATimeStamp[-1][-1],
                               self.DTimeStamp[-1][-1], self.GTimeStamp[-1][-1], self.BTimeStamp[-1][-1], self.eTimeStamp[-1][-1])
 
-        self.framesPerSeconds = 70
+        self.frameRate = 70
         self.numOfStrings = 6
-        self.maxFrames = math.ceil(self.maxEndTime) * self.framesPerSeconds
+        self.maxFrames = math.ceil(self.maxEndTime) * self.frameRate
 
         self.frames = []
         self.frameType = "fret"
-
-    def getFramesPerSeconds(self):
-        return self.framesPerSeconds
-
-    def setFramesPerSeconds(self, fps):
-        self.framesPerSeconds = fps
 
     def getNumOfStrings(self):
         return self.numOfStrings
@@ -110,15 +109,18 @@ class TabSequence():
         for i, (note, time) in enumerate(zip(notesArr,
                                              [self.ETimeStamp, self.ATimeStamp, self.DTimeStamp, self.GTimeStamp, self.BTimeStamp, self.eTimeStamp])):
             for j in range(len(note)):
-                startFrame = round(time[j][0] * self.framesPerSeconds)
-                endFrame = round(time[j][1] * self.framesPerSeconds)
+                startFrame = round(time[j][0] * self.frameRate)
+                endFrame = round(time[j][1] * self.frameRate)
                 for frame in range(startFrame, endFrame):
                     frames[frame][i] = note[j]
 
+        if (self.frameType == "fret"):
+            frames = [",".join([str(num) for num in frame])
+                      for frame in frames]
         self.setFrames(frames)
 
     def addTab(self, seconds, tab):
-        frames = seconds * self.framesPerSeconds
+        frames = seconds * self.frameRate
         for i in range(1, frames+1):
             self.addFrame(tab)
 
