@@ -8,9 +8,10 @@ from Video import Video
 from Frame import Frame
 
 fretboard = SeeFretboard("v", 6, 1, 12)
-tabSeq = TabSequence(0)
+tabSeq = TabSequence(8)
 video = Video(0, 0, 0, 0)
 fretboard.drawVerticalFretboard()
+video.setName("OpenStringG")
 
 '''
 Use guitar set track 0 to make frames

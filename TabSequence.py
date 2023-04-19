@@ -122,33 +122,36 @@ class TabSequence(Frame):
     def framesToNotesWithTime(self):
         notesPlaying = {}
         output = []
-
+        print(self.frames)
+        print("\n")
         for i, frame in enumerate(self.frames):
 
             for j, note in enumerate(frame):
                 if note != -1:
                     # Note being played
-                    if note in notesPlaying:
+                    if (j, note) in notesPlaying:
                         # Note is already being played
-                        notesPlaying[note]["end"] = (i + 1) / self.frameRate
+                        # not should be string index and the note pitch
+                        notesPlaying[(j, note)]["end"] += self.framePeriod
                     else:
                         # Note is starting to be played
-                        notesPlaying[note] = {
-                            "start": i / self.frameRate, "end": (i + 1) / self.frameRate}
+                        notesPlaying[(j, note)] = {
+                            "start": i / self.frameRate, "end": i / self.frameRate}
 
             # Loop through notes currently being played n c if it's in current frame, if not end time
-            for note in list(notesPlaying):
-                if note not in frame:
+            for (j, note) in list(notesPlaying):
+                if (i == len(self.frames)-1) or (note != self.frames[i+1][j]):
                     output.append(
-                        {"note": note, "start": notesPlaying[note]["start"], "end": notesPlaying[note]["end"]})
-                    del notesPlaying[note]
+                        {"note": note, "start": notesPlaying[(j, note)]["start"], "end": notesPlaying[(j, note)]["end"]})
+                    del notesPlaying[(j, note)]
 
-            # Add any remaining notes endtime to output
-            for note in notesPlaying:
-                output.append(
-                    {"note": note, "start": notesPlaying[note]["start"], "end": notesPlaying[note]["end"]})
+            # # Add any remaining notes endtime to output
+            # for (j, note) in notesPlaying:
+            #     output.append(
+            #         {"note": note, "start": notesPlaying[(j, note)]["start"], "end": notesPlaying[(j, note)]["end"]})
 
-            self.setFrames(output)
+        self.setFrames(output)
+        print(output)
 
     def addTab(self, seconds, tab):
         frames = seconds * self.frameRate

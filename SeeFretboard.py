@@ -258,7 +258,8 @@ class SeeFretboard():
         audioPath = ffmpeg.input(self.video.getAudioPathName())
 
         ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
-            "defaultWithAudio.mp4").run(overwrite_output=True)
+            self.video.getName(
+            )+".mp4").run(overwrite_output=True)
         print("video save with audio done")
 
     # fretboard relate
