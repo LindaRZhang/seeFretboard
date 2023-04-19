@@ -11,11 +11,8 @@ f.drawVerticalFretboard()
 
 tabS = TabSequence(0)
 tabS.setFrameType("midi")
-tabS.setFrames([])
-tabS.addTab(1, [50, 51, 51, 50, 51, 51])
-tabS.addTab(1, [55, 55, 55, 55, 55, 55])
+tabS.makingFrames()
+tabS.framesToNotesWithTime()
+frames = tabS.getFrames()
+f.sonifyJams(frames)
 
-frame = tabS.getFrames()
-f.sonifyJams(frame)
-
-print("CREATED AND SAVE MIDI")

@@ -4,6 +4,7 @@ import mirdata
 import math
 import os
 from Frame import Frame
+import numpy as np
 
 # set for 6 string in standard tuning for now
 
@@ -117,6 +118,37 @@ class TabSequence(Frame):
             frames = [",".join([str(num) for num in frame])
                       for frame in frames]
         self.setFrames(frames)
+
+    def framesToNotesWithTime(self):
+        notesPlaying = {}
+        output = []
+
+        for i, frame in enumerate(self.frames):
+
+            for j, note in enumerate(frame):
+                if note != -1:
+                    # Note being played
+                    if note in notesPlaying:
+                        # Note is already being played
+                        notesPlaying[note]["end"] = (i + 1) / self.frameRate
+                    else:
+                        # Note is starting to be played
+                        notesPlaying[note] = {
+                            "start": i / self.frameRate, "end": (i + 1) / self.frameRate}
+
+            # Loop through notes currently being played n c if it's in current frame, if not end time
+            for note in list(notesPlaying):
+                if note not in frame:
+                    output.append(
+                        {"note": note, "start": notesPlaying[note]["start"], "end": notesPlaying[note]["end"]})
+                    del notesPlaying[note]
+
+            # Add any remaining notes endtime to output
+            for note in notesPlaying:
+                output.append(
+                    {"note": note, "start": notesPlaying[note]["start"], "end": notesPlaying[note]["end"]})
+
+            self.setFrames(output)
 
     def addTab(self, seconds, tab):
         frames = seconds * self.frameRate

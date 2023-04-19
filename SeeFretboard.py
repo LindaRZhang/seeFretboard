@@ -100,7 +100,7 @@ class SeeFretboard():
         self.clearFretboardButton.on_click(self.clearFretboard)
 
         # video parameter
-        self.video = Video(0, 10, 0, 0.1)
+        self.video = Video(0, 10, 0, 0.1, 10)
         self.videoFrames = self.video.frames
 
         self.timeslider = Slider(start=self.video.startTime, end=self.video.endTime,
@@ -166,18 +166,14 @@ class SeeFretboard():
     def saveMidi(self, frames):
         midi = pretty_midi.PrettyMIDI()
         inst = pretty_midi.Instrument(program=25)
-        time = 0
 
         for frame in frames:
-            for i, note in enumerate(frame):
-                if (note != -1):
-                    n = pretty_midi.Note(velocity=100,
-                                         pitch=note, start=time,
-                                         end=time + self.video.getFramePeriod()
-                                         )
+            n = pretty_midi.Note(velocity=100,
+                                 pitch=frame['note'], start=frame['start'],
+                                 end=frame['end']
+                                 )
 
-                    inst.notes.append(n)
-            time += self.video.getFramePeriod()
+            inst.notes.append(n)
         midi.instruments.append(inst)
 
         return midi

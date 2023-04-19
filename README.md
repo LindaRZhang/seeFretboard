@@ -19,6 +19,7 @@ bokeh serve --show bokehTest.py<br /><br />
 *os
 *glob
 \*re
+\*librosa
 
 <br />
 <br />
