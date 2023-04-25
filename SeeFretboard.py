@@ -181,8 +181,7 @@ class SeeFretboard():
     def sonifyJams(self, frames):
         midi = self.saveMidi(frames)
         signal_out = midi.fluidsynth(fs=44100.0)
-        path = os.path.join(
-            os.getcwd(), "testmidiAudio.wav")
+        path = self.video.getAudioPathWithName()
         self.saveSmallWav(path, signal_out, 44100)
         return signal_out, 44100
 
@@ -238,8 +237,7 @@ class SeeFretboard():
         frameSize = (self.fig.width, self.fig.height)
         print(self.video.getFrameRate())
         print("self.video.getFrameRate()")
-        videoWriter = cv2.VideoWriter(os.path.join(self.video.getVideoPathName(), self.video.getName(
-        )+"."+self.video.getFileExtension()), fourcc, self.video.getFrameRate(), frameSize)
+        videoWriter = cv2.VideoWriter(self.video.getVideoPathWithName()+"."+self.video.getFileExtension(), fourcc, self.video.getFrameRate(), frameSize)
 
         for image in images:
             frame = cv2.imread(os.path.join(self.getImagePathName(), image))
@@ -248,17 +246,24 @@ class SeeFretboard():
         cv2.destroyAllWindows()
         videoWriter.release()
 
-        print("video saved at "+self.video.getVideoPathName())
+        print("video "+ self.video.getVideoName() +" saved at "+self.video.getVideoPathName())
 
-    def saveAsVideoWithAudio(self):
+    def createVideoWithAudio(self, videoWithAudioName):
         self.saveAsVideo()
 
-        videoPath = ffmpeg.input(os.path.join(self.video.getVideoPathName(
-        ), self.video.getName()+"."+self.video.getFileExtension()))
-        audioPath = ffmpeg.input(self.video.getAudioPathName())
+        videoPath = ffmpeg.input(self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
+        audioPath = ffmpeg.input(self.video.getAudioPathWithName())
 
         ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
-            self.video.getName(
+            videoWithAudioName+".mp4").run(overwrite_output=True)
+        print("video save with audio done")
+
+    def saveVideoWithAudio(self):
+        videoPath = ffmpeg.input(self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
+        audioPath = ffmpeg.input(self.video.getAudioPathWithName())
+
+        ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
+            self.video.getVideoName(
             )+".mp4").run(overwrite_output=True)
         print("video save with audio done")
 

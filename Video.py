@@ -4,7 +4,7 @@ from Frame import Frame
 
 class Video(Frame):
 
-    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate=10, name="defaultVid", fileExtension="mp4", codec="mp4v"):
+    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate=10, videoName="defaultVid", fileExtension="mp4", codec="mp4v"):
         super().__init__(frameRate)
 
         # format = {{frameNumber:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
@@ -18,26 +18,28 @@ class Video(Frame):
         self.frameStep = frameStep
 
         self.currentAddTabFrames = 0
-        self.name = name
         self.fileExtension = fileExtension
         self.codec = codec
 
         # paths
-        self.videoPathName = os.getcwd()
-        self.audioPathName = os.path.join(
-            os.getcwd(), '00_BN1-129-Eb_comp_hex.wav')
+        self.videoPath = os.getcwd()
+        self.videoName = videoName
+        self.videoPathWithName = os.path.join(self.videoPath,self.videoName)
+        self.audioPath = os.getcwd()
+        self.audioName = ""#'00_BN1-129-Eb_comp_hex.wav'
+        self.audioPathWithName = os.path.join(self.audioPath,self.audioName)
 
     def getVideoPathName(self):
-        return self.videoPathName
+        return self.videoPath
 
     def setVideoPathName(self, path):
-        self.videoPathName = path
+        self.videoPath = path
 
     def getAudioPathName(self):
-        return self.audioPathName
+        return self.audioPath
 
     def setAudioPathName(self, path):
-        self.audioPathName = path
+        self.audioPath = path
 
     def getCurrentSecond(self):
         return self.currentFrame/self.frameRate
@@ -116,8 +118,26 @@ class Video(Frame):
     def setFrameStep(self, step):
         self.frameStep = round(step, 2)
 
-    def getName(self):
-        return self.name
+    def getVideoName(self):
+        return self.videoName
 
-    def setName(self, name):
-        self.name = name
+    def setVideoName(self, name):
+        self.videoName = name
+    
+    def getAudioName(self):
+        return self.audioName
+
+    def setAudioName(self, name):
+        self.audioName = name
+    
+    def getVideoPathWithName(self):
+        return os.path.join(self.videoPath,self.videoName)
+
+    def setVideoPathWithName(self, path):
+        self.videoPathWithName = path
+    
+    def getAudioPathWithName(self):
+        return os.path.join(self.audioPath,self.audioName)
+
+    def setAudioPathWithName(self, path):
+        self.audioPathWithName = path

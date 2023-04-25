@@ -122,8 +122,7 @@ class TabSequence(Frame):
     def framesToNotesWithTime(self):
         notesPlaying = {}
         output = []
-        print(self.frames)
-        print("\n")
+
         for i, frame in enumerate(self.frames):
 
             for j, note in enumerate(frame):
@@ -151,7 +150,6 @@ class TabSequence(Frame):
             #         {"note": note, "start": notesPlaying[(j, note)]["start"], "end": notesPlaying[(j, note)]["end"]})
 
         self.setFrames(output)
-        print(output)
 
     def addTab(self, seconds, tab):
         frames = seconds * self.frameRate
