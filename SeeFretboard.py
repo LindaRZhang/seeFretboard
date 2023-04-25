@@ -79,6 +79,7 @@ class SeeFretboard():
         self.imagePathName = os.path.join(os.getcwd(), 'Image')
 
         self.imageName = "default"
+        self.imageMeta = ".png"
 
         # buttons
         self.tuningLabelButton = Button(
@@ -203,7 +204,7 @@ class SeeFretboard():
         for k, v in self.video.getFramesItems():
             self.updateFretboard(v)
             self.setImageName(str(k)+oriImgName)
-            self.saveAs("png")
+            self.saveAs()
             print("saving"+self.getImageName())
         print("done")
 
@@ -217,12 +218,12 @@ class SeeFretboard():
             if frame in images:
                 image = images[frame]
                 image.copy().save(os.path.join(
-            self.imagePathName, self.getImageName() + ".png"))
+            self.imagePathName, self.getImageName() + self.getImageMeta()))
             else:
                 self.updateFretboard(self.video.getFrames()[i])
-                self.saveAs("png")
+                self.saveAs()
                 image = Image.open(os.path.join(
-            self.imagePathName, self.getImageName() + ".png"))
+            self.imagePathName, self.getImageName() + self.getImageMeta()))
                 images[frame] = image.copy()
             print("saving"+self.getImageName())
         print("done")
@@ -549,13 +550,13 @@ class SeeFretboard():
         self.imagePathName = path
 
     # saveAsImg
-    def saveAs(self, meta):
+    def saveAs(self):
         fileName = os.path.join(
-            self.imagePathName, self.getImageName() + "."+meta)
-        if (meta.lower() == "png"):
+            self.imagePathName, self.getImageName() + self.getImageMeta())
+        if (self.getImageMeta().lower() == "png"):
             export_png(self.fig, filename=fileName)
 
-        elif (meta.lower() == "svg"):
+        elif (self.getImageMeta().lower() == "svg"):
             export_svg(self.fig, filename=fileName)
 
     def getImageName(self):
@@ -563,6 +564,12 @@ class SeeFretboard():
 
     def setImageName(self, name):
         self.imageName = name
+    
+    def getImageMeta(self):
+        return self.imageMeta
+
+    def setImageMeta(self, meta):
+        self.imageMeta = meta
 
     def setNoteObject(self, note):
         self.note = note
