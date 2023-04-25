@@ -18,6 +18,7 @@ import re
 
 import ffmpeg
 import cv2
+from PIL import Image
 
 from Note import Note
 from Video import Video
@@ -209,10 +210,20 @@ class SeeFretboard():
     # for guitarset n other data where num of second is not defined
     def saveAsVideoImagesNoSeconds(self):
         oriImgName = self.imageName
+        images = {}
         for i in range(len(self.video.getFrames())):
-            self.updateFretboard(self.video.getFrames()[i])
+            frame = self.video.getFrames()[i]
             self.setImageName(str(i)+oriImgName)
-            self.saveAs("png")
+            if frame in images:
+                image = images[frame]
+                image.copy().save(os.path.join(
+            self.imagePathName, self.getImageName() + ".png"))
+            else:
+                self.updateFretboard(self.video.getFrames()[i])
+                self.saveAs("png")
+                image = Image.open(os.path.join(
+            self.imagePathName, self.getImageName() + ".png"))
+                images[frame] = image.copy()
             print("saving"+self.getImageName())
         print("done")
 
