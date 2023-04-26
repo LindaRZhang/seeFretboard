@@ -1,39 +1,23 @@
 class Note():
-    def __init__(self):
-        
-        self.noteRadius = 0.5
-        self.noteFaceColor = "blue"
-        self.noteEdgeColor = "black"
-        self.noteLineWidth = 2
-        self.noteFill = True
+    def __init__(self, pitch, startTime, endTime):
+        self.pitch = pitch
+        self.startTime = startTime
+        self.endTime = endTime
     
-    def getNoteRadius(self):
-        return self.noteRadius
+    def getPitch(self):
+        return self.pitch
     
-    def setNoteRadius(self,radius):
-        self.noteRadius = radius
-        
-    def getNoteFaceColor(self):
-        return self.noteFaceColor
+    def setPitch(self, pitch):
+        self.pitch = pitch
     
-    def setNoteFaceColor(self,color):
-        self.noteFaceColor = color
-        
-    def getNoteEdgeColor(self):
-        return self.noteEdgeColor
+    def getStartTime(self):
+        return self.startTime
     
-    def setNoteEdgeColor(self,color):
-        self.noteEdgeColor = color
-        
-    def getNoteLineWidth(self):
-        return self.noteLineWidth
+    def setStartTime(self, startTime):
+        self.startTime = startTime
+
+    def getEndTime(self):
+        return self.endTime
     
-    def setNoteLineWidth(self,lw):
-        self.noteLineWidth = lw
-        
-    def getNoteFill(self):
-        return self.noteFill
-    
-    def setNoteFill(self,noteFill):
-        self.noteFill = noteFill
-        
+    def setEndTime(self, endTime):
+        self.endTime = endTime

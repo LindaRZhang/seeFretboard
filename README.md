@@ -1,4 +1,5 @@
 # seeFretboard
+
 To show with curdoc need to run server at directory of bokehTest.py<br />
 bokeh serve --show bokehTest.py<br /><br />
 
@@ -7,7 +8,19 @@ bokeh serve --show bokehTest.py<br /><br />
 *bokeh
 *selenium, firefox or chrome driver
 *opencv
-
+*ffmpeg
+*mirdata only versions >=3.7,<3.11 are supported as of 2023
+pretty_midi
+*fluidSynth
+*pyfluidsynth
+*tempfile
+*sox
+soundfile
+*os
+*glob
+*re
+*librosa
+*PIL
 
 <br />
 <br />
@@ -27,3 +40,5 @@ And ran executable in /opt/homebrew/Caskroom/chromedriver/110.0.5481.77
 
 <br />
 mac sometime permission issue: chmod 777 seeFretboard
+
+conda list shows dependiences
