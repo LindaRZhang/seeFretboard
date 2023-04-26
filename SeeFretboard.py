@@ -265,6 +265,7 @@ class SeeFretboard():
 
         videoPath = ffmpeg.input(self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
         audioPath = ffmpeg.input(self.video.getAudioPathWithName())
+        print(audioPath)
 
         ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
             videoWithAudioName+".mp4").run(overwrite_output=True)

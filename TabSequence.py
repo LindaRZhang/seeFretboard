@@ -12,7 +12,7 @@ from Note import Note
 
 
 class TabSequence(Frame):
-    def __init__(self, trackNum, frameRate=10, filePath=os.path.join(os.getcwd(), 'GuitarSet')):
+    def __init__(self, trackNum, frameRate=30, filePath=os.path.join(os.getcwd(), 'GuitarSet')):
         super().__init__(frameRate)
 
         self.filePath = filePath
@@ -66,7 +66,8 @@ class TabSequence(Frame):
         self.numOfStrings = 6
         self.maxFrames = math.ceil(self.maxEndTime) * self.frameRate
 
-        self.frames = []
+        self.fretFrames = []
+        self.midiFrames = []
         self.notesWithTimeFrames = []
         self.frameType = "fret"
 
@@ -129,14 +130,16 @@ class TabSequence(Frame):
         if (self.frameType == "fret"):
             frames = [",".join([str(num) for num in frame])
                       for frame in frames]
-            
-        self.setFrames(frames)
+            self.setFretFrames(frames)
+        
+        else:
+            self.setMidiFrames(frames)
 
     def framesToNotesWithTime(self):
         pitchesPlaying = {}
         output = []
 
-        for i, frame in enumerate(self.frames):
+        for i, frame in enumerate(self.midiFrames):
 
             for j, pitch in enumerate(frame):
                 if pitch != -1:
@@ -151,7 +154,7 @@ class TabSequence(Frame):
 
             # Loop through notes currently being played n c if it's in current frame, if not end time
             for (j, pitch) in list(pitchesPlaying):
-                if (i == len(self.frames)-1) or (pitch != self.frames[i+1][j]):
+                if (i == len(self.midiFrames)-1) or (pitch != self.midiFrames[i+1][j]):
                     output.append(pitchesPlaying[(j, pitch)])
                     del pitchesPlaying[(j, pitch)]
 
@@ -160,21 +163,30 @@ class TabSequence(Frame):
     def addTab(self, seconds, tab):
         frames = seconds * self.frameRate
         for i in range(1, frames+1):
-            self.addFrame(tab)
+            self.addFretFrame(tab)
 
-    def getFrames(self):
-        return self.frames
+    def getFretFrames(self):
+        return self.fretFrames
 
-    def getFramesAsString(self):
+    def getFramesAsString(self):#edit later
         stringFrames = [",".join([str(num) for num in sublist])
-                        for sublist in self.frames]
+                        for sublist in self.fretFrames]
         return stringFrames
 
-    def addFrame(self, frame):
-        self.frames.append(frame)
+    def addFretFrame(self, frame):
+        self.fretFrames.append(frame)
 
-    def setFrames(self, frames):
-        self.frames = frames
+    def setFretFrames(self, frames):
+        self.fretFrames = frames
+
+    def getFretFrames(self):
+        return self.midiFrames
+
+    def addMidiFramesFrame(self, frame):
+        self.midiFrames.append(frame)
+
+    def setMidiFrames(self, frames):
+        self.midiFrames = frames
 
     def getFrameType(self):
         return self.frameType

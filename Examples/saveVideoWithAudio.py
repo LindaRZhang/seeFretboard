@@ -13,11 +13,6 @@ tabSeq = TabSequence(8)
 video = Video(0, 0, 0, 0)
 fretboard.drawVerticalFretboard()
 
-'''
-Use guitar set track 0 to make frames
-Then frames to images
-then images to video with audio
-'''
 video.setVideoPathName(os.getcwd())
 video.setVideoName("video_00_BN3-119-G_comp_hex_cln")
 video.setAudioPathName(os.getcwd())

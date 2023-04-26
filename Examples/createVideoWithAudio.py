@@ -20,8 +20,6 @@ Then frames to images
 then images to video with audio
 '''
 tabSeq.makingFrames()
-guitarSetSongString = tabSeq.getFrames()
-video.setFrames(guitarSetSongString)
 video.setAudioPathName(os.getcwd())
 video.setAudioName("00_BN3-119-G_comp_hex_cln.wav")
 fretboard.setVideo(video)
