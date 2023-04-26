@@ -10,7 +10,7 @@ class Frame():
         self.frameRate = fr
 
     def getFramePeriod(self):
-        return self.framePeriod
+        return 1/self.frameRate
 
     def setFramePeriod(self, fp):
         self.framePeriod = fp

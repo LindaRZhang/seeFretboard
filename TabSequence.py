@@ -67,6 +67,7 @@ class TabSequence(Frame):
         self.maxFrames = math.ceil(self.maxEndTime) * self.frameRate
 
         self.frames = []
+        self.notesWithTimeFrames = []
         self.frameType = "fret"
 
     def getNumOfStrings(self):
@@ -74,6 +75,18 @@ class TabSequence(Frame):
 
     def setNumOfStrings(self, strings):
         self.numOfStrings = strings
+    
+    def getMaxFrames(self):
+        return math.ceil(self.getMaxEndTime()) * self.getFrameRate()
+
+    def setMaxFrames(self, maxFrames):
+        self.maxFrames = maxFrames
+    
+    def getMaxEndTime(self):
+        return self.maxEndTime
+
+    def setMaxEndTime(self, maxEndTime):
+        self.maxEndTime = maxEndTime
 
     def midiToFret(self, string, midiNotes):
         notes = []
@@ -102,8 +115,7 @@ class TabSequence(Frame):
         return roundedArray
 
     def makingFrames(self):
-        frames = [[-1] * self.numOfStrings for _ in range(self.maxFrames)]
-
+        frames = [[-1] * self.numOfStrings for _ in range(self.getMaxFrames())]
         notesArr = self.getStringFrets() if self.frameType == "fret" else self.getMidiNotes()
 
         for i, (note, time) in enumerate(zip(notesArr,
@@ -117,6 +129,7 @@ class TabSequence(Frame):
         if (self.frameType == "fret"):
             frames = [",".join([str(num) for num in frame])
                       for frame in frames]
+            
         self.setFrames(frames)
 
     def framesToNotesWithTime(self):
@@ -144,12 +157,7 @@ class TabSequence(Frame):
                         {"note": note, "start": notesPlaying[(j, note)]["start"], "end": notesPlaying[(j, note)]["end"]})
                     del notesPlaying[(j, note)]
 
-            # # Add any remaining notes endtime to output
-            # for (j, note) in notesPlaying:
-            #     output.append(
-            #         {"note": note, "start": notesPlaying[(j, note)]["start"], "end": notesPlaying[(j, note)]["end"]})
-
-        self.setFrames(output)
+        self.setNotesWithTimeFrames(output)
 
     def addTab(self, seconds, tab):
         frames = seconds * self.frameRate
@@ -175,3 +183,9 @@ class TabSequence(Frame):
 
     def setFrameType(self, type):
         self.frameType = type
+
+    def getNotesWithTimeFrames(self):
+        return self.notesWithTimeFrames
+
+    def setNotesWithTimeFrames(self, arr):
+        self.notesWithTimeFrames = arr

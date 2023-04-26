@@ -226,7 +226,7 @@ class SeeFretboard():
             self.imagePathName, self.getImageName() + self.getImageMeta()))
                 images[frame] = image.copy()
             print("saving"+self.getImageName())
-        print("done")
+        print("don e")
 
     def deleteAllImages(self):
         files = glob.glob(self.imagePathName)
