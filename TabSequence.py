@@ -4,7 +4,7 @@ import mirdata
 import math
 import os
 from Frame import Frame
-import numpy as np
+from Note import Note
 
 # set for 6 string in standard tuning for now
 
@@ -53,12 +53,12 @@ class TabSequence(Frame):
         self.eTimeStamp = self.track.notes['e'].intervals
 
         # guitarSet is automatically in midi notes
-        self.EMidiNotes = self.track.notes["E"].pitches
-        self.AMidiNotes = self.track.notes["A"].pitches
-        self.DMidiNotes = self.track.notes["D"].pitches
-        self.GMidiNotes = self.track.notes["G"].pitches
-        self.BMidiNotes = self.track.notes["B"].pitches
-        self.eMidiNotes = self.track.notes["e"].pitches
+        self.EMidiPitches = self.track.notes["E"].pitches
+        self.AMidiPitches = self.track.notes["A"].pitches
+        self.DMidiPitches = self.track.notes["D"].pitches
+        self.GMidiPitches = self.track.notes["G"].pitches
+        self.BMidiPitches = self.track.notes["B"].pitches
+        self.eMidiPitches = self.track.notes["e"].pitches
 
         self.maxEndTime = max(self.ETimeStamp[-1][-1], self.ATimeStamp[-1][-1],
                               self.DTimeStamp[-1][-1], self.GTimeStamp[-1][-1], self.BTimeStamp[-1][-1], self.eTimeStamp[-1][-1])
@@ -107,24 +107,24 @@ class TabSequence(Frame):
     def getStringFrets(self):
         return [self.EStringFrets, self.AStringFrets, self.DStringFrets, self.GStringFrets, self.BStringFrets, self.eStringFrets]
 
-    def getMidiNotes(self):
-        arr = [self.EMidiNotes, self.AMidiNotes, self.DMidiNotes,
-               self.GMidiNotes, self.BMidiNotes, self.eMidiNotes]
+    def getMidiPitches(self):
+        arr = [self.EMidiPitches, self.AMidiPitches, self.DMidiPitches,
+               self.GMidiPitches, self.BMidiPitches, self.eMidiPitches]
         roundedArray = [[round(num) for num in innerArr] for innerArr in arr]
 
         return roundedArray
 
     def makingFrames(self):
         frames = [[-1] * self.numOfStrings for _ in range(self.getMaxFrames())]
-        notesArr = self.getStringFrets() if self.frameType == "fret" else self.getMidiNotes()
+        pitchesArr = self.getStringFrets() if self.frameType == "fret" else self.getMidiPitches()
 
-        for i, (note, time) in enumerate(zip(notesArr,
+        for i, (pitch, time) in enumerate(zip(pitchesArr,
                                              [self.ETimeStamp, self.ATimeStamp, self.DTimeStamp, self.GTimeStamp, self.BTimeStamp, self.eTimeStamp])):
-            for j in range(len(note)):
+            for j in range(len(pitch)):
                 startFrame = round(time[j][0] * self.frameRate)
                 endFrame = round(time[j][1] * self.frameRate)
                 for frame in range(startFrame, endFrame):
-                    frames[frame][i] = note[j]
+                    frames[frame][i] = pitch[j]
 
         if (self.frameType == "fret"):
             frames = [",".join([str(num) for num in frame])
@@ -144,17 +144,15 @@ class TabSequence(Frame):
                     if (j, pitch) in pitchesPlaying:
                         # Note is already being played
                         # not should be string index and the note pitch
-                        pitchesPlaying[(j, pitch)]["end"] += self.getFramePeriod()
+                        pitchesPlaying[(j, pitch)].setEndTime(pitchesPlaying[(j, pitch)].getEndTime() + self.getFramePeriod())
                     else:
                         # Note is starting to be played
-                        pitchesPlaying[(j, pitch)] = {
-                            "start": i / self.frameRate, "end": i / self.frameRate}
+                        pitchesPlaying[(j, pitch)] = Note(pitch,i / self.frameRate,i / self.frameRate)
 
             # Loop through notes currently being played n c if it's in current frame, if not end time
             for (j, pitch) in list(pitchesPlaying):
                 if (i == len(self.frames)-1) or (pitch != self.frames[i+1][j]):
-                    output.append(
-                        {"note": pitch, "start": pitchesPlaying[(j, pitch)]["start"], "end": pitchesPlaying[(j, pitch)]["end"]})
+                    output.append(pitchesPlaying[(j, pitch)])
                     del pitchesPlaying[(j, pitch)]
 
         self.setNotesWithTimeFrames(output)

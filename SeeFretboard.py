@@ -20,7 +20,7 @@ import ffmpeg
 import cv2
 from PIL import Image
 
-from Note import CircleNote
+from CirlceNote import CircleNote
 from Video import Video
 
 
@@ -171,8 +171,8 @@ class SeeFretboard():
 
         for frame in frames:
             n = pretty_midi.Note(velocity=100,
-                                 pitch=frame['note'], start=frame['start'],
-                                 end=frame['end']
+                                 pitch=frame.getPitch(), start=frame.getStartTime(),
+                                 end=frame.getEndTime()
                                  )
 
             inst.notes.append(n)
