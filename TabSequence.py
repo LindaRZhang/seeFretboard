@@ -133,29 +133,29 @@ class TabSequence(Frame):
         self.setFrames(frames)
 
     def framesToNotesWithTime(self):
-        notesPlaying = {}
+        pitchesPlaying = {}
         output = []
 
         for i, frame in enumerate(self.frames):
 
-            for j, note in enumerate(frame):
-                if note != -1:
+            for j, pitch in enumerate(frame):
+                if pitch != -1:
                     # Note being played
-                    if (j, note) in notesPlaying:
+                    if (j, pitch) in pitchesPlaying:
                         # Note is already being played
                         # not should be string index and the note pitch
-                        notesPlaying[(j, note)]["end"] += self.framePeriod
+                        pitchesPlaying[(j, pitch)]["end"] += self.getFramePeriod()
                     else:
                         # Note is starting to be played
-                        notesPlaying[(j, note)] = {
+                        pitchesPlaying[(j, pitch)] = {
                             "start": i / self.frameRate, "end": i / self.frameRate}
 
             # Loop through notes currently being played n c if it's in current frame, if not end time
-            for (j, note) in list(notesPlaying):
-                if (i == len(self.frames)-1) or (note != self.frames[i+1][j]):
+            for (j, pitch) in list(pitchesPlaying):
+                if (i == len(self.frames)-1) or (pitch != self.frames[i+1][j]):
                     output.append(
-                        {"note": note, "start": notesPlaying[(j, note)]["start"], "end": notesPlaying[(j, note)]["end"]})
-                    del notesPlaying[(j, note)]
+                        {"note": pitch, "start": pitchesPlaying[(j, pitch)]["start"], "end": pitchesPlaying[(j, pitch)]["end"]})
+                    del pitchesPlaying[(j, pitch)]
 
         self.setNotesWithTimeFrames(output)
 

@@ -20,7 +20,7 @@ import ffmpeg
 import cv2
 from PIL import Image
 
-from Note import Note
+from Note import CircleNote
 from Video import Video
 
 
@@ -50,7 +50,7 @@ class SeeFretboard():
 
         self.fretboardMarkerColor = "#DCDCDC"
         # note
-        self.note = Note()
+        self.note = CircleNote()
         self.notes = []
 
         # figure attribute

@@ -1,4 +1,4 @@
-class Note():
+class CircleNote():
     def __init__(self):
         
         self.noteRadius = 0.5
