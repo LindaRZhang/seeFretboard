@@ -1,5 +1,5 @@
 from bokeh.plotting import figure, show
-from bokeh.models import Line, Circle, Label, Button, CustomJS, Slider, Range1d, ColumnDataSource
+from bokeh.models import Line, Circle, Label, Button, CustomJS, Slider, Range1d, ColumnDataSource, Text
 from bokeh.models.widgets import TextInput
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
@@ -11,6 +11,7 @@ import pretty_midi
 import tempfile
 import sox
 import soundfile as sf
+from tqdm import tqdm
 
 import os
 import glob
@@ -212,7 +213,8 @@ class SeeFretboard():
     def saveAsVideoImagesNoSeconds(self):
         oriImgName = self.imageName
         images = {}
-        for i in range(len(self.video.getFrames())):
+        print("IMAGES Generateing")
+        for i in tqdm(range(len(self.video.getFrames()))):
             frame = self.video.getFrames()[i]
             self.setImageName(str(i)+oriImgName)
             if frame in images:
@@ -225,11 +227,10 @@ class SeeFretboard():
                 image = Image.open(os.path.join(
             self.imagePathName, self.getImageName() + self.getImageMeta()))
                 images[frame] = image.copy()
-            print("saving"+self.getImageName())
-        print("don e")
+        print("IMAGES Generate done")
 
     def deleteAllImages(self):
-        files = glob.glob(self.imagePathName)
+        files = glob.glob(os.path.join(self.imagePathName,"*"))
         for f in files:
             os.remove(f)
         print("All Images Delete")
@@ -247,8 +248,7 @@ class SeeFretboard():
 
         fourcc = cv2.VideoWriter_fourcc(*self.video.getCodec())
         frameSize = (self.fig.width, self.fig.height)
-        print(self.video.getFrameRate())
-        print("self.video.getFrameRate()")
+        
         videoWriter = cv2.VideoWriter(self.video.getVideoPathWithName()+"."+self.video.getFileExtension(), fourcc, self.video.getFrameRate(), frameSize)
 
         for image in images:
@@ -258,7 +258,7 @@ class SeeFretboard():
         cv2.destroyAllWindows()
         videoWriter.release()
 
-        print("video "+ self.video.getVideoName() +" saved at "+self.video.getVideoPathName())
+        print("VIDEO "+ self.video.getVideoName() +" saved at "+self.video.getVideoPathName())
 
     def createVideoWithAudio(self, videoWithAudioName):
         self.saveAsVideo()
@@ -554,10 +554,10 @@ class SeeFretboard():
     def saveAs(self):
         fileName = os.path.join(
             self.imagePathName, self.getImageName() + self.getImageMeta())
-        if (self.getImageMeta().lower() == "png"):
+        if (self.getImageMeta().lower() == ".png"):
             export_png(self.fig, filename=fileName)
 
-        elif (self.getImageMeta().lower() == "svg"):
+        elif (self.getImageMeta().lower() == ".svg"):
             export_svg(self.fig, filename=fileName)
 
     def getImageName(self):
@@ -591,7 +591,7 @@ class SeeFretboard():
         if (fret != "0" and fret != "-1"):
             fret = int(fret)-self.fretFrom+1
 
-        if (self.hv == "h"):
+        if (self.hv == "h"):#edit later
             if (fret == "0"):
                 fret = int(fret)
                 note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
@@ -602,6 +602,13 @@ class SeeFretboard():
                               line_color=self.note.noteEdgeColor,
                               name="circleNote"
                               )
+                cds = ColumnDataSource({'x':[(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2],'y':[(string-1)*self.distanceBetweenStrings]})
+
+                text = Text(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
+                              y=(string-1)*self.distanceBetweenStrings,text="testing",text_color="#96deb3",text_align='center', text_font_size='10pt')
+                
+                self.notes.append(cds,self.fig.add_glyph(text))
+
             elif (fret == "-1"):
                 fret = 0
                 textX = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
@@ -630,6 +637,11 @@ class SeeFretboard():
                               line_color=self.note.noteEdgeColor,
                               name="circleNote"
                               )
+                text = Label(x=(string-1)*self.distanceBetweenStrings,
+                              y=self.distanceBetweenFrets *
+                              (self.getNumOfFrets()+1) +
+                              self.note.getNoteRadius()*4,text="testing",text_align='center', text_font_size='10pt')
+
             elif (fret == "-1"):
                 fret = 0
                 xPos = (string-1)*self.distanceBetweenStrings

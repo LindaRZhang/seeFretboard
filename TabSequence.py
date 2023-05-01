@@ -180,13 +180,16 @@ class TabSequence(Frame):
         self.fretFrames = frames
 
     def getFretFrames(self):
-        return self.midiFrames
+        return self.fretFrames
 
     def addMidiFramesFrame(self, frame):
         self.midiFrames.append(frame)
 
     def setMidiFrames(self, frames):
         self.midiFrames = frames
+    
+    def getMidiFrames(self):
+        return self.midiFrames
 
     def getFrameType(self):
         return self.frameType
