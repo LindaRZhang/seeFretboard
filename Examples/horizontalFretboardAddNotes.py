@@ -6,5 +6,5 @@ from SeeFretboard import SeeFretboard
 
 fretboard = SeeFretboard("h", 6, 1, 12)
 fretboard.drawHorizontalFretboard()
-fretboard.addNotesAllString("0,0,2,2,0,0")
+fretboard.addNotesAllString("-1,0,2,2,0,0")
 fretboard.showFretboard()
