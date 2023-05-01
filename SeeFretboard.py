@@ -81,6 +81,7 @@ class SeeFretboard():
 
         self.imageName = "default"
         self.imageMeta = ".png"
+        self.imageProgressBar = True
 
         # buttons
         self.tuningLabelButton = Button(
@@ -214,23 +215,23 @@ class SeeFretboard():
         oriImgName = self.imageName
         images = {}
         print("IMAGES Generateing")
-        for i in tqdm(range(len(self.video.getFrames()))):
+        for i in tqdm(range(len(self.video.getFrames())), disable=not(self.imageProgressBar)):
             frame = self.video.getFrames()[i]
             self.setImageName(str(i)+oriImgName)
             if frame in images:
                 image = images[frame]
                 image.copy().save(os.path.join(
-            self.imagePathName, self.getImageName() + self.getImageMeta()))
+                    self.imagePathName, self.getImageName() + self.getImageMeta()))
             else:
                 self.updateFretboard(self.video.getFrames()[i])
                 self.saveAs()
                 image = Image.open(os.path.join(
-            self.imagePathName, self.getImageName() + self.getImageMeta()))
+                    self.imagePathName, self.getImageName() + self.getImageMeta()))
                 images[frame] = image.copy()
         print("IMAGES Generate done")
 
     def deleteAllImages(self):
-        files = glob.glob(os.path.join(self.imagePathName,"*"))
+        files = glob.glob(os.path.join(self.imagePathName, "*"))
         for f in files:
             os.remove(f)
         print("All Images Delete")
@@ -248,8 +249,9 @@ class SeeFretboard():
 
         fourcc = cv2.VideoWriter_fourcc(*self.video.getCodec())
         frameSize = (self.fig.width, self.fig.height)
-        
-        videoWriter = cv2.VideoWriter(self.video.getVideoPathWithName()+"."+self.video.getFileExtension(), fourcc, self.video.getFrameRate(), frameSize)
+
+        videoWriter = cv2.VideoWriter(self.video.getVideoPathWithName(
+        )+"."+self.video.getFileExtension(), fourcc, self.video.getFrameRate(), frameSize)
 
         for image in images:
             frame = cv2.imread(os.path.join(self.getImagePathName(), image))
@@ -258,12 +260,14 @@ class SeeFretboard():
         cv2.destroyAllWindows()
         videoWriter.release()
 
-        print("VIDEO "+ self.video.getVideoName() +" saved at "+self.video.getVideoPathName())
+        print("VIDEO " + self.video.getVideoName() +
+              " saved at "+self.video.getVideoPathName())
 
     def createVideoWithAudio(self, videoWithAudioName):
         self.saveAsVideo()
 
-        videoPath = ffmpeg.input(self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
+        videoPath = ffmpeg.input(
+            self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
         audioPath = ffmpeg.input(self.video.getAudioPathWithName())
         print(audioPath)
 
@@ -272,7 +276,8 @@ class SeeFretboard():
         print("video save with audio done")
 
     def saveVideoWithAudio(self):
-        videoPath = ffmpeg.input(self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
+        videoPath = ffmpeg.input(
+            self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
         audioPath = ffmpeg.input(self.video.getAudioPathWithName())
 
         ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
@@ -565,12 +570,18 @@ class SeeFretboard():
 
     def setImageName(self, name):
         self.imageName = name
-    
+
     def getImageMeta(self):
         return self.imageMeta
 
     def setImageMeta(self, meta):
         self.imageMeta = meta
+    
+    def getImageProgressBar(self):
+        return self.imageProgressBar
+
+    def setImageProgressBar(self, imageProgressBar):
+        self.imageProgressBar = imageProgressBar
 
     def setNoteObject(self, note):
         self.note = note
@@ -591,7 +602,7 @@ class SeeFretboard():
         if (fret != "0" and fret != "-1"):
             fret = int(fret)-self.fretFrom+1
 
-        if (self.hv == "h"):#edit later
+        if (self.hv == "h"):  # edit later
             if (fret == "0"):
                 fret = int(fret)
                 note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
@@ -602,12 +613,13 @@ class SeeFretboard():
                               line_color=self.note.noteEdgeColor,
                               name="circleNote"
                               )
-                cds = ColumnDataSource({'x':[(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2],'y':[(string-1)*self.distanceBetweenStrings]})
+                cds = ColumnDataSource(
+                    {'x': [(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2], 'y': [(string-1)*self.distanceBetweenStrings]})
 
                 text = Text(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                              y=(string-1)*self.distanceBetweenStrings,text="testing",text_color="#96deb3",text_align='center', text_font_size='10pt')
-                
-                self.notes.append(cds,self.fig.add_glyph(text))
+                            y=(string-1)*self.distanceBetweenStrings, text="testing", text_color="#96deb3", text_align='center', text_font_size='10pt')
+
+                self.notes.append(cds, self.fig.add_glyph(text))
 
             elif (fret == "-1"):
                 fret = 0
@@ -638,9 +650,9 @@ class SeeFretboard():
                               name="circleNote"
                               )
                 text = Label(x=(string-1)*self.distanceBetweenStrings,
-                              y=self.distanceBetweenFrets *
-                              (self.getNumOfFrets()+1) +
-                              self.note.getNoteRadius()*4,text="testing",text_align='center', text_font_size='10pt')
+                             y=self.distanceBetweenFrets *
+                             (self.getNumOfFrets()+1) +
+                             self.note.getNoteRadius()*4, text="testing", text_align='center', text_font_size='10pt')
 
             elif (fret == "-1"):
                 fret = 0
@@ -682,7 +694,8 @@ class SeeFretboard():
 
     def removeNote(self):
         pass
-
+    
+    #drawing fretboard getter n setters
     def getTuning(self):
         return self.tuning
 
