@@ -1,11 +1,11 @@
 class CircleNote():
-    def __init__(self):
+    def __init__(self, noteFaceColor = "blue", noteEdgeColor = "black", noteLineWidth=2, noteFill = True, noteRadius = 0.5):
         
-        self.noteRadius = 0.5
-        self.noteFaceColor = "blue"
-        self.noteEdgeColor = "black"
-        self.noteLineWidth = 2
-        self.noteFill = True
+        self.noteFaceColor = noteFaceColor
+        self.noteEdgeColor = noteEdgeColor
+        self.noteLineWidth = noteLineWidth
+        self.noteFill = noteFill
+        self.noteRadius = noteRadius
     
     def getNoteRadius(self):
         return self.noteRadius

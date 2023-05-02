@@ -1,7 +1,7 @@
 # seeFretboard
 
-To show with curdoc need to run server at directory of bokehTest.py<br />
-bokeh serve --show bokehTest.py<br /><br />
+To show with curdoc need to run server at directory of file<br />
+bokeh serve --show fileName.py<br /><br />
 
 ###dependencies
 *python
