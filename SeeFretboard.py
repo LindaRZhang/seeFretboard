@@ -24,6 +24,7 @@ from PIL import Image
 from CirlceNote import CircleNote
 from Video import Video
 
+from music21 import scale
 
 class SeeFretboard():
 
@@ -601,6 +602,9 @@ class SeeFretboard():
     def addNote(self, string, fret):
         note = ""
         
+        if fret > self.fretTo:
+            return None
+        
         if (fret != "0" and fret != "-1"):
             fret = int(fret)-self.fretFrom+1
 
@@ -825,3 +829,135 @@ class SeeFretboard():
     def setNoteType(self, type):
         self.noteType = type
 
+    #adding scale, arpeggio, interval, chord
+    
+    '''
+    Availible/builtin scales
+        Major
+        NaturalMinor
+        HarmonicMinor
+        MelodicMinor
+        PentatonicMajor
+        PentatonicMinor
+        Blues
+        WholeTone
+        Octatonic
+        BebopDominant
+        BebopDorian
+        BebopMajor
+        BebopMelodicMinor
+        BebopMinor
+        Dorian
+        Mixolydian
+        Lydian
+        Locrian
+        Phrygian
+    '''
+    
+    #rootNote = "c", type="major"
+    def addScale(self, rootNote, type, scaleNotes=None):
+        if type.lower() == 'major' or type.lower() == 'ionian':
+            scaleObj = scale.MajorScale(rootNote)
+        elif type.lower() == 'minor' or type.lower() == 'aeolian':
+            scaleObj = scale.MinorScale(rootNote)
+        elif type.lower() == 'harmonic minor':
+            scaleObj = scale.HarmonicMinorScale(rootNote)
+        elif type.lower() == 'melodic minor':
+            scaleObj = scale.MelodicMinorScale(rootNote)
+        elif type.lower() == 'dorian':
+            scaleObj = scale.DorianScale(rootNote)
+        elif type.lower() == 'phrygian':
+            scaleObj = scale.PhrygianScale(rootNote)
+        elif type.lower() == 'lydian':
+            scaleObj = scale.LydianScale(rootNote)
+        elif type.lower() == 'mixolydian':
+            scaleObj = scale.MixolydianScale(rootNote)
+        elif type.lower() == 'locrian':
+            scaleObj = scale.LocrianScale(rootNote)
+        elif type.lower() == 'blues':
+            scaleObj = scale.BluesScale(rootNote)
+        elif type.lower() == 'whole tone':
+            scaleObj = scale.WholeToneScale(rootNote)
+        elif type.lower() == 'chromatic':
+            scaleObj = scale.ChromaticScale(rootNote)
+        elif type.lower() == 'hypodorian':
+            scaleObj = scale.HypodorianScale(rootNote)
+        elif type.lower() == 'hypophrygian':
+            scaleObj = scale.HypophrygianScale(rootNote)
+        elif type.lower() == 'hypolydian':
+            scaleObj = scale.HypolydianScale(rootNote)
+        elif type.lower() == 'hypomixolydian':
+            scaleObj = scale.HypomixolydianScale(rootNote)
+        elif type.lower() == 'hypoaeolian':
+            scaleObj = scale.HypoaeolianScale(rootNote)
+        elif type.lower() == 'octatonic':
+            scaleObj = scale.OctatonicScale(rootNote)
+        elif type.lower() == 'octaverepeating':
+            scaleObj = scale.OctaveRepeatingScale(rootNote)
+        elif type.lower() == 'cyclical':
+            scaleObj = scale.CyclicalScale(rootNote)
+        elif type.lower() == 'ragasawari':
+            scaleObj = scale.RagAsawari(rootNote)
+        elif type.lower() == 'ragmarwa':
+            scaleObj = scale.RagMarwa(rootNote)
+        elif type.lower() == 'weightedhexatonicblues':
+            scaleObj = scale.WeightedHexatonicBlues(rootNote)
+        else:
+            # assume user-defined scale
+            if scaleNotes is None:
+                raise ValueError("Intervals must be provided for a user-defined scale.")
+            pitches = [pitch.Pitch(rootNote)]
+            for i in range(len(scaleNotes)):
+                next_pitch = pitches[i].transpose(scaleNotes[i])
+                pitches.append(next_pitch)
+            scaleObj = scale.ConcreteScale(pitches)
+        
+        pitches = scaleObj.getPitches()
+        
+        for pitch in pitches:
+            fretNum = []
+            stringNum = []
+            
+            fretNum, stringNum= self.convertPitchToFretStringNum(pitch)    
+
+            for index, fret in enumerate(fretNum):
+                if(index == 6):
+                    break
+                newFret = fret+12  
+                fretNum.append(newFret)
+
+            # add the notes to the fretboard
+            print(fretNum)
+            for i in range(len(fretNum)):
+                fret = fretNum[i]
+                if(i>5):
+                    i=i-6
+                print(i)
+                string = stringNum[i]
+                self.addNote(string, fret)
+
+    #MAYBE PUT somehwere else
+    #given pitch, give me all of the places it is located in fret, string
+    def convertPitchToFretStringNum(self, pitch):
+        #tuning = TabSequence.getStringMidi()#util later
+        tuning = [40 ,45 ,50 ,55 ,59, 64]
+        frets = []
+        strings = []
+        
+        midiPitch=pitch.midi
+
+        for stringIndex, stringPitch in enumerate(tuning):
+            while midiPitch <= stringPitch:
+                midiPitch += 12
+            while midiPitch >= stringPitch + 12:
+                midiPitch -= 12
+            fret = round(abs(stringPitch- midiPitch))
+
+            if fret >= (self.fretFrom-1) and fret <= self.fretTo:
+                frets.append(fret)
+                strings.append(stringIndex+1)
+
+        return frets, strings
+
+        
+            

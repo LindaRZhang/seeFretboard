@@ -21,6 +21,7 @@ soundfile
 *re
 *librosa
 *PIL
+*Music21
 
 <br />
 <br />

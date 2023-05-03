@@ -108,6 +108,9 @@ class TabSequence(Frame):
     def getStringFrets(self):
         return [self.EStringFrets, self.AStringFrets, self.DStringFrets, self.GStringFrets, self.BStringFrets, self.eStringFrets]
 
+    def getStringMidi(self):
+        return [self.Elow,self.A,self.D,self.G,self.B,self.EHigh]
+    
     def getMidiPitches(self):
         arr = [self.EMidiPitches, self.AMidiPitches, self.DMidiPitches,
                self.GMidiPitches, self.BMidiPitches, self.eMidiPitches]
