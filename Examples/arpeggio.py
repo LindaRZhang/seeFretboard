@@ -7,8 +7,7 @@ from SeeFretboard import SeeFretboard
 fretboard = SeeFretboard("v", 6, 1, 12)
 fretboard.drawVerticalFretboard()
 
-#fretboard.addScale("c","major")
-fretboard.addScale("c","major pentatonic", [1,2,3,5,6])
-#fretboard.addScale("c","harmonic minor")
+fretboard.addArpeggio("c","minor")
+
 
 fretboard.showFretboard()

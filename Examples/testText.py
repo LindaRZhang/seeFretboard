@@ -31,7 +31,7 @@ plot.add_glyph(glyph)
 # xaxis = LinearAxis()
 # plot.add_layout(xaxis, 'below')
 
-# yaxis = LinearAxis()
+axis = LinearAxis()
 # plot.add_layout(yaxis, 'left')
 
 # plot.add_layout(Grid(dimension=0, ticker=xaxis.ticker))
