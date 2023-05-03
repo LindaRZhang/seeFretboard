@@ -24,7 +24,8 @@ from PIL import Image
 from CirlceNote import CircleNote
 from Video import Video
 
-from music21 import scale
+from music21 import scale, interval
+from music21 import pitch as m21Pitch
 
 class SeeFretboard():
 
@@ -855,7 +856,7 @@ class SeeFretboard():
     '''
     
     #rootNote = "c", type="major"
-    def addScale(self, rootNote, type, scaleNotes=None):
+    def addScale(self, rootNote, type, scaleDegrees=None):
         if type.lower() == 'major' or type.lower() == 'ionian':
             scaleObj = scale.MajorScale(rootNote)
         elif type.lower() == 'minor' or type.lower() == 'aeolian':
@@ -904,13 +905,11 @@ class SeeFretboard():
             scaleObj = scale.WeightedHexatonicBlues(rootNote)
         else:
             # assume user-defined scale
-            if scaleNotes is None:
+            if scaleDegrees is None:
                 raise ValueError("Intervals must be provided for a user-defined scale.")
-            pitches = [pitch.Pitch(rootNote)]
-            for i in range(len(scaleNotes)):
-                next_pitch = pitches[i].transpose(scaleNotes[i])
-                pitches.append(next_pitch)
-            scaleObj = scale.ConcreteScale(pitches)
+            
+            scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval.GenericInterval(degree)) for degree in scaleDegrees]
+            scaleObj = scale.ConcreteScale(rootNote,scalePitches)
         
         pitches = scaleObj.getPitches()
         
@@ -927,12 +926,10 @@ class SeeFretboard():
                 fretNum.append(newFret)
 
             # add the notes to the fretboard
-            print(fretNum)
             for i in range(len(fretNum)):
                 fret = fretNum[i]
                 if(i>5):
                     i=i-6
-                print(i)
                 string = stringNum[i]
                 self.addNote(string, fret)
 
