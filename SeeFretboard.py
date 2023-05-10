@@ -23,6 +23,7 @@ from PIL import Image
 
 from CirlceNote import CircleNote
 from Video import Video
+from Util import *
 
 from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
@@ -58,7 +59,7 @@ class SeeFretboard():
         self.labels = []
         self.noteTypes = {
             'prediction': CircleNote(), #default using that
-            'groundTruth': CircleNote("red"),
+            'groundTruth': CircleNote(noteFaceColor="red"),
         }
         self.noteType = "prediction"
 
@@ -129,6 +130,7 @@ class SeeFretboard():
         self.pitchesScaleDegrees = [""]
         self.pitchesType = "pitchesNames"
         self.pitchesIndex = 0
+        self.scaleCustom = False
 
     def inputChordButtonClicked(self):
         self.updateFretboard(self.inputChordInput.value)
@@ -622,6 +624,10 @@ class SeeFretboard():
             pitchesType = self.pitchesWithOctave
         elif self.getPitchesType() == "pitchesScaleDegrees":
             pitchesType = self.pitchesScaleDegrees
+    
+        print(self.pitchesNames)
+        print(self.pitchesScaleDegrees)
+        print(self.getPitchesIndex())
 
         textValue = str(pitchesType[self.getPitchesIndex()])
         textValue = textValue.replace("-","b")
@@ -645,8 +651,8 @@ class SeeFretboard():
                               )
                 
                 label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                              y=(string-1)*self.distanceBetweenStrings,
-                                        text=textValue, text_align='center', text_font_size='10pt')
+                              y=(string-1)*self.distanceBetweenStrings-self.distanceBetweenStrings/12-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
+                                        text=textValue, text_align='center', text_font_size='10pt',text_color='white')
                 self.labels.append(label)
                 self.fig.add_layout(label)
                 
@@ -685,8 +691,8 @@ class SeeFretboard():
                               )
                 
                 label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                              y=(string-1)*self.distanceBetweenStrings,
-                                        text=textValue, text_align='center', text_font_size='10pt')
+                              y=(string-1)*self.distanceBetweenStrings-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
+                                        text=textValue, text_align='center', text_font_size='10pt',text_color='white')
                 self.labels.append(label)
                 self.fig.add_layout(label)
         else:
@@ -696,7 +702,7 @@ class SeeFretboard():
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+1) +
                               self.getNoteTypes(self.getNoteType()).getNoteRadius()*4,
-                              radius=self.getNoteTypes(self.getNoteType()).noteRadius/2,
+                              radius=self.getNoteTypes(self.getNoteType()).noteRadius,
                               fill_color=self.getNoteTypes(self.getNoteType()).noteFaceColor,
                               line_width=self.getNoteTypes(self.getNoteType()).noteLineWidth,
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
@@ -705,8 +711,8 @@ class SeeFretboard():
                 label = Label(x=(string-1)*self.distanceBetweenStrings,
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+1) +
-                              self.getNoteTypes(self.getNoteType()).getNoteRadius()*4,
-                                        text=textValue, text_align='center', text_font_size='10pt')
+                              self.getNoteTypes(self.getNoteType()).getNoteRadius()*4-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
+                                        text=textValue, text_align='center', text_font_size='10pt', text_color='white',)
                 self.labels.append(label)
                 self.fig.add_layout(label)
 
@@ -746,7 +752,7 @@ class SeeFretboard():
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+2) - (fret) *
                               self.distanceBetweenFrets - self.distanceBetweenFrets/2,
-                              radius=self.getNoteTypes(self.getNoteType()).noteRadius/2,
+                              radius=self.getNoteTypes(self.getNoteType()).noteRadius,
                               fill_color=self.getNoteTypes(self.getNoteType()).noteFaceColor,
                               line_width=self.getNoteTypes(self.getNoteType()).noteLineWidth,
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
@@ -756,8 +762,8 @@ class SeeFretboard():
                 label = Label(x=(string-1)*self.distanceBetweenStrings,
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+2) - (fret) *
-                              self.distanceBetweenFrets - self.distanceBetweenFrets/2,
-                                        text=textValue, text_align='center', text_font_size='10pt')
+                              self.distanceBetweenFrets - self.distanceBetweenFrets/2-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
+                                        text=textValue, text_align='center', text_font_size='10pt',text_color='white')
                 self.labels.append(label)
                 self.fig.add_layout(label)
                 
@@ -915,6 +921,7 @@ class SeeFretboard():
     
     #rootNote = "c", type="major"
     def addScale(self, rootNote, type, intervalsDegrees=None):
+        
         if type.lower() == 'major' or type.lower() == 'ionian':
             scaleObj = scale.MajorScale(rootNote)
         elif type.lower() == 'minor' or type.lower() == 'aeolian':
@@ -962,36 +969,59 @@ class SeeFretboard():
         elif type.lower() == 'weightedhexatonicblues':
             scaleObj = scale.WeightedHexatonicBlues(rootNote)
         elif type.lower() == "minorpentatonic":
-            intervals = [interval.Interval(intervalString) for intervalString in 'p1 m3 p4 p5 m7'.split()]
+            intervals = 'P1 m3 P4 P5 m7'.split()
+            intervals.append("P1")
+            self.getNoteTypes(self.getNoteType()).setIntervals(intervals)
             scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+            self.getNoteTypes(self.getNoteType()).setScaleDegrees(intervalsToScaleDegrees(intervals))
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
+            self.scaleCustom = True
+
         elif type.lower() == "majorpentatonic":
-            intervals = [interval.Interval(intervalString) for intervalString in 'p1 M2 M3 p5 M6'.split()]
+            intervals = 'P1 M2 M3 P5 M6'.split()
+            intervals.append("P1")
+            self.getNoteTypes(self.getNoteType()).setIntervals(intervals)
             scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+            self.getNoteTypes(self.getNoteType()).setScaleDegrees(intervalsToScaleDegrees(intervals))
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
+            self.scaleCustom = True
         else:
             # assume user-defined scale
             if intervalsDegrees is None:
                 raise ValueError("Intervals must be provided for a user-defined scale.")
             
-            intervals = [interval.Interval(intervalString) for intervalString in intervalsDegrees.split()]
-            print(intervals)
+            intervals = intervalsDegrees.split()
+            intervals.append("P1")
+            self.getNoteTypes(self.getNoteType()).setIntervals(intervals)
             scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
-            print(scalePitches)
+            self.getNoteTypes(self.getNoteType()).setScaleDegrees(intervalsToScaleDegrees(intervals))
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
-            print(scaleObj)
-            print(scaleObj.getPitches())
-
+            self.scaleCustom = True
+        
         pitches = scaleObj.getPitches()
+        print(pitches)
+        self.addPitchesToFretBoard(pitches, scaleObj)
 
-        self.addPitchesToFretBoard(pitches, rootNote)
-
-    def addPitchesToFretBoard(self, pitches, rootNote):
+    def addPitchesToFretBoard(self, pitches, scaleObj):
         #Add to Arrays for different options
         self.setPitchesNames([p.name for p in pitches])
         self.setPitchWithOctave([p.nameWithOctave for p in pitches])
-        rootNote = key.Key(rootNote)
-        self.setPitchesScaleDegrees([rootNote.getScaleDegreeFromPitch(p) for p in pitches])
+        
+        if(self.scaleCustom == True):
+            self.setPitchesScaleDegrees(self.getNoteTypes(self.getNoteType()).getScaleDegrees())
+        else:
+            print("HEREEEEE")
+            self.setPitchesScaleDegrees([])
+            #for nonConcrete scale
+            for p in pitches:
+                if(p.alter == -1.0):
+                    self.appendPitchesScaleDegree("b"+str(scaleObj.getScaleDegreeFromPitch(p)))
+                elif(p.alter == 1.0):
+                    self.appendPitchesScaleDegree("#"+str(scaleObj.getScaleDegreeFromPitch(p)))
+                else:
+                    self.appendPitchesScaleDegree(scaleObj.getScaleDegreeFromPitch(p))
+        
+        print(self.getPitchesScaleDegrees())
 
         for pitchIndex, pitch in enumerate(pitches):
             fretNum = []
@@ -1122,18 +1152,27 @@ class SeeFretboard():
     def getPitchesNames(self):
         return self.pitchesNames
     
+    def appendPitchesName(self, value):
+        self.pitchesNames.append(value)
+
     def setPitchesNames(self, value):
         self.pitchesNames = value
     
     def getPitchWithOctave(self):
         return self.pitchesWithOctave
     
+    def appendPitchWithOctave(self, value):
+        self.pitchesWithOctave.append(value)
+
     def setPitchWithOctave(self, value):
         self.pitchesWithOctave = value
     
     def getPitchesScaleDegrees(self):
         return self.pitchesScaleDegrees
     
+    def appendPitchesScaleDegree(self, value):
+        self.pitchesScaleDegrees.append(value)
+
     def setPitchesScaleDegrees(self, value):
         self.pitchesScaleDegrees = value
     
