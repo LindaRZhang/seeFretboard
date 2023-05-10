@@ -124,9 +124,9 @@ class SeeFretboard():
         self.playing = False
 
         #notes/pitches for scales n arpeggios
-        self.pitchesNames = []
-        self.pitceshWithOctave = []
-        self.pitchesScaleDegrees = []
+        self.pitchesNames = [""]
+        self.pitceshWithOctave = [""]
+        self.pitchesScaleDegrees = [""]
         self.pitchesType = "pitchesNames"
         self.pitchesIndex = 0
 
@@ -615,9 +615,7 @@ class SeeFretboard():
     # -1 = x
     def addNote(self, string, fret):
         note = ""
-        
-        print(self.getPitchesType())
-        print("HEREEE")
+    
         if self.getPitchesType() == "pitchesNames":
             pitchesType = self.pitchesNames
         elif self.getPitchesType() == "pitchesWithOctave":
@@ -642,6 +640,12 @@ class SeeFretboard():
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
                               name="circleNote"
                               )
+                
+                label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
+                              y=(string-1)*self.distanceBetweenStrings,
+                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                self.labels.append(label)
+                self.fig.add_layout(label)
                 
             elif (fret == "-1"):
                 fret = 0
@@ -676,6 +680,12 @@ class SeeFretboard():
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
                               name="circleNote"
                               )
+                
+                label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
+                              y=(string-1)*self.distanceBetweenStrings,
+                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                self.labels.append(label)
+                self.fig.add_layout(label)
         else:
             if (fret == "0"):
                 fret = int(fret)
