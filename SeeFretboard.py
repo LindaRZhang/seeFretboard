@@ -623,6 +623,9 @@ class SeeFretboard():
         elif self.getPitchesType() == "pitchesScaleDegrees":
             pitchesType = self.pitchesScaleDegrees
 
+        print(self.getPitchesIndex())
+        textValue = str(pitchesType[self.getPitchesIndex()])
+
         if int(fret) > self.fretTo:
             return None
         
@@ -643,7 +646,7 @@ class SeeFretboard():
                 
                 label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
                               y=(string-1)*self.distanceBetweenStrings,
-                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                                        text=textValue, text_align='center', text_font_size='10pt')
                 self.labels.append(label)
                 self.fig.add_layout(label)
                 
@@ -680,10 +683,11 @@ class SeeFretboard():
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
                               name="circleNote"
                               )
-                
+                print(pitchesType)
+                print(pitchesType[self.getPitchesIndex()])
                 label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
                               y=(string-1)*self.distanceBetweenStrings,
-                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                                        text=textValue, text_align='center', text_font_size='10pt')
                 self.labels.append(label)
                 self.fig.add_layout(label)
         else:
@@ -703,7 +707,7 @@ class SeeFretboard():
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+1) +
                               self.getNoteTypes(self.getNoteType()).getNoteRadius()*4,
-                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                                        text=textValue, text_align='center', text_font_size='10pt')
                 self.labels.append(label)
                 self.fig.add_layout(label)
 
@@ -754,7 +758,7 @@ class SeeFretboard():
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+2) - (fret) *
                               self.distanceBetweenFrets - self.distanceBetweenFrets/2,
-                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                                        text=textValue, text_align='center', text_font_size='10pt')
                 self.labels.append(label)
                 self.fig.add_layout(label)
                 
@@ -968,15 +972,15 @@ class SeeFretboard():
         
         pitches = scaleObj.getPitches()
 
+        self.addPitchesToFretBoard(pitches, rootNote)
+
+    def addPitchesToFretBoard(self, pitches, rootNote):
         #Add to Arrays for different options
         self.setPitchesNames([p.name for p in pitches])
         self.setPitchWithOctave([p.nameWithOctave for p in pitches])
         rootNote = key.Key(rootNote)
         self.setPitchesScaleDegrees([rootNote.getScaleDegreeFromPitch(p) for p in pitches])
 
-        self.addPitchesToFretBoard(pitches, self.pitchesType)
-
-    def addPitchesToFretBoard(self, pitches, type):
         for pitchIndex, pitch in enumerate(pitches):
             fretNum = []
             stringNum = []
@@ -1092,7 +1096,7 @@ class SeeFretboard():
                 print("test")
                 print(chordObj)
                 print(pitches)
-            self.addPitchesToFretBoard(pitches)
+            self.addPitchesToFretBoard(pitches, rootNote)
     
     #FUNCTIONS pitchesArrays
     def getPitchesNames(self):
