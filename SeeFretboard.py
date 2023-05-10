@@ -24,7 +24,7 @@ from PIL import Image
 from CirlceNote import CircleNote
 from Video import Video
 
-from music21 import scale, interval
+from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
 
 class SeeFretboard():
@@ -55,6 +55,7 @@ class SeeFretboard():
 
         # notes circle
         self.notes = []
+        self.labels = []
         self.noteTypes = {
             'prediction': CircleNote(), #default using that
             'groundTruth': CircleNote("red"),
@@ -121,6 +122,13 @@ class SeeFretboard():
         self.playButton = Button(label="Play")
         self.playButton.on_click(self.playButtonClicked)
         self.playing = False
+
+        #notes/pitches for scales n arpeggios
+        self.pitchesNames = []
+        self.pitceshWithOctave = []
+        self.pitchesScaleDegrees = []
+        self.pitchesType = "pitchesNames"
+        self.pitchesIndex = 0
 
     def inputChordButtonClicked(self):
         self.updateFretboard(self.inputChordInput.value)
@@ -415,7 +423,7 @@ class SeeFretboard():
 
         self.drawFretLabel(distanceBetweenFrets, fretlength)
 
-        self.drawInlay()
+        self.drawInlay()                
 
         self.fig.axis.visible = False
         self.fig.xgrid.visible = False
@@ -551,6 +559,11 @@ class SeeFretboard():
         for note in notesCopy:
             self.fig.renderers.remove(note)
             self.notes.remove(note)
+        
+        for label in self.labels:
+            label.text = ""
+        
+        self.labels = []
 
     def updateFretboard(self, notes):
         self.clearFretboard()
@@ -603,7 +616,16 @@ class SeeFretboard():
     def addNote(self, string, fret):
         note = ""
         
-        if fret > self.fretTo:
+        print(self.getPitchesType())
+        print("HEREEE")
+        if self.getPitchesType() == "pitchesNames":
+            pitchesType = self.pitchesNames
+        elif self.getPitchesType() == "pitchesWithOctave":
+            pitchesType = self.pitchesWithOctave
+        elif self.getPitchesType() == "pitchesScaleDegrees":
+            pitchesType = self.pitchesScaleDegrees
+
+        if int(fret) > self.fretTo:
             return None
         
         if (fret != "0" and fret != "-1"):
@@ -667,6 +689,13 @@ class SeeFretboard():
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
                               name="circleNote"
                               )
+                label = Label(x=(string-1)*self.distanceBetweenStrings,
+                              y=self.distanceBetweenFrets *
+                              (self.getNumOfFrets()+1) +
+                              self.getNoteTypes(self.getNoteType()).getNoteRadius()*4,
+                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                self.labels.append(label)
+                self.fig.add_layout(label)
 
             elif (fret == "-1"):
                 fret = 0
@@ -691,6 +720,13 @@ class SeeFretboard():
                     source, lineOne))
                 self.notes.append(self.fig.add_glyph(
                     source, lineTwo))
+                
+                label = Label(x=xPos,
+                              y=yPos,
+                                        text="Ttest", text_align='center', text_font_size='10pt')
+                self.labels.append(label)
+                self.fig.add_layout(label)
+
             else:
                 fret = int(fret)
                 note = Circle(x=(string-1)*self.distanceBetweenStrings,
@@ -703,6 +739,15 @@ class SeeFretboard():
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
                               name="circleNote"
                               )
+                
+                label = Label(x=(string-1)*self.distanceBetweenStrings,
+                              y=self.distanceBetweenFrets *
+                              (self.getNumOfFrets()+2) - (fret) *
+                              self.distanceBetweenFrets - self.distanceBetweenFrets/2,
+                                        text=pitchesType[self.getPitchesIndex()], text_align='center', text_font_size='10pt')
+                self.labels.append(label)
+                self.fig.add_layout(label)
+                
         if (note != ""):
             self.notes.append(self.fig.add_glyph(note))
 
@@ -912,11 +957,21 @@ class SeeFretboard():
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
         
         pitches = scaleObj.getPitches()
-        
-        for pitch in pitches:
+
+        #Add to Arrays for different options
+        self.setPitchesNames([p.name for p in pitches])
+        self.setPitchWithOctave([p.nameWithOctave for p in pitches])
+        rootNote = key.Key(rootNote)
+        self.setPitchesScaleDegrees([rootNote.getScaleDegreeFromPitch(p) for p in pitches])
+
+        self.addPitchesToFretBoard(pitches, self.pitchesType)
+
+    def addPitchesToFretBoard(self, pitches, type):
+        for pitchIndex, pitch in enumerate(pitches):
             fretNum = []
             stringNum = []
-            
+            self.setPitchesIndex(pitchIndex)
+
             fretNum, stringNum= self.convertPitchToFretStringNum(pitch)    
 
             for index, fret in enumerate(fretNum):
@@ -955,6 +1010,110 @@ class SeeFretboard():
                 strings.append(stringIndex+1)
 
         return frets, strings
+    
+    '''
+    ('major', ['1,3,5', ['', 'M', 'maj']]), 
+    ('minor', ['1,-3,5', ['m', 'min']]),  
+    ('augmented', ['1,3,#5', ['+', 'aug']]),  
+    ('diminished', ['1,-3,-5', ['dim', 'o']]),
 
-        
-            
+    # sevenths
+    ('dominant-seventh', ['1,3,5,-7', ['7', 'dom7', ]]),  
+    ('major-seventh', ['1,3,5,7', ['maj7', 'M7']]), 
+    ('minor-major-seventh', ['1,-3,5,7', ['mM7', 'm#7', 'minmaj7']]),  
+    ('minor-seventh', ['1,-3,5,-7', ['m7', 'min7']]), 
+    ('augmented-major-seventh', ['1,3,#5,7', ['+M7', 'augmaj7']]),  
+    ('augmented-seventh', ['1,3,#5,-7', ['7+', '+7', 'aug7']]), 
+    ('half-diminished-seventh', ['1,-3,-5,-7', ['ø7', 'm7b5']]),  
+    ('diminished-seventh', ['1,-3,-5,--7', ['o7', 'dim7']]), 
+    ('seventh-flat-five', ['1,3,-5,-7', ['dom7dim5']]),  
+
+    # sixths
+    ('major-sixth', ['1,3,5,6', ['6']]),  
+    ('minor-sixth', ['1,-3,5,6', ['m6', 'min6']]),  
+
+    # ninths
+    ('major-ninth', ['1,3,5,7,9', ['M9', 'Maj9']]),  
+    ('dominant-ninth', ['1,3,5,-7,9', ['9', 'dom9']]),  
+    ('minor-major-ninth', ['1,-3,5,7,9', ['mM9', 'minmaj9']]),  
+    ('minor-ninth', ['1,-3,5,-7,9', ['m9', 'min9']]),  
+    ('augmented-major-ninth', ['1,3,#5,7,9', ['+M9', 'augmaj9']]),  
+    ('augmented-dominant-ninth', ['1,3,#5,-7,9', ['9#5', '+9', 'aug9']]),  
+    ('half-diminished-ninth', ['1,-3,-5,-7,9', ['ø9']]),  
+    ('half-diminished-minor-ninth', ['1,-3,-5,-7,-9', ['øb9']]),  
+    ('diminished-ninth', ['1,-3,-5,--7,9', ['o9', 'dim9']]),  
+    ('diminished-minor-ninth', ['1,-3,-5,--7,-9', ['ob9', 'dimb9']]),  
+
+    # elevenths
+    ('dominant-11th', ['1,3,5,-7,9,11', ['11', 'dom11']]),  
+    ('major-11th', ['1,3,5,7,9,11', ['M11', 'Maj11']]),  
+    ('minor-major-11th', ['1,-3,5,7,9,11', ['mM11', 'minmaj11']]),  
+    ('minor-11th', ['1,-3,5,-7,9,11', ['m11', 'min11']]),  
+    ('augmented-major-11th', ['1,3,#5,7,9,11', ['+M11', 'augmaj11']]),  
+    ('augmented-11th', ['1,3,#5,-7,9,11', ['+11', 'aug11']]),  
+    ('half-diminished-11th', ['1,-3,-5,-7,9,11', ['ø11']]),  
+    ('diminished-11th', ['1,-3,-5,--7,9,11', ['o11', 'dim11']]),  
+
+    # thirteenths
+    ('major-13th', ['1,3,5,7,9,11,13', ['M13', 'Maj13']]),  
+    ('dominant-13th', ['1,3,5,-7,9,11,13', ['13', 'dom13']]),  
+    ('minor-major-13th', ['1,-3,5,7,9,11,13', ['mM13', 'minmaj13']]),  
+    ('minor-13th', ['1,-3,5,-7,9,11,13', ['m13', 'min13']]),  
+    ('augmented-major-13th', ['1,3,#5,7,9,11,13', ['+M13', 'augmaj13']]),  
+    ('augmented-dominant-13th', ['1,3,#5,-7,9,11,13', ['+13', 'aug13']]),  
+    ('half-diminished-13th', ['1,-3,-5,-7,9,11,13', ['ø13']]),  
+
+    # other
+    ('suspended-second', ['1,2,5', ['sus2']]),  
+    ('suspended-fourth', ['1,4,5', ['sus', 'sus4']]),  
+    ('suspended-fourth-seventh', ['1,4,5,-7', ['7sus', '7sus4']]),  
+    ('Neapolitan', ['1,2-,3,5-', ['N6']]),  
+    ('Italian', ['1,#4,-6', ['It+6', 'It']]),  
+    ('French', ['1,2,#4,-6', ['Fr+6', 'Fr']]),  
+    ('German', ['1,-3,#4,-6', ['Gr+6', 'Ger']]),  
+    ('pedal', ['1', ['pedal']]),  
+    ('power', ['1,5', ['power']]),  
+    ('Tristan', ['1,#4,#6,#9', ['tristan']]),  
+    '''
+    def addArpeggio(self, rootNote, type, bass="", pitches=""):
+            if pitches == "":
+                chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
+                pitches = chordObj.pitches
+                print("test")
+                print(chordObj)
+                print(pitches)
+            self.addPitchesToFretBoard(pitches)
+    
+    #FUNCTIONS pitchesArrays
+    def getPitchesNames(self):
+        return self.pitchesNames
+    
+    def setPitchesNames(self, value):
+        self.pitchesNames = value
+    
+    def getPitchWithOctave(self):
+        return self.pitchesWithOctave
+    
+    def setPitchWithOctave(self, value):
+        self.pitchesWithOctave = value
+    
+    def getPitchesScaleDegrees(self):
+        return self.pitchesScaleDegrees
+    
+    def setPitchesScaleDegrees(self, value):
+        self.pitchesScaleDegrees = value
+    
+    def getPitchesType(self):
+        return self.pitchesType
+    
+    def setPitchesType(self, value):
+        self.pitchesType = value
+    
+    def getPitchesIndex(self):
+        return self.pitchesIndex
+    
+    def addPitchesIndex(self, amount=1):
+        self.pitchesIndex+=amount
+
+    def setPitchesIndex(self, value):
+        self.pitchesIndex = value
