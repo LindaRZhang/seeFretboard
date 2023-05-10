@@ -7,7 +7,11 @@ from SeeFretboard import SeeFretboard
 fretboard = SeeFretboard("v", 6, 1, 12)
 fretboard.drawVerticalFretboard()
 
-fretboard.addArpeggio("c","minor")
+#fretboard.setPitchesType("pitchesWithOctave")
+#fretboard.setPitchesType("pitchesScaleDegrees")
 
+#fretboard.addArpeggio("c","minor")
+#fretboard.addArpeggio("c") #just show 1 note or octaves
+fretboard.addArpeggio("c","","P1 M3 P5 M7")
 
 fretboard.showFretboard()

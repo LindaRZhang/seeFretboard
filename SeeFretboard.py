@@ -623,8 +623,8 @@ class SeeFretboard():
         elif self.getPitchesType() == "pitchesScaleDegrees":
             pitchesType = self.pitchesScaleDegrees
 
-        print(self.getPitchesIndex())
         textValue = str(pitchesType[self.getPitchesIndex()])
+        textValue = textValue.replace("-","b")
 
         if int(fret) > self.fretTo:
             return None
@@ -683,8 +683,7 @@ class SeeFretboard():
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
                               name="circleNote"
                               )
-                print(pitchesType)
-                print(pitchesType[self.getPitchesIndex()])
+                
                 label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
                               y=(string-1)*self.distanceBetweenStrings,
                                         text=textValue, text_align='center', text_font_size='10pt')
@@ -915,7 +914,7 @@ class SeeFretboard():
     '''
     
     #rootNote = "c", type="major"
-    def addScale(self, rootNote, type, scaleDegrees=None):
+    def addScale(self, rootNote, type, intervalsDegrees=None):
         if type.lower() == 'major' or type.lower() == 'ionian':
             scaleObj = scale.MajorScale(rootNote)
         elif type.lower() == 'minor' or type.lower() == 'aeolian':
@@ -962,14 +961,27 @@ class SeeFretboard():
             scaleObj = scale.RagMarwa(rootNote)
         elif type.lower() == 'weightedhexatonicblues':
             scaleObj = scale.WeightedHexatonicBlues(rootNote)
+        elif type.lower() == "minorpentatonic":
+            intervals = [interval.Interval(intervalString) for intervalString in 'p1 m3 p4 p5 m7'.split()]
+            scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+            scaleObj = scale.ConcreteScale(rootNote,scalePitches)
+        elif type.lower() == "majorpentatonic":
+            intervals = [interval.Interval(intervalString) for intervalString in 'p1 M2 M3 p5 M6'.split()]
+            scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+            scaleObj = scale.ConcreteScale(rootNote,scalePitches)
         else:
             # assume user-defined scale
-            if scaleDegrees is None:
+            if intervalsDegrees is None:
                 raise ValueError("Intervals must be provided for a user-defined scale.")
             
-            scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval.GenericInterval(degree)) for degree in scaleDegrees]
+            intervals = [interval.Interval(intervalString) for intervalString in intervalsDegrees.split()]
+            print(intervals)
+            scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+            print(scalePitches)
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
-        
+            print(scaleObj)
+            print(scaleObj.getPitches())
+
         pitches = scaleObj.getPitches()
 
         self.addPitchesToFretBoard(pitches, rootNote)
@@ -1089,13 +1101,21 @@ class SeeFretboard():
     ('power', ['1,5', ['power']]),  
     ('Tristan', ['1,#4,#6,#9', ['tristan']]),  
     '''
-    def addArpeggio(self, rootNote, type, bass="", pitches=""):
-            if pitches == "":
+    def addArpeggio(self, rootNote, type="", pitches="", bass=""):
+            print(type)
+            if type != "":
                 chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
                 pitches = chordObj.pitches
                 print("test")
                 print(chordObj)
                 print(pitches)
+
+            else:
+                intervals = [interval.Interval(intervalString) for intervalString in pitches.split()]
+                scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+                scaleObj = scale.ConcreteScale(rootNote,scalePitches)
+                pitches = scaleObj.getPitches()
+
             self.addPitchesToFretBoard(pitches, rootNote)
     
     #FUNCTIONS pitchesArrays
