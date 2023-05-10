@@ -12,12 +12,11 @@ from SeeFretboard import SeeFretboard
 fretboard = SeeFretboard("h", 6, 1, 12)
 fretboard.drawHorizontalFretboard()
 
-#fretboard.addScale("c","major")
-fretboard.setPitchesType("pitchesWithOctave")
-
+#fretboard.setPitchesType("pitchesWithOctave")
 #fretboard.setPitchesType("pitchesScaleDegrees")
 
-fretboard.addScale("c","major pentatonic", [1,2,3,5,6])
+fretboard.addScale("c","major")
+#fretboard.addScale("c","major pentatonic", [1,2,3,5,6])
 #fretboard.addScale("c","harmonic minor")
 
 fretboard.showFretboard()
