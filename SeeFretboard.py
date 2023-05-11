@@ -1,5 +1,5 @@
 from bokeh.plotting import figure, show
-from bokeh.models import Line, Circle, Label, Button, CustomJS, Slider, Range1d, ColumnDataSource, Text
+from bokeh.models import Line, Circle, Label, Button, CustomJS, Range1d, ColumnDataSource, Text
 from bokeh.models.widgets import TextInput
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
@@ -116,14 +116,6 @@ class SeeFretboard():
         self.video = Video(0, 10, 0, 0.1, 10)
         self.videoFrames = self.video.frames
 
-        self.timeslider = Slider(start=self.video.startTime, end=self.video.endTime,
-                                 value=self.video.currentFrame, step=self.video.frameStep, title="Time")
-        # self.timeslider.on_change('value', self.sliderTimeCallback)
-
-        self.playButton = Button(label="Play")
-        self.playButton.on_click(self.playButtonClicked)
-        self.playing = False
-
         #notes/pitches for scales n arpeggios
         self.pitchesNames = [""]
         self.pitceshWithOctave = [""]
@@ -135,51 +127,9 @@ class SeeFretboard():
     def inputChordButtonClicked(self):
         self.updateFretboard(self.inputChordInput.value)
 
-    # video related
-    def playButtonClicked(self):
-        if (self.playing):
-            self.playButton.label = "Play"
-            self.playing = False
-        else:
-            self.playButton.label = "Pause"
-            self.playing = True
-            while (self.playing != False):
-                self.updatingFretboardAnimation()
-
-    @without_document_lock
-    def updatingFretboardAnimation(self):
-
-        if (self.video.currentFrame >= self.video.endTime):
-            self.playButton.label = "Play"
-            self.playing = False
-            self.video.currentFrame = 0
-
-            self.updateFretboard(str(list(self.video.frames.values())[0]))
-            return
-
-        # if in the frame there is a chord draw chord
-        if (self.video.getCurrentFrame() in self.video.frames.keys()):
-            currentChord = self.video.frames[self.video.currentFrame]
-            self.updateFretboard(currentChord)
-
-        newCurrentFrame = self.video.getCurrentFrame()+self.video.getFrameStep()
-        self.video.setCurrentFrame(newCurrentFrame)
-
-        self.timeslider.update(
-            start=0, end=3, value=self.video.getCurrentSecond(), step=self.video.frameStep)
-
-    # def sliderTimeCallback(self, attr, old, new):
-    #     self.video.setCurrentFrame(self.timeslider.value)
-    #     for i in range(self.video.getFramesLength):
-    #         key1, key2 = list(self.video.getFramesKeys)[i:i+2]
-    #         if (self.timeslider.value > key1 and self.timeslider.value < key2 ):
-    #             self.updateFretboard(self.video.getFrame(key1))
-
     def setVideo(self, video):
         self.video = video
-        self.timeslider.update(start=self.video.getStartTime(), end=self.video.getEndTime(
-        ), value=self.video.getCurrentFrame(), step=self.video.getFrameStep())
-
+    
     def getVideo(self):
         return self.video
 
@@ -547,7 +497,7 @@ class SeeFretboard():
         # self.notes.append(self.fig.add_glyph(circleNote))
 
     def showFretboard(self):
-        layoutF = layout(self.fig, self.timeslider, self.playButton,
+        layoutF = layout(self.fig,
                          self.toggleButtons, self.notesOptions)
         curdoc().add_root(layoutF)
         # show(layoutF)
@@ -624,10 +574,6 @@ class SeeFretboard():
             pitchesType = self.pitchesWithOctave
         elif self.getPitchesType() == "pitchesScaleDegrees":
             pitchesType = self.pitchesScaleDegrees
-    
-        print(self.pitchesNames)
-        print(self.pitchesScaleDegrees)
-        print(self.getPitchesIndex())
 
         textValue = str(pitchesType[self.getPitchesIndex()])
         textValue = textValue.replace("-","b")
@@ -640,6 +586,7 @@ class SeeFretboard():
 
         if (self.hv == "h"):  # edit later
             if (fret == "0"):
+                print("here")
                 fret = int(fret)
                 note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
                               y=(string-1)*self.distanceBetweenStrings,
@@ -680,6 +627,7 @@ class SeeFretboard():
                     source, lineTwo))
                 
             else:
+                print(self.getNoteTypes(self.getNoteType()).noteRadius)
                 fret = int(fret)
                 note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
                               y=(string-1)*self.distanceBetweenStrings,
@@ -999,7 +947,6 @@ class SeeFretboard():
             self.scaleCustom = True
         
         pitches = scaleObj.getPitches()
-        print(pitches)
         self.addPitchesToFretBoard(pitches, scaleObj)
 
     def addPitchesToFretBoard(self, pitches, scaleObj):
@@ -1010,7 +957,6 @@ class SeeFretboard():
         if(self.scaleCustom == True):
             self.setPitchesScaleDegrees(self.getNoteTypes(self.getNoteType()).getScaleDegrees())
         else:
-            print("HEREEEEE")
             self.setPitchesScaleDegrees([])
             #for nonConcrete scale
             for p in pitches:
@@ -1021,8 +967,6 @@ class SeeFretboard():
                 else:
                     self.appendPitchesScaleDegree(scaleObj.getScaleDegreeFromPitch(p))
         
-        print(self.getPitchesScaleDegrees())
-
         for pitchIndex, pitch in enumerate(pitches):
             fretNum = []
             stringNum = []
