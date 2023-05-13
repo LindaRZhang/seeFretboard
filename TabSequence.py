@@ -5,6 +5,7 @@ import math
 import os
 from Frame import Frame
 from Note import Note
+import Util
 
 # set for 6 string in standard tuning for now
 
@@ -33,22 +34,22 @@ class TabSequence(Frame):
         self.B = 59
         self.EHigh = 64
 
-        self.EStringFrets = self.midiToFret(
+        self.EStringFrets = Util.midiToFret(
             self.Elow, self.track.notes["E"].pitches)
         self.ETimeStamp = self.track.notes['E'].intervals
-        self.AStringFrets = self.midiToFret(
+        self.AStringFrets = Util.midiToFret(
             self.A, self.track.notes["A"].pitches)
         self.ATimeStamp = self.track.notes['A'].intervals
-        self.DStringFrets = self.midiToFret(
+        self.DStringFrets = Util.midiToFret(
             self.D, self.track.notes["D"].pitches)
         self.DTimeStamp = self.track.notes['D'].intervals
-        self.GStringFrets = self.midiToFret(
+        self.GStringFrets = Util.midiToFret(
             self.G, self.track.notes["G"].pitches)
         self.GTimeStamp = self.track.notes['G'].intervals
-        self.BStringFrets = self.midiToFret(
+        self.BStringFrets = Util.midiToFret(
             self.B, self.track.notes["B"].pitches)
         self.BTimeStamp = self.track.notes['B'].intervals
-        self.eStringFrets = self.midiToFret(
+        self.eStringFrets = Util.midiToFret(
             self.EHigh, self.track.notes["e"].pitches)
         self.eTimeStamp = self.track.notes['e'].intervals
 
@@ -88,22 +89,6 @@ class TabSequence(Frame):
 
     def setMaxEndTime(self, maxEndTime):
         self.maxEndTime = maxEndTime
-
-    def midiToFret(self, string, midiNotes):
-        notes = []
-        for m in midiNotes:
-            fret = round(abs(string - m))
-            notes.append(fret)
-
-        return notes
-
-    def fretToMidi(self, string, frets):
-        midiNotes = []
-        for fret in frets:
-            midi = round(abs(string - fret))
-            midiNotes.append(midi)
-
-        return midiNotes
 
     def getStringFrets(self):
         return [self.EStringFrets, self.AStringFrets, self.DStringFrets, self.GStringFrets, self.BStringFrets, self.eStringFrets]

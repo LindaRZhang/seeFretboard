@@ -23,7 +23,8 @@ from PIL import Image
 
 from CirlceNote import CircleNote
 from Video import Video
-from Util import *
+import Util
+from PitchCollection import PitchCollection
 
 from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
@@ -31,11 +32,13 @@ from music21 import pitch as m21Pitch
 class SeeFretboard():
 
     # default values
-    def __init__(self, hv="h", strings=6, fretFrom=1, fretsTo=12, showTuning=True):
+    #fret 0 include open strings
+    def __init__(self, hv="h", strings=6, fretFrom=0, fretsTo=12, showTuning=True):
         # horizontal or vertical fretboard
         self.hv = hv
 
         self.tuning = ['E', 'A', 'D', 'G', 'B', 'E']
+        self.midiTuning = [40 ,45 ,50 ,55 ,59, 64]
         self.numOfStrings = strings
         self.fretFrom = fretFrom
         self.fretTo = fretsTo
@@ -117,11 +120,8 @@ class SeeFretboard():
         self.videoFrames = self.video.frames
 
         #notes/pitches for scales n arpeggios
-        self.pitchesNames = [""]
-        self.pitceshWithOctave = [""]
-        self.pitchesScaleDegrees = [""]
-        self.pitchesType = "pitchesNames"
-        self.pitchesIndex = 0
+        self.pitchCollection = PitchCollection()
+        
         self.scaleCustom = False
 
     def inputChordButtonClicked(self):
@@ -567,18 +567,15 @@ class SeeFretboard():
     # -1 = x
     def addNote(self, string, fret):
         note = ""
-    
-        if self.getPitchesType() == "pitchesNames":
-            pitchesType = self.pitchesNames
-        elif self.getPitchesType() == "pitchesWithOctave":
-            pitchesType = self.pitchesWithOctave
-        elif self.getPitchesType() == "pitchesScaleDegrees":
-            pitchesType = self.pitchesScaleDegrees
-
-        textValue = str(pitchesType[self.getPitchesIndex()])
+        print(self.pitchCollection.getPitchesIndex())
+        textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getPitchesIndex()))
         textValue = textValue.replace("-","b")
+        
+        print("NEW     ", string, fret, textValue, self.pitchCollection.getPitchesIndex())
+        # print(pitchesType[self.pitchCollection.getPitchesIndex()])
 
-        if int(fret) > self.fretTo:
+
+        if fret == "" or int(fret) > self.fretTo:
             return None
         
         if (fret != "0" and fret != "-1"):
@@ -589,7 +586,7 @@ class SeeFretboard():
                 print("here")
                 fret = int(fret)
                 note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                              y=(string-1)*self.distanceBetweenStrings,
+                              y=(string)*self.distanceBetweenStrings,
                               radius=self.getNoteTypes(self.getNoteType()).noteRadius,
                               fill_color=self.getNoteTypes(self.getNoteType()).noteFaceColor,
                               line_width=self.getNoteTypes(self.getNoteType()).noteLineWidth,
@@ -598,7 +595,7 @@ class SeeFretboard():
                               )
                 
                 label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                              y=(string-1)*self.distanceBetweenStrings-self.distanceBetweenStrings/12-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
+                              y=(string)*self.distanceBetweenStrings-self.distanceBetweenStrings/12-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
                                         text=textValue, text_align='center', text_font_size='10pt',text_color='white')
                 self.labels.append(label)
                 self.fig.add_layout(label)
@@ -606,7 +603,7 @@ class SeeFretboard():
             elif (fret == "-1"):
                 fret = 0
                 xPos = (fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2
-                yPos = (string-1)*self.distanceBetweenStrings+self.distanceBetweenStrings/6
+                yPos = (string)*self.distanceBetweenStrings+self.distanceBetweenStrings/6
                 symbolSize = self.distanceBetweenStrings/8
                 
                 xCor = [xPos - symbolSize*4, xPos + symbolSize]
@@ -630,7 +627,7 @@ class SeeFretboard():
                 print(self.getNoteTypes(self.getNoteType()).noteRadius)
                 fret = int(fret)
                 note = Circle(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                              y=(string-1)*self.distanceBetweenStrings,
+                              y=(string)*self.distanceBetweenStrings,
                               radius=self.getNoteTypes(self.getNoteType()).noteRadius,
                               fill_color=self.getNoteTypes(self.getNoteType()).noteFaceColor,
                               line_width=self.getNoteTypes(self.getNoteType()).noteLineWidth,
@@ -639,14 +636,14 @@ class SeeFretboard():
                               )
                 
                 label = Label(x=(fret)*self.distanceBetweenFrets-self.distanceBetweenFrets/2,
-                              y=(string-1)*self.distanceBetweenStrings-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
+                              y=(string)*self.distanceBetweenStrings-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
                                         text=textValue, text_align='center', text_font_size='10pt',text_color='white')
                 self.labels.append(label)
                 self.fig.add_layout(label)
         else:
             if (fret == "0"):
                 fret = int(fret)
-                note = Circle(x=(string-1)*self.distanceBetweenStrings,
+                note = Circle(x=(string)*self.distanceBetweenStrings,
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+1) +
                               self.getNoteTypes(self.getNoteType()).getNoteRadius()*4,
@@ -656,7 +653,7 @@ class SeeFretboard():
                               line_color=self.getNoteTypes(self.getNoteType()).noteEdgeColor,
                               name="circleNote"
                               )
-                label = Label(x=(string-1)*self.distanceBetweenStrings,
+                label = Label(x=(string)*self.distanceBetweenStrings,
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+1) +
                               self.getNoteTypes(self.getNoteType()).getNoteRadius()*4-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
@@ -666,7 +663,7 @@ class SeeFretboard():
 
             elif (fret == "-1"):
                 fret = 0
-                xPos = (string-1)*self.distanceBetweenStrings
+                xPos = (string)*self.distanceBetweenStrings
                 yPos = self.distanceBetweenFrets * \
                     (self.getNumOfFrets()+1)+self.getNoteTypes(self.getNoteType()).getNoteRadius()*5
                 symbolSize = self.distanceBetweenStrings/8
@@ -696,7 +693,7 @@ class SeeFretboard():
 
             else:
                 fret = int(fret)
-                note = Circle(x=(string-1)*self.distanceBetweenStrings,
+                note = Circle(x=(string)*self.distanceBetweenStrings,
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+2) - (fret) *
                               self.distanceBetweenFrets - self.distanceBetweenFrets/2,
@@ -707,7 +704,7 @@ class SeeFretboard():
                               name="circleNote"
                               )
                 
-                label = Label(x=(string-1)*self.distanceBetweenStrings,
+                label = Label(x=(string)*self.distanceBetweenStrings,
                               y=self.distanceBetweenFrets *
                               (self.getNumOfFrets()+2) - (fret) *
                               self.distanceBetweenFrets - self.distanceBetweenFrets/2-self.getNoteTypes(self.getNoteType()).noteRadius/1.5,
@@ -727,6 +724,12 @@ class SeeFretboard():
 
     def setTuning(self, tuning):
         self.tuning = tuning
+
+    def getMidiTuning(self):
+        return self.midiTuning
+
+    def setMidiTuning(self, tuning):
+        self.midiTuning = tuning
 
     def getNumOfStrings(self):
         return self.numOfStrings
@@ -866,7 +869,6 @@ class SeeFretboard():
         Locrian
         Phrygian
     '''
-    
     #rootNote = "c", type="major"
     def addScale(self, rootNote, type, intervalsDegrees=None):
         
@@ -921,7 +923,7 @@ class SeeFretboard():
             intervals.append("P1")
             self.getNoteTypes(self.getNoteType()).setIntervals(intervals)
             scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
-            self.getNoteTypes(self.getNoteType()).setScaleDegrees(intervalsToScaleDegrees(intervals))
+            self.getNoteTypes(self.getNoteType()).setScaleDegrees(Util.intervalsToScaleDegrees(intervals))
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
             self.scaleCustom = True
 
@@ -930,7 +932,7 @@ class SeeFretboard():
             intervals.append("P1")
             self.getNoteTypes(self.getNoteType()).setIntervals(intervals)
             scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
-            self.getNoteTypes(self.getNoteType()).setScaleDegrees(intervalsToScaleDegrees(intervals))
+            self.getNoteTypes(self.getNoteType()).setScaleDegrees(Util.intervalsToScaleDegrees(intervals))
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
             self.scaleCustom = True
         else:
@@ -942,63 +944,92 @@ class SeeFretboard():
             intervals.append("P1")
             self.getNoteTypes(self.getNoteType()).setIntervals(intervals)
             scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
-            self.getNoteTypes(self.getNoteType()).setScaleDegrees(intervalsToScaleDegrees(intervals))
+            self.getNoteTypes(self.getNoteType()).setScaleDegrees(Util.intervalsToScaleDegrees(intervals))
             scaleObj = scale.ConcreteScale(rootNote,scalePitches)
             self.scaleCustom = True
         
         pitches = scaleObj.getPitches()
-        self.addPitchesToFretBoard(pitches, scaleObj)
+        #make the arrays or pitches
+        self.addPitchesToFretboard(pitches, scaleObj)
 
-    def addPitchesToFretBoard(self, pitches, scaleObj):
+    def addPitchesToFretboard(self, pitches, scaleObj):
+        
+        self.arraysForPitchCollection(pitches, scaleObj)
+
+        for i in range(len(self.pitchCollection.getArrayTypeNow())):
+            self.pitchCollection.setPitchesIndex(i)
+            self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
+            
+
+    def arraysForPitchCollection(self, pitches, scaleObj):
         #Add to Arrays for different options
-        self.setPitchesNames([p.name for p in pitches])
-        self.setPitchWithOctave([p.nameWithOctave for p in pitches])
-        
-        if(self.scaleCustom == True):
-            self.setPitchesScaleDegrees(self.getNoteTypes(self.getNoteType()).getScaleDegrees())
-        else:
-            self.setPitchesScaleDegrees([])
-            #for nonConcrete scale
-            for p in pitches:
-                if(p.alter == -1.0):
-                    self.appendPitchesScaleDegree("b"+str(scaleObj.getScaleDegreeFromPitch(p)))
-                elif(p.alter == 1.0):
-                    self.appendPitchesScaleDegree("#"+str(scaleObj.getScaleDegreeFromPitch(p)))
-                else:
-                    self.appendPitchesScaleDegree(scaleObj.getScaleDegreeFromPitch(p))
-        
-        for pitchIndex, pitch in enumerate(pitches):
+        self.pitchCollection.setPitchesNames([])
+        self.pitchCollection.setPitchWithOctave([])
+        self.pitchCollection.setPitchesScaleDegrees([])
+
+        #add to fretboard and octave name string
+        for pitchIndex in range(len(pitches)-1):
             fretNum = []
             stringNum = []
-            self.setPitchesIndex(pitchIndex)
 
-            fretNum, stringNum= self.convertPitchToFretStringNum(pitch)    
+            #get each note on each string n their fret
+            fretNum, stringNum= self.convertPitchesToFretsStringsNum(pitches[pitchIndex])    
+            
+            #depending on how many octave to display 
+            quotient, remainder = divmod(self.fretTo, 12)
+            for octavesFret in range(quotient):
+                for index in range(self.getNumOfStrings()):
+                    newFret = fretNum[index]+12  
+                    fretNum.append(newFret)
+                    stringNum.append(index)
 
-            for index, fret in enumerate(fretNum):
-                if(index == 6):
-                    break
-                newFret = fret+12  
-                fretNum.append(newFret)
-
-            # add the notes to the fretboard
+            #check to see if between fret range 
             for i in range(len(fretNum)):
-                fret = fretNum[i]
-                if(i>5):
-                    i=i-6
-                string = stringNum[i]
-                self.addNote(string, fret)
+                if (self.fretFrom-1 > fretNum[i] or fretNum[i] > self.fretTo):
+                    fretNum[i] = ""
 
+            # add the notes to the  octave array
+            for i in range(len(fretNum)):
+                self.pitchCollection.appendFrets(fretNum[i])
+                self.pitchCollection.appendStrings(stringNum[i])
+                self.pitchCollection.appendPitchesName(pitches[pitchIndex].name)
+
+                if(fretNum[i] != ""):
+                    midi = Util.fretToMidi(self.getMidiTuning()[stringNum[i]],fretNum[i])
+                    pitchWithOctave = Util.midiToNoteNameWithOctave(midi)
+                else:
+                    pitchWithOctave = ""
+        
+                self.pitchCollection.appendPitchWithOctave(pitchWithOctave)
+
+                #scale degree
+                if(self.scaleCustom == True):
+                    self.pitchCollection.appendPitchesScaleDegree(self.getNoteTypes(self.getNoteType()).getScaleDegrees()[pitchIndex])
+        
+                else:
+                #for nonConcrete scale
+                # for p in pitches:
+                    if(pitches[pitchIndex].alter == -1.0):
+                        self.pitchCollection.appendPitchesScaleDegree("b"+str(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex])))
+                    elif(pitches[pitchIndex].alter == 1.0):
+                        self.pitchCollection.appendPitchesScaleDegree("#"+str(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex])))
+                    else:
+                        self.pitchCollection.appendPitchesScaleDegree(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex]))
+
+                
+            print("NOTE FINSIH")
+
+        print(self.getNoteTypes(self.getNoteType()).getScaleDegrees())
     #MAYBE PUT somehwere else
     #given pitch, give me all of the places it is located in fret, string
-    def convertPitchToFretStringNum(self, pitch):
+    def convertPitchesToFretsStringsNum(self, pitch):
         #tuning = TabSequence.getStringMidi()#util later
-        tuning = [40 ,45 ,50 ,55 ,59, 64]
         frets = []
         strings = []
         
         midiPitch=pitch.midi
 
-        for stringIndex, stringPitch in enumerate(tuning):
+        for stringIndex, stringPitch in enumerate(self.getMidiTuning()):
             while midiPitch <= stringPitch:
                 midiPitch += 12
             while midiPitch >= stringPitch + 12:
@@ -1007,7 +1038,7 @@ class SeeFretboard():
 
             if fret >= (self.fretFrom-1) and fret <= self.fretTo:
                 frets.append(fret)
-                strings.append(stringIndex+1)
+                strings.append(stringIndex)
 
         return frets, strings
     
@@ -1090,47 +1121,15 @@ class SeeFretboard():
                 scaleObj = scale.ConcreteScale(rootNote,scalePitches)
                 pitches = scaleObj.getPitches()
 
-            self.addPitchesToFretBoard(pitches, rootNote)
+            self.addPitchesToFretboard(pitches, scaleObj)
     
-    #FUNCTIONS pitchesArrays
-    def getPitchesNames(self):
-        return self.pitchesNames
+    def addChord(self, rootNote, type="", chord="", bass =""):
+        chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
+        pitches = chordObj.pitches
+        #1 note per string, in progress later
     
-    def appendPitchesName(self, value):
-        self.pitchesNames.append(value)
-
-    def setPitchesNames(self, value):
-        self.pitchesNames = value
+    def getPitchCollection(self):
+        return self.pitchCollection
     
-    def getPitchWithOctave(self):
-        return self.pitchesWithOctave
-    
-    def appendPitchWithOctave(self, value):
-        self.pitchesWithOctave.append(value)
-
-    def setPitchWithOctave(self, value):
-        self.pitchesWithOctave = value
-    
-    def getPitchesScaleDegrees(self):
-        return self.pitchesScaleDegrees
-    
-    def appendPitchesScaleDegree(self, value):
-        self.pitchesScaleDegrees.append(value)
-
-    def setPitchesScaleDegrees(self, value):
-        self.pitchesScaleDegrees = value
-    
-    def getPitchesType(self):
-        return self.pitchesType
-    
-    def setPitchesType(self, value):
-        self.pitchesType = value
-    
-    def getPitchesIndex(self):
-        return self.pitchesIndex
-    
-    def addPitchesIndex(self, amount=1):
-        self.pitchesIndex+=amount
-
-    def setPitchesIndex(self, value):
-        self.pitchesIndex = value
+    def setPitchCollection(self, pitchCollection):
+        self.pitchCollection = pitchCollection

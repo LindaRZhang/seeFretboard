@@ -1,3 +1,5 @@
+import music21 
+
 #chromatic first and later can get conversions
 
 #scale degree, later can add b or #
@@ -29,3 +31,33 @@ def intervalToScaleDegree(interval):
 
 def scaleDegreeToInterval(degree):
     return allInterval[scaleDegrees.index(degree)]
+
+def midiToFret(string, midiNotes):
+        notes = []
+        for m in midiNotes:
+            fret = round(abs(int(string) - int(m)))
+            notes.append(fret)
+
+        return notes
+
+def fretsToMidi(string, frets):
+    midiNotes = []
+    print(string)
+    print("frett")
+    print(frets)
+    for fret in frets:
+        midi = fretToMidi(string,fret)
+        midiNotes.append(midi)
+
+    return midiNotes
+
+def fretToMidi(string, fret):
+
+    midi = int(string) + int(fret)
+    
+    return midi
+
+def midiToNoteNameWithOctave(midiNote):
+    note = music21.note.Note()
+    note.pitch.midi = midiNote
+    return note.nameWithOctave
