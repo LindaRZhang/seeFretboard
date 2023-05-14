@@ -10,8 +10,7 @@ fretboard.drawVerticalFretboard()
 fretboard.getPitchCollection().setPitchesType("pitchesWithOctave")
 #fretboard.getPitchCollection().setPitchesType("pitchesScaleDegrees")
 
-fretboard.addArpeggio("c","suspended-second")#gota put words for arpeggio kinds
-#fretboard.addArpeggio("c") #just show 1 note or octaves
-#fretboard.addArpeggio("c","","P1 M3 P5 M7")
+fretboard.addInterval("c","P8")#gota put words for interval
+#if p11 nd stuff should just show that instead of all
 
 fretboard.showFretboard()

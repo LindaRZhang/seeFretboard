@@ -33,15 +33,18 @@ class SeeFretboard():
 
     # default values
     #fret 0 include open strings
-    def __init__(self, hv="h", strings=6, fretFrom=0, fretsTo=12, showTuning=True):
+    def __init__(self, hv="h", strings=6, fretFrom=1, fretTo=12, showTuning=True):
         # horizontal or vertical fretboard
         self.hv = hv
 
         self.tuning = ['E', 'A', 'D', 'G', 'B', 'E']
         self.midiTuning = [40 ,45 ,50 ,55 ,59, 64]
         self.numOfStrings = strings
+        if fretFrom <= 0:
+            raise ValueError("fretFrom must be a positive integer.")
+        self.hv = hv
         self.fretFrom = fretFrom
-        self.fretTo = fretsTo
+        self.fretTo = fretTo
         self.numOfFrets = self.fretTo - self.fretFrom
 
         self.showTuning = showTuning
@@ -567,11 +570,10 @@ class SeeFretboard():
     # -1 = x
     def addNote(self, string, fret):
         note = ""
-        print(self.pitchCollection.getPitchesIndex())
         textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getPitchesIndex()))
         textValue = textValue.replace("-","b")
         
-        print("NEW     ", string, fret, textValue, self.pitchCollection.getPitchesIndex())
+        #print("NEW     ", string, fret, textValue, self.pitchCollection.getPitchesIndex())
         # print(pitchesType[self.pitchCollection.getPitchesIndex()])
 
 
@@ -955,7 +957,7 @@ class SeeFretboard():
     def addPitchesToFretboard(self, pitches, scaleObj):
         
         self.arraysForPitchCollection(pitches, scaleObj)
-
+        print(self.pitchCollection.getArrayTypeNow())
         for i in range(len(self.pitchCollection.getArrayTypeNow())):
             self.pitchCollection.setPitchesIndex(i)
             self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
@@ -968,7 +970,7 @@ class SeeFretboard():
         self.pitchCollection.setPitchesScaleDegrees([])
 
         #add to fretboard and octave name string
-        for pitchIndex in range(len(pitches)-1):
+        for pitchIndex in range(len(pitches)):
             fretNum = []
             stringNum = []
 
@@ -976,18 +978,18 @@ class SeeFretboard():
             fretNum, stringNum= self.convertPitchesToFretsStringsNum(pitches[pitchIndex])    
             
             #depending on how many octave to display 
-            quotient, remainder = divmod(self.fretTo, 12)
+            quotient, remainder = divmod(self.fretTo+1, 12)
             for octavesFret in range(quotient):
                 for index in range(self.getNumOfStrings()):
                     newFret = fretNum[index]+12  
                     fretNum.append(newFret)
                     stringNum.append(index)
-
+            print(fretNum)
             #check to see if between fret range 
             for i in range(len(fretNum)):
                 if (self.fretFrom-1 > fretNum[i] or fretNum[i] > self.fretTo):
                     fretNum[i] = ""
-
+            print(fretNum)
             # add the notes to the  octave array
             for i in range(len(fretNum)):
                 self.pitchCollection.appendFrets(fretNum[i])
@@ -1107,14 +1109,10 @@ class SeeFretboard():
     ('Tristan', ['1,#4,#6,#9', ['tristan']]),  
     '''
     def addArpeggio(self, rootNote, type="", pitches="", bass=""):
-            print(type)
             if type != "":
                 chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
                 pitches = chordObj.pitches
-                print("test")
-                print(chordObj)
-                print(pitches)
-
+                scaleObj = scale.ConcreteScale(rootNote,pitches)
             else:
                 intervals = [interval.Interval(intervalString) for intervalString in pitches.split()]
                 scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
@@ -1123,10 +1121,21 @@ class SeeFretboard():
 
             self.addPitchesToFretboard(pitches, scaleObj)
     
+    def addInterval(self, rootNote, intervalName=""):
+            rootNotePitch = m21Pitch.Pitch(rootNote+"2")
+            scalePitches = [rootNotePitch.transpose(interval.Interval(intervalName))] 
+            scalePitches.insert(0,rootNotePitch)
+            print(scalePitches)
+            scaleObj = scale.ConcreteScale(rootNote,scalePitches)
+            pitches = scaleObj.getPitches()
+
+            self.addPitchesToFretboard(pitches, scaleObj)
+
     def addChord(self, rootNote, type="", chord="", bass =""):
         chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
         pitches = chordObj.pitches
         #1 note per string, in progress later
+        #differnt positions
     
     def getPitchCollection(self):
         return self.pitchCollection
