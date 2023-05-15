@@ -42,7 +42,6 @@ class SeeFretboard():
         self.numOfStrings = strings
         if fretFrom <= 0:
             raise ValueError("fretFrom must be a positive integer.")
-        self.hv = hv
         self.fretFrom = fretFrom
         self.fretTo = fretTo
         self.numOfFrets = self.fretTo - self.fretFrom
@@ -57,7 +56,6 @@ class SeeFretboard():
         self.stringsColor = "black"
         self.fretOpacity = 0.3
         self.stringsOpactiy = 1
-
         self.fretboardMarkerColor = "#DCDCDC"
 
         # notes circle
@@ -92,8 +90,8 @@ class SeeFretboard():
             self.fig.x_range = self.figVerXRange
             self.fig.y_range = self.figVerYRange
 
+        #images parameters
         self.imagePathName = os.path.join(os.getcwd(), 'Image')
-
         self.imageName = "default"
         self.imageMeta = ".png"
         self.imageProgressBar = True
@@ -1135,10 +1133,12 @@ class SeeFretboard():
         chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
         pitches = chordObj.pitches
         #1 note per string, in progress later
-        #differnt positions
+        #differnt positions 
     
     def getPitchCollection(self):
         return self.pitchCollection
     
     def setPitchCollection(self, pitchCollection):
         self.pitchCollection = pitchCollection
+
+    

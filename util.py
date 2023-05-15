@@ -42,9 +42,6 @@ def midiToFret(string, midiNotes):
 
 def fretsToMidi(string, frets):
     midiNotes = []
-    print(string)
-    print("frett")
-    print(frets)
     for fret in frets:
         midi = fretToMidi(string,fret)
         midiNotes.append(midi)

@@ -3,17 +3,33 @@ class PitchCollection():
     def __init__(self, pitchesType = "pitchesNames"):
         #differentTypeOfNaming or displays for for scales, arpeggios, chord, intervals
         self.pitchesNames = [""]
-        self.pitcheshWithOctave = [""]
+        self.pitchesWithOctave = [""]
         self.pitchesScaleDegrees = [""]
         self.pitchesType = pitchesType
         self.pitchesIndex = 0
-        self.pitchesIndexForOctaves = 0
         self.frets = []
         self.strings = []
-        # self.currentFret = ""
-        # self.currentString = ""
         self.arrayTypeNow = []
-     
+    
+
+    def getPitchesNamesLength(self):
+        return len(self.pitchesNames)
+
+    def getPitchesShWithOctaveLength(self):
+        return len(self.pitchesshWithOctave)
+
+    def getPitchesScaleDegreesLength(self):
+        return len(self.pitchesScaleDegrees)
+
+    def getArrayTypeNowLength(self):
+        return len(self.arrayTypeNow)
+
+    def getFretsLength(self):
+        return len(self.frets)
+
+    def getStringsLength(self):
+        return len(self.strings)
+
     def getPitchesNames(self):
         return self.pitchesNames
     
@@ -22,6 +38,9 @@ class PitchCollection():
 
     def setPitchesNames(self, value):
         self.pitchesNames = value
+
+    def emptyPitchesNames(self):
+        self.pitchesNames = []
     
     def getPitchWithOctave(self):
         return self.pitchesWithOctave
@@ -32,6 +51,9 @@ class PitchCollection():
     def setPitchWithOctave(self, value):
         self.pitchesWithOctave = value
     
+    def emptyPitchesWithOctaves(self):
+        self.pitcheshWithOctave = []
+
     def getPitchesScaleDegrees(self):
         return self.pitchesScaleDegrees
     
@@ -41,6 +63,9 @@ class PitchCollection():
     def setPitchesScaleDegrees(self, value):
         self.pitchesScaleDegrees = value
     
+    def emptyPitchesScaleDegree(self):
+        self.pitchesshWithOctave = []
+
     def getPitchesType(self):
         return self.pitchesType
     
@@ -65,6 +90,10 @@ class PitchCollection():
     def setArrayTypeNow(self):
         return self.arrayTypeNow
     
+    def emptyArrayTypeNow(self):
+        self.arrayTypeNow = []
+    
+    
     def getPitchesIndex(self):
         return self.pitchesIndex
     
@@ -73,15 +102,6 @@ class PitchCollection():
 
     def setPitchesIndex(self, value):
         self.pitchesIndex = value
-    
-    # def getPitchesIndexForOctaves(self):
-    #         return self.pitchesIndexForOctaves
-    
-    # def addPitchesIndexForOctaves(self, amount=1):
-    #     self.pitchesIndexForOctaves+=amount
-
-    # def setPitchesIndexForOctaves(self, value):
-    #     self.pitchesIndexForOctaves = value
     
     def getFrets(self):
         return self.frets
@@ -95,6 +115,12 @@ class PitchCollection():
     def setFrets(self, value):
         self.frets = value
     
+    def emptyFrets(self):
+        self.frets = []
+    
+    def emptyStrings(self):
+        self.strings = []
+
     def getStrings(self):
         return self.strings
     
@@ -107,17 +133,7 @@ class PitchCollection():
     def setStrings(self, value):
         self.strings = value
 
-    # def getCurrentFret(self):
-    #     return self.currentFret
-    
-    # def setCurrentFret(self, value):
-    #     self.currentFret = value
-
-    # def getCurrentString(self):
-    #     return self.currentString
-
-    # def setCurrentString(self, value):
-    #     self.currentString = value
 
     def getFretStringCurrentPitch(self):
         return self.getFretsAt(self.pitchesIndex),self.getStringsAt(self.pitchesIndex),self.getArrayTypeNowAt(self.pitchesIndex)
+        
