@@ -5,7 +5,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
-from Styles import FretboardStyle
+from Styles import FretboardTheme
 from Styles import FretboardOrientation
 from Styles import Tuning
 from Styles import FretboardRange
@@ -33,7 +33,7 @@ Fields:
 class TestFretboardStyle:
     # Tests that a FretboardStyle object can be created with all valid inputs. 
     def test_create_fretboard_style_with_all_valid_inputs(self):
-        style = FretboardStyle(orientation=FretboardOrientation("horizontal"), tuning=Tuning(letterTuning=['E', 'A', 'D', 'G', 'B', 'E']), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign())
+        style = FretboardTheme(orientation=FretboardOrientation("horizontal"), tuning=Tuning(letterTuning=['E', 'A', 'D', 'G', 'B', 'E']), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign())
         assert isinstance(style.orientation, FretboardOrientation)
         assert isinstance(style.tuning, Tuning)
         assert isinstance(style.fretboardRange, FretboardRange)
@@ -41,7 +41,7 @@ class TestFretboardStyle:
 
     # Tests that a FretboardStyle object can be created with only some optional inputs. 
     def test_create_fretboard_style_with_some_optional_inputs(self):
-        style = FretboardStyle(tuning=Tuning(letterTuning=['E', 'A', 'D', 'G', 'B', 'E']), fretboardRange=FretboardRange(1, 12))
+        style = FretboardTheme(tuning=Tuning(letterTuning=['E', 'A', 'D', 'G', 'B', 'E']), fretboardRange=FretboardRange(1, 12))
         assert isinstance(style.orientation, FretboardOrientation)
         assert isinstance(style.tuning, Tuning)
         assert isinstance(style.fretboardRange, FretboardRange)
@@ -50,31 +50,31 @@ class TestFretboardStyle:
     # Tests that a FretboardStyle object cannot be created with an invalid orientation input. 
     def test_create_fretboard_style_with_invalid_orientation_input(self):
         with pytest.raises(ValueError):
-            style = FretboardStyle(orientation="invalid")
+            style = FretboardTheme(orientation="invalid")
 
     # Tests that a FretboardStyle object cannot be created with an invalid tuning input. 
     def test_create_fretboard_style_with_invalid_tuning_input(self):
         with pytest.raises(TypeError):
-            style = FretboardStyle(tuning="invalid")
+            style = FretboardTheme(tuning="invalid")
 
     # Tests that a FretboardStyle object cannot be created with an invalid fretboard range input. 
     def test_create_fretboard_style_with_invalid_fretboard_range_input(self):
         with pytest.raises(ValueError):
-            style = FretboardStyle(fretboardRange=FretboardRange(0, 12))
+            style = FretboardTheme(fretboardRange=FretboardRange(0, 12))
 
     # Tests that a FretboardStyle object cannot be created with an invalid fretboard design input. 
     def test_create_fretboard_style_with_invalid_fretboard_design_input(self):
         with pytest.raises(TypeError):
-            style = FretboardStyle(fretboardDesign="invalid")
+            style = FretboardTheme(fretboardDesign="invalid")
 
     # Tests that a FretboardStyle object has an orientation property.  
     def test_fretboard_style_has_orientation_property(self):
-        style = FretboardStyle()
+        style = FretboardTheme()
         assert hasattr(style, "orientation")
 
     # Tests that a FretboardStyle object can set and get properties for each of its components.  
     def test_fretboard_style_can_set_and_get_properties(self):
-        style = FretboardStyle(orientation=FretboardOrientation(orientation="v"), tuning=Tuning(numOfStrings=7), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign(distanceBetweenFrets=6))
+        style = FretboardTheme(orientation=FretboardOrientation(orientation="v"), tuning=Tuning(numOfStrings=7), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign(distanceBetweenFrets=6))
         assert style.orientation.orientation == "v"
         assert style.tuning.numOfStrings == 7
         assert style.fretboardRange.fretFrom == 1
@@ -82,7 +82,7 @@ class TestFretboardStyle:
 
     # Tests the interaction between the FretboardStyle object and its components.  
     def test_fretboard_style_components_interaction(self):
-        style = FretboardStyle(orientation="h", tuning=Tuning(numOfStrings=4), fretboardRange=FretboardRange(1, 5), fretboardDesign=FretboardDesign(distanceBetweenFrets=3))
+        style = FretboardTheme(orientation="h", tuning=Tuning(numOfStrings=4), fretboardRange=FretboardRange(1, 5), fretboardDesign=FretboardDesign(distanceBetweenFrets=3))
         assert style.orientation.orientation == "h"
         assert style.tuning.numOfStrings == 4
         assert style.fretboardRange.fretFrom == 1
@@ -133,5 +133,5 @@ class TestFretboardStyle:
 
     # Tests that the fretboardDesign property getter returns the correct value.    
     def test_fretboard_design_property_getter(self):
-        style = FretboardStyle(fretboardDesign=FretboardDesign(showTuning=False))
+        style = FretboardTheme(fretboardDesign=FretboardDesign(showTuning=False))
         assert style.fretboardDesign.showTuning == False

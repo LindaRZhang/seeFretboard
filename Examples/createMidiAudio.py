@@ -5,7 +5,7 @@ from TabSequence import TabSequence
 from Video import Video
 from SeeFretboard import SeeFretboard
 
-f = SeeFretboard("v", 6, 1, 12)
+f = SeeFretboard("v", 1, 12)
 f.addNotesAllString("-1,0,5,5,0,0")
 f.drawVerticalFretboard()
 

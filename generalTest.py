@@ -32,6 +32,9 @@ from Styles import *
 # fretboardStyle.orientation = "v"
 # print(fretboardStyle.orientation)
 
-orientation = FretboardOrientation("horizontal")
+# orientation = FretboardOrientation("horizontal")
 
-orientation.orientation = "invalid"
+# orientation.orientation = "invalid"
+theme = FretboardTheme(theme="lightV")
+        
+print(theme.orientation.orientation)

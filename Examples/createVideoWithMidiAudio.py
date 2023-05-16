@@ -8,7 +8,7 @@ from TabSequence import TabSequence
 from SeeFretboard import SeeFretboard
 
 
-fretboard = SeeFretboard("v", 6, 1, 12)
+fretboard = SeeFretboard("v", 1, 12)
 tabSeq = TabSequence(8)#guitar set track 8
 video = Video(0, 0, 0, 0)
 fretboard.drawVerticalFretboard()

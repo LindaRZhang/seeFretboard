@@ -1,26 +1,33 @@
 
-class FretboardStyle:
-    def __init__(self, **kwargs):
-        orientation = kwargs.get("orientation")
+class FretboardTheme:
+    def __init__(self, theme=None, **kwargs):
+        if(theme == "light"):
+            self.lightTheme(kwargs.get("orientation"))
+            
+        if len(kwargs) > 0:
+            self.customTheme(**kwargs)
+
+    def customTheme(self,  **kwargs):
+        orientation = kwargs.get("orientation", "h")
         if isinstance(orientation, FretboardOrientation):
             self.orientation = orientation
         else:
-            self.orientation = FretboardOrientation(kwargs.get("orientation", "h"))
-       
+            self.orientation = FretboardOrientation(orientation)
+
         tuning = kwargs.get("tuning")
+        if tuning is not None and not isinstance(tuning, Tuning):
+            raise TypeError("Invalid tuning input. Expected instance of Tuning.")
         if isinstance(tuning, Tuning):
             self.tuning = tuning
         else:
             self.tuning = Tuning(**kwargs)
-        
+            
         fretboardRange = kwargs.get("fretboardRange")
-        if tuning is not None and not isinstance(tuning, Tuning):
-            raise TypeError("Invalid tuning input. Expected instance of Tuning.")
         if isinstance(fretboardRange, FretboardRange):
             self.fretboardRange = fretboardRange
         else:
             self.fretboardRange = FretboardRange(kwargs.get("fretFrom", 1),
-                                                 kwargs.get("fretTo", 12))
+                                                    kwargs.get("fretTo", 12))
 
         fretboardDesign = kwargs.get("fretboardDesign")
         if fretboardDesign is not None and not isinstance(fretboardDesign, FretboardDesign):
@@ -29,6 +36,12 @@ class FretboardStyle:
             self.fretboardDesign = fretboardDesign
         else:
             self.fretboardDesign = FretboardDesign(**kwargs)
+    
+    def lightTheme(self, orientation):
+        self.orientation = FretboardOrientation(orientation)
+        self.tuning = Tuning()
+        self.fretboardRange = FretboardRange(fretFrom = 1, fretTo = 12)
+        self.fretboardDesign = FretboardDesign()
 
 class FretboardOrientation:
     def __init__(self, orientation = "h"):
@@ -40,7 +53,7 @@ class FretboardOrientation:
     
     @orientation.setter
     def orientation(self, orientation):
-        if orientation.lower() not in ["horizontal", "h", "vertical", "v"]:
+        if orientation is None or orientation.lower() not in ["horizontal", "h", "vertical", "v"]:
             raise ValueError("Invalid orientation value. Must be 'horizontal', 'h', 'vertical', or 'v'.")
         self._orientation = orientation.lower()
 
