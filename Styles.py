@@ -1,10 +1,11 @@
+from Util import STANDARD_TUNING, STANDARD_TUNING_MIDI
 
 class FretboardTheme:
     def __init__(self, theme=None, **kwargs):
         if(theme == "light"):
             self.lightTheme(kwargs.get("orientation"))
-            
-        if len(kwargs) > 0:
+        
+        else:
             self.customTheme(**kwargs)
 
     def customTheme(self,  **kwargs):
@@ -59,8 +60,8 @@ class FretboardOrientation:
 
 class Tuning:
     def __init__(self, **kwargs):
-        self.letterTuning = kwargs.get("letterTuning", ['E', 'A', 'D', 'G', 'B', 'E'])
-        self.midiTuning = kwargs.get("midiTuning", [40, 45, 50, 55, 59, 64])
+        self.letterTuning = kwargs.get("letterTuning", STANDARD_TUNING)
+        self.midiTuning = kwargs.get("midiTuning", STANDARD_TUNING_MIDI)
         self.numOfStrings = kwargs.get("numOfStrings", 6)
         
     @property

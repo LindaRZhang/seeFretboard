@@ -10,7 +10,7 @@ from Styles import FretboardOrientation
 from Styles import Tuning
 from Styles import FretboardRange
 from Styles import FretboardDesign
-
+from Util import STANDARD_TUNING, STANDARD_TUNING_MIDI
 
 import pytest
 
@@ -33,7 +33,7 @@ Fields:
 class TestFretboardStyle:
     # Tests that a FretboardStyle object can be created with all valid inputs. 
     def test_create_fretboard_style_with_all_valid_inputs(self):
-        style = FretboardTheme(orientation=FretboardOrientation("horizontal"), tuning=Tuning(letterTuning=['E', 'A', 'D', 'G', 'B', 'E']), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign())
+        style = FretboardTheme(orientation=FretboardOrientation("horizontal"), tuning=Tuning(letterTuning=STANDARD_TUNING), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign())
         assert isinstance(style.orientation, FretboardOrientation)
         assert isinstance(style.tuning, Tuning)
         assert isinstance(style.fretboardRange, FretboardRange)
@@ -41,7 +41,7 @@ class TestFretboardStyle:
 
     # Tests that a FretboardStyle object can be created with only some optional inputs. 
     def test_create_fretboard_style_with_some_optional_inputs(self):
-        style = FretboardTheme(tuning=Tuning(letterTuning=['E', 'A', 'D', 'G', 'B', 'E']), fretboardRange=FretboardRange(1, 12))
+        style = FretboardTheme(tuning=Tuning(letterTuning=STANDARD_TUNING), fretboardRange=FretboardRange(1, 12))
         assert isinstance(style.orientation, FretboardOrientation)
         assert isinstance(style.tuning, Tuning)
         assert isinstance(style.fretboardRange, FretboardRange)
@@ -94,8 +94,8 @@ class TestFretboardStyle:
     def test_tuning_class_behavior(self):
         # Test default values
         tuning = Tuning()
-        assert tuning.letterTuning == ['E', 'A', 'D', 'G', 'B', 'E']
-        assert tuning.midiTuning == [40, 45, 50, 55, 59, 64]
+        assert tuning.letterTuning == STANDARD_TUNING
+        assert tuning.midiTuning == STANDARD_TUNING_MIDI
         assert tuning.numOfStrings == 6
 
         # Test custom values

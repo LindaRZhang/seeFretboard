@@ -907,7 +907,8 @@ class SeeFretboard():
         
                 else:
                 #for nonConcrete scale
-                # for p in pitches:
+                    print(pitches[pitchIndex])
+                    print(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex]))
                     if(pitches[pitchIndex].alter == -1.0):
                         self.pitchCollection.appendPitchesScaleDegree("b"+str(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex])))
                     elif(pitches[pitchIndex].alter == 1.0):
@@ -1004,14 +1005,26 @@ class SeeFretboard():
     ('power', ['1,5', ['power']]),  
     ('Tristan', ['1,#4,#6,#9', ['tristan']]),  
     '''
-    def addArpeggio(self, rootNote, type="", pitches="", bass=""):
+    def addArpeggio(self, rootNote, type="", chordPitches="", bass=""):
             if type != "":
+                print("HEREEE")
+                # chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
+                # chordPitches = chordObj.pitches
+                # intervals = []
+                # for i in range(len(chordPitches)):
+                #     intervalObj = interval.Interval(chordPitches[0],chordPitches[i])
+                #     intervals.append(intervalObj)
+                # print(intervals)
+                # pitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+                # print(pitches)
+                # scaleObj = scale.ConcreteScale(rootNote,pitches)
                 chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
                 pitches = chordObj.pitches
                 scaleObj = scale.ConcreteScale(rootNote,pitches)
             else:
-                intervals = [interval.Interval(intervalString) for intervalString in pitches.split()]
+                intervals = [interval.Interval(intervalString) for intervalString in chordPitches.split()]
                 scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+                print(scalePitches)
                 scaleObj = scale.ConcreteScale(rootNote,scalePitches)
                 pitches = scaleObj.getPitches()
 

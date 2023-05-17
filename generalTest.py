@@ -1,6 +1,6 @@
 #quick test for my purpose
 from Styles import *
-
+from Util import STANDARD_TUNING
 # tuning = Tuning(midiTuning = [40, 45, 50, 115, 59, 64])
 # print(tuning.midiTuning)
 # # f = FretboardStyle(tuning = tuning)
@@ -15,7 +15,7 @@ from Styles import *
 
 # print(f.fretboardRange.fretTo)
 
-# style = FretboardStyle(orientation=FretboardOrientation("horizontal"), tuning=Tuning(letterTuning=['E', 'A', 'D', 'G', 'B', 'E']), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign())
+# style = FretboardStyle(orientation=FretboardOrientation("horizontal"), tuning=Tuning(letterTuning=STANDARD_TUNING), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign())
 # assert isinstance(style.orientation, FretboardOrientation)
 # assert isinstance(style.tuning, Tuning)
 # assert isinstance(style.fretboardRange, FretboardRange)
