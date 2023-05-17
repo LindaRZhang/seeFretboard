@@ -1008,25 +1008,22 @@ class SeeFretboard():
     def addArpeggio(self, rootNote, type="", chordPitches="", bass=""):
             if type != "":
                 print("HEREEE")
-                # chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
-                # chordPitches = chordObj.pitches
-                # intervals = []
-                # for i in range(len(chordPitches)):
-                #     intervalObj = interval.Interval(chordPitches[0],chordPitches[i])
-                #     intervals.append(intervalObj)
-                # print(intervals)
-                # pitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
-                # print(pitches)
-                # scaleObj = scale.ConcreteScale(rootNote,pitches)
                 chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
-                pitches = chordObj.pitches
-                scaleObj = scale.ConcreteScale(rootNote,pitches)
+                chordPitches = chordObj.pitches
+                intervals = []
+                for i in range(len(chordPitches)):
+                    intervalObj = interval.Interval(chordPitches[0],chordPitches[i])
+                    intervals.append(intervalObj.directedName)
             else:
-                intervals = [interval.Interval(intervalString) for intervalString in chordPitches.split()]
-                scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
-                print(scalePitches)
-                scaleObj = scale.ConcreteScale(rootNote,scalePitches)
-                pitches = scaleObj.getPitches()
+                intervals = chordPitches.split()
+                
+            intervals.append("P1")
+            self.getNoteTypes(self.getNoteType()).setIntervals(intervals)
+            scalePitches = [m21Pitch.Pitch(rootNote).transpose(interval) for interval in intervals]
+            self.getNoteTypes(self.getNoteType()).setScaleDegrees(Util.intervalsToScaleDegrees(intervals))
+            scaleObj = scale.ConcreteScale(rootNote,scalePitches)
+            self.scaleCustom = True
+            pitches = scaleObj.getPitches()
 
             self.addPitchesToFretboard(pitches, scaleObj)
     

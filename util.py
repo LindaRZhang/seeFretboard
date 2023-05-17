@@ -1,7 +1,7 @@
 import music21 
 
 #scale degree, later can add b or #
-scaleDegrees = ["1", "b2", "2", "b3", "3", "4", "#4/b5", "5", "b6", "6", "b7", "7","1"]
+scaleDegrees = ["1", "b2", "2", "b3", "3", "4", "b5", "5", "b6", "6", "b7", "7","1"]
 
 #notes
 chromaticNotes = ["A","A#/Bb","B","C","C#/Db","D","D#/Eb","E","F","F#/Gb","G","G#/Ab"]
@@ -10,7 +10,7 @@ chromaticNotes = ["A","A#/Bb","B","C","C#/Db","D","D#/Eb","E","F","F#/Gb","G","G
 chromaticSolfeges = ["do","di","re","ri","mi","fa","fi","sol","si","la","li","ti"]
 
 #intervals
-allInterval = ["P1","m2","M2","m3","M3","P4","D5","P5","m6","M6","m7","M7","P8"]
+allInterval = ["P1", "m2", "M2", "m3", "M3", "P4", "#4", "P5", "m6", "M6", "m7", "M7", "P8", "m9", "M9", "m10", "M10", "P11", "#11", "P12", "m13", "M13", "m14", "M14", "m15", "M15", "P16"]
 
 #common tunings in notes
 STANDARD_TUNING = ['E', 'A', 'D', 'G', 'B', 'E']
@@ -74,7 +74,10 @@ def intervalToScaleDegree(interval):
     Returns:
         degree (str): The scale degree (e.g. "3", "5") corresponding to the interval.
     """
-    return scaleDegrees[allInterval.index(interval)]
+    index = allInterval.index(interval)
+    scaleDegree = scaleDegrees[index % 12] 
+    
+    return scaleDegree
 
 def scaleDegreeToInterval(degree):
     """Converts a scale degree to an interval name.
