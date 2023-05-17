@@ -5,11 +5,11 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
-from Styles import FretboardTheme
-from Styles import FretboardOrientation
-from Styles import Tuning
-from Styles import FretboardRange
-from Styles import FretboardDesign
+from Styles.fretboardStyle import FretboardTheme
+from Styles.fretboardStyle import FretboardOrientation
+from Styles.fretboardStyle import Tuning
+from Styles.fretboardStyle import FretboardRange
+from Styles.fretboardStyle import FretboardDesign
 from Util import STANDARD_TUNING, STANDARD_TUNING_MIDI
 
 import pytest

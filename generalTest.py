@@ -1,40 +1,27 @@
-#quick test for my purpose
-from Styles import *
-from Util import STANDARD_TUNING
-# tuning = Tuning(midiTuning = [40, 45, 50, 115, 59, 64])
-# print(tuning.midiTuning)
-# # f = FretboardStyle(tuning = tuning)
-# f = FretboardStyle(midiTuning = [40, 45, 50, 115, 59, 64])
+from bokeh.plotting import figure, show
+from bokeh.layouts import gridplot
+import numpy as np
 
-# print(f.tuning.midiTuning)
+# Generate sample data for bokeh effect
+x = np.random.random(100)
+y = np.random.random(100)
+sizes = np.random.randint(10, 50, size=100)
 
-# range = FretboardRange(fretFrom= 1, fretTo=8)
-# print(range.fretTo)
-# f = FretboardStyle(fretboardRange = FretboardRange)
-# # f = FretboardStyle(midiTuning = [40, 45, 50, 115, 59, 64])
+# Create individual bokeh figures
+figure1 = figure(title="Figure 1", width=400, height=400)
+figure1.circle(x, y, size=sizes, alpha=0.6)
 
-# print(f.fretboardRange.fretTo)
+figure2 = figure(title="Figure 2", width=400, height=400)
+figure2.circle(x, y, size=sizes, alpha=0.6)
 
-# style = FretboardStyle(orientation=FretboardOrientation("horizontal"), tuning=Tuning(letterTuning=STANDARD_TUNING), fretboardRange=FretboardRange(1, 12), fretboardDesign=FretboardDesign())
-# assert isinstance(style.orientation, FretboardOrientation)
-# assert isinstance(style.tuning, Tuning)
-# assert isinstance(style.fretboardRange, FretboardRange)
-# assert isinstance(style.fretboardDesign, FretboardDesign)
+figure3 = figure(title="Figure 3", width=400, height=400)
+figure3.circle(x, y, size=sizes, alpha=0.6)
 
-# style = FretboardStyle(tuning="invalid")
-# print(style.tuning.midiTuning)
-# style.tuning.midiTuning = [1,2,3,4,5,6]
-# print(style.tuning.midiTuning)
+figure4 = figure(title="Figure 4", width=400, height=400)
+figure4.circle(x, y, size=sizes, alpha=0.6)
 
+# Arrange figures in a grid layout
+grid = gridplot([[figure1, figure2], [figure3, figure4]])
 
-# fretboardStyle = FretboardStyle(orientation="h")
-# print(isinstance(fretboardStyle.orientation, FretboardOrientation))
-# fretboardStyle.orientation = "v"
-# print(fretboardStyle.orientation)
-
-# orientation = FretboardOrientation("horizontal")
-
-# orientation.orientation = "invalid"
-theme = FretboardTheme(theme="lightV")
-        
-print(theme.orientation.orientation)
+# Display the grid of figures
+show(grid)
