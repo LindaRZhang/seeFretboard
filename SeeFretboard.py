@@ -226,6 +226,7 @@ class SeeFretboard():
 
     # fretboard relate
     def drawTuningLabel(self, distanceStrings, i):
+        print(self.theme.orientation.orientation)
         if (self.theme.orientation.orientation == "h"):
             stringLabel = Label(x=-1, y=distanceStrings-self.theme.fretboardDesign.distanceBetweenStrings,
                                  text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
@@ -260,17 +261,21 @@ class SeeFretboard():
         notesPosOnFretboard = self.getCurrentNotesOnFretboard()
         
         self.removeFigure()
+        
+        print("Toggle", self.theme.orientation.orientation)
 
         if(self.theme.orientation.orientation in Constants.HORIZONTAL):
             self.setFretboardFig(FretboardFigure(self.getCurrentNoteType(), self.getTheme(), "v"))
-            self.drawVerticalFretboard()
             self.getTheme().orientation.orientation = "v"
+            self.drawVerticalFretboard()
 
         else:
             self.setFretboardFig(FretboardFigure(self.getCurrentNoteType(), self.getTheme(), "h"))
-            self.drawHorizontalFretboard()
             self.getTheme().orientation.orientation = "h"
-        
+            self.drawHorizontalFretboard()
+            
+        print("ToggleAfter", self.theme.orientation.orientation)
+
         self.layout.children.insert(0,self.fretboardFig.fig)
 
         for notePos in notesPosOnFretboard:
