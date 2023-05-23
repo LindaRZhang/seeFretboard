@@ -1,7 +1,7 @@
 from bokeh.plotting import figure
 from bokeh.models import Range1d
 
-class fretboardFigure():
+class FretboardFigure():
     def __init__(self, note, theme, orientation="h", width = None, height=None):
         self.fig = figure()
         self.figHorXRange = Range1d(-8*note.getNoteRadius(),
@@ -32,7 +32,32 @@ class fretboardFigure():
                 self.fig.height = height
             self.fig.x_range = self.figVerXRange
             self.fig.y_range = self.figVerYRange
+
+        self.stringLabel = ""
+        self.fretLabel = ""
+
+    @property
+    def stringLabel(self):
+        return self._stringLabel
+
+    @stringLabel.setter
+    def stringLabel(self, stringLabel):
+        self._stringLabel = stringLabel
+
+    def addStringLabelLayout(self):
+        self.fig.add_layout(self.stringLabel)
+
+    @property
+    def fretLabel(self):
+        return self._fretLabel
+
+    @fretLabel.setter
+    def fretLabel(self, fretLabel):
+        self._fretLabel = fretLabel
     
+    def addFretLabelLayout(self):
+        self.fig.add_layout(self.fretLabel)
+
     @property
     def fig(self):
         return self._fig

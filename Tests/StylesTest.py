@@ -10,7 +10,7 @@ from Styles.fretboardStyle import FretboardOrientation
 from Styles.fretboardStyle import Tuning
 from Styles.fretboardStyle import FretboardRange
 from Styles.fretboardStyle import FretboardDesign
-from Util import STANDARD_TUNING, STANDARD_TUNING_MIDI
+from Constants import STANDARD_TUNING, STANDARD_TUNING_MIDI
 
 import pytest
 

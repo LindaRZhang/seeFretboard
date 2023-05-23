@@ -1,4 +1,7 @@
 class CircleNote():
+    '''
+    CircleNote is for displaying notes, universal
+    '''
     def __init__(self, **kwargs):
         
         #more for drawing part
@@ -13,6 +16,10 @@ class CircleNote():
         self.scaleDegrees = kwargs.get('scaleDegree', None)
         self.name = kwargs.get('name', None)
         self.nameWithOctave = kwargs.get('nameWithOctave', None)
+
+        #current note string and fret
+        self.fret = kwargs.get('fret', None)
+        self.string = kwargs.get('string', None)
     
     def getNoteRadius(self):
         return self.noteRadius

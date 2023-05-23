@@ -1,4 +1,4 @@
-from Util import STANDARD_TUNING, STANDARD_TUNING_MIDI
+from Constants import STANDARD_TUNING, STANDARD_TUNING_MIDI
 
 class FretboardTheme:
     def __init__(self, theme=None, **kwargs):

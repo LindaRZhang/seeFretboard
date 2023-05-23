@@ -1,8 +1,8 @@
 class PitchCollection():
     def __init__(self, pitchesType = "pitchesNames"):
         """
-        A class representing a collection of pitches.
-
+        A class representing a collection of pitches musically.
+        
         Args:
             pitchesType (str): The type of pitches to store.
 

@@ -23,9 +23,11 @@ from PIL import Image
 from CirlceNote import CircleNote
 from Video import Video
 import Util
+import Constants
 from PitchCollection import PitchCollection
 from Styles.fretboardStyle import *
-from FretboardFigure import fretboardFigure
+from FretboardFigure import FretboardFigure
+from NotePosition import NotePosition
 
 from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
@@ -42,7 +44,8 @@ class SeeFretboard():
                                     showTuning=showTuning, **kwargs)
 
         # notes circle
-        self.notes = []
+        self.currentNotesPositionOnFretboard = [] #NotePosition
+        self.notes = [] #glyph of the current notes more for removeable purposes
         self.labels = []
         self.noteTypes = {
             'prediction': CircleNote(), #default using that
@@ -52,8 +55,8 @@ class SeeFretboard():
 
         
         # figure attribute
-        self.fretboardFig = fretboardFigure(self.getCurrentNoteType(), self.theme, orientation)
-
+        self.fretboardFig = FretboardFigure(self.getCurrentNoteType(), self.theme, orientation)
+        
         #images parameters
         self.imagePathName = os.path.join(os.getcwd(), 'Images')
         self.imageName = "default"
@@ -89,6 +92,15 @@ class SeeFretboard():
         self.pitchCollection = PitchCollection()
         
         self.scaleCustom = False
+
+        self.layout = layout([self.fretboardFig.fig,
+                         self.toggleButtons, self.notesOptions])
+
+    def getFretboardFig(self):
+        return self.fretboardFig
+    
+    def setFretboardFig(self, fig):
+        self.fretboardFig = fig
 
     def inputChordButtonClicked(self):
         self.updateFretboard(self.inputChordInput.value)
@@ -215,36 +227,60 @@ class SeeFretboard():
     # fretboard relate
     def drawTuningLabel(self, distanceStrings, i):
         if (self.theme.orientation.orientation == "h"):
-            string_label = Label(x=-1, y=distanceStrings-self.theme.fretboardDesign.distanceBetweenStrings,
+            stringLabel = Label(x=-1, y=distanceStrings-self.theme.fretboardDesign.distanceBetweenStrings,
                                  text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
         else:
-            string_label = Label(x=distanceStrings, y=self.theme.fretboardDesign.distanceBetweenFrets*(
+            stringLabel = Label(x=distanceStrings, y=self.theme.fretboardDesign.distanceBetweenFrets*(
                 self.theme.fretboardRange.numOfFrets+1), text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
-        string_label.visible = self.theme.fretboardDesign.showTuning
-        self.fretboardFig.fig.add_layout(string_label)
+        stringLabel.visible = self.theme.fretboardDesign.showTuning
+        
+        self.fretboardFig.stringLabel = stringLabel
+        self.fretboardFig.addStringLabelLayout()
 
         self.tuningLabelButton.js_on_event(ButtonClick, CustomJS(args=dict(
-            stringLabel=string_label), code="""stringLabel.visible = !stringLabel.visible"""))
+            stringLabel=stringLabel), code="""stringLabel.visible = !stringLabel.visible"""))
 
     def drawFretLabel(self, distanceBetweenFrets, j):
         if (self.theme.orientation.orientation == "h"):
-            fret_label = Label(x=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
+            fretLabel = Label(x=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
                                y=-self.getCurrentNoteType().noteRadius*1.5, text=str(j+1), text_align='center', text_font_size='10pt')
         else:
-            fret_label = Label(x=-self.getCurrentNoteType().noteRadius*1.5, y=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets -
+            fretLabel = Label(x=-self.getCurrentNoteType().noteRadius*1.5, y=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets -
                                self.theme.fretboardDesign.distanceBetweenFrets/2, text=str(j), text_align='center', text_font_size='10pt')
 
-        fret_label.visible = self.theme.fretboardDesign.showFretboardNumber
-        self.fretboardFig.fig.add_layout(fret_label)
+        fretLabel.visible = self.theme.fretboardDesign.showFretboardNumber
+        
+        self.fretboardFig.fretLabel = fretLabel
+        self.fretboardFig.addFretLabelLayout()
 
         self.fretLabelButton.js_on_event(ButtonClick, CustomJS(args=dict(
-            fretLabel=fret_label), code="""fretLabel.visible = !fretLabel.visible"""))
+            fretLabel=fretLabel), code="""fretLabel.visible = !fretLabel.visible"""))
 
     def toggleFretboardDirection(self):
-        self.clearFretboard()
-        if(self.theme.orientation.orientation == "h"):
+        notesPosOnFretboard = self.getCurrentNotesOnFretboard()
+        
+        self.removeFigure()
+
+        if(self.theme.orientation.orientation in Constants.HORIZONTAL):
+            self.setFretboardFig(FretboardFigure(self.getCurrentNoteType(), self.getTheme(), "v"))
             self.drawVerticalFretboard()
-        self.drawHorizontalFretboard()
+            self.getTheme().orientation.orientation = "v"
+
+        else:
+            self.setFretboardFig(FretboardFigure(self.getCurrentNoteType(), self.getTheme(), "h"))
+            self.drawHorizontalFretboard()
+            self.getTheme().orientation.orientation = "h"
+        
+        self.layout.children.insert(0,self.fretboardFig.fig)
+
+        for notePos in notesPosOnFretboard:
+            self.addNote(notePos.getString(), notePos.getFret(),False)
+
+    def drawFretboard(self, orientation):
+        if(orientation.lower() in Constants.HORIZONTAL):
+            self.drawHorizontalFretboard()
+        elif(orientation.lower() in Constants.VERTICAL):
+            self.drawVerticalFretboard()
 
     # preview
     def drawHorizontalFretboard(self):
@@ -457,10 +493,8 @@ class SeeFretboard():
         # self.notes.append(self.fig.add_glyph(circleNote))
 
     def showFretboard(self):
-        layoutF = layout(self.fretboardFig.fig,
-                         self.toggleButtons, self.notesOptions)
-        curdoc().add_root(layoutF)
-        # show(layoutF)
+        
+        curdoc().add_root(self.layout)
 
     def clearFretboard(self):
         notesCopy = list(self.notes)
@@ -474,6 +508,9 @@ class SeeFretboard():
         
         self.labels = []
 
+    def removeFigure(self):
+        self.layout.children.remove(self.fretboardFig.fig)
+        
     def updateFretboard(self, notes):
         self.clearFretboard()
         self.addNotesAllString(notes)
@@ -522,7 +559,7 @@ class SeeFretboard():
             print("ERROR, WRONG FORMAT.")
 
     # -1 = x
-    def addNote(self, string, fret):
+    def addNote(self, string, fret, appendPos=True):
         note = ""
         textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getPitchesIndex()))
         textValue = textValue.replace("-","b")
@@ -664,7 +701,10 @@ class SeeFretboard():
                 
         if (note != ""):
             self.notes.append(self.fretboardFig.fig.add_glyph(note))
-    
+            if(appendPos):
+                notePos = NotePosition(string, fret)
+                self.appendCurrentNotesOnFretboard(notePos)
+
     #drawing fretboard getter n setters
     def getTheme(self):
         return self.theme
@@ -687,6 +727,15 @@ class SeeFretboard():
     def getCurrentNoteType(self):
         return self.getNoteTypes(self.getNoteType())
 
+    def getCurrentNotesOnFretboard(self):
+        return self.currentNotesPositionOnFretboard
+
+    def appendCurrentNotesOnFretboard(self, value):
+        self.currentNotesPositionOnFretboard.append(value)
+
+    def setCurrentNotesOnFretboard(self, notes):
+        self.currentNotesPositionOnFretboard = notes
+    
     #adding scale, arpeggio, interval, chord
     
     '''

@@ -7,7 +7,7 @@ from SeeFretboard import SeeFretboard
 fretboard = SeeFretboard("v", 1, 12)
 fretboard.drawVerticalFretboard()
 
-#fretboard.getPitchCollection().setPitchesType("pitchesWithOctave")
+fretboard.getPitchCollection().setPitchesType("pitchesWithOctave")
 #fretboard.getPitchCollection().setPitchesType("pitchesScaleDegrees")
 
 fretboard.addArpeggio("f","major-13th")
