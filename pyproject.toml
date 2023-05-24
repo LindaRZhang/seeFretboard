@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "seefretboard"
-version = "0.1.0"
+version = "0.0.4"
 description = ""
 authors = ["LindaRZhang <ronglindaz@gmail.com>"]
 readme = "README.md"

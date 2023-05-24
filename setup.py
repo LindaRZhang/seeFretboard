@@ -1,11 +1,11 @@
-import setuptools
+from setuptools import setuptools, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name='seeFretboard',
-    version='0.0.3',
+    version='0.0.4',
     author='Linda Rong Zhang',
     author_email='ronglindaz@gmail.com',
     description='Testing installation of Package',
@@ -16,6 +16,6 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/LindaRZhang/seeFretboard/issues"
     },
     license='MIT',
-    packages=['seeFretboard'],
+    packages=find_packages(),
     install_requires=['requests'],
 )
