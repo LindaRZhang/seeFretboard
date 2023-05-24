@@ -1,0 +1,16 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.py
+seeFretboard/NotePosition.py
+seeFretboard/PathInfo.py
+seeFretboard/PitchCollection.py
+seeFretboard/SeeFretboard.py
+seeFretboard/__init__.py
+seeFretboard/generalTest.py
+seeFretboard.egg-info/PKG-INFO
+seeFretboard.egg-info/SOURCES.txt
+seeFretboard.egg-info/dependency_links.txt
+seeFretboard.egg-info/requires.txt
+seeFretboard.egg-info/top_level.txt

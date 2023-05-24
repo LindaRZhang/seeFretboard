@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: seeFretboard
+Version: 0.0.3
+Summary: Testing installation of Package
+Home-page: https://github.com/LindaRZhang/seeFretboard
+Author: Linda Rong Zhang
+Author-email: ronglindaz@gmail.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/LindaRZhang/seeFretboard/issues
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# seeFretboard
+
+To show with curdoc need to run server at directory of file<br />
+bokeh serve --show fileName.py<br /><br />
+
+###dependencies
+*python
+*bokeh
+*selenium, firefox or chrome driver
+*opencv
+*ffmpeg
+*mirdata only versions >=3.7,<3.11 are supported as of 2023
+pretty_midi
+*fluidSynth
+*pyfluidsynth
+*tempfile
+*sox
+soundfile
+*os
+*glob
+*re
+*librosa
+*PIL
+*Music21
+
+<br />
+<br />
+To use bokeh.io image export functions you need selenium ('conda install selenium' or 'pip install selenium')<br />
+If firefox: conda install firefox -c conda-forge<br />
+If chrome: conda install selenium python-chromedriver-binary -c conda-forge
+<br />
+<br />
+
+Problem with chrome driver Run locally for mac first<br />
+Run chromedriver executable file<br />
+Use Homebrew to download chromedriver<br />
+And ran executable in /opt/homebrew/Caskroom/chromedriver/110.0.5481.77
+
+<br />
+* Video download: pip install opencv-python
+
+<br />
+mac sometime permission issue: chmod 777 seeFretboard
+
+conda list shows dependiences

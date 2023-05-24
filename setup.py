@@ -16,6 +16,6 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/LindaRZhang/seeFretboard/issues"
     },
     license='MIT',
-    packages=['toolbox'],
+    packages=['seeFretboard'],
     install_requires=['requests'],
 )
