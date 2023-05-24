@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 
 from Designs.CirlceNote import CircleNote
-import Utilities.Util as Util
+from Utilities import Util
 import Utilities.Constants as Constants
 from PitchCollection import PitchCollection
 from Designs.FretboardStyle import *
