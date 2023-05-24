@@ -1,4 +1,4 @@
-class Note():
+class VideoNote():
     def __init__(self, pitch, startTime, endTime):
         self.pitch = pitch
         self.startTime = startTime

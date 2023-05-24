@@ -1,5 +1,5 @@
 import os
-from Frame import Frame
+from Videos.Frame import Frame
 
 
 class Video(Frame):

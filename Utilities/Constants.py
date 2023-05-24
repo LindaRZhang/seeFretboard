@@ -1,3 +1,6 @@
+from pathlib import Path
+import os 
+
 #scale degree, later can add b or #
 scaleDegrees = ["1", "b2", "2", "b3", "3", "4", "b5", "5", "b6", "6", "b7", "7","1"]
 
@@ -38,3 +41,6 @@ OPEN_B_TUNING_MIDI = [35, 42, 35, 42, 35, 39]
 #orientation
 HORIZONTAL = ["horizontal", "h"]
 VERTICAL = ["vertical", "v"]
+
+BASE_PATH = Path(__file__).resolve().parent.parent
+

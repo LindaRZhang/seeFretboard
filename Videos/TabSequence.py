@@ -3,17 +3,17 @@
 import mirdata
 import math
 import os
-from Frame import Frame
-from Note import Note
-import Util
-
+from Videos.Frame import Frame
+from Videos.VideoNote import VideoNote
+import Utilities.Util as Util
+from Utilities.Constants import BASE_PATH
 # set for 6 string in standard tuning for now
 
 # tab consist of many frames or the frames in certain period
 
 
 class TabSequence(Frame):
-    def __init__(self, trackNum, frameRate=30, filePath=os.path.join(os.getcwd(), 'GuitarSet')):
+    def __init__(self, trackNum, frameRate=30, filePath=os.path.join(BASE_PATH, 'GuitarSet')):
         super().__init__(frameRate)
 
         self.filePath = filePath
@@ -138,7 +138,7 @@ class TabSequence(Frame):
                         pitchesPlaying[(j, pitch)].setEndTime(pitchesPlaying[(j, pitch)].getEndTime() + self.getFramePeriod())
                     else:
                         # Note is starting to be played
-                        pitchesPlaying[(j, pitch)] = Note(pitch,i / self.frameRate,i / self.frameRate)
+                        pitchesPlaying[(j, pitch)] = VideoNote(pitch,i / self.frameRate,i / self.frameRate)
 
             # Loop through notes currently being played n c if it's in current frame, if not end time
             for (j, pitch) in list(pitchesPlaying):

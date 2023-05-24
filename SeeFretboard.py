@@ -20,13 +20,14 @@ import ffmpeg
 import cv2
 from PIL import Image
 
-from CirlceNote import CircleNote
-from Video import Video
-import Util
-import Constants
+from Designs.CirlceNote import CircleNote
+from Videos.Video import Video
+from Videos.Images import Images
+import Utilities.Util as Util
+import Utilities.Constants as Constants
 from PitchCollection import PitchCollection
-from Styles.fretboardStyle import *
-from FretboardFigure import FretboardFigure
+from Designs.FretboardStyle import *
+from Designs.FretboardFigure import FretboardFigure
 from NotePosition import NotePosition
 
 from music21 import scale, interval, harmony, key
@@ -58,10 +59,7 @@ class SeeFretboard():
         self.fretboardFig = FretboardFigure(self.getCurrentNoteType(), self.theme, orientation)
         
         #images parameters
-        self.imagePathName = os.path.join(os.getcwd(), 'Images')
-        self.imageName = "default"
-        self.imageMeta = ".png"
-        self.imageProgressBar = True
+        self.images = Images(self.fretboardFig.fig)
 
         # buttons
         self.tuningLabelButton = Button(
@@ -146,43 +144,43 @@ class SeeFretboard():
         os.remove(tmp_file)
 
     def saveAsVideoImages(self):
-        oriImgName = self.imageName
+        oriImgName = self.images.name
         print(oriImgName)
         for k, v in self.video.getFramesItems():
             self.updateFretboard(v)
-            self.setImageName(str(k)+oriImgName)
+            self.images.name = str(k)+oriImgName
             self.saveAs()
-            print("saving"+self.getImageName())
+            print("saving"+self.images.name)
         print("done")
 
     # for guitarset n other data where num of second is not defined
     def saveAsVideoImagesNoSeconds(self):
-        oriImgName = self.imageName
+        oriImgName = self.images.name
         images = {}
         print("IMAGES Generateing")
-        for i in tqdm(range(len(self.video.getFrames())), disable=not(self.imageProgressBar)):
+        for i in tqdm(range(len(self.video.getFrames())), disable=not(self.images.imageProgressBar)):
             frame = self.video.getFrames()[i]
-            self.setImageName(str(i)+oriImgName)
+            self.images.name = str(i)+oriImgName
             if frame in images:
                 image = images[frame]
                 image.copy().save(os.path.join(
-                    self.imagePathName, self.getImageName() + self.getImageMeta()))
+                    self.images.outputPathName, self.images.name + self.images.meta))
             else:
                 self.updateFretboard(self.video.getFrames()[i])
                 self.saveAs()
                 image = Image.open(os.path.join(
-                    self.imagePathName, self.getImageName() + self.getImageMeta()))
+                    self.images.outputPathName, self.images.name + self.images.meta))
                 images[frame] = image.copy()
         print("IMAGES Generate done")
 
     def deleteAllImages(self):
-        files = glob.glob(os.path.join(self.imagePathName, "*"))
+        files = glob.glob(os.path.join(self.images.outputPathName, "*"))
         for f in files:
             os.remove(f)
         print("All Images Delete")
 
     def saveAsVideo(self):
-        images = os.listdir(self.imagePathName)
+        images = os.listdir(self.images.outputPathName)
         images = sorted(images, key=lambda s: [
                         int(x) if x.isdigit() else x for x in re.split('(\d+)', s)])
 
@@ -193,7 +191,7 @@ class SeeFretboard():
         )+"."+self.video.getFileExtension(), fourcc, self.video.getFrameRate(), frameSize)
 
         for image in images:
-            frame = cv2.imread(os.path.join(self.getImagePathName(), image))
+            frame = cv2.imread(os.path.join(self.images.outputPathName(), image))
             videoWriter.write(frame)
 
         cv2.destroyAllWindows()
@@ -226,7 +224,6 @@ class SeeFretboard():
 
     # fretboard relate
     def drawTuningLabel(self, distanceStrings, i):
-        print(self.theme.orientation.orientation)
         if (self.theme.orientation.orientation == "h"):
             stringLabel = Label(x=-1, y=distanceStrings-self.theme.fretboardDesign.distanceBetweenStrings,
                                  text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
@@ -261,8 +258,6 @@ class SeeFretboard():
         notesPosOnFretboard = self.getCurrentNotesOnFretboard()
         
         self.removeFigure()
-        
-        print("Toggle", self.theme.orientation.orientation)
 
         if(self.theme.orientation.orientation in Constants.HORIZONTAL):
             self.setFretboardFig(FretboardFigure(self.getCurrentNoteType(), self.getTheme(), "v"))
@@ -274,8 +269,6 @@ class SeeFretboard():
             self.getTheme().orientation.orientation = "h"
             self.drawHorizontalFretboard()
             
-        print("ToggleAfter", self.theme.orientation.orientation)
-
         self.layout.children.insert(0,self.fretboardFig.fig)
 
         for notePos in notesPosOnFretboard:
@@ -520,39 +513,13 @@ class SeeFretboard():
         self.clearFretboard()
         self.addNotesAllString(notes)
 
-    def getImagePathName(self):
-        return self.imagePathName
-
-    def setImagePathName(self, path):
-        self.imagePathName = path
-
     # saveAsImg
     def saveAs(self):
-        fileName = os.path.join(
-            self.imagePathName, self.getImageName() + self.getImageMeta())
-        if (self.getImageMeta().lower() == ".png"):
-            export_png(self.fretboardFig.fig, filename=fileName)
+        if (self.images.meta.lower() == ".png"):
+            export_png(self.fretboardFig.fig, filename=self.images.fileName)
 
-        elif (self.getImageMeta().lower() == ".svg"):
-            export_svg(self.fretboardFig.fig, filename=fileName)
-
-    def getImageName(self):
-        return self.imageName
-
-    def setImageName(self, name):
-        self.imageName = name
-
-    def getImageMeta(self):
-        return self.imageMeta
-
-    def setImageMeta(self, meta):
-        self.imageMeta = meta
-    
-    def getImageProgressBar(self):
-        return self.imageProgressBar
-
-    def setImageProgressBar(self, imageProgressBar):
-        self.imageProgressBar = imageProgressBar
+        elif (self.images.meta.lower() == ".svg"):
+            export_svg(self.fretboardFig.fig, filename=self.images.fileName)
 
     # user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self, notes):

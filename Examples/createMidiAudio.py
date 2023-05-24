@@ -1,8 +1,8 @@
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from TabSequence import TabSequence
-from Video import Video
+from Videos.TabSequence import TabSequence
+from Videos.Video import Video
 from SeeFretboard import SeeFretboard
 
 f = SeeFretboard("v", 1, 12)

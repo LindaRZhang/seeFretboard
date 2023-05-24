@@ -2,9 +2,9 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Frame import Frame
-from Video import Video
-from TabSequence import TabSequence
+from Videos.Frame import Frame
+from Videos.Video import Video
+from Videos.TabSequence import TabSequence
 from SeeFretboard import SeeFretboard
 
 
