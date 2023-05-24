@@ -1,10 +1,10 @@
 import os
 from Videos.Frame import Frame
-
+from Utilities.Constants import BASE_PATH, FRAMERATE
 
 class Video(Frame):
 
-    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate=10, videoName="defaultVid", fileExtension="mp4", codec="mp4v"):
+    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate=FRAMERATE, videoName="defaultVid", fileExtension=".mp4", codec="mp4v", videoWAudioName="defaultVideoWAudio"):
         super().__init__(frameRate)
 
         # format = {{frameNumber:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
@@ -22,12 +22,18 @@ class Video(Frame):
         self.codec = codec
 
         # paths
-        self.videoPath = os.getcwd()
+        self.videoPath = os.path.join(BASE_PATH, 'Outputs', 'Videos')
         self.videoName = videoName
-        self.videoPathWithName = os.path.join(self.videoPath,self.videoName)
-        self.audioPath = os.getcwd()
-        self.audioName = ""#'00_BN1-129-Eb_comp_hex.wav'
-        self.audioPathWithName = os.path.join(self.audioPath,self.audioName)
+        self.videoPathWithName = os.path.join(self.videoPath, self.videoName)
+        
+        self.audioPath = os.path.join(BASE_PATH, 'GuitarSet')
+        self.audioName = ""
+        self.audioPathWithName = os.path.join(self.audioPath, self.audioName)
+
+        self.videoWAudioPath = os.path.join(BASE_PATH, 'Outputs', 'Videos')
+        self.videoWAudioName = videoWAudioName
+        self.videoWAudioPathWithName = os.path.join(self.videoWAudioPath, self.videoWAudioName+fileExtension)
+
 
     def getVideoPathName(self):
         return self.videoPath
@@ -40,16 +46,22 @@ class Video(Frame):
 
     def setAudioPathName(self, path):
         self.audioPath = path
+    
+    def getVideoWAudioPathName(self):
+        return self.videoWAudioPath
 
+    def setVideoWAudioPathName(self, path):
+        self.videoWAudioPath = path
+    
     def getCurrentSecond(self):
-        return self.currentFrame/self.frameRate
+        return self.currentFrame / self.frameRate
 
     def addTab(self, seconds, tab):
         frames = seconds * self.frameRate
-        for i in range(1, frames+1):
-            self.addFrame(self.currentAddTabFrames+i, tab)
+        for i in range(1, frames + 1):
+            self.addFrame(self.currentAddTabFrames + i, tab)
 
-        self.currentAddTabFrames = self.currentAddTabFrames+frames
+        self.currentAddTabFrames = self.currentAddTabFrames + frames
 
     def addFrame(self, timeFrame, notes):
         timeFrame = round(timeFrame, 2)
@@ -129,15 +141,28 @@ class Video(Frame):
 
     def setAudioName(self, name):
         self.audioName = name
+
+    def getVideoWAudioName(self):
+        return self.videoWAudioName
+
+    def setVideoWAudioName(self, name):
+        self.videoWAudioName = name
     
     def getVideoPathWithName(self):
-        return os.path.join(self.videoPath,self.videoName)
+        return os.path.join(self.videoPath, self.videoName)
 
     def setVideoPathWithName(self, path):
         self.videoPathWithName = path
     
     def getAudioPathWithName(self):
-        return os.path.join(self.audioPath,self.audioName)
+        return os.path.join(self.audioPath, self.audioName)
 
     def setAudioPathWithName(self, path):
         self.audioPathWithName = path
+
+    def getVideoWAudioPathWithName(self):
+        return os.path.join(self.videoWAudioPath, self.videoWAudioName+self.fileExtension)
+
+    def setVideoWAudioPathWithName(self, path):
+        self.videoWAudioPath = path
+

@@ -6,23 +6,17 @@ from bokeh.events import ButtonClick
 from bokeh.io import export_png, export_svg, curdoc
 from bokeh.layouts import row
 
-import pretty_midi
-import tempfile
-import sox
-import soundfile as sf
 from tqdm import tqdm
 
 import os
-import glob
 import re
 
 import ffmpeg
-import cv2
 from PIL import Image
+import cv2
 
 from Designs.CirlceNote import CircleNote
 from Videos.Video import Video
-from Videos.Images import Images
 import Utilities.Util as Util
 import Utilities.Constants as Constants
 from PitchCollection import PitchCollection
@@ -32,7 +26,7 @@ from NotePosition import NotePosition
 
 from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
-
+#manager/master kinda
 class SeeFretboard():
     
     # default values
@@ -57,9 +51,7 @@ class SeeFretboard():
         
         # figure attribute
         self.fretboardFig = FretboardFigure(self.getCurrentNoteType(), self.theme, orientation)
-        
-        #images parameters
-        self.images = Images(self.fretboardFig.fig)
+    
 
         # buttons
         self.tuningLabelButton = Button(
@@ -108,119 +100,6 @@ class SeeFretboard():
     
     def getVideo(self):
         return self.video
-
-    # the frames are in frets
-    def saveMidi(self, frames):
-        midi = pretty_midi.PrettyMIDI()
-        inst = pretty_midi.Instrument(program=25)
-
-        for frame in frames:
-            n = pretty_midi.Note(velocity=100,
-                                 pitch=frame.getPitch(), start=frame.getStartTime(),
-                                 end=frame.getEndTime()
-                                 )
-
-            inst.notes.append(n)
-        midi.instruments.append(inst)
-
-        return midi
-
-    def sonifyJams(self, frames):
-        midi = self.saveMidi(frames)
-        signal_out = midi.fluidsynth(fs=44100.0)
-        path = self.video.getAudioPathWithName()
-        self.saveSmallWav(path, signal_out, 44100)
-        return signal_out, 44100
-
-    def saveSmallWav(self, out_path, y, fs):
-        fhandle, tmp_file = tempfile.mkstemp(suffix='.wav')
-
-        sf.write(tmp_file, y, fs)
-
-        tfm = sox.Transformer()
-        tfm.convert(bitdepth=16)
-        tfm.build(tmp_file, out_path)
-        os.close(fhandle)
-        os.remove(tmp_file)
-
-    def saveAsVideoImages(self):
-        oriImgName = self.images.name
-        print(oriImgName)
-        for k, v in self.video.getFramesItems():
-            self.updateFretboard(v)
-            self.images.name = str(k)+oriImgName
-            self.saveAs()
-            print("saving"+self.images.name)
-        print("done")
-
-    # for guitarset n other data where num of second is not defined
-    def saveAsVideoImagesNoSeconds(self):
-        oriImgName = self.images.name
-        images = {}
-        print("IMAGES Generateing")
-        for i in tqdm(range(len(self.video.getFrames())), disable=not(self.images.imageProgressBar)):
-            frame = self.video.getFrames()[i]
-            self.images.name = str(i)+oriImgName
-            if frame in images:
-                image = images[frame]
-                image.copy().save(os.path.join(
-                    self.images.outputPathName, self.images.name + self.images.meta))
-            else:
-                self.updateFretboard(self.video.getFrames()[i])
-                self.saveAs()
-                image = Image.open(os.path.join(
-                    self.images.outputPathName, self.images.name + self.images.meta))
-                images[frame] = image.copy()
-        print("IMAGES Generate done")
-
-    def deleteAllImages(self):
-        files = glob.glob(os.path.join(self.images.outputPathName, "*"))
-        for f in files:
-            os.remove(f)
-        print("All Images Delete")
-
-    def saveAsVideo(self):
-        images = os.listdir(self.images.outputPathName)
-        images = sorted(images, key=lambda s: [
-                        int(x) if x.isdigit() else x for x in re.split('(\d+)', s)])
-
-        fourcc = cv2.VideoWriter_fourcc(*self.video.getCodec())
-        frameSize = (self.fretboardFig.fig.width, self.fretboardFig.fig.height)
-
-        videoWriter = cv2.VideoWriter(self.video.getVideoPathWithName(
-        )+"."+self.video.getFileExtension(), fourcc, self.video.getFrameRate(), frameSize)
-
-        for image in images:
-            frame = cv2.imread(os.path.join(self.images.outputPathName(), image))
-            videoWriter.write(frame)
-
-        cv2.destroyAllWindows()
-        videoWriter.release()
-
-        print("VIDEO " + self.video.getVideoName() +
-              " saved at "+self.video.getVideoPathName())
-
-    def createVideoWithAudio(self, videoWithAudioName):
-        self.saveAsVideo()
-
-        videoPath = ffmpeg.input(
-            self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
-        audioPath = ffmpeg.input(self.video.getAudioPathWithName())
-        print(audioPath)
-
-        ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
-            videoWithAudioName+".mp4").run(overwrite_output=True)
-        print("video save with audio done")
-
-    def saveVideoWithAudio(self):
-        videoPath = ffmpeg.input(
-            self.video.getVideoPathWithName()+"."+self.video.getFileExtension())
-        audioPath = ffmpeg.input(self.video.getAudioPathWithName())
-
-        ffmpeg.concat(videoPath, audioPath, v=1, a=1).output(
-            self.video.getVideoName(
-            )+".mp4").run(overwrite_output=True)
-        print("video save with audio done")
 
     # fretboard relate
     def drawTuningLabel(self, distanceStrings, i):
@@ -513,14 +392,6 @@ class SeeFretboard():
         self.clearFretboard()
         self.addNotesAllString(notes)
 
-    # saveAsImg
-    def saveAs(self):
-        if (self.images.meta.lower() == ".png"):
-            export_png(self.fretboardFig.fig, filename=self.images.fileName)
-
-        elif (self.images.meta.lower() == ".svg"):
-            export_svg(self.fretboardFig.fig, filename=self.images.fileName)
-
     # user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self, notes):
         notes = [(x.strip()) for x in notes.split(',')]
@@ -646,7 +517,7 @@ class SeeFretboard():
                 
                 label = Label(x=xPos,
                               y=yPos,
-                                        text="Ttest", text_align='center', text_font_size='10pt')
+                                        text="", text_align='center', text_font_size='10pt')
                 self.labels.append(label)
                 self.fretboardFig.fig.add_layout(label)
 

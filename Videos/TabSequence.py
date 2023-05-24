@@ -6,14 +6,14 @@ import os
 from Videos.Frame import Frame
 from Videos.VideoNote import VideoNote
 import Utilities.Util as Util
-from Utilities.Constants import BASE_PATH
+from Utilities.Constants import BASE_PATH,FRAMERATE
 # set for 6 string in standard tuning for now
 
 # tab consist of many frames or the frames in certain period
 
 
 class TabSequence(Frame):
-    def __init__(self, trackNum, frameRate=30, filePath=os.path.join(BASE_PATH, 'GuitarSet')):
+    def __init__(self, trackNum, frameRate=FRAMERATE, filePath=os.path.join(BASE_PATH, 'GuitarSet')):
         super().__init__(frameRate)
 
         self.filePath = filePath

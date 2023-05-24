@@ -44,3 +44,4 @@ VERTICAL = ["vertical", "v"]
 
 BASE_PATH = Path(__file__).resolve().parent.parent
 
+FRAMERATE = 30

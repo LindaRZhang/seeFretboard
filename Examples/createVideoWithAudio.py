@@ -6,6 +6,7 @@ from Videos.Frame import Frame
 from Videos.Video import Video
 from Videos.TabSequence import TabSequence
 from SeeFretboard import SeeFretboard
+from Videos import Video, TabSequence, Audio, VideoManager, Images
 
 
 fretboard = SeeFretboard("v", 1, 12)
@@ -20,8 +21,8 @@ Then frames to images
 then images to video with audio
 '''
 tabSeq.makingFrames()
-video.setAudioPathName(os.getcwd())
 video.setAudioName("00_BN3-119-G_comp_hex_cln.wav")
-fretboard.setVideo(video)
-fretboard.saveAsVideoImagesNoSeconds()
-fretboard.createVideoWithAudio("videoWithAudio2_00_BN3-119-G_comp_hex_cln")
+
+videoManager = VideoManager(fretboard,video,Images())
+#videoManager.saveAsVideoImagesNoSeconds()#generate images for audio
+videoManager.createVideoWithAudio()#createVideoWithMidiAudio
