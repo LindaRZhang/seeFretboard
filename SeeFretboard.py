@@ -121,7 +121,9 @@ class SeeFretboard():
 
     def toggleFretboardDirection(self):
         notesPosOnFretboard = self.getCurrentNotesOnFretboard()
-        
+        pitchCollectionOnFretboard = self.getPitchCollection()
+        print(pitchCollectionOnFretboard.getArrayTypeNow())
+
         self.removeFigure()
 
         if(self.theme.orientation.orientation in Constants.HORIZONTAL):
@@ -136,9 +138,12 @@ class SeeFretboard():
             
         self.layout.children.insert(0,self.fretboardFig.fig)
 
+        self.setPitchCollection(pitchCollectionOnFretboard)
+        print(pitchCollectionOnFretboard.getArrayTypeNow())
+
         for notePos in notesPosOnFretboard:
             self.addNote(notePos.getString(), notePos.getFret(),False)
-
+        
     def drawFretboard(self, orientation):
         if(orientation.lower() in Constants.HORIZONTAL):
             self.drawHorizontalFretboard()
@@ -725,8 +730,6 @@ class SeeFretboard():
         
                 else:
                 #for nonConcrete scale
-                    print(pitches[pitchIndex])
-                    print(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex]))
                     if(pitches[pitchIndex].alter == -1.0):
                         self.pitchCollection.appendPitchesScaleDegree("b"+str(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex])))
                     elif(pitches[pitchIndex].alter == 1.0):
@@ -888,7 +891,7 @@ class SeeFretboard():
             file.write(div)
 
     def generateWithServerHtml(self, name="withServer.html"):
-        script = server_document()
+        script = server_document("http://localhost:5006/generalTest")
         
         self.pathInfo.name = name
         with open(self.pathInfo.getPathWithName(), "w") as file:

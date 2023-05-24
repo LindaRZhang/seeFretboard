@@ -16,4 +16,4 @@ fretboard1 = SeeFretboard()
 fretboard1.drawHorizontalFretboard()
 fretboard1.addScale("c","major")
 
-fretboard1.genereateScriptAndDiv()
+fretboard1.showFretboard()
