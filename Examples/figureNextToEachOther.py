@@ -2,11 +2,6 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from bokeh.plotting import figure
-from bokeh.resources import CDN
-from bokeh.embed import file_html
-
-
 from SeeFretboard import SeeFretboard
 from bokeh.layouts import row
 from bokeh.io import  curdoc
@@ -14,6 +9,8 @@ from bokeh.io import  curdoc
 
 fretboard1 = SeeFretboard()  
 fretboard1.drawHorizontalFretboard()
-fretboard1.addScale("c","major")
+fretboard2 = SeeFretboard("v")  
+fretboard2.drawVerticalFretboard()
 
-fretboard1.genereateScriptAndDiv()
+layout = row(fretboard1.layout, fretboard2.layout)  
+curdoc().add_root(layout)

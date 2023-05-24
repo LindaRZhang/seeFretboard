@@ -1,0 +1,14 @@
+<script id="p1753">
+  (function() {
+    const xhr = new XMLHttpRequest()
+    xhr.responseType = 'blob';
+    xhr.open('GET', "http://localhost:5006/autoload.js?bokeh-autoload-element=p1753&bokeh-absolute-url=http://localhost:5006", true);
+    xhr.onload = function (event) {
+      const script = document.createElement('script');
+      const src = URL.createObjectURL(event.target.response);
+      script.src = src;
+      document.body.appendChild(script);
+    };
+    xhr.send();
+  })();
+</script>

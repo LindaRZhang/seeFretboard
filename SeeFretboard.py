@@ -5,6 +5,8 @@ from bokeh.layouts import layout
 from bokeh.events import ButtonClick
 from bokeh.io import  curdoc
 from bokeh.layouts import row
+from bokeh.resources import CDN
+from bokeh.embed import file_html, components, server_document
 
 from tqdm import tqdm
 
@@ -16,6 +18,7 @@ from PitchCollection import PitchCollection
 from Designs.FretboardStyle import *
 from Designs.FretboardFigure import FretboardFigure
 from NotePosition import NotePosition
+from PathInfo import EmbedPathInfo
 
 from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
@@ -40,11 +43,9 @@ class SeeFretboard():
             'groundTruth': CircleNote(noteFaceColor="red"),
         }
         self.noteType = "prediction"
-
         
         # figure attribute
         self.fretboardFig = FretboardFigure(self.getCurrentNoteType(), self.theme, orientation)
-    
 
         # buttons
         self.tuningLabelButton = Button(
@@ -71,6 +72,8 @@ class SeeFretboard():
         self.pitchCollection = PitchCollection()
         
         self.scaleCustom = False
+
+        self.pathInfo = EmbedPathInfo()
 
         self.layout = layout([self.fretboardFig.fig,
                          self.toggleButtons, self.notesOptions])
@@ -863,4 +866,31 @@ class SeeFretboard():
     def setPitchCollection(self, pitchCollection):
         self.pitchCollection = pitchCollection
 
+    #Embedding
+    def generateStandaloneHtml(self, name="standalone.html"):
+        html = file_html(self.getFretboardFig().fig, CDN, "my plot")
+
+        self.pathInfo.name = name
+        # Write the HTML to a file
+        with open(self.pathInfo.getPathWithName(), "w") as file:
+            file.write(html)
     
+    def genereateScriptAndDiv(self, scriptName="script.html", divName="div.html"):
+        script, div = components(self.fretboardFig.fig)
+
+        self.pathInfo.name = scriptName
+        # Write to a file
+        with open(self.pathInfo.getPathWithName(), "w") as file:
+            file.write(script)
+        
+        self.pathInfo.name = divName
+        with open(self.pathInfo.getPathWithName(), "w") as file:
+            file.write(div)
+
+    def generateWithServerHtml(self, name="withServer.html"):
+        script = server_document()
+        
+        self.pathInfo.name = name
+        with open(self.pathInfo.getPathWithName(), "w") as file:
+            file.write(script)
+
