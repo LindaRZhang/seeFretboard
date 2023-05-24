@@ -3,20 +3,13 @@ from bokeh.models import Line, Circle, Label, Button, CustomJS, Range1d, ColumnD
 from bokeh.models.widgets import TextInput
 from bokeh.layouts import layout
 from bokeh.events import ButtonClick
-from bokeh.io import export_png, export_svg, curdoc
+from bokeh.io import  curdoc
 from bokeh.layouts import row
 
 from tqdm import tqdm
 
-import os
-import re
-
-import ffmpeg
-from PIL import Image
-import cv2
 
 from Designs.CirlceNote import CircleNote
-from Videos.Video import Video
 import Utilities.Util as Util
 import Utilities.Constants as Constants
 from PitchCollection import PitchCollection
@@ -74,10 +67,6 @@ class SeeFretboard():
         self.clearFretboardButton.on_click(self.clearFretboard)
         self.fretBoardDirectionButton.on_click(self.toggleFretboardDirection)
 
-        # video parameter
-        self.video = Video(0, 10, 0, 0.1, 10)
-        self.videoFrames = self.video.frames
-
         #notes/pitches for scales n arpeggios
         self.pitchCollection = PitchCollection()
         
@@ -94,12 +83,6 @@ class SeeFretboard():
 
     def inputChordButtonClicked(self):
         self.updateFretboard(self.inputChordInput.value)
-
-    def setVideo(self, video):
-        self.video = video
-    
-    def getVideo(self):
-        return self.video
 
     # fretboard relate
     def drawTuningLabel(self, distanceStrings, i):
