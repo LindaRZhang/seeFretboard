@@ -1,5 +1,5 @@
 import music21 
-
+from .Constants import allInterval,scaleDegrees
 def intervalsToScaleDegrees(intervals):
     """Converts a list of intervals to scale degrees.
     

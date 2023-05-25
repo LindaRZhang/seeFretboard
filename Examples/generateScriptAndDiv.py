@@ -7,7 +7,7 @@ from bokeh.resources import CDN
 from bokeh.embed import file_html
 
 
-from SeeFretboard import SeeFretboard
+from seeFretboard import SeeFretboard
 from bokeh.layouts import row
 from bokeh.io import  curdoc
 

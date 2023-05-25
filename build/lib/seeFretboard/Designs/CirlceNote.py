@@ -7,8 +7,8 @@ class CircleNote():
         #more for drawing part
         self.noteFaceColor = kwargs.get('noteFaceColor', 'blue')
         self.noteEdgeColor = kwargs.get('noteEdgeColor', 'black')
-        self.noteLineWidth = kwargs.get('noteLineWidth', 2)
         self.noteFill = kwargs.get('noteFill', True)
+        self.noteEdgeWidth = kwargs.get('noteEdgeWidth', 2)
         self.noteRadius = kwargs.get('noteRadius', 0.4)
         
         #text part
@@ -39,11 +39,11 @@ class CircleNote():
     def setNoteEdgeColor(self,color):
         self.noteEdgeColor = color
         
-    def getNoteLineWidth(self):
-        return self.noteLineWidth
+    def getnoteEdgeWidth(self):
+        return self.noteEdgeWidth
     
-    def setNoteLineWidth(self,lw):
-        self.noteLineWidth = lw
+    def setnoteEdgeWidth(self,lw):
+        self.noteEdgeWidth = lw
         
     def getNoteFill(self):
         return self.noteFill

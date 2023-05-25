@@ -2,10 +2,10 @@ from seeFretboard.Utilities.Constants import STANDARD_TUNING, STANDARD_TUNING_MI
 
 class FretboardTheme:
     def __init__(self, theme=None, **kwargs):
-        if(theme == "light"):
-            self.lightTheme(kwargs.get("orientation"))
+        # if(theme == "light"):
+        #     self.lightTheme(kwargs.get("orientation"))
         
-        else:
+        # else:
             self.customTheme(**kwargs)
 
     def customTheme(self,  **kwargs):
@@ -27,10 +27,12 @@ class FretboardTheme:
         if isinstance(fretboardRange, FretboardRange):
             self.fretboardRange = fretboardRange
         else:
-            self.fretboardRange = FretboardRange(kwargs.get("fretFrom", 1),
-                                                    kwargs.get("fretTo", 12))
+            self.fretboardRange = FretboardRange(kwargs.get("fretFrom", 0),
+                                                    kwargs.get("fretTo", 12),
+                                                     kwargs.get("numOfString", 6))
 
         fretboardDesign = kwargs.get("fretboardDesign")
+
         if fretboardDesign is not None and not isinstance(fretboardDesign, FretboardDesign):
             raise TypeError("Invalid fretboardDesign input. Expected instance of FretboardDesign.")
         if isinstance(fretboardDesign, FretboardDesign):
@@ -38,11 +40,11 @@ class FretboardTheme:
         else:
             self.fretboardDesign = FretboardDesign(**kwargs)
     
-    def lightTheme(self, orientation):
-        self.orientation = FretboardOrientation(orientation)
-        self.tuning = Tuning()
-        self.fretboardRange = FretboardRange(fretFrom = 1, fretTo = 12)
-        self.fretboardDesign = FretboardDesign()
+    # def lightTheme(self, orientation):
+    #     self.orientation = FretboardOrientation(orientation)
+    #     self.tuning = Tuning()
+    #     self.fretboardRange = FretboardRange(fretFrom = 0, fretTo = 12)
+    #     self.fretboardDesign = FretboardDesign()
 
 class FretboardOrientation:
     def __init__(self, orientation = "h"):
@@ -89,14 +91,17 @@ class Tuning:
         self._numOfStrings = value
 
 class FretboardRange:
-    def __init__(self, fretFrom, fretTo):
-        if fretFrom <= 0:
+    def __init__(self, fretFrom, fretTo, numOfString):
+        if fretFrom < 0:
             raise ValueError("fretFrom must be a positive integer.")
         if fretTo <= fretFrom:
             raise ValueError("fretTo must be greater than fretFrom.")
+        if numOfString < 0:
+            raise ValueError("numOfString must be a positive integer.")
         self.fretFrom = fretFrom
         self.fretTo = fretTo
         self.numOfFrets = fretTo - fretFrom
+        self.numOfStrings = numOfString
     
     @property
     def fretFrom(self):
@@ -122,11 +127,20 @@ class FretboardRange:
     def numOfFrets(self, numOfFrets):
         self._numOfFrets = numOfFrets
 
+    @property
+    def numOfStrings(self):
+        return self._numOfStrings
+
+    @numOfStrings.setter
+    def numOfStrings(self, numOfStrings):
+        self._numOfStrings = numOfStrings
+
 class FretboardDesign:
     def __init__(self, **kwargs):
         # display
         self.showTuning = kwargs.get("showTuning", True)
         self.showFretboardNumber = kwargs.get("showFretboardNumber", True)
+        self.toolBar = kwargs.get("toolBar", True)
 
         # fretboard design
         self.distanceBetweenFrets = kwargs.get("distanceBetweenFrets", 5)
@@ -135,7 +149,11 @@ class FretboardDesign:
         self.stringsColor = kwargs.get("stringsColor", "black")
         self.fretOpacity = kwargs.get("fretOpacity", 0.3)
         self.stringsOpacity = kwargs.get("stringsOpacity", 1)
+
+        #width of them both later add
         self.fretboardMarkerColor = kwargs.get("fretboardMarkerColor", "#DCDCDC")
+
+
 
     @property
     def showTuning(self):
@@ -152,6 +170,14 @@ class FretboardDesign:
     @showFretboardNumber.setter
     def showFretboardNumber(self, value):
         self._showFretboardNumber = value
+
+    @property
+    def toolBar(self):
+        return self._toolBar
+
+    @showFretboardNumber.setter
+    def toolBar(self, value):
+        self._toolBar = value
 
     @property
     def distanceBetweenFrets(self):

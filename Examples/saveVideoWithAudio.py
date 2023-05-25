@@ -2,10 +2,10 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Videos.Frame import Frame
-from Videos.Video import Video
-from Videos.TabSequence import TabSequence
-from SeeFretboard import SeeFretboard
+from seeFretboard.Videos.Frame import Frame
+from seeFretboard.Videos.Video import Video
+from seeFretboard.Videos.TabSequence import TabSequence
+from seeFretboard import SeeFretboard
 
 
 fretboard = SeeFretboard("v", 1, 12)

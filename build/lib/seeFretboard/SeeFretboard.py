@@ -255,7 +255,7 @@ class SeeFretboard():
                                               self.theme.fretboardDesign.distanceBetweenStrings/2,
                                               radius=self.getCurrentNoteType().noteRadius,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 5 <= self.theme.fretboardRange.fretTo):
@@ -264,7 +264,7 @@ class SeeFretboard():
                                               self.theme.fretboardDesign.distanceBetweenStrings/2,
                                               radius=self.getCurrentNoteType().noteRadius,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 7 <= self.theme.fretboardRange.fretTo):
@@ -273,7 +273,7 @@ class SeeFretboard():
                                               self.theme.fretboardDesign.distanceBetweenStrings/2,
                                               radius=self.getCurrentNoteType().noteRadius,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 9 <= self.theme.fretboardRange.fretTo):
@@ -282,7 +282,7 @@ class SeeFretboard():
                                               self.theme.fretboardDesign.distanceBetweenStrings/2,
                                               radius=self.getCurrentNoteType().noteRadius,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 12 <= self.theme.fretboardRange.fretTo):
@@ -291,7 +291,7 @@ class SeeFretboard():
                                                  self.theme.fretboardDesign.distanceBetweenStrings/4,
                                                  radius=self.getCurrentNoteType().noteRadius,
                                                  fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteLineWidth,
+                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
                                                  fill_alpha=self.getCurrentNoteType().noteFill,
                                                  line_color=self.getCurrentNoteType().noteEdgeColor)
                 markerFret12_2 = self.fretboardFig.fig.circle(x=(12-self.theme.fretboardRange.fretFrom+1)*self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
@@ -299,7 +299,7 @@ class SeeFretboard():
                                                  self.theme.fretboardDesign.distanceBetweenStrings/1.75,
                                                  radius=self.getCurrentNoteType().noteRadius,
                                                  fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteLineWidth,
+                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
                                                  fill_alpha=self.getCurrentNoteType().noteFill,
                                                  line_color=self.getCurrentNoteType().noteEdgeColor)
 
@@ -310,7 +310,7 @@ class SeeFretboard():
                                                   3-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
                                               radius=self.getCurrentNoteType().noteRadius/2,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 5 <= self.theme.fretboardRange.fretTo):
@@ -319,7 +319,7 @@ class SeeFretboard():
                                                   5-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
                                               radius=self.getCurrentNoteType().noteRadius/2,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 7 <= self.theme.fretboardRange.fretTo):
@@ -328,7 +328,7 @@ class SeeFretboard():
                                                   7-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
                                               radius=self.getCurrentNoteType().noteRadius/2,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 9 <= self.theme.fretboardRange.fretTo):
@@ -337,7 +337,7 @@ class SeeFretboard():
                                                   9-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
                                               radius=self.getCurrentNoteType().noteRadius/2,
                                               fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteLineWidth,
+                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                                               fill_alpha=self.getCurrentNoteType().noteFill,
                                               line_color=self.getCurrentNoteType().noteEdgeColor)
             if (self.theme.fretboardRange.fretFrom <= 12 <= self.theme.fretboardRange.fretTo):
@@ -346,7 +346,7 @@ class SeeFretboard():
                                                      12-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
                                                  radius=self.getCurrentNoteType().noteRadius/2,
                                                  fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteLineWidth,
+                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
                                                  fill_alpha=self.getCurrentNoteType().noteFill,
                                                  line_color=self.getCurrentNoteType().noteEdgeColor)
                 markerFret12_2 = self.fretboardFig.fig.circle(x=(self.theme.tuning.numOfStrings)*self.theme.fretboardDesign.distanceBetweenStrings/3-self.theme.fretboardDesign.distanceBetweenStrings/2,
@@ -354,7 +354,7 @@ class SeeFretboard():
                                                      12-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
                                                  radius=self.getCurrentNoteType().noteRadius/2,
                                                  fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteLineWidth,
+                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
                                                  fill_alpha=self.getCurrentNoteType().noteFill,
                                                  line_color=self.getCurrentNoteType().noteEdgeColor)
         # self.notes.append(self.fig.add_glyph(circleNote))
@@ -411,7 +411,7 @@ class SeeFretboard():
                               y=(string)*self.theme.fretboardDesign.distanceBetweenStrings,
                               radius=self.getCurrentNoteType().noteRadius,
                               fill_color=self.getCurrentNoteType().noteFaceColor,
-                              line_width=self.getCurrentNoteType().noteLineWidth,
+                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                               line_color=self.getCurrentNoteType().noteEdgeColor,
                               name="circleNote"
                               )
@@ -451,7 +451,7 @@ class SeeFretboard():
                               y=(string)*self.theme.fretboardDesign.distanceBetweenStrings,
                               radius=self.getCurrentNoteType().noteRadius,
                               fill_color=self.getCurrentNoteType().noteFaceColor,
-                              line_width=self.getCurrentNoteType().noteLineWidth,
+                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                               line_color=self.getCurrentNoteType().noteEdgeColor,
                               name="circleNote"
                               )
@@ -470,7 +470,7 @@ class SeeFretboard():
                               self.getCurrentNoteType().getNoteRadius()*4,
                               radius=self.getCurrentNoteType().noteRadius,
                               fill_color=self.getCurrentNoteType().noteFaceColor,
-                              line_width=self.getCurrentNoteType().noteLineWidth,
+                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                               line_color=self.getCurrentNoteType().noteEdgeColor,
                               name="circleNote"
                               )
@@ -520,7 +520,7 @@ class SeeFretboard():
                               self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets/2,
                               radius=self.getCurrentNoteType().noteRadius,
                               fill_color=self.getCurrentNoteType().noteFaceColor,
-                              line_width=self.getCurrentNoteType().noteLineWidth,
+                              line_width=self.getCurrentNoteType().noteEdgeWidth,
                               line_color=self.getCurrentNoteType().noteEdgeColor,
                               name="circleNote"
                               )
