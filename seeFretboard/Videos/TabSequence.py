@@ -3,10 +3,10 @@
 import mirdata
 import math
 import os
-from Videos.Frame import Frame
-from Videos.VideoNote import VideoNote
-import Utilities.Util as Util
-from Utilities.Constants import BASE_PATH,FRAMERATE
+from .Frame import Frame
+from .VideoNote import VideoNote
+import seeFretboard.Utilities.Util as Util
+from seeFretboard.Utilities.Constants import BASE_PATH,FRAMERATE
 # set for 6 string in standard tuning for now
 
 # tab consist of many frames or the frames in certain period

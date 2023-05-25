@@ -7,18 +7,17 @@ from bokeh.io import  curdoc
 from bokeh.layouts import row
 from bokeh.resources import CDN
 from bokeh.embed import file_html, components, server_document
+from bokeh.application import Application
+from bokeh.application.handlers import FunctionHandler
 
-from tqdm import tqdm
-
-
-from Designs.CirlceNote import CircleNote
-import Utilities.Util as Util
-import Utilities.Constants as Constants
-from PitchCollection import PitchCollection
-from Designs.FretboardStyle import *
-from Designs.FretboardFigure import FretboardFigure
-from NotePosition import NotePosition
-from PathInfo import EmbedPathInfo
+from seeFretboard.Designs.CirlceNote import CircleNote
+from seeFretboard.Utilities import Util
+import seeFretboard.Utilities.Constants as Constants
+from seeFretboard.PitchCollection import PitchCollection
+from seeFretboard.Designs.FretboardStyle import *
+from seeFretboard.Designs.FretboardFigure import FretboardFigure
+from seeFretboard.NotePosition import NotePosition
+from seeFretboard.PathInfo import EmbedPathInfo
 
 from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
@@ -363,6 +362,7 @@ class SeeFretboard():
     def showFretboard(self):
         
         curdoc().add_root(self.layout)
+
 
     def clearFretboard(self):
         notesCopy = list(self.notes)

@@ -1,6 +1,6 @@
 import os
-from Videos.Frame import Frame
-from Utilities.Constants import BASE_PATH, FRAMERATE
+from .Frame import Frame
+from seeFretboard.Utilities.Constants import BASE_PATH, FRAMERATE
 
 class Video(Frame):
 

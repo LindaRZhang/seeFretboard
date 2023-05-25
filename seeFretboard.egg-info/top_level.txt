@@ -1,7 +1,1 @@
-Designs
-Examples
-GuitarSet
-Outputs
-Tests
-Utilities
-Videos
+seeFretboard

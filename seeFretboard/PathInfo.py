@@ -1,5 +1,5 @@
 import os
-from Utilities.Constants import BASE_PATH
+from seeFretboard.Utilities.Constants import BASE_PATH
 
 class PathInfo():
     def __init__(self, name, path):

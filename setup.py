@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='seeFretboard',
-    version='0.0.6',
+    version='0.0.1.3',
     author='Linda Rong Zhang',
     author_email='ronglindaz@gmail.com',
     description='Testing installation of Package',
@@ -16,6 +16,7 @@ setuptools.setup(
         "Bug Tracker": "https://github.com/LindaRZhang/seeFretboard/issues"
     },
     license='MIT',
-    packages=find_packages(),
+    packages=find_packages(include=['seeFretboard', 'seeFretboard.*']),
     install_requires=['requests'],
+    include_package_data=True
 )
