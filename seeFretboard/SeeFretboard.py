@@ -90,10 +90,10 @@ class SeeFretboard():
     def drawTuningLabel(self, distanceStrings, i):
         if (self.theme.orientation.orientation == "h"):
             stringLabel = Label(x=-1, y=distanceStrings-self.theme.fretboardDesign.distanceBetweenStrings,
-                                 text=self.theme.tuning.letterTuning[i], text_align='center', text_font_size='10pt')
+                                 text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
         else:
             stringLabel = Label(x=distanceStrings, y=self.theme.fretboardDesign.distanceBetweenFrets*(
-                self.theme.fretboardRange.numOfFrets+1), text=self.theme.tuning.letterTuning[i], text_align='center', text_font_size='10pt')
+                self.theme.fretboardRange.numOfFrets+1), text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
         stringLabel.visible = self.theme.fretboardDesign.showTuning
         
         self.fretboardFig.stringLabel = stringLabel
@@ -401,7 +401,8 @@ class SeeFretboard():
         textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getPitchesIndex()))
         textValue = textValue.replace("-","b")
 
-        if fret == "" or int(fret) > self.theme.fretboardRange.fretTo:
+        if fret == "" or int(fret) > self.theme.fretboardRange.fretTo or (fret < self.theme.fretboardRange.fretFrom and (fret != 0)):
+            print("fret",fret,"must be within the fretboard range")
             return None
         
         if (fret != "0" and fret != "-1"):
