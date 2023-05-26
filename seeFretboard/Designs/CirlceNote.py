@@ -51,6 +51,12 @@ class CircleNote():
     
     def setNoteFill(self,noteFill):
         self.noteFill = noteFill
+
+    def getNoteOpacity(self):
+        return self.noteOpactiy
+
+    def setNoteOpacity(self,noteOpacity):
+        self.noteOpacity = noteOpacity
     
     def getIntervals(self):
         return self.intervals

@@ -4,7 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from seeFretboard import SeeFretboard
 
-fretboard = SeeFretboard("v", 1, 12)
+fretboard = SeeFretboard("v", 3, 12)
 fretboard.drawVerticalFretboard()
 
 fretboard.getPitchCollection().setPitchesType("pitchesWithOctave")

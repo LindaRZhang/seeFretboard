@@ -27,7 +27,7 @@ class FretboardTheme:
         if isinstance(fretboardRange, FretboardRange):
             self.fretboardRange = fretboardRange
         else:
-            self.fretboardRange = FretboardRange(kwargs.get("fretFrom", 0),
+            self.fretboardRange = FretboardRange(kwargs.get("fretFrom", 1),
                                                     kwargs.get("fretTo", 12),
                                                      kwargs.get("numOfString", 6))
 
@@ -92,7 +92,7 @@ class Tuning:
 
 class FretboardRange:
     def __init__(self, fretFrom, fretTo, numOfString):
-        if fretFrom < 0:
+        if fretFrom <=0:
             raise ValueError("fretFrom must be a positive integer.")
         if fretTo <= fretFrom:
             raise ValueError("fretTo must be greater than fretFrom.")
@@ -121,7 +121,7 @@ class FretboardRange:
 
     @property
     def numOfFrets(self):
-        return self.fretTo - self.fretFrom
+        return int(self.fretTo - self.fretFrom)
 
     @numOfFrets.setter
     def numOfFrets(self, numOfFrets):

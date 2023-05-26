@@ -26,7 +26,7 @@ class SeeFretboard():
     
     # default values
     #fret 0 include open strings
-    def __init__(self, orientation = "h",fretFrom=0, fretTo=12, string=6, showTuning=True, **kwargs):
+    def __init__(self, orientation = "h",fretFrom=1, fretTo=12, string=6, showTuning=True, **kwargs):
         print("original", fretTo, fretFrom)
         # styleing/theme
         self.theme = FretboardTheme(theme="light", orientation=orientation, 
@@ -90,10 +90,10 @@ class SeeFretboard():
     def drawTuningLabel(self, distanceStrings, i):
         if (self.theme.orientation.orientation == "h"):
             stringLabel = Label(x=-1, y=distanceStrings-self.theme.fretboardDesign.distanceBetweenStrings,
-                                 text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
+                                 text=self.theme.tuning.letterTuning[i], text_align='center', text_font_size='10pt')
         else:
             stringLabel = Label(x=distanceStrings, y=self.theme.fretboardDesign.distanceBetweenFrets*(
-                self.theme.fretboardRange.numOfFrets+1), text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
+                self.theme.fretboardRange.numOfFrets+1), text=self.theme.tuning.letterTuning[i], text_align='center', text_font_size='10pt')
         stringLabel.visible = self.theme.fretboardDesign.showTuning
         
         self.fretboardFig.stringLabel = stringLabel
@@ -105,9 +105,9 @@ class SeeFretboard():
     def drawFretLabel(self, distanceBetweenFrets, j):
         if (self.theme.orientation.orientation == "h"):
             fretLabel = Label(x=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                               y=-self.getCurrentNoteType().noteRadius*1.5, text=str(j+1), text_align='center', text_font_size='10pt')
+                               y=-self.getCurrentNoteType().noteRadius*2.5, text=str(j+1), text_align='center', text_font_size='10pt')
         else:
-            fretLabel = Label(x=-self.getCurrentNoteType().noteRadius*1.5, y=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets -
+            fretLabel = Label(x=-self.getCurrentNoteType().noteRadius*2.5, y=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets -
                                self.theme.fretboardDesign.distanceBetweenFrets/2, text=str(j), text_align='center', text_font_size='10pt')
 
         fretLabel.visible = self.theme.fretboardDesign.showFretboardNumber
@@ -142,6 +142,8 @@ class SeeFretboard():
 
         for notePos in notesPosOnFretboard:
             self.addNote(notePos.getString(), notePos.getFret(),False)
+        
+        print("Toggle Fretboard Success")
         
     def drawFretboard(self, orientation):
         if(orientation.lower() in Constants.HORIZONTAL):
@@ -389,7 +391,7 @@ class SeeFretboard():
         notes = [(x.strip()) for x in notes.split(',')]
         if (len(notes) == self.theme.tuning.numOfStrings):
             for i in range(0, self.theme.tuning.numOfStrings):
-                self.addNote(i, notes[i-1])
+                self.addNote(i, notes[i])
         else:
             print("ERROR, WRONG FORMAT.")
 
@@ -713,8 +715,8 @@ class SeeFretboard():
                     stringNum.append(index)
             #check to see if between fret range 
             for i in range(len(fretNum)):
-                if (self.theme.fretboardRange.fretFrom-1 > fretNum[i] or fretNum[i] > self.theme.fretboardRange.fretTo):
-                    fretNum[i] = ""
+                if (self.theme.fretboardRange.fretFrom > fretNum[i] or fretNum[i] >= self.theme.fretboardRange.fretTo+1) and not(((self.theme.fretboardRange.fretFrom == 1) and (fretNum[i] == 0)) ):                    
+                    fretNum[i]=""
             # add the notes to the  octave array
             for i in range(len(fretNum)):
                 self.pitchCollection.appendFrets(fretNum[i])
@@ -755,13 +757,9 @@ class SeeFretboard():
         midiPitch=pitch.midi
 
         for stringIndex, stringPitch in enumerate(self.theme.tuning.midiTuning):
-            while midiPitch <= stringPitch:
-                midiPitch += 12
-            while midiPitch >= stringPitch + 12:
-                midiPitch -= 12
-            fret = round(abs(stringPitch- midiPitch))
+            fret = (midiPitch - stringPitch) % 12
 
-            if fret >= (self.theme.fretboardRange.fretFrom-1) and fret <= self.theme.fretboardRange.fretTo:
+            if fret >= (self.theme.fretboardRange.fretFrom - 1) and fret <= self.theme.fretboardRange.fretTo or fret == 0:
                 frets.append(fret)
                 strings.append(stringIndex)
 
