@@ -9,6 +9,8 @@ fretboard.drawVerticalFretboard()
 
 #fretboard.getPitchCollection().setPitchesType("pitchesScaleDegrees")
 
-fretboard.addCagedPosChord("e", type="major")
+#fretboard.addCagedPosChord("e", type="major")
+fretboard.addCagedPosChord("c", type="major", caged="e")
+
 
 fretboard.showFretboard()

@@ -116,7 +116,8 @@ def midiToNoteNameWithOctave(midiNote):
 
 def calculateHalfSteps(startNote, endNote):
     """
-    Calculates the number of half steps between two notes.
+    Calculates the number of half steps between two notes, considering enharmonic equivalents
+    and circular chromatic scale.
 
     Args:
         startNote (str): The starting note.
@@ -126,15 +127,21 @@ def calculateHalfSteps(startNote, endNote):
         int: The number of half steps from startNote to endNote. Returns 0 if startNote and endNote are the same.
     """
 
+    chromaticWEnharmonicScale = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+
     startIndex = chromaticWEnharmonicScale.index(startNote.upper())
     endIndex = chromaticWEnharmonicScale.index(endNote.upper())
 
-    halfSteps = endIndex - startIndex
+    numNotes = len(chromaticWEnharmonicScale)
+    distanceEnharmonic = (endIndex - startIndex) % numNotes
 
-    if startNote.upper() == endNote.upper():
-        halfSteps = 0
+    if distanceEnharmonic > numNotes // 2:
+        intervalHs = numNotes - distanceEnharmonic
 
-    return int(halfSteps)
+    return distanceEnharmonic,intervalHs
+
+
+
 
 def getNoteFromInterval(note, interval):
     """

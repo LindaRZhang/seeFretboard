@@ -898,11 +898,11 @@ class SeeFretboard():
             majPos = []
             if(caged.lower() == "c"):
                 
-                intervals = Util.calculateHalfSteps("c",rootNote)
-                print(intervals)
+                steps, interval = Util.calculateHalfSteps("c",rootNote)
+                print(steps)
                 for i in range(len(Constants.cMajNote)):
-                    newNote = Util.getNoteFromInterval(Constants.cMajNote[i], intervals)
-                    newPos = int(Constants.cMajPosition[i])+intervals-2
+                    newNote = Util.getNoteFromInterval(Constants.cMajNote[i], steps)
+                    newPos = int(Constants.cMajPosition[i])+interval
                     
                     if(Constants.cMajScaleDegree[i] == ""):
                             majPos.append("-1")
@@ -915,6 +915,26 @@ class SeeFretboard():
                 
                 self.pitchCollection.setPitchesNames(majNote)
                 self.pitchCollection.setPitchesScaleDegrees(Constants.cMajScaleDegree)
+                self.pitchCollection.setStrings([0,1,2,3,4,5])
+
+                for i in range(len(majNote)):
+                    self.pitchCollection.setPitchesIndex(i)
+                    self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
+            if(caged.lower() == "e"):
+                
+                steps,interval = Util.calculateHalfSteps("e",rootNote)
+                print(steps, interval)
+                for i in range(len(Constants.EMajNote)):
+                    newNote = Util.getNoteFromInterval(Constants.EMajNote[i], steps)
+                    newPos = int(Constants.EMajPosition[i])+interval
+                    
+                    majPos.append(newPos)
+                    majNote.append(newNote)
+                    self.pitchCollection.setPitchesIndex(i)
+                    self.pitchCollection.setFrets(majPos)
+                
+                self.pitchCollection.setPitchesNames(majNote)
+                self.pitchCollection.setPitchesScaleDegrees(Constants.EMajNote)
                 self.pitchCollection.setStrings([0,1,2,3,4,5])
 
                 for i in range(len(majNote)):

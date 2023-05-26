@@ -54,3 +54,7 @@ FRAMERATE = 30
 cMajNote = ["E","C","E","G","C","E"]
 cMajPosition = ["-1","3","2","0","1","0"]
 cMajScaleDegree = ["","1","3","5","1","3"]
+
+EMajNote = ["E","B","E","G#","B","E"]
+EMajPosition = ["0","2","2","1","0","0"]
+EMajScaleDegree = ["1","5","1","3","5","1"]
