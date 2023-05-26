@@ -395,7 +395,7 @@ class SeeFretboard():
     # -1 = x
     def addNote(self, string, fret, appendPos=True):
         note = ""
-        textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getPitchesIndex()))
+        textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getCurrentPitchesIndex()))
         textValue = textValue.replace("-","b")
 
         if fret == "" or int(fret) > self.theme.fretboardRange.fretTo:

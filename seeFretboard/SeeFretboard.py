@@ -19,6 +19,8 @@ from seeFretboard.Designs.FretboardFigure import FretboardFigure
 from seeFretboard.NotePosition import NotePosition
 from seeFretboard.PathInfo import EmbedPathInfo
 
+from tqdm import tqdm
+
 from music21 import scale, interval, harmony, key
 from music21 import pitch as m21Pitch
 #manager/master kinda
@@ -45,6 +47,9 @@ class SeeFretboard():
         
         # figure attribute
         self.fretboardFig = FretboardFigure(self.getCurrentNoteType(), self.theme, orientation)
+        
+        self.stringSource = ""
+        self.fretSource = ""
 
         # buttons
         self.tuningLabelButton = Button(
@@ -121,7 +126,6 @@ class SeeFretboard():
     def toggleFretboardDirection(self):
         notesPosOnFretboard = self.getCurrentNotesOnFretboard()
         pitchCollectionOnFretboard = self.getPitchCollection()
-        print(pitchCollectionOnFretboard.getArrayTypeNow())
 
         self.removeFigure()
 
@@ -140,8 +144,11 @@ class SeeFretboard():
         self.setPitchCollection(pitchCollectionOnFretboard)
         print(pitchCollectionOnFretboard.getArrayTypeNow())
 
-        for notePos in notesPosOnFretboard:
-            self.addNote(notePos.getString(), notePos.getFret(),False)
+        # Add the progress bar
+        with tqdm(total=len(notesPosOnFretboard)) as pbar:
+            for notePos in notesPosOnFretboard:
+                self.addNote(notePos.getString(), notePos.getFret(), False)
+                pbar.update(1)  # Update the progress bar
         
         print("Toggle Fretboard Success")
         
@@ -153,40 +160,49 @@ class SeeFretboard():
 
     # preview
     def drawHorizontalFretboard(self):
-        print(self.theme.fretboardRange.fretTo,self.theme.fretboardRange.fretFrom+1, "fweoifhwoue")
-        x = [0, self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.fretTo-self.theme.fretboardRange.fretFrom+1)]
-        y = [0, 0]
-
-        self.drawTuningLabel(self.theme.fretboardDesign.distanceBetweenStrings, -1)
-
-        self.fretboardFig.fig.line(x=x, y=y, line_color=self.theme.fretboardDesign.stringsColor,
-                      line_alpha=self.theme.fretboardDesign.stringsOpacity)
-
-        distanceStrings = self.theme.fretboardDesign.distanceBetweenStrings
+        distanceStrings = 0        
+        strings = {
+            "x": [],
+            "y": []
+        }
+        frets = {
+            "x": [],
+            "y": []
+        }
         # draw strings (horizontal line)
-        for i in range(0, self.theme.tuning.numOfStrings-1):
-            x = [0, self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.fretTo-self.theme.fretboardRange.fretFrom+1)]
-            y = [distanceStrings, distanceStrings]
+        for i in range(0, self.theme.tuning.numOfStrings):
+            strings["x"].append([0, self.theme.fretboardDesign.distanceBetweenFrets * (self.theme.fretboardRange.fretTo - self.theme.fretboardRange.fretFrom + 1)])
+            strings["y"].append([distanceStrings, distanceStrings])
 
-            self.drawTuningLabel(
-                distanceStrings+self.theme.fretboardDesign.distanceBetweenStrings, i)
+            self.drawTuningLabel(distanceStrings + self.theme.fretboardDesign.distanceBetweenStrings, i)
 
             distanceStrings += self.theme.fretboardDesign.distanceBetweenStrings
-            self.fretboardFig.fig.line(x=x, y=y, line_color=self.theme.fretboardDesign.stringsColor,
-                          line_alpha=self.theme.fretboardDesign.stringsOpacity)
+        self.stringSource = ColumnDataSource(data=strings)
+        self.fretboardFig.fig.multi_line(xs="x", ys="y", line_color=self.theme.fretboardDesign.stringsColor,
+                                   line_alpha=self.theme.fretboardDesign.stringsOpacity, source=self.stringSource)
 
         distanceBetweenFrets = 0
+    
         # draw frets (vertical line)
-        for j in range(self.theme.fretboardRange.fretFrom-1, self.theme.fretboardRange.fretTo+1):
-            fx = [0, self.theme.fretboardDesign.distanceBetweenStrings*(self.theme.tuning.numOfStrings-1)]
-            fy = [distanceBetweenFrets, distanceBetweenFrets]
+        for j in range(self.theme.fretboardRange.fretFrom - 1, self.theme.fretboardRange.fretTo + 1):
+            frets["x"].append([distanceBetweenFrets, distanceBetweenFrets])
+            frets["y"].append([0, self.theme.fretboardDesign.distanceBetweenStrings * (self.theme.tuning.numOfStrings - 1)])
 
-            if (j != self.theme.fretboardRange.fretTo):
+            if j != self.theme.fretboardRange.fretTo:
                 self.drawFretLabel(distanceBetweenFrets, j)
 
             distanceBetweenFrets += self.theme.fretboardDesign.distanceBetweenFrets
-            self.fretboardFig.fig.line(x=fy, y=fx, line_color=self.theme.fretboardDesign.fretColor,
-                          line_alpha=self.theme.fretboardDesign.fretOpacity)
+            print(frets)
+
+        self.fretSource = ColumnDataSource(data=frets)
+        self.fretboardFig.fig.multi_line(xs="x", ys="y", line_color=self.theme.fretboardDesign.fretColor,
+                                        line_alpha=self.theme.fretboardDesign.fretOpacity, source=self.fretSource)
+        self.drawInlay()
+
+        self.fretboardFig.fig.y_range=Range1d(0-self.theme.fretboardDesign.distanceBetweenStrings, self.theme.fretboardDesign.distanceBetweenStrings*self.theme.fretboardRange.numOfStrings,bounds='auto')
+        # self.fretboardFig.fig.axis.visible = False
+        # self.fretboardFig.fig.xgrid.visible = False
+        # self.fretboardFig.fig.ygrid.visible = False
 
         self.drawInlay()
         self.fretboardFig.fig.y_range=Range1d(0-self.theme.fretboardDesign.distanceBetweenStrings, self.theme.fretboardDesign.distanceBetweenStrings*self.theme.fretboardRange.numOfStrings,bounds='auto')
@@ -398,7 +414,7 @@ class SeeFretboard():
     # -1 = x
     def addNote(self, string, fret, appendPos=True):
         note = ""
-        textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getPitchesIndex()))
+        textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getCurrentPitchesIndex()))
         textValue = textValue.replace("-","b")
 
         if fret == "" or int(fret) > self.theme.fretboardRange.fretTo:
@@ -715,7 +731,7 @@ class SeeFretboard():
                     stringNum.append(index)
             #check to see if between fret range 
             for i in range(len(fretNum)):
-                if (self.theme.fretboardRange.fretFrom > fretNum[i] or fretNum[i] >= self.theme.fretboardRange.fretTo+1) and not(((self.theme.fretboardRange.fretFrom == 1) and (fretNum[i] == 0)) ):                    
+                if (self.theme.fretboardRange.fretFrom > fretNum[i] or fretNum[i] >= self.theme.fretboardRange.fretTo+1) and not((self.theme.fretboardRange.fretFrom == 1) and (fretNum[i] == 0)):                    
                     fretNum[i]=""
             # add the notes to the  octave array
             for i in range(len(fretNum)):
@@ -829,9 +845,8 @@ class SeeFretboard():
     ('power', ['1,5', ['power']]),  
     ('Tristan', ['1,#4,#6,#9', ['tristan']]),  
     '''
-    def addArpeggio(self, rootNote, type="", chordPitches="", bass=""):
+    def getArpeggioPitches(self, rootNote, type="", chordPitches="", bass=""):
             if type != "":
-                print("HEREEE")
                 chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
                 chordPitches = chordObj.pitches
                 intervals = []
@@ -849,22 +864,61 @@ class SeeFretboard():
             self.scaleCustom = True
             pitches = scaleObj.getPitches()
 
+            return pitches, scaleObj
+
+    def addArpeggio(self, rootNote, type="", chordPitches="", bass=""):
+            pitches, scaleObj = self.getArpeggioPitches()              
+
             self.addPitchesToFretboard(pitches, scaleObj)
     
+    def getIntervalPitches(self, rootNote, intervalName=""):
+        rootNotePitch = m21Pitch.Pitch(rootNote+"2")
+        scalePitches = [rootNotePitch.transpose(interval.Interval(intervalName))] 
+        scalePitches.insert(0,rootNotePitch)
+        scaleObj = scale.ConcreteScale(rootNote,scalePitches)
+        pitches = scaleObj.getPitches()
+        
+        return pitches, scaleObj
+    
     def addInterval(self, rootNote, intervalName=""):
-            rootNotePitch = m21Pitch.Pitch(rootNote+"2")
-            scalePitches = [rootNotePitch.transpose(interval.Interval(intervalName))] 
-            scalePitches.insert(0,rootNotePitch)
-            scaleObj = scale.ConcreteScale(rootNote,scalePitches)
-            pitches = scaleObj.getPitches()
+            pitches, scaleObj = self.getIntervalPitches(rootNote, intervalName)
 
             self.addPitchesToFretboard(pitches, scaleObj)
 
-    def addChord(self, rootNote, type="", chord="", bass =""):
-        chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
-        pitches = chordObj.pitches
-        #1 note per string, in progress later
-        #differnt positions 
+    def addCagedPosChord(self, rootNote, type="", chordPitches="", bass="", caged="c"):
+        # Define the CAGED system shapes
+        pitches, scaleObj = self.getArpeggioPitches(rootNote, type, chordPitches, bass)
+        self.arraysForPitchCollection(pitches, scaleObj)
+        
+        arrNow = self.pitchCollection.getArrayTypeNow()
+        print(arrNow)
+        arrNowByStrings = [arrNow[i:i+6] for i in range(0, len(arrNow), 6)]
+        arrNowByStrings = [sublist for sublist in arrNowByStrings if all(elem != '' for elem in sublist)]
+
+        notes = []
+        print(arrNowByStrings)
+        if(caged.lower() == "c"):
+            root = 2
+            third = self.pitchCollection.getPitchIndex(arrNowByStrings[1][2])
+            fifth = self.pitchCollection.getPitchIndex(arrNowByStrings[2][3])
+            rootTwo = self.pitchCollection.getPitchIndex(arrNowByStrings[3][4])
+            thirdTwo = self.pitchCollection.getPitchIndex(arrNowByStrings[1][5])
+
+            notes.append(root)
+            notes.append(third)
+            notes.append(fifth)
+            notes.append(rootTwo)
+            notes.append(thirdTwo)
+
+
+            self.addNote(0, "-1")            
+            for i in notes:
+                self.pitchCollection.setPitchesIndex(i)
+                self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
+
+
+    def addOctave(self, rootNote):
+        self.addArpeggio(rootNote,"","P1")
     
     def getPitchCollection(self):
         return self.pitchCollection

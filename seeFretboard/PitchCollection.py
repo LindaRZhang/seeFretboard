@@ -147,9 +147,13 @@ class PitchCollection():
         """Empties the arrayTypeNow list."""
         self.arrayTypeNow = []
     
-    def getPitchesIndex(self):
+    def getCurrentPitchesIndex(self):
         """Returns the current pitchesIndex."""
         return self.pitchesIndex
+    
+    def getPitchIndex(self, value):
+        """Returns the index of the value at arrayTypeNow List."""
+        return self.getArrayTypeNow().index(value)
     
     def addPitchesIndex(self, amount=1):
         """Adds the specified amount to the pitchesIndex."""

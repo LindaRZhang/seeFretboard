@@ -10,7 +10,6 @@ fretboard.drawVerticalFretboard()
 fretboard.getPitchCollection().setPitchesType("pitchesWithOctave")
 #fretboard.getPitchCollection().setPitchesType("pitchesScaleDegrees")
 
-fretboard.addInterval("c","P5")#gota put words for interval
-#if p11 nd stuff should just show that instead of all
+fretboard.addCagedPosChord("C", type="major")
 
 fretboard.showFretboard()
