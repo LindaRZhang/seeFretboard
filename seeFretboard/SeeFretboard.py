@@ -18,6 +18,7 @@ from seeFretboard.Designs.FretboardStyle import *
 from seeFretboard.Designs.FretboardFigure import FretboardFigure
 from seeFretboard.NotePosition import NotePosition
 from seeFretboard.PathInfo import EmbedPathInfo
+from seeFretboard.Utilities import Constants
 
 from tqdm import tqdm
 
@@ -414,6 +415,7 @@ class SeeFretboard():
     # -1 = x
     def addNote(self, string, fret, appendPos=True):
         note = ""
+        
         textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getCurrentPitchesIndex()))
         textValue = textValue.replace("-","b")
 
@@ -885,36 +887,39 @@ class SeeFretboard():
 
             self.addPitchesToFretboard(pitches, scaleObj)
 
-    def addCagedPosChord(self, rootNote, type="", chordPitches="", bass="", caged="c"):
+    #only work in standard tuning as of now
+    def addCagedPosChord(self, rootNote, type="", caged="c"):
+        #what fret to start on and then interval
+        #ditch the octave
+        #positions
         # Define the CAGED system shapes
-        pitches, scaleObj = self.getArpeggioPitches(rootNote, type, chordPitches, bass)
-        self.arraysForPitchCollection(pitches, scaleObj)
-        
-        arrNow = self.pitchCollection.getArrayTypeNow()
-        print(arrNow)
-        arrNowByStrings = [arrNow[i:i+6] for i in range(0, len(arrNow), 6)]
-        arrNowByStrings = [sublist for sublist in arrNowByStrings if all(elem != '' for elem in sublist)]
+        if(type == "major"):
+            majNote = []
+            majPos = []
+            if(caged.lower() == "c"):
+                
+                intervals = Util.calculateHalfSteps("c",rootNote)
+                print(intervals)
+                for i in range(len(Constants.cMajNote)):
+                    newNote = Util.getNoteFromInterval(Constants.cMajNote[i], intervals)
+                    newPos = int(Constants.cMajPosition[i])+intervals-2
+                    
+                    if(Constants.cMajScaleDegree[i] == ""):
+                            majPos.append("-1")
+                    else:
+                            majPos.append(newPos)
 
-        notes = []
-        print(arrNowByStrings)
-        if(caged.lower() == "c"):
-            root = 2
-            third = self.pitchCollection.getPitchIndex(arrNowByStrings[1][2])
-            fifth = self.pitchCollection.getPitchIndex(arrNowByStrings[2][3])
-            rootTwo = self.pitchCollection.getPitchIndex(arrNowByStrings[3][4])
-            thirdTwo = self.pitchCollection.getPitchIndex(arrNowByStrings[1][5])
+                    majNote.append(newNote)
+                    self.pitchCollection.setPitchesIndex(i)
+                    self.pitchCollection.setFrets(majPos)
+                
+                self.pitchCollection.setPitchesNames(majNote)
+                self.pitchCollection.setPitchesScaleDegrees(Constants.cMajScaleDegree)
+                self.pitchCollection.setStrings([0,1,2,3,4,5])
 
-            notes.append(root)
-            notes.append(third)
-            notes.append(fifth)
-            notes.append(rootTwo)
-            notes.append(thirdTwo)
-
-
-            self.addNote(0, "-1")            
-            for i in notes:
-                self.pitchCollection.setPitchesIndex(i)
-                self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
+                for i in range(len(majNote)):
+                    self.pitchCollection.setPitchesIndex(i)
+                    self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
 
 
     def addOctave(self, rootNote):

@@ -7,6 +7,9 @@ scaleDegrees = ["1", "b2", "2", "b3", "3", "4", "b5", "5", "b6", "6", "b7", "7",
 #notes
 chromaticNotes = ["A","A#/Bb","B","C","C#/Db","D","D#/Eb","E","F","F#/Gb","G","G#/Ab"]
 
+#chromatic notes with enharmonic    
+chromaticWEnharmonicScale = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+
 #solfeges
 chromaticSolfeges = ["do","di","re","ri","mi","fa","fi","sol","si","la","li","ti"]
 
@@ -45,3 +48,9 @@ VERTICAL = ["vertical", "v"]
 BASE_PATH = Path(__file__).resolve().parent.parent
 
 FRAMERATE = 30
+
+#caged
+#c shape
+cMajNote = ["E","C","E","G","C","E"]
+cMajPosition = ["-1","3","2","0","1","0"]
+cMajScaleDegree = ["","1","3","5","1","3"]

@@ -1,5 +1,5 @@
 import music21 
-from .Constants import allInterval,scaleDegrees
+from .Constants import allInterval,scaleDegrees, chromaticWEnharmonicScale
 def intervalsToScaleDegrees(intervals):
     """Converts a list of intervals to scale degrees.
     
@@ -113,3 +113,43 @@ def midiToNoteNameWithOctave(midiNote):
     note = music21.note.Note()
     note.pitch.midi = midiNote
     return note.nameWithOctave
+
+def calculateHalfSteps(startNote, endNote):
+    """
+    Calculates the number of half steps between two notes.
+
+    Args:
+        startNote (str): The starting note.
+        endNote (str): The ending note.
+
+    Returns:
+        int: The number of half steps from startNote to endNote. Returns 0 if startNote and endNote are the same.
+    """
+
+    startIndex = chromaticWEnharmonicScale.index(startNote.upper())
+    endIndex = chromaticWEnharmonicScale.index(endNote.upper())
+
+    halfSteps = endIndex - startIndex
+
+    if startNote.upper() == endNote.upper():
+        halfSteps = 0
+
+    return int(halfSteps)
+
+def getNoteFromInterval(note, interval):
+    """
+    Returns a new note that is the given interval away from the input note.
+
+    Args:
+        note (str): The starting note.
+        interval (int): The interval (number) indicating the distance from the starting note.
+
+    Returns:
+        str: The new note that is interval away from the input note.
+    """
+
+    noteIndex = chromaticWEnharmonicScale.index(note.upper())
+    newIndex = (noteIndex + interval) % len(chromaticWEnharmonicScale)
+    newNote = chromaticWEnharmonicScale[newIndex]
+
+    return newNote

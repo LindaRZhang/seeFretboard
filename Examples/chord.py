@@ -7,9 +7,8 @@ from seeFretboard import SeeFretboard
 fretboard = SeeFretboard("v", 1, 12)
 fretboard.drawVerticalFretboard()
 
-fretboard.getPitchCollection().setPitchesType("pitchesWithOctave")
 #fretboard.getPitchCollection().setPitchesType("pitchesScaleDegrees")
 
-fretboard.addCagedPosChord("C", type="major")
+fretboard.addCagedPosChord("e", type="major")
 
 fretboard.showFretboard()
