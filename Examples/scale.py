@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from seeFretboard import SeeFretboard
 
 #veritcal fretboard option
-fretboard = SeeFretboard("v", 3, 12)
+fretboard = SeeFretboard("v", 3, 16)
 fretboard.drawVerticalFretboard()
 
 #horizontal option

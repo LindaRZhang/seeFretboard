@@ -45,6 +45,12 @@ class CircleNote():
     
     def setNoteEdgeWidth(self,lw):
         self.noteEdgeWidth = lw
+
+    def getNoteOpacity(self):
+        return self.noteOpactiy
+    
+    def setNoteOpacity(self,noteOpacity):
+        self.noteOpacity = noteOpacity
         
     def getNoteFill(self):
         return self.noteFill

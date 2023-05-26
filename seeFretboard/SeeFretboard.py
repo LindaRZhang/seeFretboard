@@ -26,8 +26,7 @@ class SeeFretboard():
     
     # default values
     #fret 0 include open strings
-    def __init__(self, orientation = "h",fretFrom=0, fretTo=12, string=6, showTuning=True, **kwargs):
-        print("original", fretTo, fretFrom)
+    def __init__(self, orientation = "h",fretFrom=1, fretTo=12, string=6, showTuning=True, **kwargs):
         # styleing/theme
         self.theme = FretboardTheme(theme="light", orientation=orientation, 
                                     fretFrom =fretFrom, fretTo=fretTo, string=string,
@@ -45,6 +44,11 @@ class SeeFretboard():
         
         # figure attribute
         self.fretboardFig = FretboardFigure(self.getCurrentNoteType(), self.theme, orientation)
+        self.stringSource = ""
+        self.fretSource = ""
+        self.inlaySources = ""
+
+        self.clockwiseRotation = True
 
         # buttons
         self.tuningLabelButton = Button(
@@ -90,10 +94,10 @@ class SeeFretboard():
     def drawTuningLabel(self, distanceStrings, i):
         if (self.theme.orientation.orientation == "h"):
             stringLabel = Label(x=-1, y=distanceStrings-self.theme.fretboardDesign.distanceBetweenStrings,
-                                 text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
+                                 text=self.theme.tuning.letterTuning[i], text_align='center', text_font_size='10pt')
         else:
             stringLabel = Label(x=distanceStrings, y=self.theme.fretboardDesign.distanceBetweenFrets*(
-                self.theme.fretboardRange.numOfFrets+1), text=self.theme.tuning.letterTuning[i+1], text_align='center', text_font_size='10pt')
+                self.theme.fretboardRange.numOfFrets+1), text=self.theme.tuning.letterTuning[i], text_align='center', text_font_size='10pt')
         stringLabel.visible = self.theme.fretboardDesign.showTuning
         
         self.fretboardFig.stringLabel = stringLabel
@@ -105,9 +109,9 @@ class SeeFretboard():
     def drawFretLabel(self, distanceBetweenFrets, j):
         if (self.theme.orientation.orientation == "h"):
             fretLabel = Label(x=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                               y=-self.getCurrentNoteType().noteRadius*1.5, text=str(j+1), text_align='center', text_font_size='10pt')
+                               y=-self.getCurrentNoteType().noteRadius*2.5, text=str(j+1), text_align='center', text_font_size='10pt')
         else:
-            fretLabel = Label(x=-self.getCurrentNoteType().noteRadius*1.5, y=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets -
+            fretLabel = Label(x=-self.getCurrentNoteType().noteRadius*2.5, y=distanceBetweenFrets+self.theme.fretboardDesign.distanceBetweenFrets -
                                self.theme.fretboardDesign.distanceBetweenFrets/2, text=str(j), text_align='center', text_font_size='10pt')
 
         fretLabel.visible = self.theme.fretboardDesign.showFretboardNumber
@@ -119,30 +123,62 @@ class SeeFretboard():
             fretLabel=fretLabel), code="""fretLabel.visible = !fretLabel.visible"""))
 
     def toggleFretboardDirection(self):
-        notesPosOnFretboard = self.getCurrentNotesOnFretboard()
-        pitchCollectionOnFretboard = self.getPitchCollection()
-        print(pitchCollectionOnFretboard.getArrayTypeNow())
+        # for notePos in notesPosOnFretboard:
+        #     self.addNote(notePos.getString(), notePos.getFret(),False)
+        # Set the initial rotation direction
 
-        self.removeFigure()
-
-        if(self.theme.orientation.orientation in Constants.HORIZONTAL):
-            self.setFretboardFig(FretboardFigure(self.getCurrentNoteType(), self.getTheme(), "v"))
-            self.getTheme().orientation.orientation = "v"
-            self.drawVerticalFretboard()
-
+        if self.clockwiseRotation:
+            self.rotateData(self.stringSource.data, clockwise=True)
+            self.rotateData(self.fretSource.data, clockwise=True)
+            self.rotateData(self.inlaySources.data, clockwise=True)
         else:
-            self.setFretboardFig(FretboardFigure(self.getCurrentNoteType(), self.getTheme(), "h"))
-            self.getTheme().orientation.orientation = "h"
-            self.drawHorizontalFretboard()
-            
-        self.layout.children.insert(0,self.fretboardFig.fig)
-
-        self.setPitchCollection(pitchCollectionOnFretboard)
-        print(pitchCollectionOnFretboard.getArrayTypeNow())
-
-        for notePos in notesPosOnFretboard:
-            self.addNote(notePos.getString(), notePos.getFret(),False)
+            self.rotateData(self.stringSource.data, clockwise=False)
+            self.rotateData(self.fretSource.data, clockwise=False)
+            self.rotateData(self.inlaySources.data, clockwise=True)
         
+        self.clockwiseRotation = not self.clockwiseRotation
+        self.drawInlay()
+        tempW = self.fretboardFig.height
+        tempH = self.fretboardFig.width
+        self.fretboardFig.width = tempW
+        self.fretboardFig.height = tempH
+
+        
+        if(self.theme.orientation.orientation in Constants.HORIZONTAL):
+            tempXRange = self.fretboardFig.getFigHorXRange()
+            tempYRange = self.fretboardFig.getFigHorYRange()
+            self.fretboardFig.setFigVerYRange(tempXRange)
+            self.fretboardFig.setFigVerXRange(tempYRange)
+            self.theme.orientation.orientation = "v"
+        else:
+            tempXRange = self.fretboardFig.getFigVerYRange()
+            tempYRange = self.fretboardFig.getFigVerXRange()
+            self.fretboardFig.setFigHorXRange(tempXRange)
+            self.fretboardFig.setFigHorYRange(tempYRange)
+            print(self.fretboardFig.getFigHorXRange())
+            
+
+    def rotateData(self, data, clockwise=True):
+        rotatedX = []
+        rotatedY = []
+
+        for xCoordinates, yCoordinates in zip(data['x'], data['y']):
+            if clockwise:
+                if isinstance(yCoordinates, list):
+                    rotatedX.append(yCoordinates[::-1])
+                else:
+                    rotatedX.append([yCoordinates])
+                rotatedY.append(xCoordinates)
+            else:
+                if isinstance(xCoordinates, list):
+                    rotatedX.append(yCoordinates)
+                else:
+                    rotatedX.append([yCoordinates])
+                rotatedY.append(xCoordinates[::-1])
+
+        data['x'] = rotatedX
+        data['y'] = rotatedY
+
     def drawFretboard(self, orientation):
         if(orientation.lower() in Constants.HORIZONTAL):
             self.drawHorizontalFretboard()
@@ -151,44 +187,47 @@ class SeeFretboard():
 
     # preview
     def drawHorizontalFretboard(self):
-        print(self.theme.fretboardRange.fretTo,self.theme.fretboardRange.fretFrom+1, "fweoifhwoue")
-        x = [0, self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.fretTo-self.theme.fretboardRange.fretFrom+1)]
-        y = [0, 0]
-
-        self.drawTuningLabel(self.theme.fretboardDesign.distanceBetweenStrings, -1)
-
-        self.fretboardFig.fig.line(x=x, y=y, line_color=self.theme.fretboardDesign.stringsColor,
-                      line_alpha=self.theme.fretboardDesign.stringsOpacity)
-
-        distanceStrings = self.theme.fretboardDesign.distanceBetweenStrings
+        distanceStrings = 0        
+        strings = {
+            "x": [],
+            "y": []
+        }
+        frets = {
+            "x": [],
+            "y": []
+        }
         # draw strings (horizontal line)
-        for i in range(0, self.theme.tuning.numOfStrings-1):
-            x = [0, self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.fretTo-self.theme.fretboardRange.fretFrom+1)]
-            y = [distanceStrings, distanceStrings]
+        for i in range(0, self.theme.tuning.numOfStrings):
+            strings["x"].append([0, self.theme.fretboardDesign.distanceBetweenFrets * (self.theme.fretboardRange.fretTo - self.theme.fretboardRange.fretFrom + 1)])
+            strings["y"].append([distanceStrings, distanceStrings])
 
-            self.drawTuningLabel(
-                distanceStrings+self.theme.fretboardDesign.distanceBetweenStrings, i)
+            self.drawTuningLabel(distanceStrings + self.theme.fretboardDesign.distanceBetweenStrings, i)
 
             distanceStrings += self.theme.fretboardDesign.distanceBetweenStrings
-            self.fretboardFig.fig.line(x=x, y=y, line_color=self.theme.fretboardDesign.stringsColor,
-                          line_alpha=self.theme.fretboardDesign.stringsOpacity)
+        self.stringSource = ColumnDataSource(data=strings)
+        self.fretboardFig.fig.multi_line(xs="x", ys="y", line_color=self.theme.fretboardDesign.stringsColor,
+                                   line_alpha=self.theme.fretboardDesign.stringsOpacity, source=self.stringSource)
 
         distanceBetweenFrets = 0
+    
         # draw frets (vertical line)
-        for j in range(self.theme.fretboardRange.fretFrom-1, self.theme.fretboardRange.fretTo+1):
-            fx = [0, self.theme.fretboardDesign.distanceBetweenStrings*(self.theme.tuning.numOfStrings-1)]
-            fy = [distanceBetweenFrets, distanceBetweenFrets]
+        for j in range(self.theme.fretboardRange.fretFrom - 1, self.theme.fretboardRange.fretTo + 1):
+            frets["x"].append([distanceBetweenFrets, distanceBetweenFrets])
+            frets["y"].append([0, self.theme.fretboardDesign.distanceBetweenStrings * (self.theme.tuning.numOfStrings - 1)])
 
-            if (j != self.theme.fretboardRange.fretTo):
+            if j != self.theme.fretboardRange.fretTo:
                 self.drawFretLabel(distanceBetweenFrets, j)
 
             distanceBetweenFrets += self.theme.fretboardDesign.distanceBetweenFrets
-            self.fretboardFig.fig.line(x=fy, y=fx, line_color=self.theme.fretboardDesign.fretColor,
-                          line_alpha=self.theme.fretboardDesign.fretOpacity)
+            print(frets)
 
+        self.fretSource = ColumnDataSource(data=frets)
+        self.fretboardFig.fig.multi_line(xs="x", ys="y", line_color=self.theme.fretboardDesign.fretColor,
+                                        line_alpha=self.theme.fretboardDesign.fretOpacity, source=self.fretSource)
         self.drawInlay()
+
         self.fretboardFig.fig.y_range=Range1d(0-self.theme.fretboardDesign.distanceBetweenStrings, self.theme.fretboardDesign.distanceBetweenStrings*self.theme.fretboardRange.numOfStrings,bounds='auto')
-        self.fretboardFig.fig.axis.visible = self.theme.fretboardDesign.toolBar
+        # self.fretboardFig.fig.axis.visible = False
         # self.fretboardFig.fig.xgrid.visible = False
         # self.fretboardFig.fig.ygrid.visible = False
 
@@ -246,119 +285,67 @@ class SeeFretboard():
         self.fretboardFig.fig.ygrid.visible = False
 
     def drawInlay(self):
-        # I think I still need to work more on the math for layout on 12th fret
-        # vertical note radius is /2, should fix or check up on it later
-        if (self.theme.orientation.orientation == "h"):
-            # draw 3,5,7,9 marker
-            if (self.theme.fretboardRange.fretFrom <= 3 <= self.theme.fretboardRange.fretTo):
-                markerFret3 = self.fretboardFig.fig.circle(x=(3-self.theme.fretboardRange.fretFrom+1)*self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              y=(self.theme.tuning.numOfStrings-1) *
-                                              self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              radius=self.getCurrentNoteType().noteRadius,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 5 <= self.theme.fretboardRange.fretTo):
-                markerFret5 = self.fretboardFig.fig.circle(x=(5-self.theme.fretboardRange.fretFrom+1)*self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              y=(self.theme.tuning.numOfStrings-1) *
-                                              self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              radius=self.getCurrentNoteType().noteRadius,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 7 <= self.theme.fretboardRange.fretTo):
-                markerFret7 = self.fretboardFig.fig.circle(x=(7-self.theme.fretboardRange.fretFrom+1)*self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              y=(self.theme.tuning.numOfStrings-1) *
-                                              self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              radius=self.getCurrentNoteType().noteRadius,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 9 <= self.theme.fretboardRange.fretTo):
-                markerFret9 = self.fretboardFig.fig.circle(x=(9-self.theme.fretboardRange.fretFrom+1)*self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              y=(self.theme.tuning.numOfStrings-1) *
-                                              self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              radius=self.getCurrentNoteType().noteRadius,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 12 <= self.theme.fretboardRange.fretTo):
-                markerFret12_1 = self.fretboardFig.fig.circle(x=(12-self.theme.fretboardRange.fretFrom+1)*self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                                 y=(self.theme.tuning.numOfStrings) *
-                                                 self.theme.fretboardDesign.distanceBetweenStrings/4,
-                                                 radius=self.getCurrentNoteType().noteRadius,
-                                                 fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                                 fill_alpha=self.getCurrentNoteType().noteFill,
-                                                 line_color=self.getCurrentNoteType().noteEdgeColor)
-                markerFret12_2 = self.fretboardFig.fig.circle(x=(12-self.theme.fretboardRange.fretFrom+1)*self.theme.fretboardDesign.distanceBetweenFrets-self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                                 y=(self.theme.tuning.numOfStrings) *
-                                                 self.theme.fretboardDesign.distanceBetweenStrings/1.75,
-                                                 radius=self.getCurrentNoteType().noteRadius,
-                                                 fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                                 fill_alpha=self.getCurrentNoteType().noteFill,
-                                                 line_color=self.getCurrentNoteType().noteEdgeColor)
+        # Create lists to hold the x and y coordinates
+        inlay = {"x" : [], "y" : []}
 
-        else:
-            if (self.theme.fretboardRange.fretFrom <= 3 <= self.theme.fretboardRange.fretTo):
-                markerFret3 = self.fretboardFig.fig.circle(x=(self.theme.tuning.numOfStrings-1)*self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              y=self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.numOfFrets) - self.theme.fretboardDesign.distanceBetweenFrets*(
-                                                  3-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              radius=self.getCurrentNoteType().noteRadius/2,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 5 <= self.theme.fretboardRange.fretTo):
-                markerFret5 = self.fretboardFig.fig.circle(x=(self.theme.tuning.numOfStrings-1)*self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              y=self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.numOfFrets) - self.theme.fretboardDesign.distanceBetweenFrets*(
-                                                  5-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              radius=self.getCurrentNoteType().noteRadius/2,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 7 <= self.theme.fretboardRange.fretTo):
-                markerFret7 = self.fretboardFig.fig.circle(x=(self.theme.tuning.numOfStrings-1)*self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              y=self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.numOfFrets) - self.theme.fretboardDesign.distanceBetweenFrets*(
-                                                  7-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              radius=self.getCurrentNoteType().noteRadius/2,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 9 <= self.theme.fretboardRange.fretTo):
-                markerFret9 = self.fretboardFig.fig.circle(x=(self.theme.tuning.numOfStrings-1)*self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                              y=self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.numOfFrets) - self.theme.fretboardDesign.distanceBetweenFrets*(
-                                                  9-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                              radius=self.getCurrentNoteType().noteRadius/2,
-                                              fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                              line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                              fill_alpha=self.getCurrentNoteType().noteFill,
-                                              line_color=self.getCurrentNoteType().noteEdgeColor)
-            if (self.theme.fretboardRange.fretFrom <= 12 <= self.theme.fretboardRange.fretTo):
-                markerFret12_1 = self.fretboardFig.fig.circle(x=(self.theme.tuning.numOfStrings)*self.theme.fretboardDesign.distanceBetweenStrings*2/3-self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                                 y=self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.numOfFrets) - self.theme.fretboardDesign.distanceBetweenFrets*(
-                                                     12-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                                 radius=self.getCurrentNoteType().noteRadius/2,
-                                                 fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                                 fill_alpha=self.getCurrentNoteType().noteFill,
-                                                 line_color=self.getCurrentNoteType().noteEdgeColor)
-                markerFret12_2 = self.fretboardFig.fig.circle(x=(self.theme.tuning.numOfStrings)*self.theme.fretboardDesign.distanceBetweenStrings/3-self.theme.fretboardDesign.distanceBetweenStrings/2,
-                                                 y=self.theme.fretboardDesign.distanceBetweenFrets*(self.theme.fretboardRange.numOfFrets) - self.theme.fretboardDesign.distanceBetweenFrets*(
-                                                     12-self.theme.fretboardRange.fretFrom-1) - self.theme.fretboardDesign.distanceBetweenFrets/2,
-                                                 radius=self.getCurrentNoteType().noteRadius/2,
-                                                 fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
-                                                 line_width=self.getCurrentNoteType().noteEdgeWidth,
-                                                 fill_alpha=self.getCurrentNoteType().noteFill,
-                                                 line_color=self.getCurrentNoteType().noteEdgeColor)
-        # self.notes.append(self.fig.add_glyph(circleNote))
+        if self.theme.orientation.orientation == "h":
+            # draw 3, 5, 7, 9, 12 markers
+            if self.theme.fretboardRange.fretFrom <= 3 <= self.theme.fretboardRange.fretTo:
+                inlay["x"].append((3 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+                inlay["y"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+
+            if self.theme.fretboardRange.fretFrom <= 5 <= self.theme.fretboardRange.fretTo:
+                inlay["x"].append((5 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+                inlay["y"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+
+            if self.theme.fretboardRange.fretFrom <= 7 <= self.theme.fretboardRange.fretTo:
+                inlay["x"].append((7 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+                inlay["y"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+
+            if self.theme.fretboardRange.fretFrom <= 9 <= self.theme.fretboardRange.fretTo:
+                inlay["x"].append((9 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+                inlay["y"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+
+            if self.theme.fretboardRange.fretFrom <= 12 <= self.theme.fretboardRange.fretTo:
+                inlay["x"].append((12 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+                inlay["y"].append(self.theme.tuning.numOfStrings * self.theme.fretboardDesign.distanceBetweenStrings / 4)
+
+                inlay["x"].append((12 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+                inlay["y"].append(self.theme.tuning.numOfStrings * self.theme.fretboardDesign.distanceBetweenStrings / 1.75)
+
+            else:
+                if self.theme.fretboardRange.fretFrom <= 3 <= self.theme.fretboardRange.fretTo:
+                    inlay["x"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+                    inlay["y"].append(self.theme.fretboardDesign.distanceBetweenFrets * self.theme.fretboardRange.numOfFrets - self.theme.fretboardDesign.distanceBetweenFrets * (3 - self.theme.fretboardRange.fretFrom - 1) - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+
+                if self.theme.fretboardRange.fretFrom <= 5 <= self.theme.fretboardRange.fretTo:
+                    inlay["x"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+                    inlay["y"].append(self.theme.fretboardDesign.distanceBetweenFrets * self.theme.fretboardRange.numOfFrets - self.theme.fretboardDesign.distanceBetweenFrets * (5 - self.theme.fretboardRange.fretFrom - 1) - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+
+                if self.theme.fretboardRange.fretFrom <= 7 <= self.theme.fretboardRange.fretTo:
+                    inlay["x"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+                    inlay["y"].append(self.theme.fretboardDesign.distanceBetweenFrets * self.theme.fretboardRange.numOfFrets - self.theme.fretboardDesign.distanceBetweenFrets * (7 - self.theme.fretboardRange.fretFrom - 1) - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+
+                if self.theme.fretboardRange.fretFrom <= 9 <= self.theme.fretboardRange.fretTo:
+                    inlay["x"].append((self.theme.tuning.numOfStrings - 1) * self.theme.fretboardDesign.distanceBetweenStrings / 2)
+                    inlay["y"].append(self.theme.fretboardDesign.distanceBetweenFrets * self.theme.fretboardRange.numOfFrets - self.theme.fretboardDesign.distanceBetweenFrets * (9 - self.theme.fretboardRange.fretFrom - 1) - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+
+                if self.theme.fretboardRange.fretFrom <= 12 <= self.theme.fretboardRange.fretTo:
+                    inlay["x"].append(self.theme.tuning.numOfStrings * self.theme.fretboardDesign.distanceBetweenStrings / 4)
+                    inlay["y"].append((12 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+
+                    inlay["x"].append(self.theme.tuning.numOfStrings * self.theme.fretboardDesign.distanceBetweenStrings / 1.75)
+                    inlay["y"].append((12 - self.theme.fretboardRange.fretFrom + 1) * self.theme.fretboardDesign.distanceBetweenFrets - self.theme.fretboardDesign.distanceBetweenFrets / 2)
+
+            self.inlaySources = ColumnDataSource(data=inlay)
+
+            marker_frets = self.fretboardFig.fig.circle(x='x', y='y', radius=self.getCurrentNoteType().noteRadius,
+                                                        fill_color=self.theme.fretboardDesign.fretboardMarkerColor,
+                                                        line_width=self.getCurrentNoteType().noteEdgeWidth,
+                                                        fill_alpha=self.getCurrentNoteType().noteFill,
+                                                        line_color=self.getCurrentNoteType().noteEdgeColor,
+                                                        source=self.inlaySources)
+            print(self.inlaySources.data)
 
     def showFretboard(self):
         
@@ -377,6 +364,8 @@ class SeeFretboard():
         
         self.labels = []
 
+        print("fretboard cleared")
+
     def removeFigure(self):
         self.layout.children.remove(self.fretboardFig.fig)
         
@@ -389,7 +378,8 @@ class SeeFretboard():
         notes = [(x.strip()) for x in notes.split(',')]
         if (len(notes) == self.theme.tuning.numOfStrings):
             for i in range(0, self.theme.tuning.numOfStrings):
-                self.addNote(i, notes[i-1])
+                print(notes[i],"nhihhiihih")
+                self.addNote(i, notes[i])
         else:
             print("ERROR, WRONG FORMAT.")
 
@@ -683,7 +673,6 @@ class SeeFretboard():
         self.addPitchesToFretboard(pitches, scaleObj)
 
     def addPitchesToFretboard(self, pitches, scaleObj):
-        
         self.arraysForPitchCollection(pitches, scaleObj)
         for i in range(len(self.pitchCollection.getArrayTypeNow())):
             self.pitchCollection.setPitchesIndex(i)
@@ -703,7 +692,7 @@ class SeeFretboard():
 
             #get each note on each string n their fret
             fretNum, stringNum= self.convertPitchesToFretsStringsNum(pitches[pitchIndex])    
-            
+
             #depending on how many octave to display 
             quotient, remainder = divmod(self.theme.fretboardRange.fretTo+1, 12)
             for octavesFret in range(quotient):
@@ -713,9 +702,9 @@ class SeeFretboard():
                     stringNum.append(index)
             #check to see if between fret range 
             for i in range(len(fretNum)):
-                if (self.theme.fretboardRange.fretFrom-1 > fretNum[i] or fretNum[i] > self.theme.fretboardRange.fretTo):
+                if (self.theme.fretboardRange.fretFrom > fretNum[i] or fretNum[i] >= self.theme.fretboardRange.fretTo+1) and not(((self.theme.fretboardRange.fretFrom == 1) and (fretNum[i] == 0)) ):
                     fretNum[i] = ""
-            # add the notes to the  octave array
+            # add the notes to the octave array
             for i in range(len(fretNum)):
                 self.pitchCollection.appendFrets(fretNum[i])
                 self.pitchCollection.appendStrings(stringNum[i])
@@ -742,7 +731,7 @@ class SeeFretboard():
                     else:
                         self.pitchCollection.appendPitchesScaleDegree(scaleObj.getScaleDegreeFromPitch(pitches[pitchIndex]))
 
-                
+
             print("NOTE FINSIH")
 
     #MAYBE PUT somehwere else
@@ -752,16 +741,12 @@ class SeeFretboard():
         frets = []
         strings = []
         
-        midiPitch=pitch.midi
+        midiPitch = pitch.midi
 
         for stringIndex, stringPitch in enumerate(self.theme.tuning.midiTuning):
-            while midiPitch <= stringPitch:
-                midiPitch += 12
-            while midiPitch >= stringPitch + 12:
-                midiPitch -= 12
-            fret = round(abs(stringPitch- midiPitch))
+            fret = (midiPitch - stringPitch) % 12
 
-            if fret >= (self.theme.fretboardRange.fretFrom-1) and fret <= self.theme.fretboardRange.fretTo:
+            if fret >= (self.theme.fretboardRange.fretFrom - 1) and fret <= self.theme.fretboardRange.fretTo or fret == 0:
                 frets.append(fret)
                 strings.append(stringIndex)
 
@@ -833,7 +818,6 @@ class SeeFretboard():
     '''
     def addArpeggio(self, rootNote, type="", chordPitches="", bass=""):
             if type != "":
-                print("HEREEE")
                 chordObj = harmony.ChordSymbol(root=rootNote, bass=bass, kind=type)
                 chordPitches = chordObj.pitches
                 intervals = []

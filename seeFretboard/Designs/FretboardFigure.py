@@ -85,24 +85,43 @@ class FretboardFigure():
     def getFigHorXRange(self):
         return self.figHorXRange
 
-    def setFigHorXRange(self, v1, v2):
+    def setFigHorXRange(self, v1,v2):
         self.figHorXRange = Range1d(v1, v2)
+        self.fig.x_range = self.figHorXRange
+
+    def setFigHorXRange(self, range):
+        self.figHorXRange = range
+        self.fig.x_range = range
 
     def getFigHorYRange(self):
         return self.figHorYRange
 
     def setFigHorYRange(self, v1, v2):
         self.figHorYRange = Range1d(v1, v2)
+        self.fig.y_range = self.figHorYRange
+
+    def setFigHorYRange(self, range):
+        self.figHorYRange = range
+        self.fig.y_range = range
 
     def getFigVerXRange(self):
         return self.figVerXRange
 
     def setFigVerXRange(self, v1, v2):
         self.figVerXRange = Range1d(v1, v2)
+        self.fig.x_range = self.figVerXRange
+
+    def setFigVerXRange(self, range):
+        self.figVerXRange = range
+        self.fig.x_range = range
 
     def getFigVerYRange(self):
         return self.figVerYRange
 
     def setFigVerYRange(self, v1, v2):
         self.figVerYRange = Range1d(v1, v2)
-        
+        self.fig.y_range = self.figVerYRange
+
+    def setFigVerYRange(self, range):
+        self.figVerYRange = range
+        self.fig.y_range = range
