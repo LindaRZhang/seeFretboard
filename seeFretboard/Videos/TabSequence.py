@@ -5,7 +5,7 @@ import math
 import os
 from .Frame import Frame
 from .VideoNote import VideoNote
-import seeFretboard.Utilities.Util as Util
+import seeFretboard.Utilities.Functions as Functions
 from seeFretboard.Utilities.Constants import BASE_PATH,FRAMERATE
 # set for 6 string in standard tuning for now
 
@@ -34,22 +34,22 @@ class TabSequence(Frame):
         self.B = 59
         self.EHigh = 64
 
-        self.EStringFrets = Util.midiToFret(
+        self.EStringFrets = Functions.midiToFret(
             self.Elow, self.track.notes["E"].pitches)
         self.ETimeStamp = self.track.notes['E'].intervals
-        self.AStringFrets = Util.midiToFret(
+        self.AStringFrets = Functions.midiToFret(
             self.A, self.track.notes["A"].pitches)
         self.ATimeStamp = self.track.notes['A'].intervals
-        self.DStringFrets = Util.midiToFret(
+        self.DStringFrets = Functions.midiToFret(
             self.D, self.track.notes["D"].pitches)
         self.DTimeStamp = self.track.notes['D'].intervals
-        self.GStringFrets = Util.midiToFret(
+        self.GStringFrets = Functions.midiToFret(
             self.G, self.track.notes["G"].pitches)
         self.GTimeStamp = self.track.notes['G'].intervals
-        self.BStringFrets = Util.midiToFret(
+        self.BStringFrets = Functions.midiToFret(
             self.B, self.track.notes["B"].pitches)
         self.BTimeStamp = self.track.notes['B'].intervals
-        self.eStringFrets = Util.midiToFret(
+        self.eStringFrets = Functions.midiToFret(
             self.EHigh, self.track.notes["e"].pitches)
         self.eTimeStamp = self.track.notes['e'].intervals
 
@@ -104,7 +104,7 @@ class TabSequence(Frame):
         return roundedArray
 
     def makingFrames(self):
-        frames = [[-1] * self.numOfStrings for _ in range(self.getMaxFrames())]
+        frames = [['x'] * self.numOfStrings for _ in range(self.getMaxFrames())]
         pitchesArr = self.getStringFrets() if self.frameType == "fret" else self.getMidiPitches()
 
         for i, (pitch, time) in enumerate(zip(pitchesArr,
@@ -130,7 +130,7 @@ class TabSequence(Frame):
         for i, frame in enumerate(self.midiFrames):
 
             for j, pitch in enumerate(frame):
-                if pitch != -1:
+                if pitch != 'x':
                     # Note being played
                     if (j, pitch) in pitchesPlaying:
                         # Note is already being played

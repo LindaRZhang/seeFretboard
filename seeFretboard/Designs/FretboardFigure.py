@@ -1,5 +1,6 @@
 from bokeh.plotting import figure
 from bokeh.models import Range1d
+import seeFretboard.Utilities.Constants as Constants
 
 class FretboardFigure():
     def __init__(self, note, theme, orientation="h", width = None, height=None):
@@ -13,6 +14,7 @@ class FretboardFigure():
         self.figVerYRange = Range1d(-8*note.getNoteRadius(),
                                         (theme.fretboardRange.numOfFrets+2)*theme.fretboardDesign.distanceBetweenFrets)
 
+        self.oreintation = orientation
         if (orientation == "h"):
             if(width == None or height == None):
                 self.fig.width = 800
@@ -30,11 +32,14 @@ class FretboardFigure():
             else:
                 self.fig.width = width
                 self.fig.height = height
+
             self.fig.x_range = self.figVerXRange
             self.fig.y_range = self.figVerYRange
 
         self.stringLabel = ""
         self.fretLabel = ""
+        self.fig.sizing_mode = "fixed"
+
 
     @property
     def stringLabel(self):
@@ -105,4 +110,33 @@ class FretboardFigure():
 
     def setFigVerYRange(self, v1, v2):
         self.figVerYRange = Range1d(v1, v2)
+    
+    @property
+    def fig_x_range(self):
+        return self.fig.x_range
+
+    @fig_x_range.setter
+    def fig_x_range(self, value):
+        self.fig.x_range = value
+
+    @property
+    def fig_y_range(self):
+        return self.fig.y_range
+
+    @fig_y_range.setter
+    def fig_y_range(self, value):
+        self.fig.y_range = value
+
+    def switchOrientation(self,oreientation):
+        if(self.oreintation != oreientation):
+            newH = self.width
+            newW = self.height
+            self.width = newW
+            self.height = newH
+        if(oreientation in Constants.VERTICAL):
+            self.fig_x_range = self.getFigVerXRange()
+            self.fig_y_range = self.getFigVerYRange()
+        else:    
+            self.fig_x_range = self.getFigHorXRange()
+            self.fig_y_range = self.getFigVerYRange()
         

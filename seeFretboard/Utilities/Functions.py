@@ -1,5 +1,6 @@
 import music21 
-from .Constants import allInterval,scaleDegrees, chromaticWEnharmonicScale
+from .Constants import *
+
 def intervalsToScaleDegrees(intervals):
     """Converts a list of intervals to scale degrees.
     
@@ -116,8 +117,7 @@ def midiToNoteNameWithOctave(midiNote):
 
 def calculateHalfSteps(startNote, endNote):
     """
-    Calculates the number of half steps between two notes, considering enharmonic equivalents
-    and circular chromatic scale.
+    Calculates the number of half steps between two notes, considering enharmonic equivalents.
 
     Args:
         startNote (str): The starting note.
@@ -127,23 +127,26 @@ def calculateHalfSteps(startNote, endNote):
         int: The number of half steps from startNote to endNote. Returns 0 if startNote and endNote are the same.
     """
 
-    chromaticWEnharmonicScale = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+    noteIndices = {}
+    for i, sublist in enumerate(chromaticWEnharmonicScaleFindDistance):
+        for note in sublist:
+            noteIndices[note.upper()] = i
 
-    startIndex = chromaticWEnharmonicScale.index(startNote.upper())
-    endIndex = chromaticWEnharmonicScale.index(endNote.upper())
+    startIndex = noteIndices.get(startNote.upper())
+    endIndex = noteIndices.get(endNote.upper())
 
-    numNotes = len(chromaticWEnharmonicScale)
-    distanceEnharmonic = (endIndex - startIndex) % numNotes
+    if startIndex is None or endIndex is None:
+        raise ValueError("Invalid startNote or endNote.")
 
-    if distanceEnharmonic > numNotes // 2:
-        intervalHs = numNotes - distanceEnharmonic
+    numNotes = len(chromaticWEnharmonicScaleFindDistance)
+    distance = (endIndex - startIndex) % numNotes
+    
+    if distance < 0:
+            distance += numNotes
 
-    return distanceEnharmonic,intervalHs
+    return distance
 
-
-
-
-def getNoteFromInterval(note, interval):
+def getNoteFromInterval(note, interval, rootNote):
     """
     Returns a new note that is the given interval away from the input note.
 
@@ -152,11 +155,63 @@ def getNoteFromInterval(note, interval):
         interval (int): The interval (number) indicating the distance from the starting note.
 
     Returns:
-        str: The new note that is interval away from the input note.
+        str: The new note that is interval away from the input note. Will be in # unless it is the root note
     """
+    for i, sublist in enumerate(chromaticWEnharmonicScaleFindDistance):
+        if any(note.upper() in sub.upper() for sub in sublist):
+            noteIndex = i
+            newIndex = (noteIndex + interval) % len(chromaticWEnharmonicScaleFindDistance)
+            newSublist = chromaticWEnharmonicScaleFindDistance[newIndex]
+            newNote = newSublist[0]
+            if len(newSublist) > 1 and newNote.upper() != rootNote.upper():
+                newNote = newSublist[1]
 
-    noteIndex = chromaticWEnharmonicScale.index(note.upper())
-    newIndex = (noteIndex + interval) % len(chromaticWEnharmonicScale)
-    newNote = chromaticWEnharmonicScale[newIndex]
+            return newNote
 
-    return newNote
+    return None  # Note not found
+
+
+def processCAGEDShape(caged, rootNote, type="major"):
+        """
+        Process a CAGED shape for a given root note and type.
+
+        Args:
+            caged (str): The CAGED shape to process ('c', 'a', 'g', 'd', etc.).
+            rootNote (str): The root note.
+            type (str, optional): The type of chord or scale. Defaults to 'major'.
+
+        Raises:
+            ValueError: If an invalid CAGED shape is provided.
+
+        Returns:
+            dict: The processed CAGED shape information.
+        """
+        shape = cagedShapes[caged]
+        interval = calculateHalfSteps(shape["name"], rootNote)
+        processedShape = {
+            "name": shape["name"],
+            "note": {},
+            "position": {},
+            "scaleDegree": {}
+        }
+    
+        processedShape["note"][type] = []
+        processedShape["position"][type] = []
+        processedShape["scaleDegree"][type] = shape[type + "ScaleDegree"]
+        print("print",)
+        for i in range(len(shape[type + "Note"])):
+            newNote = getNoteFromInterval("".join(shape[type + "Note"][i].split()), interval, rootNote)
+            pos = shape[type + "Position"][i]
+            if not(isinstance(shape[type + "Position"][i], str) and str(shape[type + "Position"][i]).lower() == 'x'):
+                # if(int(shape[type + "Position"][i])<0):
+                #     newPos = int(shape[type + "Position"][i])+12, if add octave stuff, rn just 1-12 show n if more up then no
+                if pos != 'x':
+                    pos = int(pos)
+                    pos += interval
+                print("new",pos)
+
+            processedShape["note"][type].append(newNote)
+            processedShape["position"][type].append(str(pos))
+
+        return processedShape
+

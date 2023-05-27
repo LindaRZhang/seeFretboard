@@ -9,6 +9,7 @@ chromaticNotes = ["A","A#/Bb","B","C","C#/Db","D","D#/Eb","E","F","F#/Gb","G","G
 
 #chromatic notes with enharmonic    
 chromaticWEnharmonicScale = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
+chromaticWEnharmonicScaleFindDistance = [['C'], ['C#', 'Db'], ['D'], ['D#', 'Eb'], ['E'], ['F'], ['F#', 'Gb'], ['G'], ['G#', 'Ab'], ['A'], ['A#', 'Bb'], ['B']]
 
 #solfeges
 chromaticSolfeges = ["do","di","re","ri","mi","fa","fi","sol","si","la","li","ti"]
@@ -51,10 +52,67 @@ FRAMERATE = 30
 
 #caged
 #c shape
-cMajNote = ["E","C","E","G","C","E"]
-cMajPosition = ["-1","3","2","0","1","0"]
-cMajScaleDegree = ["","1","3","5","1","3"]
 
-EMajNote = ["E","B","E","G#","B","E"]
-EMajPosition = ["0","2","2","1","0","0"]
-EMajScaleDegree = ["1","5","1","3","5","1"]
+cShape = {
+    "name": "C",
+    "majNote": ["E", "C", "E", "G", "C", "E"],
+    "majPosition": ["x", "3", "2", "0", "1", "0"],
+    "majScaleDegree": ["", "1", "3", "5", "1", "3"],
+
+    "minNote": ["Eb", "C", "Eb", "G", "C", "Eb"],
+    "minPosition": ["x", "3", "1", "0", "1", "-1"],
+    "minScaleDegree": ["", "1", "b3", "5", "1", "b3"]
+}
+
+aShape = {
+    "name": "A",
+    "majNote": ["E", "A", "E", "A", "C#", "E"],
+    "majPosition": ["0", "0", "2", "2", "2", "0"],
+    "majScaleDegree": ["5", "1", "5", "1", "3", "5"],
+
+    "majNote": ["E", "A", "E", "A", "C", "E"],
+    "majPosition": ["0", "0", "2", "2", "1", "0"],
+    "majScaleDegree": ["5", "1", "5", "1", "b3", "5"]
+}
+
+gShape = {
+    "name": "G",
+    "majNote": ["G", "B", "D", "G", "B", "G"],
+    "majPosition": ["3", "2", "0", "0", "0", "3"],
+    "majScaleDegree": ["1", "3", "5", "1", "3", "1"],
+
+    "minNote": ["G", "Bb", "D", "G", "Bb", "G"],
+    "minPosition": ["3", "1", "0", "0", "1", "3"],
+    "minScaleDegree": ["1", "b3", "5", "1", "b3", "1"]
+}
+
+eShape = {
+    "name": "E",
+    "majNote": ["E", "B", "E", "G#", "B", "E"],
+    "majPosition": ["0", "2", "2", "1", "0", "0"],
+    "majScaleDegree": ["1", "5", "1", "3", "5", "1"],
+
+    "minNote": ["E", "B", "E", "G", "B", "E"],
+    "minPosition": ["0", "2", "2", "1", "-1", "0"],
+    "minScaleDegree": ["1", "5", "1", "b3", "5", "1"]
+}
+
+dShape = {
+    "name": "D",
+    "majNote": ["", "", "D", "A", "D", "F#"],
+    "majPosition": ["x", "", "0", "2", "3", "2"],
+    "majScaleDegree": ["", "", "1", "5", "1", "3"],
+
+    "minNote": ["", "", "D", "A", "D", "F"],
+    "minPosition": ["x", "x", "0", "2", "3", "1"],
+    "minScaleDegree": ["", "", "1", "5", "1", "b3"]
+}
+
+cagedShapes = {
+    "C": cShape,
+    "A": aShape,
+    "G": gShape,
+    "E": eShape,
+    "D": dShape,
+    # Add other shapes as needed
+}
