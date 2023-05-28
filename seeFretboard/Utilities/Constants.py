@@ -76,14 +76,14 @@ cShape = {
     "min7b5ScaleDegree": ["", "1", "b3", "b7", "1", "b5"],
 
     "dimNote": ["Eb", "C", "Eb", "Gb", "C", "Eb"],
-    "dimPosition": ["x", "3", "1", "0", "1", "x"],
+    "dimPosition": ["x", "3", "1", "-1", "x", "x"],
     "dimScaleDegree": ["", "1", "b3", "b5", "1", "b3"],
     "dim7Note": ["Eb", "C", "Eb", "A", "C", "Gb"],
     "dim7Position": ["x", "3", "1", "2", "1", "2"],
     "dim7ScaleDegree": ["", "1", "b3", "6", "1", "b3"],
 
     "augNote": ["E", "C", "E", "G#", "C", "E"],
-    "augPosition": ["x", "3", "2", "1", "1", "0"],
+    "augPosition": ["x", "3", "2", "1", "1", "x"],
     "augScaleDegree": ["", "1", "b3", "b7", "1", "b5"]
 }
 
@@ -110,7 +110,7 @@ aShape = {
     "min7b5ScaleDegree": ["", "1", "b5", "b7", "b3", ""],
 
     "dimNote": ["Eb", "A", "Eb", "A", "C", "Eb"],
-    "dimPosition": ["-1", "0", "1", "2", "1", "-1"],
+    "dimPosition": ["x", "0", "1", "2", "1", "x"],
     "dimScaleDegree": ["b5", "1", "b5", "1", "b3", "b5"],
     "dim7Note": ["E", "A", "Eb", "Gb", "C", "E"],
     "dim7Position": ["x", "0", "1", "-1", "1", "x"],
@@ -127,16 +127,16 @@ gShape = {
     "majPosition": ["3", "2", "0", "0", "0", "3"],
     "majScaleDegree": ["1", "3", "5", "1", "3", "1"],
 
-    "minNote": ["G", "Bb", "D", "G", "Bb", "G"],
-    "minPosition": ["3", "1", "0", "0", "1", "3"],
-    "minScaleDegree": ["1", "b3", "5", "1", "b3", "1"],
+    "minNote": ["G", "Bb", "D", "G", "", ""],
+    "minPosition": ["3", "1", "0", "0", "x", "x"],
+    "minScaleDegree": ["1", "b3", "5", "1", "", ""],
     
     "dimNote": ["G", "Bb", "Db", "G", "Bb", "G"],
-    "dimPosition": ["3", "1", "-1", "0", "-1", "3"],
+    "dimPosition": ["3", "1", "-1", "x", "x", "x"],
     "dimScaleDegree": ["1", "b3", "b5", "1", "b3", "1"],
 
     "augNote": ["G", "B", "D#", "G", "B", "G"],
-    "augPosition": ["3", "2", "1", "0", "0", "3"],
+    "augPosition": ["3", "2", "1", "0", "0", "x"],
     "augScaleDegree": ["1", "3", "#5", "1", "3", "1"],
 }
 
@@ -153,7 +153,7 @@ eShape = {
     "dom7ScaleDegree": ["1", "5", "b7", "3", "5", "1"],
 
     "minNote": ["E", "B", "E", "G", "B", "E"],
-    "minPosition": ["0", "2", "2", "1", "-1", "0"],
+    "minPosition": ["0", "2", "2", "1", "0", "0"],
     "minScaleDegree": ["1", "5", "1", "b3", "5", "1"],
     "min7Note": ["E", "B", "D", "G", "B", "E"],
     "min7Position": ["0", "2", "0", "0", "0", "0"],
@@ -163,7 +163,7 @@ eShape = {
     "min7b5ScaleDegree": ["1", "b5", "b7", "b3", "b5", "1"],
 
     "dimNote": ["E", "Bb", "E", "G", "Bb", "E"],
-    "dimPosition": ["0", "1", "2", "1", "-2", "0"],
+    "dimPosition": ["0", "1", "2", "1", "x", "0"],
     "dimScaleDegree": ["1", "b5", "1", "b3", "b5", "1"],
     "dim7Note": ["E", "Bb", "C#", "G", "", ""],
     "dim7Position": ["0", "1", "-1", "0", "x", "x"],
@@ -197,7 +197,7 @@ dShape = {
     "min7b5ScaleDegree": ["", "", "1", "b5", "b7", "b3"],
 
     "dimNote": ["", "", "D", "Ab", "D", "F"],
-    "dimPosition": ["x", "x", "0", "2", "3", "1"],
+    "dimPosition": ["x", "x", "0", "1", "3", "1"],
     "dimScaleDegree": ["", "", "1", "b5", "1", "b3"],
     "dim7Note": ["", "", "D", "Ab", "B", "F"],
     "dim7Position": ["x", "x", "0", "1", "0", "1"],
