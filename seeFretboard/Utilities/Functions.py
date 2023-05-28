@@ -157,8 +157,9 @@ def getNoteFromInterval(note, interval, rootNote):
     Returns:
         str: The new note that is interval away from the input note. Will be in # unless it is the root note
     """
+    print("getnote",note, rootNote, interval)
     for i, sublist in enumerate(chromaticWEnharmonicScaleFindDistance):
-        if any(note.upper() in sub.upper() for sub in sublist):
+        if note.upper() in [sub.upper() for sub in sublist]:
             noteIndex = i
             newIndex = (noteIndex + interval) % len(chromaticWEnharmonicScaleFindDistance)
             newSublist = chromaticWEnharmonicScaleFindDistance[newIndex]
@@ -172,46 +173,50 @@ def getNoteFromInterval(note, interval, rootNote):
 
 
 def processCAGEDShape(caged, rootNote, type="major"):
-        """
-        Process a CAGED shape for a given root note and type.
+    """
+    Process a CAGED shape for a given root note and type.
 
-        Args:
-            caged (str): The CAGED shape to process ('c', 'a', 'g', 'd', etc.).
-            rootNote (str): The root note.
-            type (str, optional): The type of chord or scale. Defaults to 'major'.
+    Args:
+        caged (str): The CAGED shape to process ('c', 'a', 'g', 'd', etc.).
+        rootNote (str): The root note.
+        type (str, optional): The type of chord or scale. Defaults to 'major'.
 
-        Raises:
-            ValueError: If an invalid CAGED shape is provided.
+    Raises:
+        ValueError: If an invalid CAGED shape is provided.
+        ValueError: If the given type does not exist in the shape.
 
-        Returns:
-            dict: The processed CAGED shape information.
-        """
-        shape = cagedShapes[caged]
-        interval = calculateHalfSteps(shape["name"], rootNote)
-        processedShape = {
-            "name": shape["name"],
-            "note": {},
-            "position": {},
-            "scaleDegree": {}
-        }
-    
-        processedShape["note"][type] = []
-        processedShape["position"][type] = []
-        processedShape["scaleDegree"][type] = shape[type + "ScaleDegree"]
-        print("print",)
-        for i in range(len(shape[type + "Note"])):
-            newNote = getNoteFromInterval("".join(shape[type + "Note"][i].split()), interval, rootNote)
-            pos = shape[type + "Position"][i]
-            if not(isinstance(shape[type + "Position"][i], str) and str(shape[type + "Position"][i]).lower() == 'x'):
-                # if(int(shape[type + "Position"][i])<0):
-                #     newPos = int(shape[type + "Position"][i])+12, if add octave stuff, rn just 1-12 show n if more up then no
-                if pos != 'x':
-                    pos = int(pos)
-                    pos += interval
-                print("new",pos)
+    Returns:
+        dict: The processed CAGED shape information.
+    """
+    shape = cagedShapes[caged]
 
-            processedShape["note"][type].append(newNote)
-            processedShape["position"][type].append(str(pos))
+    if type+"Note" not in shape:
+        raise ValueError(f"Invalid type '{type}' provided for CAGED shape '{caged}'")
 
-        return processedShape
+    interval = calculateHalfSteps(shape["name"], rootNote)
+    print(shape["name"], rootNote, "interval", interval)
 
+    processedShape = {
+        "name": shape["name"],
+        "note": {},
+        "position": {},
+        "scaleDegree": {}
+    }
+
+    processedShape["note"][type] = []
+    processedShape["position"][type] = []
+    processedShape["scaleDegree"][type] = shape[type + "ScaleDegree"]
+
+    for i in range(len(shape[type + "Note"])):
+        newNote = getNoteFromInterval("".join(shape[type + "Note"][i].split()), interval, rootNote)
+        print("newNote", newNote)
+        pos = shape[type + "Position"][i]
+        print(shape[type + "Position"])
+
+        if not(isinstance(pos, str) and pos.lower() == 'x'):
+            pos = int(pos) + interval
+
+        processedShape["note"][type].append(newNote)
+        processedShape["position"][type].append(str(pos))
+
+    return processedShape

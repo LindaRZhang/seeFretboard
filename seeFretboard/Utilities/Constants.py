@@ -58,10 +58,33 @@ cShape = {
     "majNote": ["E", "C", "E", "G", "C", "E"],
     "majPosition": ["x", "3", "2", "0", "1", "0"],
     "majScaleDegree": ["", "1", "3", "5", "1", "3"],
+    "maj7Note": ["E", "C", "E", "G", "B", "E"],
+    "maj7Position": ["x", "3", "2", "0", "0", "0"],
+    "maj7ScaleDegree": ["", "1", "3", "5", "7", "3"],
+    "dom7Note": ["E", "C", "E", "Bb", "C", "E"],
+    "dom7Position": ["x", "3", "2", "3", "1", "x"],
+    "dom7ScaleDegree": ["", "1", "3", "b7", "1", "3"],
 
     "minNote": ["Eb", "C", "Eb", "G", "C", "Eb"],
-    "minPosition": ["x", "3", "1", "0", "1", "-1"],
-    "minScaleDegree": ["", "1", "b3", "5", "1", "b3"]
+    "minPosition": ["x", "3", "1", "0", "1", "x"],
+    "minScaleDegree": ["", "1", "b3", "5", "1", ""],
+    "min7Note": ["Eb", "C", "Eb", "Bb", "C", "G"],
+    "min7Position": ["x", "3", "1", "3", "1", "3"],
+    "min7ScaleDegree": ["", "1", "b3", "b7", "1", "5"],
+    "min7b5Note": ["Eb", "C", "Eb", "Bb", "C", "Gb"],
+    "min7b5Position": ["x", "3", "1", "3", "1", "2"],
+    "min7b5ScaleDegree": ["", "1", "b3", "b7", "1", "b5"],
+
+    "dimNote": ["Eb", "C", "Eb", "Gb", "C", "Eb"],
+    "dimPosition": ["x", "3", "1", "0", "1", "x"],
+    "dimScaleDegree": ["", "1", "b3", "b5", "1", "b3"],
+    "dim7Note": ["Eb", "C", "Eb", "A", "C", "Gb"],
+    "dim7Position": ["x", "3", "1", "2", "1", "2"],
+    "dim7ScaleDegree": ["", "1", "b3", "6", "1", "b3"],
+
+    "augNote": ["E", "C", "E", "G#", "C", "E"],
+    "augPosition": ["x", "3", "2", "1", "1", "0"],
+    "augScaleDegree": ["", "1", "b3", "b7", "1", "b5"]
 }
 
 aShape = {
@@ -69,10 +92,33 @@ aShape = {
     "majNote": ["E", "A", "E", "A", "C#", "E"],
     "majPosition": ["0", "0", "2", "2", "2", "0"],
     "majScaleDegree": ["5", "1", "5", "1", "3", "5"],
+    "maj7Note": ["E", "A", "E", "Ab", "C#", "E"],
+    "maj7Position": ["0", "0", "2", "1", "2", "0"],
+    "maj7ScaleDegree": ["5", "1", "5", "7", "3", "5"],
+    "dom7Note": ["E", "A", "E", "G", "C#", "E"],
+    "dom7Position": ["0", "0", "2", "0", "2", "0"],
+    "dom7ScaleDegree": ["5", "1", "5", "b7", "3", "5"],
 
-    "majNote": ["E", "A", "E", "A", "C", "E"],
-    "majPosition": ["0", "0", "2", "2", "1", "0"],
-    "majScaleDegree": ["5", "1", "5", "1", "b3", "5"]
+    "minNote": ["E", "A", "E", "A", "C", "E"],
+    "minPosition": ["0", "0", "2", "2", "1", "0"],
+    "minScaleDegree": ["5", "1", "5", "1", "b3", "5"],
+    "min7Note": ["E", "A", "E", "G", "C", "E"],
+    "min7Position": ["0", "0", "2", "0", "1", "0"],
+    "min7ScaleDegree": ["5", "1", "5", "b7", "b3", "5"],
+    "min7b5Note": ["E", "A", "Eb", "G", "C", "E"],
+    "min7b5Position": ["x", "0", "1", "0", "1", "x"],
+    "min7b5ScaleDegree": ["", "1", "b5", "b7", "b3", ""],
+
+    "dimNote": ["Eb", "A", "Eb", "A", "C", "Eb"],
+    "dimPosition": ["-1", "0", "1", "2", "1", "-1"],
+    "dimScaleDegree": ["b5", "1", "b5", "1", "b3", "b5"],
+    "dim7Note": ["E", "A", "Eb", "Gb", "C", "E"],
+    "dim7Position": ["x", "0", "1", "-1", "1", "x"],
+    "dim7ScaleDegree": ["", "1", "b5", "6", "b3", ""],
+
+    "augNote": ["F", "A", "F", "A", "C#", "F"],
+    "augPosition": ["1", "0", "3", "2", "2", "1"],
+    "augScaleDegree": ["#5", "1", "#5", "1", "3", "#5"],
 }
 
 gShape = {
@@ -83,7 +129,15 @@ gShape = {
 
     "minNote": ["G", "Bb", "D", "G", "Bb", "G"],
     "minPosition": ["3", "1", "0", "0", "1", "3"],
-    "minScaleDegree": ["1", "b3", "5", "1", "b3", "1"]
+    "minScaleDegree": ["1", "b3", "5", "1", "b3", "1"],
+    
+    "dimNote": ["G", "Bb", "Db", "G", "Bb", "G"],
+    "dimPosition": ["3", "1", "-1", "0", "-1", "3"],
+    "dimScaleDegree": ["1", "b3", "b5", "1", "b3", "1"],
+
+    "augNote": ["G", "B", "D#", "G", "B", "G"],
+    "augPosition": ["3", "2", "1", "0", "0", "3"],
+    "augScaleDegree": ["1", "3", "#5", "1", "3", "1"],
 }
 
 eShape = {
@@ -91,21 +145,67 @@ eShape = {
     "majNote": ["E", "B", "E", "G#", "B", "E"],
     "majPosition": ["0", "2", "2", "1", "0", "0"],
     "majScaleDegree": ["1", "5", "1", "3", "5", "1"],
+    "maj7Note": ["E", "B", "D#", "G#", "B", "E"],
+    "maj7Position": ["0", "2", "1", "1", "0", "0"],
+    "maj7ScaleDegree": ["1", "5", "7", "3", "5", "1"],
+    "dom7Note": ["E", "B", "D", "G#", "B", "E"],
+    "dom7Position": ["0", "2", "0", "1", "0", "0"],
+    "dom7ScaleDegree": ["1", "5", "b7", "3", "5", "1"],
 
     "minNote": ["E", "B", "E", "G", "B", "E"],
     "minPosition": ["0", "2", "2", "1", "-1", "0"],
-    "minScaleDegree": ["1", "5", "1", "b3", "5", "1"]
+    "minScaleDegree": ["1", "5", "1", "b3", "5", "1"],
+    "min7Note": ["E", "B", "D", "G", "B", "E"],
+    "min7Position": ["0", "2", "0", "0", "0", "0"],
+    "min7ScaleDegree": ["1", "5", "b7", "b3", "5", "1"],
+    "min7b5Note": ["E", "Bb", "D", "G", "Bb", "E"],
+    "min7b5Position": ["0", "1", "0", "0", "0", "0"],
+    "min7b5ScaleDegree": ["1", "b5", "b7", "b3", "b5", "1"],
+
+    "dimNote": ["E", "Bb", "E", "G", "Bb", "E"],
+    "dimPosition": ["0", "1", "2", "1", "-2", "0"],
+    "dimScaleDegree": ["1", "b5", "1", "b3", "b5", "1"],
+    "dim7Note": ["E", "Bb", "C#", "G", "", ""],
+    "dim7Position": ["0", "1", "-1", "0", "x", "x"],
+    "dim7ScaleDegree": ["1", "b5", "6", "b3", "", ""],
+
+    "augNote": ["E", "C", "E", "G#", "C", "E"],
+    "augPosition": ["0", "3", "2", "1", "1", "0"],
+    "augScaleDegree": ["1", "#5", "1", "3", "#5", "1"],
 }
 
 dShape = {
     "name": "D",
     "majNote": ["", "", "D", "A", "D", "F#"],
-    "majPosition": ["x", "", "0", "2", "3", "2"],
+    "majPosition": ["x", "x", "0", "2", "3", "2"],
     "majScaleDegree": ["", "", "1", "5", "1", "3"],
+    "maj7Note": ["", "", "D", "A", "C#", "F#"],
+    "maj7Position": ["x", "x", "0", "2", "2", "2"],
+    "maj7ScaleDegree": ["", "", "1", "5", "7", "3"],
+    "dom7Note": ["", "", "D", "A", "C", "F#"],
+    "dom7Position": ["x", "x", "0", "2", "1", "2"],
+    "dom7ScaleDegree": ["", "", "1", "5", "b7", "3"],
 
     "minNote": ["", "", "D", "A", "D", "F"],
     "minPosition": ["x", "x", "0", "2", "3", "1"],
-    "minScaleDegree": ["", "", "1", "5", "1", "b3"]
+    "minScaleDegree": ["", "", "1", "5", "1", "b3"],
+    "min7Note": ["", "", "D", "A", "C", "F"],
+    "min7Position": ["x", "x", "0", "2", "1", "1"],
+    "min7ScaleDegree": ["", "", "1", "5", "b7", "b3"],
+    "min7b5Note": ["", "", "D", "Ab", "C", "F"],
+    "min7b5Position": ["x", "x", "0", "1", "1", "1"],
+    "min7b5ScaleDegree": ["", "", "1", "b5", "b7", "b3"],
+
+    "dimNote": ["", "", "D", "Ab", "D", "F"],
+    "dimPosition": ["x", "x", "0", "2", "3", "1"],
+    "dimScaleDegree": ["", "", "1", "b5", "1", "b3"],
+    "dim7Note": ["", "", "D", "Ab", "B", "F"],
+    "dim7Position": ["x", "x", "0", "1", "0", "1"],
+    "dim7ScaleDegree": ["", "", "1", "b5", "6", "b3"],
+
+    "augNote": ["", "", "D", "A#", "D", "F#"],
+    "augPosition": ["x", "x", "0", "3", "3", "2"],
+    "augScaleDegree": ["", "", "1", "#5", "1", "3"],
 }
 
 cagedShapes = {

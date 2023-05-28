@@ -892,7 +892,12 @@ class SeeFretboard():
 
             self.addPitchesToFretboard(pitches, scaleObj)
 
+
+    #there is just so many different ways to think about chord and construct them, a chord works as long as it has the notes of the chord like inversions
     #only work in standard tuning as of now
+    #caged dont work well with dim7,aug7 chords, lotta time also just take out 5
+    #put in one that is more easier to press
+    # Very basic people start with caged
     def addCagedPosChord(self, rootNote, type="", caged="c"):
         #what fret to start on and then interval
         #ditch the octave
@@ -900,8 +905,8 @@ class SeeFretboard():
         # Define the CAGED system shapes
 
         chordType = type.lower()
-
-        if chordType not in ["maj", "min", "dim", "aug", "dom7", "dim7", "maj7", "min7"]:
+        #m7b5?
+        if chordType not in ["maj", "min", "dim", "aug", "dom7", "dim7", "maj7", "min7","min7b5"]:
             raise ValueError("Invalid chord type provided.")
         
         if caged.upper() not in Constants.cagedShapes.keys():
