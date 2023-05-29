@@ -1,2 +1,2 @@
-from .Util import *
+from .Functions import *
 from .Constants import *

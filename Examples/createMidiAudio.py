@@ -6,7 +6,7 @@ from seeFretboard.Videos.Video import Video
 from seeFretboard import SeeFretboard
 
 f = SeeFretboard("v", 1, 12)
-f.addNotesAllString("-1,0,5,5,0,0")
+f.addNotesAllString("'x',0,5,5,0,0")
 f.drawVerticalFretboard()
 
 f.video.setAudioName("midiAudio_00_BN1-129-Eb_comp_hex.wav")
