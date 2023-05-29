@@ -899,31 +899,57 @@ class SeeFretboard():
     #put in one that is more easier to press
     # Very basic people start with caged
     def addCagedPosChord(self, rootNote, type="", caged="c"):
-        #what fret to start on and then interval
-        #ditch the octave
-        #positions
-        # Define the CAGED system shapes
-
         chordType = type.lower()
-        #m7b5?
-        if chordType not in ["maj", "min", "dim", "aug", "dom7", "dim7", "maj7", "min7","min7b5"]:
-            raise ValueError("Invalid chord type provided.")
-        
-        if caged.upper() not in Constants.cagedShapes.keys():
-            raise ValueError("Invalid CAGED SHAPE")
+        Functions.checkChordType(chordType)
+
+        Functions.ifInDict(caged, Functions.cagedShapes)
+
         
         processedShape = Functions.processCAGEDShape(caged.upper(), rootNote, chordType)
-        print(processedShape)
+
         note = processedShape["note"][chordType]
         pos = processedShape["position"][chordType]
         sd = processedShape["scaleDegree"][chordType]
-        print(pos)
+
         self.pitchCollection.setFrets(pos)
         self.pitchCollection.setPitchesNames(note)
         self.pitchCollection.setPitchesScaleDegrees(sd)
         self.pitchCollection.setStrings([0,1,2,3,4,5])
 
         for i in range(len(note)):
+            self.pitchCollection.setPitchesIndex(i)
+            self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
+
+    def addDropChord(self, rootNote, type="", drop="Drop2", pos="1", string="6"):
+        chordType = type.lower()
+        drop = drop.upper()
+
+        Functions.checkChordType(chordType,True)
+        Functions.ifInDict(drop, Functions.DROPShapes)
+
+        processedShape = Functions.processDropShape(drop.upper(), rootNote, chordType, string,pos)
+
+        note = processedShape["note"][chordType]
+        pos = processedShape["position"][chordType]
+        sd = processedShape["scaleDegree"][chordType]
+
+        self.pitchCollection.setFrets(pos)
+        self.pitchCollection.setPitchesNames(note)
+        self.pitchCollection.setPitchesScaleDegrees(sd)
+        self.pitchCollection.setStrings([0,1,2,3,4,5])
+
+        for i in range(len(note)):
+            self.pitchCollection.setPitchesIndex(i)
+            self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
+
+    def addCustomShape(self, customShape, name):
+        customShape = customShape.getShape(name)
+        self.pitchCollection.setFrets(customShape['note'])
+        self.pitchCollection.setPitchesNames(customShape['position'])
+        self.pitchCollection.setPitchesScaleDegrees(customShape['scaleDegree'])
+        self.pitchCollection.setStrings([0,1,2,3,4,5])
+
+        for i in range(len(customShape['note'])):
             self.pitchCollection.setPitchesIndex(i)
             self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
 

@@ -220,3 +220,52 @@ def processCAGEDShape(caged, rootNote, type="major"):
         processedShape["position"][type].append(str(pos))
 
     return processedShape
+
+def processDropShape(drop, rootNote, type, string, shapePos):
+    shape = DROPShapes[drop]
+
+    interval = calculateHalfSteps("c", rootNote)
+
+    processedShape = {
+        "note": {},
+        "position": {},
+        "scaleDegree": {}
+    }
+
+    processedShape["note"][type] = []
+    processedShape["position"][type] = []
+    processedShape["scaleDegree"][type] = shape[drop+"String"+string][type + "ScaleDegree"+shapePos]
+    for i in range(len(processedShape["scaleDegree"][type])):
+        print(i)
+        print(shape[drop+"String"+string][type + "Note" + str(shapePos)])
+        note = shape[drop+"String"+string][type + "Note" + str(shapePos)][i]
+        newNote = getNoteFromInterval(note, interval, rootNote)
+        pos = shape[drop+"String"+string][type + "Position"+shapePos][i]
+
+        if not(isinstance(pos, str) and pos.lower() == 'x'):
+            pos = int(pos) + interval
+
+        processedShape["note"][type].append(newNote)
+        processedShape["position"][type].append(str(pos))
+
+    return processedShape
+
+def checkChordType(type,seve=False):
+    type = type.lower()
+    if seve:
+        if type not in ["dom7", "dim7", "maj7", "min7","min7b5"]:
+            raise ValueError("Invalid chord type provided.")
+    
+    if type not in ["maj", "min", "dim", "aug", "dom7", "dim7", "maj7", "min7","min7b5"]:
+        raise ValueError("Invalid chord type provided.")
+
+def ifInDict(value, dictionary):
+    if value.upper() not in dictionary.keys():
+        raise ValueError("Invalid "+value+" in "+getDictionaryName(dictionary))
+
+def getDictionaryName(dictionary):
+    for name, value in globals().items():
+        if value is dictionary:
+            return name
+    return None
+    
