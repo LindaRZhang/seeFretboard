@@ -1,5 +1,4 @@
 
-# in colab right will update later
 import mirdata
 import math
 import os
@@ -13,7 +12,20 @@ from seeFretboard.Utilities.Constants import BASE_PATH,FRAMERATE
 
 
 class TabSequence(Frame):
+    '''
+    The TabSequence class is responsible for generating sequences of frame from audio files. 
+    It uses the GuitarSet dataset to extract note information from audio tracks and converts 
+    this information into tablature frames. The class can generate frames in either fret or 
+    MIDI format and can convert between the two. It also provides methods for adding tablature 
+    frames and converting frames to notes with time information.
+    '''
     def __init__(self, trackNum, frameRate=FRAMERATE, filePath=os.path.join(BASE_PATH, 'GuitarSet')):
+        '''
+        Parameters:
+            trackNum (int): The index of the track to load from the dataset.
+            frameRate (float, optional): The frame rate of the tab sequence. Default is FRAMERATE.
+            filePath (str, optional): The file path to the GuitarSet dataset. Default is 'BASE_PATH/GuitarSet'.
+            '''
         super().__init__(frameRate)
 
         self.filePath = filePath
@@ -73,30 +85,84 @@ class TabSequence(Frame):
         self.frameType = "fret"
 
     def getNumOfStrings(self):
+        """
+        Get the number of strings in the tab sequence.
+
+        Returns:
+            int: The number of strings.
+        """
         return self.numOfStrings
 
     def setNumOfStrings(self, strings):
+        """
+        Set the number of strings in the tab sequence.
+
+        Parameters:
+            strings (int): The number of strings to set.
+        """
         self.numOfStrings = strings
     
     def getMaxFrames(self):
+        """
+        Get the maximum number of frames in the tab sequence.
+
+        Returns:
+            int: The maximum number of frames.
+        """
         return math.ceil(self.getMaxEndTime()) * self.getFrameRate()
 
     def setMaxFrames(self, maxFrames):
+        """
+        Set the maximum number of frames in the tab sequence.
+
+        Parameters:
+            maxFrames (int): The maximum number of frames to set.
+        """
         self.maxFrames = maxFrames
     
     def getMaxEndTime(self):
+        """
+        Get the maximum end time of the tab sequence.
+
+        Returns:
+            float: The maximum end time.
+        """
         return self.maxEndTime
 
     def setMaxEndTime(self, maxEndTime):
+        """
+        Set the maximum end time of the tab sequence.
+
+        Parameters:
+            maxEndTime (float): The maximum end time to set.
+        """
         self.maxEndTime = maxEndTime
 
     def getStringFrets(self):
+        """
+        Get the fret positions of each string in the tab sequence.
+
+        Returns:
+            list: A list of lists representing the fret positions of each string.
+        """
         return [self.EStringFrets, self.AStringFrets, self.DStringFrets, self.GStringFrets, self.BStringFrets, self.eStringFrets]
 
     def getStringMidi(self):
-        return [self.Elow,self.A,self.D,self.G,self.B,self.EHigh]
+        """
+        Get the MIDI pitches of each string in the tab sequence.
+
+        Returns:
+            list: A list of MIDI pitches of each string.
+        """
+        return [self.Elow, self.A, self.D, self.G, self.B, self.EHigh]
     
     def getMidiPitches(self):
+        """
+        Get the MIDI pitches of all strings in the tab sequence.
+
+        Returns:
+            list: A list of lists representing the MIDI pitches of all strings.
+        """
         arr = [self.EMidiPitches, self.AMidiPitches, self.DMidiPitches,
                self.GMidiPitches, self.BMidiPitches, self.eMidiPitches]
         roundedArray = [[round(num) for num in innerArr] for innerArr in arr]
@@ -104,26 +170,41 @@ class TabSequence(Frame):
         return roundedArray
 
     def makingFrames(self):
+        """
+        Create the frames for the tab sequence based on the string frets or MIDI pitches.
+
+        This method populates the `fretFrames` attribute if the frame type is "fret",
+        otherwise it populates the `midiFrames` attribute.
+
+        Note: The method assumes that the frets or MIDI pitches have already been initialized.
+
+        """
         frames = [['x'] * self.numOfStrings for _ in range(self.getMaxFrames())]
         pitchesArr = self.getStringFrets() if self.frameType == "fret" else self.getMidiPitches()
 
         for i, (pitch, time) in enumerate(zip(pitchesArr,
-                                             [self.ETimeStamp, self.ATimeStamp, self.DTimeStamp, self.GTimeStamp, self.BTimeStamp, self.eTimeStamp])):
+                                              [self.ETimeStamp, self.ATimeStamp, self.DTimeStamp,
+                                               self.GTimeStamp, self.BTimeStamp, self.eTimeStamp])):
             for j in range(len(pitch)):
                 startFrame = round(time[j][0] * self.frameRate)
                 endFrame = round(time[j][1] * self.frameRate)
                 for frame in range(startFrame, endFrame):
                     frames[frame][i] = pitch[j]
 
-        if (self.frameType == "fret"):
-            frames = [",".join([str(num) for num in frame])
-                      for frame in frames]
+        if self.frameType == "fret":
+            frames = [",".join([str(num) for num in frame]) for frame in frames]
             self.setFretFrames(frames)
         
         else:
             self.setMidiFrames(frames)
 
     def framesToNotesWithTime(self):
+        """
+        Convert the frames to video notes with time information.
+
+        This method populates the `notesWithTimeFrames` attribute based on the `midiFrames` attribute.
+        The video notes represent the notes being played along with their start and end times.
+        """
         pitchesPlaying = {}
         output = []
 
@@ -140,7 +221,7 @@ class TabSequence(Frame):
                         # Note is starting to be played
                         pitchesPlaying[(j, pitch)] = VideoNote(pitch,i / self.frameRate,i / self.frameRate)
 
-            # Loop through notes currently being played n c if it's in current frame, if not end time
+            # Loop through notes currently being played and check if it's in current frame, if not end time
             for (j, pitch) in list(pitchesPlaying):
                 if (i == len(self.midiFrames)-1) or (pitch != self.midiFrames[i+1][j]):
                     output.append(pitchesPlaying[(j, pitch)])
@@ -149,44 +230,125 @@ class TabSequence(Frame):
         self.setNotesWithTimeFrames(output)
 
     def addTab(self, seconds, tab):
+        """
+        Add a tab to the tab sequence.
+
+        Parameters:
+            seconds (float): The duration of the tab in seconds.
+            tab (str or list): The tab to add. If it's a string, it represents a single frame.
+                               If it's a list, it represents multiple frames.
+        """
         frames = seconds * self.frameRate
         for i in range(1, frames+1):
             self.addFretFrame(tab)
 
     def getFretFrames(self):
+        """
+        Get the fret frames of the tab sequence.
+
+        Returns:
+            list: A list of strings representing the fret frames.
+        """
         return self.fretFrames
 
-    def getFramesAsString(self):#edit later
-        stringFrames = [",".join([str(num) for num in sublist])
-                        for sublist in self.fretFrames]
+    def getFramesAsString(self):
+        """
+        Get the fret frames of the tab sequence as strings.
+
+        Returns:
+            list: A list of strings representing the fret frames.
+        """
+        stringFrames = [",".join([str(num) for num in sublist]) for sublist in self.fretFrames]
         return stringFrames
 
     def addFretFrame(self, frame):
+        """
+        Add a fret frame to the tab sequence.
+
+        Parameters:
+            frame (str or list): The fret frame to add. If it's a string, it represents a single frame.
+                                 If it's a list, it represents multiple frames.
+        """
         self.fretFrames.append(frame)
 
     def setFretFrames(self, frames):
+        """
+        Set the fret frames of the tab sequence.
+
+        Parameters:
+            frames (list): A list of strings representing the fret frames.
+        """
         self.fretFrames = frames
 
     def getFretFrames(self):
+        """
+        Get the fret frames of the tab sequence.
+
+        Returns:
+            list: A list of strings representing the fret frames.
+        """
         return self.fretFrames
 
-    def addMidiFramesFrame(self, frame):
+    def addMidiFrame(self, frame):
+        """
+        Add a MIDI frame to the tab sequence.
+
+        Parameters:
+            frame (str or list): The MIDI frame to add. If it's a string, it represents a single frame.
+                                 If it's a list, it represents multiple frames.
+        """
         self.midiFrames.append(frame)
 
     def setMidiFrames(self, frames):
+        """
+        Set the MIDI frames of the tab sequence.
+
+        Parameters:
+            frames (list): A list of strings representing the MIDI frames.
+        """
         self.midiFrames = frames
-    
+
     def getMidiFrames(self):
+        """
+        Get the MIDI frames of the tab sequence.
+
+        Returns:
+            list: A list of strings representing the MIDI frames.
+        """
         return self.midiFrames
 
-    def getFrameType(self):
-        return self.frameType
-
-    def setFrameType(self, type):
-        self.frameType = type
-
     def getNotesWithTimeFrames(self):
+        """
+        Get the video notes with time information of the tab sequence.
+
+        Returns:
+            list: A list of VideoNote objects representing the notes being played along with their start and end times.
+        """
         return self.notesWithTimeFrames
 
-    def setNotesWithTimeFrames(self, arr):
-        self.notesWithTimeFrames = arr
+    def setNotesWithTimeFrames(self, notes):
+        """
+        Set the video notes with time information of the tab sequence.
+
+        Parameters:
+            notes (list): A list of VideoNote objects representing the notes being played along with their start and end times.
+        """
+        self.notesWithTimeFrames = notes
+
+    def getFrameType(self):
+        """
+        Get the frame type of the tab sequence.
+
+        Returns:
+            str: The frame type, either "fret" or "midi".
+        """
+        return self.frameType
+
+    def setFrameType(self, frameType):
+        """
+        Set the frame type of the tab sequence.
+
+        Parameters:
+            frameType (str): The frame type to set, either "fret" or "midi".
+        """
+        self.frameType = frameType

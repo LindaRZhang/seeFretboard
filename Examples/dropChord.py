@@ -216,11 +216,11 @@ Drop3 String5
 # fretboard.addDropChord("c", "min7b5","Drop3", "4","5")
 
 fretboard.addDropChord("c","dim7","Drop3","1","5")
-fretboard.setNoteType("groundTruth")
+fretboard.theme.fretboardDesign.setNoteType("groundTruth")
 fretboard.addDropChord("c", "dim7","Drop3", "2","5")
-fretboard.setNoteType("prediction")
+fretboard.theme.fretboardDesign.setNoteType("prediction")
 fretboard.addDropChord("c", "dim7","Drop3", "3","5")
-fretboard.setNoteType("groundTruth")
+fretboard.theme.fretboardDesign.setNoteType("groundTruth")
 fretboard.addDropChord("c", "dim7","Drop3", "4","5")
 
 fretboard.showFretboard()

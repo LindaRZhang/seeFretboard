@@ -1,6 +1,8 @@
 import music21 
 from .Constants import *
 
+#helper functions
+
 def intervalsToScaleDegrees(intervals):
     """Converts a list of intervals to scale degrees.
     
@@ -157,7 +159,6 @@ def getNoteFromInterval(note, interval, rootNote):
     Returns:
         str: The new note that is interval away from the input note. Will be in # unless it is the root note
     """
-    print("getnote",note, rootNote, interval)
     for i, sublist in enumerate(chromaticWEnharmonicScaleFindDistance):
         if note.upper() in [sub.upper() for sub in sublist]:
             noteIndex = i
@@ -194,7 +195,6 @@ def processCAGEDShape(caged, rootNote, type="major"):
         raise ValueError(f"Invalid type '{type}' provided for CAGED shape '{caged}'")
 
     interval = calculateHalfSteps(shape["name"], rootNote)
-    print(shape["name"], rootNote, "interval", interval)
 
     processedShape = {
         "name": shape["name"],
@@ -209,9 +209,7 @@ def processCAGEDShape(caged, rootNote, type="major"):
 
     for i in range(len(shape[type + "Note"])):
         newNote = getNoteFromInterval("".join(shape[type + "Note"][i].split()), interval, rootNote)
-        print("newNote", newNote)
         pos = shape[type + "Position"][i]
-        print(shape[type + "Position"])
 
         if not(isinstance(pos, str) and pos.lower() == 'x'):
             pos = int(pos) + interval
@@ -222,6 +220,30 @@ def processCAGEDShape(caged, rootNote, type="major"):
     return processedShape
 
 def processDropShape(drop, rootNote, type, string, shapePos):
+    '''
+    Processes a drop shape by calculating the corresponding notes, positions, and scale degrees.
+
+    Args:
+        drop (str): The drop shape name.
+        rootNote (str): The root note of the shape.
+        type (str): The type of the chord: maj7, dom7, min7, min7b5, dim7
+        string (str): The string of the shape.
+        shapePos (str): The position of the shape.
+
+    Returns:
+        processedShape (dict): A dictionary containing the processed shape information. It has the following structure:
+        {
+            "note": {
+                type: [list of notes]
+            },
+            "position": {
+                type: [list of positions]
+            },
+            "scaleDegree": {
+                type: [list of scale degrees]
+            }
+        }
+    '''
     shape = DROPShapes[drop]
 
     interval = calculateHalfSteps("c", rootNote)
@@ -236,8 +258,6 @@ def processDropShape(drop, rootNote, type, string, shapePos):
     processedShape["position"][type] = []
     processedShape["scaleDegree"][type] = shape[drop+"String"+string][type + "ScaleDegree"+shapePos]
     for i in range(len(processedShape["scaleDegree"][type])):
-        print(i)
-        print(shape[drop+"String"+string][type + "Note" + str(shapePos)])
         note = shape[drop+"String"+string][type + "Note" + str(shapePos)][i]
         newNote = getNoteFromInterval(note, interval, rootNote)
         pos = shape[drop+"String"+string][type + "Position"+shapePos][i]
@@ -251,6 +271,16 @@ def processDropShape(drop, rootNote, type, string, shapePos):
     return processedShape
 
 def checkChordType(type,seve=False):
+    '''
+    Checks if the provided chord type is valid.
+
+    Args:
+        type (str): The chord type to check.
+        seve (bool): If True, check for valid chord types for seventh chords.
+
+    Raises:
+        ValueError: If the provided chord type is not valid.
+    '''
     type = type.lower()
     if seve:
         if type not in ["dom7", "dim7", "maj7", "min7","min7b5"]:
@@ -260,10 +290,29 @@ def checkChordType(type,seve=False):
         raise ValueError("Invalid chord type provided.")
 
 def ifInDict(value, dictionary):
+    '''
+    Checks if a value is present in a dictionary.
+
+    Args:
+        value: The value to check.
+        dictionary (dict): The dictionary to check.
+
+    Raises:
+        ValueError: If the value is not present in the dictionary.
+    '''
     if value.upper() not in dictionary.keys():
         raise ValueError("Invalid "+value+" in "+getDictionaryName(dictionary))
 
 def getDictionaryName(dictionary):
+    '''
+    Returns the name of a dictionary.
+
+    Args:
+        dictionary (dict): The dictionary.
+
+    Returns:
+        name (str): The name of the dictionary.
+    '''
     for name, value in globals().items():
         if value is dictionary:
             return name
