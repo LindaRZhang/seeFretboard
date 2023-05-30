@@ -45,7 +45,7 @@ pip install seeFretboard
 ## Documentations
 
 - [ReadTheDocs](https://linktodocumentation)
-- [Colab](https://colab.research.google.com/drive/1ph2_gWhY4UMN_gLa4Ab9w2uEYFbGuFOA?usp=sharing)
+- [Colab Examples](https://colab.research.google.com/drive/1ph2_gWhY4UMN_gLa4Ab9w2uEYFbGuFOA?usp=sharing)
 
 ## Contributing
 
