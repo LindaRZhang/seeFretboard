@@ -32,9 +32,9 @@
 <span></span><span class="kn">from</span> <span class="nn">seeFretboard.Utilities.Constants</span> <span class="kn">import</span> <span class="n">STANDARD_TUNING</span><span class="p">,</span> <span class="n">STANDARD_TUNING_MIDI</span>
 <span class="kn">from</span> <span class="nn">seeFretboard.Designs.CirlceNote</span> <span class="kn">import</span> <span class="n">CircleNote</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">These classes can be used to configure and customize the settings of a guitar fretboard for various purposes.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="FretboardTheme"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardTheme">[docs]</a><span class="k">class</span> <span class="nc">FretboardTheme</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a theme for the fretboard visualization.&quot;&quot;&quot;</span>
@@ -47,7 +47,7 @@
 <span class="sd">            theme (str): The theme to apply (&quot;blue, dark, wood, or green&quot;). If None, a custom theme (light basically) is applied.</span>
 <span class="sd">            **kwargs: Additional keyword arguments for custom theme settings.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">theme</span> <span class="o">=</span> <span class="n">theme</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">customTheme</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">theme</span> <span class="o">==</span> <span class="s2">&quot;blue&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">BlueTheme</span><span class="p">()</span>
@@ -739,8 +739,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#designs">Designs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>

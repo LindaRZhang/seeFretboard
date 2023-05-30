@@ -4,14 +4,6 @@ seeFretboard.Designs package
 Submodules
 ----------
 
-seeFretboard.Designs.Buttons module
------------------------------------
-
-.. automodule:: seeFretboard.Designs.Buttons
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 seeFretboard.Designs.CirlceNote module
 --------------------------------------
 

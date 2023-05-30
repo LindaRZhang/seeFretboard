@@ -38,14 +38,6 @@ seeFretboard.SeeFretboard module
    :undoc-members:
    :show-inheritance:
 
-seeFretboard.generalTest module
--------------------------------
-
-.. automodule:: seeFretboard.generalTest
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

@@ -178,12 +178,12 @@ scaleDegree: [list of scale degrees]</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="seeFretboard.Utilities.Functions.fretToMidi">
-<span class="sig-prename descclassname"><span class="pre">seeFretboard.Utilities.Functions.</span></span><span class="sig-name descname"><span class="pre">fretToMidi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fret</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Functions.html#fretToMidi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Functions.fretToMidi" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">seeFretboard.Utilities.Functions.</span></span><span class="sig-name descname"><span class="pre">fretToMidi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stringMidi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fret</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Functions.html#fretToMidi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Functions.fretToMidi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a fret number on a string to a MIDI note number.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>string</strong> (<em>int</em>) – The string number, where 1 is the highest pitch string.</p></li>
+<li><p><strong>string</strong> (<em>int</em>) – The string number, is the midi string corresponding to that string the fret is on.</p></li>
 <li><p><strong>fret</strong> (<em>int</em>) – The fret number on the string.</p></li>
 </ul>
 </dd>
@@ -337,6 +337,23 @@ scaleDegree: [list of scale degrees]</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>noteNameWithOctave (str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="seeFretboard.Utilities.Functions.midisToNoteNameWithOctaves">
+<span class="sig-prename descclassname"><span class="pre">seeFretboard.Utilities.Functions.</span></span><span class="sig-name descname"><span class="pre">midisToNoteNameWithOctaves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midiNote</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Functions.html#midisToNoteNameWithOctaves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Functions.midisToNoteNameWithOctaves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list of MIDI note number to a list of note name with octave.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>midiNote</strong> (<em>list</em>) – The list of MIDI note number.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of note name and octave (e.g. “C4”, “F#5”) corresponding to the MIDI note number.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>noteNameWithOctave (list)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -549,10 +566,10 @@ scaleDegree: [list of scale degrees]</p>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.NotePosition">seeFretboard.NotePosition module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.PitchCollection">seeFretboard.PitchCollection module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.SeeFretboard">seeFretboard.SeeFretboard module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#seefretboard-generaltest-module">seeFretboard.generalTest module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>

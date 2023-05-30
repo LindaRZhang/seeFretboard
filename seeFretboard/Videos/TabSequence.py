@@ -11,20 +11,20 @@ from seeFretboard.Utilities.Constants import BASE_PATH,FRAMERATE
 
 
 class TabSequence(Frame):
-    '''
+    """
     The TabSequence class is responsible for generating sequences of frame from audio files. 
     It uses the GuitarSet dataset to extract note information from audio tracks and converts 
     this information into tablature frames. The class can generate frames in either fret or 
     MIDI format and can convert between the two. It also provides methods for adding tablature 
     frames and converting frames to notes with time information.
-    '''
+    """
     def __init__(self, trackNum=0, frameRate=FRAMERATE, filePath=os.path.join(BASE_PATH, 'GuitarSet')):
-        '''
+        """
         Parameters:
             trackNum (int): The index of the track to load from the dataset.
             frameRate (float, optional): The frame rate of the tab sequence. Default is FRAMERATE.
             filePath (str, optional): The file path to the GuitarSet dataset. Default is 'BASE_PATH/GuitarSet'.
-            '''
+            """
         super().__init__(frameRate)
 
         self.filePath = filePath

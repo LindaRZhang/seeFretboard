@@ -3,25 +3,25 @@ from bokeh.models import Range1d
 import seeFretboard.Utilities.Constants as Constants
 
 class FretboardFigure():
-    '''
+    """
     The FretboardFigure class is responsible for creating a Bokeh figure object that represents a guitar fretboard. 
     It allows for customization of the figure's orientation, size, and range, as well as the addition of string and fret labels. 
     The class also includes methods for switching the orientation of the figure and getting/setting the x and y ranges.
     
     Attributes:
-    - fig (figure): The Bokeh figure object.
-    - figHorXRange (Range1d): The x-range for the horizontal orientation.
-    - figHorYRange (Range1d): The y-range for the horizontal orientation.
-    - figVerXRange (Range1d): The x-range for the vertical orientation.
-    - figVerYRange (Range1d): The y-range for the vertical orientation.
-    - orientation (str): The orientation of the fretboard figure ('h' for horizontal, 'v' for vertical).
-    - stringLabel (str): The string label layout.
-    - fretLabel (str): The fret label layout.
-    - width (int): The width of the figure.
-    - height (int): The height of the figure.
-    '''
+        - fig (figure): The Bokeh figure object.
+        - figHorXRange (Range1d): The x-range for the horizontal orientation.
+        - figHorYRange (Range1d): The y-range for the horizontal orientation.
+        - figVerXRange (Range1d): The x-range for the vertical orientation.
+        - figVerYRange (Range1d): The y-range for the vertical orientation.
+        - orientation (str): The orientation of the fretboard figure ('h' for horizontal, 'v' for vertical).
+        - stringLabel (str): The string label layout.
+        - fretLabel (str): The fret label layout.
+        - width (int): The width of the figure.
+        - height (int): The height of the figure.
+    """
     def __init__(self, note, theme, orientation="h", width = None, height=None):
-        '''
+        """
         Initializes a FretboardFigure object with the specified parameters.
 
         Parameters:
@@ -30,7 +30,7 @@ class FretboardFigure():
         - orientation (str): The orientation of the fretboard figure ('h' for horizontal, 'v' for vertical). Default is 'h'.
         - width (int): The width of the figure. Default is None.
         - height (int): The height of the figure. Default is None.
-        '''
+        """
 
         self.fig = figure()
         self.figHorXRange = Range1d(-10*note.getNoteRadius(),
@@ -82,9 +82,9 @@ class FretboardFigure():
         self._stringLabel = stringLabel
 
     def addStringLabelLayout(self):
-        '''
+        """
         Adds the string label layout to the figure.
-        '''
+        """
         self.fig.add_layout(self.stringLabel)
 
     @property
@@ -96,9 +96,9 @@ class FretboardFigure():
         self._fretLabel = fretLabel
 
     def addFretLabelLayout(self):
-        '''
+        """
         Adds the fret label layout to the figure.
-        '''
+        """
         self.fig.add_layout(self.fretLabel)
 
     @property
@@ -126,79 +126,79 @@ class FretboardFigure():
         self.fig.height = height
 
     def getFigHorXRange(self):
-        '''
+        """
         Returns the x-range for the horizontal orientation.
 
         Returns:
         - Range1d: The x-range for the horizontal orientation.
-        '''
+        """
         return self.figHorXRange
 
     def setFigHorXRange(self, v1, v2):
-        '''
+        """
         Sets the x-range for the horizontal orientation.
 
         Parameters:
         - v1: The starting value of the x-range.
         - v2: The ending value of the x-range.
-        '''
+        """
         self.figHorXRange = Range1d(v1, v2)
 
     def getFigHorYRange(self):
-        '''
+        """
         Returns the y-range for the horizontal orientation.
 
         Returns:
         - Range1d: The y-range for the horizontal orientation.
-        '''
+        """
         return self.figHorYRange
 
     def setFigHorYRange(self, v1, v2):
-        '''
+        """
         Sets the y-range for the horizontal orientation.
 
         Parameters:
         - v1: The starting value of the y-range.
         - v2: The ending value of the y-range.
-        '''
+        """
         self.figHorYRange = Range1d(v1, v2)
 
     def getFigVerXRange(self):
-        '''
+        """
         Returns the x-range for the vertical orientation.
 
         Returns:
         - Range1d: The x-range for the vertical orientation.
-        '''
+        """
         return self.figVerXRange
 
     def setFigVerXRange(self, v1, v2):
-        '''
+        """
         Sets the x-range for the vertical orientation.
 
         Parameters:
         - v1: The starting value of the x-range.
         - v2: The ending value of the x-range.
-        '''
+        """
         self.figVerXRange = Range1d(v1, v2)
 
     def getFigVerYRange(self):
-        '''
+        """
         Returns the y-range for the vertical orientation.
 
         Returns:
         - Range1d: The y-range for the vertical orientation.
-        '''
+        """
         return self.figVerYRange
 
     def setFigVerYRange(self, v1, v2):
-        '''
+        """
         Sets the y-range for the vertical orientation.
 
         Parameters:
         - v1: The starting value of the y-range.
         - v2: The ending value of the y-range.
-        '''
+        """
         self.figVerYRange = Range1d(v1, v2)
 
     @property
@@ -218,12 +218,12 @@ class FretboardFigure():
         self.fig.y_range = value
 
     def switchOrientation(self, orientation):
-        '''
+        """
         Switches the orientation of the fretboard figure.
 
         Parameters:
         - orientation (str): The new orientation ('h' for horizontal, 'v' for vertical).
-        '''
+        """
         if self.orientation != orientation:
             newH = self.width
             newW = self.height

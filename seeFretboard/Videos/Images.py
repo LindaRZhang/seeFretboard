@@ -2,7 +2,7 @@ import os
 from seeFretboard.Utilities.Constants import BASE_PATH
 
 class Images():
-    '''
+    """
     The Images class is designed to create and manage image files. 
     It allows the user to set the output path, name, and file type 
     of the image, and automatically generates a file name based on 
@@ -14,7 +14,7 @@ class Images():
         name (str): The name of the image.
         meta (str): The file extension or meta information of the image.
         fileName (str): The full file path and name of the image.
-    '''
+    """
     def __init__(self):
         """
         Initializes an Images object with default attribute values.

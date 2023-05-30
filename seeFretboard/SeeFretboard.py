@@ -85,15 +85,6 @@ class SeeFretboard():
 
     def inputChordButtonClicked(self):
         #setting pitch collection let me think think
-        notes="".join(self.inputChordInput.value.split(","))
-        midiNotes = []
-        for i in range(len(notes)):
-            self.pitchCollection.appendPitchesEmpty("")
-            midiNotes.append(str(Functions.fretToMidi(i,notes[i])))
-        
-        self.pitchCollection.setPitchesType("")
-        notesWithOctaveName = Functions.midisToNoteNameWithOctaves(midiNotes)
-        self.pitchCollection.setPitchWithOctave(notesWithOctaveName)
         self.updateFretboard(self.inputChordInput.value)
 
     # fretboard relate
@@ -131,7 +122,6 @@ class SeeFretboard():
 
     def toggleFretboardDirection(self):
         notesPosOnFretboard = self.getCurrentNotesOnFretboard()
-    
         self.removeFigure()
 
         if(self.fretboardTheme.orientation.orientation in Constants.HORIZONTAL):
@@ -143,18 +133,18 @@ class SeeFretboard():
             self.setFretboardFig(FretboardFigure(self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue(), self.getTheme(), "h"))
             self.getTheme().orientation.orientation = "h"
             self.drawHorizontalFretboard()
-            
+
         self.layout.children.insert(0,self.fretboardFig.fig)
 
         self.notes = []
         self.labels = []
+
         # Add the progress bar
         with tqdm(total=len(notesPosOnFretboard)) as pbar:
-            for i,notePos in enumerate(notesPosOnFretboard):
+            for i, notePos in enumerate(notesPosOnFretboard):
                 self.pitchCollection.setPitchesIndex(i)
-                self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i), False)
+                self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
                 pbar.update(1)  # Update the progress bar
-        
         print("Toggle Fretboard Success")
         
     def drawFretboard(self, orientation):
@@ -392,8 +382,10 @@ class SeeFretboard():
             label.text = ""
         
         self.labels = []
+        self.currentNotesPositionOnFretboard = []
 
     def removeFigure(self):
+        self.currentNotesPositionOnFretboard = []
         self.layout.children.remove(self.fretboardFig.fig)
         
     def updateFretboard(self, notes):
@@ -403,18 +395,39 @@ class SeeFretboard():
     # user input = string like "1,0,1,1,0,0" which correspond to standard tuning "E,A,D,G,B,E"
     def addNotesAllString(self, notes):
         notes = [(x.strip()) for x in notes.split(',')]
-
+        midiNotes = []
+        strings = []
+        frets = []
+        len(notes)
+        self.pitchCollection.setAllEmpty()
+        for i in range(len(notes)):
+            self.pitchCollection.appendPitchesEmpty("")
+            strings.append(i)
+            frets.append(notes[i])
+            midiNotes.append(str(Functions.fretToMidi(self.fretboardTheme.tuning.midiTuning[i],notes[i])))
+        self.pitchCollection.setStrings(strings)
+        self.pitchCollection.setFrets(frets)
+        notesWithOctaveName = Functions.midisToNoteNameWithOctaves(midiNotes)
+        print(notesWithOctaveName)
+        self.pitchCollection.setPitchWithOctave(notesWithOctaveName)
+        
+        
         if (len(notes) == self.fretboardTheme.tuning.numOfStrings):
             for i in range(0, self.fretboardTheme.tuning.numOfStrings):
+                self.pitchCollection.setPitchesIndex(i)
                 self.addNote(i, notes[i])
         else:
             print("ERROR, WRONG FORMAT.")
 
     # -1 = x
-    def addNote(self, string, fret, appendPos=True):
+    def addNote(self, string, fret):
         note = ""
+        
         textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getCurrentPitchesIndex()))
         textValue = textValue.replace("-","b")
+
+        notePos = NotePositionsOnCurrentFretboard(string, fret)
+        self.appendCurrentNotesOnFretboard(notePos)
 
         if(fret=="" or fret==''):
             return None
@@ -470,6 +483,7 @@ class SeeFretboard():
                     source, lineOne))
                 self.notes.append(self.fretboardFig.fig.add_glyph(
                     source, lineTwo))
+                    
                 
             else:
                 fret = int(fret)
@@ -565,10 +579,7 @@ class SeeFretboard():
                 
         if (note != ""):
             self.notes.append(self.fretboardFig.fig.add_glyph(note))
-            if(appendPos):
-                notePos = NotePositionsOnCurrentFretboard(string, fret)
-                self.appendCurrentNotesOnFretboard(notePos)
-
+        
     #drawing fretboard getter n setters
     def getTheme(self):
         return self.fretboardTheme

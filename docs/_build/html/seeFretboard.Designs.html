@@ -36,9 +36,6 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </section>
-<section id="seefretboard-designs-buttons-module">
-<h2>seeFretboard.Designs.Buttons module<a class="headerlink" href="#seefretboard-designs-buttons-module" title="Permalink to this heading">¶</a></h2>
-</section>
 <section id="module-seeFretboard.Designs.CirlceNote">
 <span id="seefretboard-designs-cirlcenote-module"></span><h2>seeFretboard.Designs.CirlceNote module<a class="headerlink" href="#module-seeFretboard.Designs.CirlceNote" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
@@ -46,21 +43,160 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.CirlceNote.</span></span><span class="sig-name descname"><span class="pre">CircleNote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>CircleNote is a class for displaying notes with customizable properties.</p>
-<p>Attributes:
-- noteFaceColor (str): The color of the note face. Default is ‘blue’.
-- noteFill (bool): Indicates whether the note should be filled. Default is True.
-- noteEdgeColor (str): The color of the note edge. Default is ‘black’.
-- noteEdgeWidth (int): The width of the note edge. Default is 2.
-- noteRadius (float): The radius of the note. Default is 0.4.
-- noteOpacity (float): The opacity of the note. Default is 1.
-- noteTextColor (str): The color of the text inside note.
-- noteTextFont (str): The font of the text inside note.
-- intervals (list): List of intervals associated with the note.
-- scaleDegrees (list): List of scale degrees associated with the note.
-- name (str): The name of the note.
-- nameWithOctave (str): The name of the note with octave information.
-- fret (int): The fret position of the note.
-- string (int): The string position of the note.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteFaceColor</span></span></dt>
+<dd><p>The color of the note face. Default is ‘blue’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteFill</span></span></dt>
+<dd><p>Indicates whether the note should be filled. Default is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteEdgeColor</span></span></dt>
+<dd><p>The color of the note edge. Default is ‘black’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteEdgeWidth</span></span></dt>
+<dd><p>The width of the note edge. Default is 2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteRadius</span></span></dt>
+<dd><p>The radius of the note. Default is 0.4.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteOpacity</span></span></dt>
+<dd><p>The opacity of the note. Default is 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteTextColor</span></span></dt>
+<dd><p>The color of the text inside note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">noteTextFont</span></span></dt>
+<dd><p>The font of the text inside note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">intervals</span></span></dt>
+<dd><p>List of intervals associated with the note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">scaleDegrees</span></span></dt>
+<dd><p>List of scale degrees associated with the note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">name</span></span></dt>
+<dd><p>The name of the note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">nameWithOctave</span></span></dt>
+<dd><p>The name of the note with octave information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">fret</span></span></dt>
+<dd><p>The fret position of the note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">string</span></span></dt>
+<dd><p>The string position of the note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getIntervals">
 <span class="sig-name descname"><span class="pre">getIntervals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getIntervals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getIntervals" title="Permalink to this definition">¶</a></dt>
@@ -257,17 +393,116 @@
 <p>The FretboardFigure class is responsible for creating a Bokeh figure object that represents a guitar fretboard.
 It allows for customization of the figure’s orientation, size, and range, as well as the addition of string and fret labels.
 The class also includes methods for switching the orientation of the figure and getting/setting the x and y ranges.</p>
-<p>Attributes:
-- fig (figure): The Bokeh figure object.
-- figHorXRange (Range1d): The x-range for the horizontal orientation.
-- figHorYRange (Range1d): The y-range for the horizontal orientation.
-- figVerXRange (Range1d): The x-range for the vertical orientation.
-- figVerYRange (Range1d): The y-range for the vertical orientation.
-- orientation (str): The orientation of the fretboard figure (‘h’ for horizontal, ‘v’ for vertical).
-- stringLabel (str): The string label layout.
-- fretLabel (str): The fret label layout.
-- width (int): The width of the figure.
-- height (int): The height of the figure.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">fig</span></span></dt>
+<dd><p>The Bokeh figure object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">figHorXRange</span></span></dt>
+<dd><p>The x-range for the horizontal orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Range1d</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">figHorYRange</span></span></dt>
+<dd><p>The y-range for the horizontal orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Range1d</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">figVerXRange</span></span></dt>
+<dd><p>The x-range for the vertical orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Range1d</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">figVerYRange</span></span></dt>
+<dd><p>The y-range for the vertical orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Range1d</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">orientation</span></span></dt>
+<dd><p>The orientation of the fretboard figure (‘h’ for horizontal, ‘v’ for vertical).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">stringLabel</span></span></dt>
+<dd><p>The string label layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">fretLabel</span></span></dt>
+<dd><p>The fret label layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">width</span></span></dt>
+<dd><p>The width of the figure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">height</span></span></dt>
+<dd><p>The height of the figure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.addFretLabelLayout">
 <span class="sig-name descname"><span class="pre">addFretLabelLayout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.addFretLabelLayout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.addFretLabelLayout" title="Permalink to this definition">¶</a></dt>
@@ -836,10 +1071,10 @@ The class also includes methods for switching the orientation of the figure and 
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.NotePosition">seeFretboard.NotePosition module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.PitchCollection">seeFretboard.PitchCollection module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.SeeFretboard">seeFretboard.SeeFretboard module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#seefretboard-generaltest-module">seeFretboard.generalTest module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>

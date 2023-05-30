@@ -6,3 +6,4 @@ seeFretboard
 
    Tests
    seeFretboard
+   setup

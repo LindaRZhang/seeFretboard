@@ -90,19 +90,38 @@ def fretsToMidi(string, frets):
 
     return midiNotes
 
-def fretToMidi(string, fret):
+def fretToMidi(stringMidi, fret):
     """Converts a fret number on a string to a MIDI note number.
     
     Args:
-        string (int): The string number, where 1 is the highest pitch string.
+        string (int): The string number, is the midi string corresponding to that string the fret is on.
         fret (int): The fret number on the string. 
         
     Returns:
         midi (int): The MIDI note number corresponding to the fret on the string.
     """
-    midi = int(string) + int(fret)
+    if(isinstance(fret, str) and fret.lower() == "x"):
+        midi = "x"
+    else:
+        midi = int(stringMidi) + int(fret)
     
     return midi
+
+def midisToNoteNameWithOctaves(midiNote):
+    """Converts a list of MIDI note number to a list of note name with octave.
+    
+    Args:
+        midiNote (list): The list of MIDI note number.
+        
+    Returns:
+        noteNameWithOctave (list): The list of note name and octave (e.g. "C4", "F#5") corresponding to the MIDI note number.
+    """
+    nameOctaves = []
+    for midiNote in midiNote:
+        octave = midiToNoteNameWithOctave(midiNote)
+        nameOctaves.append(octave)
+
+    return nameOctaves
 
 def midiToNoteNameWithOctave(midiNote):
     """Converts a MIDI note number to a note name with octave.
@@ -113,9 +132,13 @@ def midiToNoteNameWithOctave(midiNote):
     Returns:
         noteNameWithOctave (str): The note name and octave (e.g. "C4", "F#5") corresponding to the MIDI note number.
     """
-    note = music21.note.Note()
-    note.pitch.midi = midiNote
-    return note.nameWithOctave
+    if(isinstance(midiNote, str) and midiNote.lower() == "x"):
+        nameWithOctave = "x"
+    else:
+        note = music21.note.Note()
+        note.pitch.midi = float(midiNote)
+        nameWithOctave = note.nameWithOctave
+    return nameWithOctave
 
 def calculateHalfSteps(startNote, endNote):
     """
@@ -220,7 +243,7 @@ def processCAGEDShape(caged, rootNote, type="major"):
     return processedShape
 
 def processDropShape(drop, rootNote, type, string, shapePos):
-    '''
+    """
     Processes a drop shape by calculating the corresponding notes, positions, and scale degrees.
 
     Args:
@@ -243,7 +266,7 @@ def processDropShape(drop, rootNote, type, string, shapePos):
                 type: [list of scale degrees]
             }
         }
-    '''
+    """
     shape = DROPShapes[drop]
 
     interval = calculateHalfSteps("c", rootNote)
@@ -271,7 +294,7 @@ def processDropShape(drop, rootNote, type, string, shapePos):
     return processedShape
 
 def checkChordType(type,seve=False):
-    '''
+    """
     Checks if the provided chord type is valid.
 
     Args:
@@ -280,7 +303,7 @@ def checkChordType(type,seve=False):
 
     Raises:
         ValueError: If the provided chord type is not valid.
-    '''
+    """
     type = type.lower()
     if seve:
         if type not in ["dom7", "dim7", "maj7", "min7","min7b5"]:
@@ -290,7 +313,7 @@ def checkChordType(type,seve=False):
         raise ValueError("Invalid chord type provided.")
 
 def ifInDict(value, dictionary):
-    '''
+    """
     Checks if a value is present in a dictionary.
 
     Args:
@@ -299,12 +322,12 @@ def ifInDict(value, dictionary):
 
     Raises:
         ValueError: If the value is not present in the dictionary.
-    '''
+    """
     if value.upper() not in dictionary.keys():
         raise ValueError("Invalid "+value+" in "+getDictionaryName(dictionary))
 
 def getDictionaryName(dictionary):
-    '''
+    """
     Returns the name of a dictionary.
 
     Args:
@@ -312,7 +335,7 @@ def getDictionaryName(dictionary):
 
     Returns:
         name (str): The name of the dictionary.
-    '''
+    """
     for name, value in globals().items():
         if value is dictionary:
             return name

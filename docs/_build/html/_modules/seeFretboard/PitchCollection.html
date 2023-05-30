@@ -30,7 +30,7 @@
             
   <h1>Source code for seeFretboard.PitchCollection</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="PitchCollection"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection">[docs]</a><span></span><span class="k">class</span> <span class="nc">PitchCollection</span><span class="p">():</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitchesType</span> <span class="o">=</span> <span class="s2">&quot;pitchesNames&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitchesType</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A class representing a collection of pitches musically.</span>
 <span class="sd">        </span>
@@ -41,7 +41,8 @@
 <span class="sd">            pitchesNames (list): A list of pitch names.</span>
 <span class="sd">            pitchesWithOctave (list): A list of pitches with octave.</span>
 <span class="sd">            pitchesScaleDegrees (list): A list of pitch scale degrees.</span>
-<span class="sd">            pitchesType (str): The type of pitches being stored.</span>
+<span class="sd">            pitchesEmpty (list): A list of pitches for displaying nothing</span>
+<span class="sd">            pitchesType (str): The type of pitches being stored: &quot;pitchesNames&quot;,pitchesWithOctave&quot;, or &quot;pitchesScaleDegrees&quot;:</span>
 <span class="sd">            pitchesIndex (int): The current index for accessing pitches.</span>
 <span class="sd">            frets (list): A list of fret values that correspond to the pitches.</span>
 <span class="sd">            strings (list): A list of string values that correspond to the pitches.</span>
@@ -50,6 +51,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesEmpty</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">=</span> <span class="n">pitchesType</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -112,6 +114,22 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the pitchesWithOctave list to the given value.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span> <span class="o">=</span> <span class="n">value</span></div>
     
+<div class="viewcode-block" id="PitchCollection.getPitchesEmpty"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchesEmpty">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchesEmpty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the pitchesEmpty list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesEmpty</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.setPitchesEmpty"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setPitchesEmpty">[docs]</a>    <span class="k">def</span> <span class="nf">setPitchesEmpty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the pitchesEmpty list to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesEmpty</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="PitchCollection.appendPitchesEmpty"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.appendPitchesEmpty">[docs]</a>    <span class="k">def</span> <span class="nf">appendPitchesEmpty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Appends a value to the pitchesEmpty list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesEmpty</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.emptyPitchesEmpty"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyPitchesEmpty">[docs]</a>    <span class="k">def</span> <span class="nf">emptyPitchesEmpty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the pitchesEmpty list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesEmpty</span> <span class="o">=</span> <span class="p">[]</span></div>
+
 <div class="viewcode-block" id="PitchCollection.emptyPitchesWithOctaves"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyPitchesWithOctaves">[docs]</a>    <span class="k">def</span> <span class="nf">emptyPitchesWithOctaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the pitchesWithOctave list.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pitcheshWithOctave</span> <span class="o">=</span> <span class="p">[]</span></div>
@@ -147,12 +165,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: The current arrayTypeNow list based on the pitchesType.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pitchValue</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">==</span> <span class="s2">&quot;pitchesNames&quot;</span><span class="p">:</span>
             <span class="n">pitchValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">==</span> <span class="s2">&quot;pitchesWithOctave&quot;</span><span class="p">:</span>
             <span class="n">pitchValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">==</span> <span class="s2">&quot;pitchesScaleDegrees&quot;</span><span class="p">:</span>
             <span class="n">pitchValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pitchValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesEmpty</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span> <span class="o">=</span> <span class="n">pitchValue</span>
         
@@ -258,8 +279,16 @@
 <span class="sd">            tuple: A tuple containing the current fret, string, and pitch values.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFretsAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getStringsAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getArrayTypeNowAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFretsAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getStringsAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getArrayTypeNowAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="PitchCollection.setAllEmpty"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setAllEmpty">[docs]</a>    <span class="k">def</span> <span class="nf">setAllEmpty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesEmpty</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span> <span class="o">=</span> <span class="p">[]</span></div></div>
 </pre></div>
 
           </div>
@@ -278,9 +307,15 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
 </ul>
 
 <div class="relations">

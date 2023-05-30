@@ -34,25 +34,25 @@
 <span class="kn">import</span> <span class="nn">seeFretboard.Utilities.Constants</span> <span class="k">as</span> <span class="nn">Constants</span>
 
 <div class="viewcode-block" id="FretboardFigure"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure">[docs]</a><span class="k">class</span> <span class="nc">FretboardFigure</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The FretboardFigure class is responsible for creating a Bokeh figure object that represents a guitar fretboard. </span>
 <span class="sd">    It allows for customization of the figure&#39;s orientation, size, and range, as well as the addition of string and fret labels. </span>
 <span class="sd">    The class also includes methods for switching the orientation of the figure and getting/setting the x and y ranges.</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes:</span>
-<span class="sd">    - fig (figure): The Bokeh figure object.</span>
-<span class="sd">    - figHorXRange (Range1d): The x-range for the horizontal orientation.</span>
-<span class="sd">    - figHorYRange (Range1d): The y-range for the horizontal orientation.</span>
-<span class="sd">    - figVerXRange (Range1d): The x-range for the vertical orientation.</span>
-<span class="sd">    - figVerYRange (Range1d): The y-range for the vertical orientation.</span>
-<span class="sd">    - orientation (str): The orientation of the fretboard figure (&#39;h&#39; for horizontal, &#39;v&#39; for vertical).</span>
-<span class="sd">    - stringLabel (str): The string label layout.</span>
-<span class="sd">    - fretLabel (str): The fret label layout.</span>
-<span class="sd">    - width (int): The width of the figure.</span>
-<span class="sd">    - height (int): The height of the figure.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">        - fig (figure): The Bokeh figure object.</span>
+<span class="sd">        - figHorXRange (Range1d): The x-range for the horizontal orientation.</span>
+<span class="sd">        - figHorYRange (Range1d): The y-range for the horizontal orientation.</span>
+<span class="sd">        - figVerXRange (Range1d): The x-range for the vertical orientation.</span>
+<span class="sd">        - figVerYRange (Range1d): The y-range for the vertical orientation.</span>
+<span class="sd">        - orientation (str): The orientation of the fretboard figure (&#39;h&#39; for horizontal, &#39;v&#39; for vertical).</span>
+<span class="sd">        - stringLabel (str): The string label layout.</span>
+<span class="sd">        - fretLabel (str): The fret label layout.</span>
+<span class="sd">        - width (int): The width of the figure.</span>
+<span class="sd">        - height (int): The height of the figure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note</span><span class="p">,</span> <span class="n">theme</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes a FretboardFigure object with the specified parameters.</span>
 
 <span class="sd">        Parameters:</span>
@@ -61,10 +61,10 @@
 <span class="sd">        - orientation (str): The orientation of the fretboard figure (&#39;h&#39; for horizontal, &#39;v&#39; for vertical). Default is &#39;h&#39;.</span>
 <span class="sd">        - width (int): The width of the figure. Default is None.</span>
 <span class="sd">        - height (int): The height of the figure. Default is None.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="n">figure</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">figHorXRange</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="o">*</span><span class="n">note</span><span class="o">.</span><span class="n">getNoteRadius</span><span class="p">(),</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figHorXRange</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="o">*</span><span class="n">note</span><span class="o">.</span><span class="n">getNoteRadius</span><span class="p">(),</span>
                                         <span class="p">(</span><span class="n">theme</span><span class="o">.</span><span class="n">fretboardRange</span><span class="o">.</span><span class="n">numOfFrets</span><span class="o">+</span><span class="mf">1.3</span><span class="p">)</span><span class="o">*</span><span class="n">theme</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">distanceBetweenFrets</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">figHorYRange</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">note</span><span class="o">.</span><span class="n">getNoteRadius</span><span class="p">(),</span>
                                         <span class="n">theme</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">distanceBetweenStrings</span><span class="o">*</span><span class="n">theme</span><span class="o">.</span><span class="n">tuning</span><span class="o">.</span><span class="n">numOfStrings</span><span class="p">)</span>
@@ -76,7 +76,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">orientation</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;h&quot;</span><span class="p">):</span>
             <span class="k">if</span><span class="p">(</span><span class="n">width</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">height</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">800</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">900</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">400</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
@@ -87,7 +87,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span><span class="p">(</span><span class="n">width</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">height</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">400</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">800</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">900</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
@@ -113,9 +113,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_stringLabel</span> <span class="o">=</span> <span class="n">stringLabel</span>
 
 <div class="viewcode-block" id="FretboardFigure.addStringLabelLayout"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.addStringLabelLayout">[docs]</a>    <span class="k">def</span> <span class="nf">addStringLabelLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the string label layout to the figure.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stringLabel</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
@@ -127,9 +127,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fretLabel</span> <span class="o">=</span> <span class="n">fretLabel</span>
 
 <div class="viewcode-block" id="FretboardFigure.addFretLabelLayout"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.addFretLabelLayout">[docs]</a>    <span class="k">def</span> <span class="nf">addFretLabelLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the fret label layout to the figure.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">add_layout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fretLabel</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
@@ -157,79 +157,79 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
 
 <div class="viewcode-block" id="FretboardFigure.getFigHorXRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigHorXRange">[docs]</a>    <span class="k">def</span> <span class="nf">getFigHorXRange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the x-range for the horizontal orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - Range1d: The x-range for the horizontal orientation.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">figHorXRange</span></div>
 
 <div class="viewcode-block" id="FretboardFigure.setFigHorXRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigHorXRange">[docs]</a>    <span class="k">def</span> <span class="nf">setFigHorXRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the x-range for the horizontal orientation.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - v1: The starting value of the x-range.</span>
 <span class="sd">        - v2: The ending value of the x-range.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">figHorXRange</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FretboardFigure.getFigHorYRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigHorYRange">[docs]</a>    <span class="k">def</span> <span class="nf">getFigHorYRange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the y-range for the horizontal orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - Range1d: The y-range for the horizontal orientation.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">figHorYRange</span></div>
 
 <div class="viewcode-block" id="FretboardFigure.setFigHorYRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigHorYRange">[docs]</a>    <span class="k">def</span> <span class="nf">setFigHorYRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the y-range for the horizontal orientation.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - v1: The starting value of the y-range.</span>
 <span class="sd">        - v2: The ending value of the y-range.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">figHorYRange</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FretboardFigure.getFigVerXRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigVerXRange">[docs]</a>    <span class="k">def</span> <span class="nf">getFigVerXRange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the x-range for the vertical orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - Range1d: The x-range for the vertical orientation.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">figVerXRange</span></div>
 
 <div class="viewcode-block" id="FretboardFigure.setFigVerXRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigVerXRange">[docs]</a>    <span class="k">def</span> <span class="nf">setFigVerXRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the x-range for the vertical orientation.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - v1: The starting value of the x-range.</span>
 <span class="sd">        - v2: The ending value of the x-range.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">figVerXRange</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FretboardFigure.getFigVerYRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigVerYRange">[docs]</a>    <span class="k">def</span> <span class="nf">getFigVerYRange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the y-range for the vertical orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - Range1d: The y-range for the vertical orientation.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">figVerYRange</span></div>
 
 <div class="viewcode-block" id="FretboardFigure.setFigVerYRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigVerYRange">[docs]</a>    <span class="k">def</span> <span class="nf">setFigVerYRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the y-range for the vertical orientation.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - v1: The starting value of the y-range.</span>
 <span class="sd">        - v2: The ending value of the y-range.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">figVerYRange</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
@@ -249,12 +249,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">y_range</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="FretboardFigure.switchOrientation"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardFigure.FretboardFigure.switchOrientation">[docs]</a>    <span class="k">def</span> <span class="nf">switchOrientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Switches the orientation of the fretboard figure.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - orientation (str): The new orientation (&#39;h&#39; for horizontal, &#39;v&#39; for vertical).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">!=</span> <span class="n">orientation</span><span class="p">:</span>
             <span class="n">newH</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
             <span class="n">newW</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
@@ -284,9 +284,15 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
 </ul>
 
 <div class="relations">

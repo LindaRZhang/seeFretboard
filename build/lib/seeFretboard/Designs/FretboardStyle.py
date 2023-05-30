@@ -1,9 +1,9 @@
 from seeFretboard.Utilities.Constants import STANDARD_TUNING, STANDARD_TUNING_MIDI
 from seeFretboard.Designs.CirlceNote import CircleNote
 
-'''
+"""
 These classes can be used to configure and customize the settings of a guitar fretboard for various purposes.
-'''
+"""
 
 class FretboardTheme:
     """Represents a theme for the fretboard visualization."""

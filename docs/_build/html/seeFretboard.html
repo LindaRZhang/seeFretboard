@@ -39,7 +39,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="seeFretboard.Designs.html">seeFretboard.Designs package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="seeFretboard.Designs.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="seeFretboard.Designs.html#seefretboard-designs-buttons-module">seeFretboard.Designs.Buttons module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="seeFretboard.Designs.html#module-seeFretboard.Designs.CirlceNote">seeFretboard.Designs.CirlceNote module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote"><code class="docutils literal notranslate"><span class="pre">CircleNote</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getIntervals"><code class="docutils literal notranslate"><span class="pre">CircleNote.getIntervals()</span></code></a></li>
@@ -173,6 +172,7 @@
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.intervalsToScaleDegrees"><code class="docutils literal notranslate"><span class="pre">intervalsToScaleDegrees()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.midiToFret"><code class="docutils literal notranslate"><span class="pre">midiToFret()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.midiToNoteNameWithOctave"><code class="docutils literal notranslate"><span class="pre">midiToNoteNameWithOctave()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.midisToNoteNameWithOctaves"><code class="docutils literal notranslate"><span class="pre">midisToNoteNameWithOctaves()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.processCAGEDShape"><code class="docutils literal notranslate"><span class="pre">processCAGEDShape()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.processDropShape"><code class="docutils literal notranslate"><span class="pre">processDropShape()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.scaleDegreeToInterval"><code class="docutils literal notranslate"><span class="pre">scaleDegreeToInterval()</span></code></a></li>
@@ -430,7 +430,7 @@ The class provides methods to get and set these attributes.</p>
 <span id="seefretboard-pitchcollection-module"></span><h2>seeFretboard.PitchCollection module<a class="headerlink" href="#module-seeFretboard.PitchCollection" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.PitchCollection.</span></span><span class="sig-name descname"><span class="pre">PitchCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitchesType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pitchesNames'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.PitchCollection.</span></span><span class="sig-name descname"><span class="pre">PitchCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitchesType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.addPitchesIndex">
@@ -448,6 +448,12 @@ The class provides methods to get and set these attributes.</p>
 <dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.appendPitchWithOctave">
 <span class="sig-name descname"><span class="pre">appendPitchWithOctave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.appendPitchWithOctave"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.appendPitchWithOctave" title="Permalink to this definition">¶</a></dt>
 <dd><p>Appends a value to the pitchesWithOctave list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.appendPitchesEmpty">
+<span class="sig-name descname"><span class="pre">appendPitchesEmpty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.appendPitchesEmpty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.appendPitchesEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends a value to the pitchesEmpty list.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -478,6 +484,12 @@ The class provides methods to get and set these attributes.</p>
 <dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.emptyFrets">
 <span class="sig-name descname"><span class="pre">emptyFrets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.emptyFrets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.emptyFrets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Empties the frets list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.emptyPitchesEmpty">
+<span class="sig-name descname"><span class="pre">emptyPitchesEmpty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.emptyPitchesEmpty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.emptyPitchesEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empties the pitchesEmpty list.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -603,6 +615,12 @@ The class provides methods to get and set these attributes.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.getPitchesEmpty">
+<span class="sig-name descname"><span class="pre">getPitchesEmpty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.getPitchesEmpty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.getPitchesEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the pitchesEmpty list.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.getPitchesNames">
 <span class="sig-name descname"><span class="pre">getPitchesNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.getPitchesNames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.getPitchesNames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the pitchesNames list.</p>
@@ -668,6 +686,11 @@ The class provides methods to get and set these attributes.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.setAllEmpty">
+<span class="sig-name descname"><span class="pre">setAllEmpty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.setAllEmpty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.setAllEmpty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.setArrayTypeNow">
 <span class="sig-name descname"><span class="pre">setArrayTypeNow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.setArrayTypeNow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.setArrayTypeNow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the arrayTypeNow to the current array type.</p>
@@ -683,6 +706,12 @@ The class provides methods to get and set these attributes.</p>
 <dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.setPitchWithOctave">
 <span class="sig-name descname"><span class="pre">setPitchWithOctave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.setPitchWithOctave"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.setPitchWithOctave" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the pitchesWithOctave list to the given value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.PitchCollection.PitchCollection.setPitchesEmpty">
+<span class="sig-name descname"><span class="pre">setPitchesEmpty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/PitchCollection.html#PitchCollection.setPitchesEmpty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.PitchCollection.PitchCollection.setPitchesEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the pitchesEmpty list to the given value.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -722,7 +751,7 @@ The class provides methods to get and set these attributes.</p>
 <span id="seefretboard-seefretboard-module"></span><h2>seeFretboard.SeeFretboard module<a class="headerlink" href="#module-seeFretboard.SeeFretboard" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="seeFretboard.SeeFretboard.SeeFretboard">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.SeeFretboard.</span></span><span class="sig-name descname"><span class="pre">SeeFretboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'h'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fretFrom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fretTo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showTuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/SeeFretboard.html#SeeFretboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.SeeFretboard.SeeFretboard" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.SeeFretboard.</span></span><span class="sig-name descname"><span class="pre">SeeFretboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'h'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fretFrom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fretTo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showTuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/SeeFretboard.html#SeeFretboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.SeeFretboard.SeeFretboard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.SeeFretboard.SeeFretboard.addArpeggio">
@@ -751,7 +780,7 @@ The class provides methods to get and set these attributes.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.SeeFretboard.SeeFretboard.addNote">
-<span class="sig-name descname"><span class="pre">addNote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appendPos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/SeeFretboard.html#SeeFretboard.addNote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.SeeFretboard.SeeFretboard.addNote" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">addNote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fret</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/SeeFretboard.html#SeeFretboard.addNote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.SeeFretboard.SeeFretboard.addNote" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -917,9 +946,6 @@ The class provides methods to get and set these attributes.</p>
 </dd></dl>
 
 </section>
-<section id="seefretboard-generaltest-module">
-<h2>seeFretboard.generalTest module<a class="headerlink" href="#seefretboard-generaltest-module" title="Permalink to this heading">¶</a></h2>
-</section>
 <section id="module-seeFretboard">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seeFretboard" title="Permalink to this heading">¶</a></h2>
 </section>
@@ -955,10 +981,10 @@ The class provides methods to get and set these attributes.</p>
 <li class="toctree-l3"><a class="reference internal" href="#module-seeFretboard.NotePosition">seeFretboard.NotePosition module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-seeFretboard.PitchCollection">seeFretboard.PitchCollection module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-seeFretboard.SeeFretboard">seeFretboard.SeeFretboard module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#seefretboard-generaltest-module">seeFretboard.generalTest module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-seeFretboard">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>

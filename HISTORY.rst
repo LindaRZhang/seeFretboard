@@ -8,9 +8,9 @@ History
 * Started development.
 
 0.0.0 - 0.0.9 (2023-5-25)
-------------------
+--------------------------
 
 * First Release on PyPI and testing installation of Packages.
 
 0.0.0 - 0.0.9 (2023-5-30)
-------------------
+-------------------------

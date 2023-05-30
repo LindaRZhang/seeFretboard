@@ -121,19 +121,38 @@
 
     <span class="k">return</span> <span class="n">midiNotes</span></div>
 
-<div class="viewcode-block" id="fretToMidi"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.fretToMidi">[docs]</a><span class="k">def</span> <span class="nf">fretToMidi</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">fret</span><span class="p">):</span>
+<div class="viewcode-block" id="fretToMidi"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.fretToMidi">[docs]</a><span class="k">def</span> <span class="nf">fretToMidi</span><span class="p">(</span><span class="n">stringMidi</span><span class="p">,</span> <span class="n">fret</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a fret number on a string to a MIDI note number.</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
-<span class="sd">        string (int): The string number, where 1 is the highest pitch string.</span>
+<span class="sd">        string (int): The string number, is the midi string corresponding to that string the fret is on.</span>
 <span class="sd">        fret (int): The fret number on the string. </span>
 <span class="sd">        </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        midi (int): The MIDI note number corresponding to the fret on the string.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">midi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">fret</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">fret</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fret</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span>
+        <span class="n">midi</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">midi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stringMidi</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">fret</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">midi</span></div>
+
+<div class="viewcode-block" id="midisToNoteNameWithOctaves"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.midisToNoteNameWithOctaves">[docs]</a><span class="k">def</span> <span class="nf">midisToNoteNameWithOctaves</span><span class="p">(</span><span class="n">midiNote</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a list of MIDI note number to a list of note name with octave.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        midiNote (list): The list of MIDI note number.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        noteNameWithOctave (list): The list of note name and octave (e.g. &quot;C4&quot;, &quot;F#5&quot;) corresponding to the MIDI note number.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nameOctaves</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">midiNote</span> <span class="ow">in</span> <span class="n">midiNote</span><span class="p">:</span>
+        <span class="n">octave</span> <span class="o">=</span> <span class="n">midiToNoteNameWithOctave</span><span class="p">(</span><span class="n">midiNote</span><span class="p">)</span>
+        <span class="n">nameOctaves</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">octave</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">nameOctaves</span></div>
 
 <div class="viewcode-block" id="midiToNoteNameWithOctave"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.midiToNoteNameWithOctave">[docs]</a><span class="k">def</span> <span class="nf">midiToNoteNameWithOctave</span><span class="p">(</span><span class="n">midiNote</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a MIDI note number to a note name with octave.</span>
@@ -144,9 +163,13 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        noteNameWithOctave (str): The note name and octave (e.g. &quot;C4&quot;, &quot;F#5&quot;) corresponding to the MIDI note number.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">note</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">()</span>
-    <span class="n">note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">midi</span> <span class="o">=</span> <span class="n">midiNote</span>
-    <span class="k">return</span> <span class="n">note</span><span class="o">.</span><span class="n">nameWithOctave</span></div>
+    <span class="k">if</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">midiNote</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">midiNote</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span>
+        <span class="n">nameWithOctave</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">note</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">()</span>
+        <span class="n">note</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">midi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">midiNote</span><span class="p">)</span>
+        <span class="n">nameWithOctave</span> <span class="o">=</span> <span class="n">note</span><span class="o">.</span><span class="n">nameWithOctave</span>
+    <span class="k">return</span> <span class="n">nameWithOctave</span></div>
 
 <div class="viewcode-block" id="calculateHalfSteps"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.calculateHalfSteps">[docs]</a><span class="k">def</span> <span class="nf">calculateHalfSteps</span><span class="p">(</span><span class="n">startNote</span><span class="p">,</span> <span class="n">endNote</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -251,7 +274,7 @@
     <span class="k">return</span> <span class="n">processedShape</span></div>
 
 <div class="viewcode-block" id="processDropShape"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.processDropShape">[docs]</a><span class="k">def</span> <span class="nf">processDropShape</span><span class="p">(</span><span class="n">drop</span><span class="p">,</span> <span class="n">rootNote</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">shapePos</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Processes a drop shape by calculating the corresponding notes, positions, and scale degrees.</span>
 
 <span class="sd">    Args:</span>
@@ -274,7 +297,7 @@
 <span class="sd">                type: [list of scale degrees]</span>
 <span class="sd">            }</span>
 <span class="sd">        }</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">shape</span> <span class="o">=</span> <span class="n">DROPShapes</span><span class="p">[</span><span class="n">drop</span><span class="p">]</span>
 
     <span class="n">interval</span> <span class="o">=</span> <span class="n">calculateHalfSteps</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">rootNote</span><span class="p">)</span>
@@ -302,7 +325,7 @@
     <span class="k">return</span> <span class="n">processedShape</span></div>
 
 <div class="viewcode-block" id="checkChordType"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.checkChordType">[docs]</a><span class="k">def</span> <span class="nf">checkChordType</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span><span class="n">seve</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks if the provided chord type is valid.</span>
 
 <span class="sd">    Args:</span>
@@ -311,7 +334,7 @@
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If the provided chord type is not valid.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">type</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">seve</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;dom7&quot;</span><span class="p">,</span> <span class="s2">&quot;dim7&quot;</span><span class="p">,</span> <span class="s2">&quot;maj7&quot;</span><span class="p">,</span> <span class="s2">&quot;min7&quot;</span><span class="p">,</span><span class="s2">&quot;min7b5&quot;</span><span class="p">]:</span>
@@ -321,7 +344,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid chord type provided.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ifInDict"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.ifInDict">[docs]</a><span class="k">def</span> <span class="nf">ifInDict</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks if a value is present in a dictionary.</span>
 
 <span class="sd">    Args:</span>
@@ -330,12 +353,12 @@
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If the value is not present in the dictionary.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid &quot;</span><span class="o">+</span><span class="n">value</span><span class="o">+</span><span class="s2">&quot; in &quot;</span><span class="o">+</span><span class="n">getDictionaryName</span><span class="p">(</span><span class="n">dictionary</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="getDictionaryName"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.getDictionaryName">[docs]</a><span class="k">def</span> <span class="nf">getDictionaryName</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the name of a dictionary.</span>
 
 <span class="sd">    Args:</span>
@@ -343,7 +366,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        name (str): The name of the dictionary.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">dictionary</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">name</span>
@@ -448,8 +471,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#designs">Designs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>

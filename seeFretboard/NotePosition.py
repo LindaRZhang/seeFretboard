@@ -1,9 +1,9 @@
 class NotePositionsOnCurrentFretboard():
-    '''
+    """
     The NotePositionsOnCurrentFretboard class represents a position of a note on a guitar fretboard. 
     It has two main attributes: the string number and the fret number. 
     The class provides methods to get and set these attributes.
-    '''
+    """
     def __init__(self, string, fret):
         self.string = string
         self.fret = fret

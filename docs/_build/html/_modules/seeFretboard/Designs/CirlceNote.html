@@ -30,32 +30,32 @@
             
   <h1>Source code for seeFretboard.Designs.CirlceNote</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="CircleNote"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote">[docs]</a><span></span><span class="k">class</span> <span class="nc">CircleNote</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    CircleNote is a class for displaying notes with customizable properties.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">    - noteFaceColor (str): The color of the note face. Default is &#39;blue&#39;.</span>
-<span class="sd">    - noteFill (bool): Indicates whether the note should be filled. Default is True.</span>
-<span class="sd">    - noteEdgeColor (str): The color of the note edge. Default is &#39;black&#39;.</span>
-<span class="sd">    - noteEdgeWidth (int): The width of the note edge. Default is 2.</span>
-<span class="sd">    - noteRadius (float): The radius of the note. Default is 0.4.</span>
-<span class="sd">    - noteOpacity (float): The opacity of the note. Default is 1.</span>
-<span class="sd">    - noteTextColor (str): The color of the text inside note.</span>
-<span class="sd">    - noteTextFont (str): The font of the text inside note.</span>
-<span class="sd">    - intervals (list): List of intervals associated with the note.</span>
-<span class="sd">    - scaleDegrees (list): List of scale degrees associated with the note.</span>
-<span class="sd">    - name (str): The name of the note.</span>
-<span class="sd">    - nameWithOctave (str): The name of the note with octave information.</span>
-<span class="sd">    - fret (int): The fret position of the note.</span>
-<span class="sd">    - string (int): The string position of the note.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">        - noteFaceColor (str): The color of the note face. Default is &#39;blue&#39;.</span>
+<span class="sd">        - noteFill (bool): Indicates whether the note should be filled. Default is True.</span>
+<span class="sd">        - noteEdgeColor (str): The color of the note edge. Default is &#39;black&#39;.</span>
+<span class="sd">        - noteEdgeWidth (int): The width of the note edge. Default is 2.</span>
+<span class="sd">        - noteRadius (float): The radius of the note. Default is 0.4.</span>
+<span class="sd">        - noteOpacity (float): The opacity of the note. Default is 1.</span>
+<span class="sd">        - noteTextColor (str): The color of the text inside note.</span>
+<span class="sd">        - noteTextFont (str): The font of the text inside note.</span>
+<span class="sd">        - intervals (list): List of intervals associated with the note.</span>
+<span class="sd">        - scaleDegrees (list): List of scale degrees associated with the note.</span>
+<span class="sd">        - name (str): The name of the note.</span>
+<span class="sd">        - nameWithOctave (str): The name of the note with octave information.</span>
+<span class="sd">        - fret (int): The fret position of the note.</span>
+<span class="sd">        - string (int): The string position of the note.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes a CircleNote object with the specified properties.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - **kwargs (dict): Additional keyword arguments for customizing the note properties.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#more for drawing part</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteFaceColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;noteFaceColor&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteFill</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;noteFill&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -78,184 +78,184 @@
         
     
 <div class="viewcode-block" id="CircleNote.getNoteRadius"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNoteRadius">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteRadius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the radius of the note.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - noteRadius (float): The radius of the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteRadius</span></div>
     
 <div class="viewcode-block" id="CircleNote.setNoteRadius"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setNoteRadius">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteRadius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">radius</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the radius of the note.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - radius (float): The radius of the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteRadius</span> <span class="o">=</span> <span class="n">radius</span></div>
         
 <div class="viewcode-block" id="CircleNote.getNoteFaceColor"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNoteFaceColor">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteFaceColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the color of the note face.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - noteFaceColor (str): The color of the note face.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteFaceColor</span></div>
     
 <div class="viewcode-block" id="CircleNote.setNoteFaceColor"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setNoteFaceColor">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteFaceColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">color</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the color of the note face.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - color (str): The color of the note face.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteFaceColor</span> <span class="o">=</span> <span class="n">color</span></div>
         
 <div class="viewcode-block" id="CircleNote.getNoteEdgeColor"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNoteEdgeColor">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteEdgeColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the color of the note edge.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - noteEdgeColor (str): The color of the note edge.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteEdgeColor</span></div>
     
 <div class="viewcode-block" id="CircleNote.setNoteEdgeColor"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setNoteEdgeColor">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteEdgeColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">color</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the color of the note edge.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - color (str): The color of the note edge.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteEdgeColor</span> <span class="o">=</span> <span class="n">color</span></div>
         
 <div class="viewcode-block" id="CircleNote.getNoteEdgeWidth"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNoteEdgeWidth">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteEdgeWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the width of the note edge.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - noteEdgeWidth (int): The width of the note edge.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteEdgeWidth</span></div>
     
 <div class="viewcode-block" id="CircleNote.setNoteEdgeWidth"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setNoteEdgeWidth">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteEdgeWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lw</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the width of the note edge.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - lw (int): The width of the note edge.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteEdgeWidth</span> <span class="o">=</span> <span class="n">lw</span></div>
         
 <div class="viewcode-block" id="CircleNote.getNoteFill"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNoteFill">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteFill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the note is filled.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - noteFill (bool): True if the note is filled, False otherwise.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteFill</span></div>
     
 <div class="viewcode-block" id="CircleNote.setNoteFill"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setNoteFill">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteFill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">noteFill</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set whether the note should be filled.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - noteFill (bool): True to fill the note, False to leave it empty.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteFill</span> <span class="o">=</span> <span class="n">noteFill</span></div>
 
 <div class="viewcode-block" id="CircleNote.getNoteOpacity"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNoteOpacity">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteOpacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the opacity of the note.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - noteOpacity (float): The opacity of the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteOpactiy</span></div>
 
 <div class="viewcode-block" id="CircleNote.setNoteOpacity"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setNoteOpacity">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteOpacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">noteOpacity</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the opacity of the note.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - noteOpacity (float): The opacity of the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">noteOpacity</span> <span class="o">=</span> <span class="n">noteOpacity</span></div>
     
 <div class="viewcode-block" id="CircleNote.getIntervals"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getIntervals">[docs]</a>    <span class="k">def</span> <span class="nf">getIntervals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the intervals associated with the note.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - intervals (list): List of intervals associated with the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span></div>
     
 <div class="viewcode-block" id="CircleNote.setIntervals"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setIntervals">[docs]</a>    <span class="k">def</span> <span class="nf">setIntervals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the intervals associated with the note.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - interval (list): List of intervals to associate with the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="o">=</span> <span class="n">interval</span></div>
     
 <div class="viewcode-block" id="CircleNote.getScaleDegrees"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getScaleDegrees">[docs]</a>    <span class="k">def</span> <span class="nf">getScaleDegrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the scale degrees associated with the note.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - scaleDegrees (list): List of scale degrees associated with the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaleDegrees</span></div>
     
 <div class="viewcode-block" id="CircleNote.setScaleDegrees"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setScaleDegrees">[docs]</a>    <span class="k">def</span> <span class="nf">setScaleDegrees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scaleDegree</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the scale degrees associated with the note.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - scaleDegree (list): List of scale degrees to associate with the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scaleDegrees</span> <span class="o">=</span> <span class="n">scaleDegree</span></div>
     
 <div class="viewcode-block" id="CircleNote.getName"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getName">[docs]</a>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the name of the note.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - name (str): The name of the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
     
 <div class="viewcode-block" id="CircleNote.setName"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setName">[docs]</a>    <span class="k">def</span> <span class="nf">setName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the name of the note.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - name (str): The name of the note.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span></div>
     
 <div class="viewcode-block" id="CircleNote.getNameWithOctave"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNameWithOctave">[docs]</a>    <span class="k">def</span> <span class="nf">getNameWithOctave</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the name of the note with octave information.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">        - nameWithOctave (str): The name of the note with octave information.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nameWithOctave</span></div>
     
 <div class="viewcode-block" id="CircleNote.setNameWithOctave"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.setNameWithOctave">[docs]</a>    <span class="k">def</span> <span class="nf">setNameWithOctave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameWithOctave</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the name of the note with octave information.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">        - nameWithOctave (str): The name of the note with octave information.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nameWithOctave</span> <span class="o">=</span> <span class="n">nameWithOctave</span></div>
 
 <div class="viewcode-block" id="CircleNote.getNoteTextColor"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.CirlceNote.CircleNote.getNoteTextColor">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteTextColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -291,9 +291,15 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
 </ul>
 
 <div class="relations">

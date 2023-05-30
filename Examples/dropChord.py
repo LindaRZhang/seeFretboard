@@ -9,9 +9,9 @@ fretboard.drawFretboard("v")#this function can change from h to v
 
 #fretboard.getPitchCollection().setPitchesType("pitchesScaleDegrees")
 
-'''
+"""
 Drop2 String6
-'''
+"""
 fretboard.addDropChord("c","maj7")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "maj7","Drop2", "2")
@@ -51,9 +51,9 @@ fretboard.addDropChord("c","maj7")
 # fretboard.addDropChord("c", "dim7","Drop2", "3")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "dim7","Drop2", "4")
-'''
+"""
 Drop2 String5
-'''
+"""
 # fretboard.addDropChord("c","maj7","Drop2","1","5")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "maj7","Drop2", "2","5")
@@ -95,9 +95,9 @@ Drop2 String5
 # fretboard.addDropChord("c", "dim7","Drop2", "4","5")
 
 
-'''
+"""
 Drop2 String4
-'''
+"""
 # fretboard.addDropChord("c","maj7","Drop2","1","4")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "maj7","Drop2", "2","4")
@@ -138,9 +138,9 @@ Drop2 String4
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "dim7","Drop2", "4","4")
 
-'''
+"""
 Drop3 String6
-'''
+"""
 # fretboard.addDropChord("c","maj7","Drop3","1","6")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "maj7","Drop3", "2","6")
@@ -180,9 +180,9 @@ Drop3 String6
 # fretboard.addDropChord("c", "dim7","Drop3", "3","6")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "dim7","Drop3", "4","6")
-'''
+"""
 Drop3 String5
-'''
+"""
 # fretboard.addDropChord("c","maj7","Drop3","1","5")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "maj7","Drop3", "2","5")

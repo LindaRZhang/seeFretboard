@@ -40,7 +40,7 @@
 <span class="kn">import</span> <span class="nn">glob</span>
 
 <div class="viewcode-block" id="VideoManager"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager">[docs]</a><span class="k">class</span> <span class="nc">VideoManager</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The VideoManager class provides functionalities to manage video and image files. </span>
 <span class="sd">    It allows the user to save video frames as images, generate a video from saved images,</span>
 <span class="sd">    create a video with audio, and delete all saved images. It also provides options to </span>
@@ -52,7 +52,7 @@
 <span class="sd">        video (Video): The Video object.</span>
 <span class="sd">        images (Images): The Images object.</span>
 <span class="sd">        imageProgressBar (bool): Flag indicating whether to display a progress bar while generating images.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fretboard</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">imageProgressBar</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fretboard</span> <span class="o">=</span> <span class="n">fretboard</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">video</span> <span class="o">=</span> <span class="n">video</span>
@@ -60,14 +60,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">imageProgressBar</span> <span class="o">=</span> <span class="n">imageProgressBar</span>
 
 <div class="viewcode-block" id="VideoManager.saveAsVideoImages"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager.saveAsVideoImages">[docs]</a>    <span class="k">def</span> <span class="nf">saveAsVideoImages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves video frames as images.</span>
 
 <span class="sd">        This method iterates over the frames of the video and saves each frame as an image.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            FileNotFoundError: If the output directory specified in the Images object does not exist.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">oriImgName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">name</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">oriImgName</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">getFramesItems</span><span class="p">():</span>
@@ -79,7 +79,7 @@
 
     <span class="c1"># </span>
 <div class="viewcode-block" id="VideoManager.saveAsVideoImagesNoSeconds"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager.saveAsVideoImagesNoSeconds">[docs]</a>    <span class="k">def</span> <span class="nf">saveAsVideoImagesNoSeconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves video frames as images when the number of seconds is not defined.</span>
 <span class="sd">        For guitarset and other data where number of second is not defined</span>
 
@@ -88,7 +88,7 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            FileNotFoundError: If the output directory specified in the Images object does not exist.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">oriImgName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">name</span>
         <span class="n">images</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IMAGES Generateing&quot;</span><span class="p">)</span>
@@ -109,7 +109,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IMAGES Generate done&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VideoManager.saveAsVideo"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager.saveAsVideo">[docs]</a>    <span class="k">def</span> <span class="nf">saveAsVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a video from saved images.</span>
 
 <span class="sd">        This method reads the saved images, orders them based on their filenames, and</span>
@@ -117,7 +117,7 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            FileNotFoundError: If the output directory specified in the Images object does not exist.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">images</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">outputPathName</span><span class="p">)</span>
         <span class="n">images</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="p">[</span>
                         <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(\d+)&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)])</span>
@@ -139,14 +139,14 @@
               <span class="s2">&quot; saved at &quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">getVideoPathName</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="VideoManager.createVideoWithAudio"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager.createVideoWithAudio">[docs]</a>    <span class="k">def</span> <span class="nf">createVideoWithAudio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a video with audio.</span>
 
 <span class="sd">        This method combines the video file and audio file into a single video file with audio.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            FileNotFoundError: If the video or audio files specified in the Video object do not exist.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saveAsVideo</span><span class="p">()</span>
 
         <span class="n">videoPath</span> <span class="o">=</span> <span class="n">ffmpeg</span><span class="o">.</span><span class="n">input</span><span class="p">(</span>
@@ -159,7 +159,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;video save with audio done&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VideoManager.saveVideoWithAudio"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager.saveVideoWithAudio">[docs]</a>    <span class="k">def</span> <span class="nf">saveVideoWithAudio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves a video with audio.</span>
 
 <span class="sd">        This method combines the video file and audio file into a single video file with audio</span>
@@ -167,7 +167,7 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            FileNotFoundError: If the video or audio files specified in the Video object do not exist.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">videoPath</span> <span class="o">=</span> <span class="n">ffmpeg</span><span class="o">.</span><span class="n">input</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">getVideoPathWithName</span><span class="p">()</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">getFileExtension</span><span class="p">())</span>
         <span class="n">audioPath</span> <span class="o">=</span> <span class="n">ffmpeg</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">getAudioPathWithName</span><span class="p">())</span>
@@ -178,7 +178,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;video save with audio done&quot;</span><span class="p">)</span></div>
     
 <div class="viewcode-block" id="VideoManager.saveImage"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager.saveImage">[docs]</a>    <span class="k">def</span> <span class="nf">saveImage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves the fretboard visualization as an image.</span>
 
 <span class="sd">        This method saves the current state of the fretboard visualization as an image file.</span>
@@ -187,7 +187,7 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            FileNotFoundError: If the output directory specified in the Images object does not exist.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.png&quot;</span><span class="p">):</span>
             <span class="n">export_png</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fretboard</span><span class="o">.</span><span class="n">getFretboardFig</span><span class="p">()</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">fileName</span><span class="p">)</span>
 
@@ -196,14 +196,14 @@
 
 
 <div class="viewcode-block" id="VideoManager.deleteAllImages"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.VideoManager.VideoManager.deleteAllImages">[docs]</a>    <span class="k">def</span> <span class="nf">deleteAllImages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes all saved images.</span>
 
 <span class="sd">        This method deletes all image files in the output directory specified in the Images object.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            FileNotFoundError: If the output directory specified in the Images object does not exist.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">outputPathName</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -212,19 +212,19 @@
         
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">imageProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        bool: Flag indicating whether to display a progress bar while generating images.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imageProgressBar</span>
 
     <span class="nd">@imageProgressBar</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">imageProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imageProgressBar</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Setter for the imageProgressBar property.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            imageProgressBar (bool): Flag indicating whether to display a progress bar while generating images.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_imageProgressBar</span> <span class="o">=</span> <span class="n">imageProgressBar</span></div>
 </pre></div>
 
@@ -244,9 +244,15 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
 </ul>
 
 <div class="relations">

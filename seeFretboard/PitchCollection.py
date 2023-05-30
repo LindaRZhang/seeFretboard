@@ -250,3 +250,11 @@ class PitchCollection():
         """
         return self.getFretsAt(self.pitchesIndex), self.getStringsAt(self.pitchesIndex), self.getArrayTypeNowAt(self.pitchesIndex)
 
+    def setAllEmpty(self):
+        self.pitchesNames = []
+        self.pitchesWithOctave = []
+        self.pitchesScaleDegrees = []
+        self.pitchesEmpty = []
+        self.frets = []
+        self.strings = []
+        self.arrayTypeNow = []

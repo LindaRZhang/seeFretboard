@@ -3,7 +3,7 @@ from .Frame import Frame
 from seeFretboard.Utilities.Constants import BASE_PATH, FRAMERATE
 
 class Video(Frame):
-    '''
+    """
     The Video class is designed to represent a video and inherits from the Frame class. 
     It stores information about the video such as the start and end times, current frame,
     frame step, video name, file extension, codec, and audio name. The main functionalities
@@ -27,7 +27,7 @@ class Video(Frame):
         videoWAudioPath (str): The path to the video with audio directory.
         videoWAudioName (str): The name of the video with audio.
         videoWAudioPathWithName (str): The path to the video with audio file.
-    '''
+    """
     def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate=FRAMERATE, videoName="defaultVid", fileExtension=".mp4", codec="mp4v", videoWAudioName="defaultVideoWAudio"):
         super().__init__(frameRate)
 

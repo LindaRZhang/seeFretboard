@@ -101,8 +101,7 @@ $ python setup.py develop</p>
 <p>Now you can make your changes locally.</p>
 <p>5. When you’re done making changes, check that your changes pass the
 tests, including testing other Python versions with tox:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest
-    $ python setup.py test
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py test
 </pre></div>
 </div>
 <p>To get flake8 and tox, just pip install them into your virtualenv.</p>
@@ -127,6 +126,14 @@ your new functionality into a function with a docstring, and add the
 feature to the list in README.rst.</p></li>
 </ol>
 </section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this heading">¶</a></h2>
+<p>If your contribution involves a visual component and Selenium tests have not been implemented yet, we would appreciate your help in adding them. Suggested is Selenium test.</p>
+<p>For now run the following and make sure everything shows up correctly as well as the files in Examples are able to run</p>
+<blockquote>
+<div><p>$ python Examples/RunAllExamples.py</p>
+</div></blockquote>
+</section>
 </section>
 
 
@@ -149,8 +156,8 @@ feature to the list in README.rst.</p></li>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="setupInstallation.html">Setting up seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html#designs">Designs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
@@ -164,6 +171,7 @@ feature to the list in README.rst.</p></li>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#get-started">Get Started!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
