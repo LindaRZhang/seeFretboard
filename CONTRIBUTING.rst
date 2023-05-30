@@ -76,7 +76,6 @@ Now you can make your changes locally.
 5. When you're done making changes, check that your changes pass the
 tests, including testing other Python versions with tox::
 
-    $ pytest
 	$ python setup.py test
 
 To get flake8 and tox, just pip install them into your virtualenv. 
@@ -98,3 +97,11 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
+
+Tests
+------
+If your contribution involves a visual component and Selenium tests have not been implemented yet, we would appreciate your help in adding them. Suggested is Selenium test.
+
+For now run the following and make sure everything shows up correctly as well as the files in Examples are able to run
+
+    $ python Examples/RunAllExamples.py
