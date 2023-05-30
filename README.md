@@ -1,9 +1,8 @@
+<p align="center">
+  <img width="460" height="400" src="logo.png">
+</p>
 
 # seeFretboard
-
-<p align="center">
-  <img width="460" height="300" src="logo.png">
-</p>
 
 Unlocking Boundless Possibilities for Music Education, Research, and Creative Exploration. The seeFretboard Python library allows users to visualize guitar fretboards. Providing foundational music theory displays with intervals, chords, arpeggios, and scales. It also has features such as dynamic video creation of the visualized fretboards with integration of audio.
 
@@ -28,7 +27,16 @@ Install with Pip
 ```
 ## Features
 
-- 
+- Customization of styles, designs, and other visual elements
+- Display horizontal and vertical fretboards
+- Display intervals, arpeggios, scales, custom arpeggios, and custom scales
+- Display drop2, drop3, and CAGED chord shape and custom arpeggio and scales
+- Create dynamic videos of visualized fretboard
+- Generate MIDI audio
+- Combine videos with audio (mp3, wav, MIDI, etc) to create synchronized multimedia content
+- Support for prediction vs ground truth, beneficial for music information retrieval researchers working on guitar transcription
+- Suitable for integration into websites, applications, or standalone usage.
+- Potential for future developments, such as templates, deliberate practice tools, repetition, reflection exercises, quizzes, textbooks, games, and advanced techniques for fretboard visualization, manipulation, learnings, and AI/ML assistance.
 
 
 ## Documentations
@@ -40,7 +48,7 @@ Install with Pip
 
 Contributions are always welcome! We appreciate it! 
 
-See [CONTRIBUTING.RST](CONTRIBUTING.RST) for ways to get started.
+See [CONTRIBUTING.rst](CONTRIBUTING.rst) for ways to get started.
 
 
 ## Credits
@@ -49,4 +57,9 @@ See [CONTRIBUTING.RST](CONTRIBUTING.RST) for ways to get started.
 ## Creator
 This project was created by Linda Rong Zhang.
 - [@LindaRZhang](https://github.com/LindaRZhang) 
+
+## History
+[HISTORY.rst](HISTORY.rst)
+
+
 
