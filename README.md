@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="460" height="400" src="logo.png">
+  <img width="500" height="400" src="logo.png">
 </p>
 
 # seeFretboard
@@ -30,7 +30,7 @@ Install with Pip
 - Customization of styles, designs, and other visual elements
 - Display horizontal and vertical fretboards
 - Display intervals, arpeggios, scales, custom arpeggios, and custom scales
-- Display drop2, drop3, and CAGED chord shape and custom arpeggio and scales
+- Display drop2, drop3, and CAGED chord shape and custom chords
 - Create dynamic videos of visualized fretboard
 - Generate MIDI audio
 - Combine videos with audio (mp3, wav, MIDI, etc) to create synchronized multimedia content
@@ -59,7 +59,7 @@ This project was created by Linda Rong Zhang.
 - [@LindaRZhang](https://github.com/LindaRZhang) 
 
 ## History
-[HISTORY.rst](HISTORY.rst)
+[HISTORY](HISTORY.rst)
 
 
 
