@@ -31,7 +31,7 @@ class SeeFretboard():
     #fret 0 include open strings
     def __init__(self, orientation = "h",fretFrom=1, fretTo=12, string=6, showTuning=True, **kwargs):
         # styleing/theme
-        self.theme = FretboardTheme(theme="green", orientation=orientation, 
+        self.theme = FretboardTheme(theme="", orientation=orientation, 
                                     fretFrom =fretFrom, fretTo=fretTo, string=string,
                                     showTuning=showTuning, **kwargs)
 
