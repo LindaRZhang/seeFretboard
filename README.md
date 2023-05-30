@@ -39,7 +39,7 @@ pip install seeFretboard
 - Combine videos with audio (mp3, wav, MIDI, etc) to create synchronized multimedia content
 - Support for prediction vs ground truth, beneficial for music information retrieval researchers working on guitar transcription
 - Suitable for integration into websites, applications, or standalone usage.
-- Potential for future developments, such as templates, deliberate practice tools, repetition, reflection exercises, quizzes, textbooks, games, and advanced techniques for fretboard visualization, manipulation, learnings, and AI/ML assistance.
+- Potential for future developments, such as templates, deliberate practice tools, voicings, repetition, reflection exercises, quizzes, textbooks, games, and advanced techniques for fretboard visualization, manipulation, learnings, and AI/ML assistance.
 
 
 ## Documentations
