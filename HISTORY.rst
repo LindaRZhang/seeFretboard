@@ -10,4 +10,4 @@ History
 0.0.0 - 0.0.9 (2023-3-25)
 ------------------
 
-* First Release on PyPI and testing installation of Packaged.
+* First Release on PyPI and testing installation of Packages.
