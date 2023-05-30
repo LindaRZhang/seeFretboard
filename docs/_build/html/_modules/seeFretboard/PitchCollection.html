@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>seeFretboard.PitchCollection &#8212; seeFretboard  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for seeFretboard.PitchCollection</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="PitchCollection"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection">[docs]</a><span></span><span class="k">class</span> <span class="nc">PitchCollection</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitchesType</span> <span class="o">=</span> <span class="s2">&quot;pitchesNames&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class representing a collection of pitches musically.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            pitchesType (str): The type of pitches to store.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            pitchesNames (list): A list of pitch names.</span>
+<span class="sd">            pitchesWithOctave (list): A list of pitches with octave.</span>
+<span class="sd">            pitchesScaleDegrees (list): A list of pitch scale degrees.</span>
+<span class="sd">            pitchesType (str): The type of pitches being stored.</span>
+<span class="sd">            pitchesIndex (int): The current index for accessing pitches.</span>
+<span class="sd">            frets (list): A list of fret values that correspond to the pitches.</span>
+<span class="sd">            strings (list): A list of string values that correspond to the pitches.</span>
+<span class="sd">            arrayTypeNow (list): The current array type based on pitchesType.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">=</span> <span class="n">pitchesType</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Getter methods for the lengths of pitch lists</span>
+
+<div class="viewcode-block" id="PitchCollection.getPitchesNamesLength"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchesNamesLength">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchesNamesLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the length of pitchesNames list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getPitchesWithOctaveLength"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchesWithOctaveLength">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchesWithOctaveLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the length of pitchesWithOctave list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getPitchesScaleDegreesLength"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchesScaleDegreesLength">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchesScaleDegreesLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the length of pitchesScaleDegrees list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getArrayTypeNowLength"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getArrayTypeNowLength">[docs]</a>    <span class="k">def</span> <span class="nf">getArrayTypeNowLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the length of arrayTypeNow list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getFretsLength"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getFretsLength">[docs]</a>    <span class="k">def</span> <span class="nf">getFretsLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the length of frets list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frets</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getStringsLength"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getStringsLength">[docs]</a>    <span class="k">def</span> <span class="nf">getStringsLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the length of strings list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strings</span><span class="p">)</span></div>
+
+    <span class="c1"># Getter and setter methods for pitch lists</span>
+<div class="viewcode-block" id="PitchCollection.getPitchesNames"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchesNames">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchesNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the pitchesNames list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.appendPitchesName"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.appendPitchesName">[docs]</a>    <span class="k">def</span> <span class="nf">appendPitchesName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Appends a value to the pitchesNames list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.setPitchesNames"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setPitchesNames">[docs]</a>    <span class="k">def</span> <span class="nf">setPitchesNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the pitchesNames list to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="PitchCollection.emptyPitchesNames"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyPitchesNames">[docs]</a>    <span class="k">def</span> <span class="nf">emptyPitchesNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the pitchesNames list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span> <span class="o">=</span> <span class="p">[]</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.getPitchWithOctave"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchWithOctave">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchWithOctave</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the pitchesWithOctave list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.appendPitchWithOctave"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.appendPitchWithOctave">[docs]</a>    <span class="k">def</span> <span class="nf">appendPitchWithOctave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Appends a value to the pitchesWithOctave list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.setPitchWithOctave"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setPitchWithOctave">[docs]</a>    <span class="k">def</span> <span class="nf">setPitchWithOctave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the pitchesWithOctave list to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span> <span class="o">=</span> <span class="n">value</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.emptyPitchesWithOctaves"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyPitchesWithOctaves">[docs]</a>    <span class="k">def</span> <span class="nf">emptyPitchesWithOctaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the pitchesWithOctave list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitcheshWithOctave</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getPitchesScaleDegrees"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchesScaleDegrees">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchesScaleDegrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the pitchesScaleDegrees list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.appendPitchesScaleDegree"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.appendPitchesScaleDegree">[docs]</a>    <span class="k">def</span> <span class="nf">appendPitchesScaleDegree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Appends a value to the pitchesScaleDegrees list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.setPitchesScaleDegrees"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setPitchesScaleDegrees">[docs]</a>    <span class="k">def</span> <span class="nf">setPitchesScaleDegrees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the pitchesScaleDegrees list to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span> <span class="o">=</span> <span class="n">value</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.emptyPitchesScaleDegree"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyPitchesScaleDegree">[docs]</a>    <span class="k">def</span> <span class="nf">emptyPitchesScaleDegree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the pitchesScaleDegrees list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getPitchesType"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchesType">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchesType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current pitchesType.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.setPitchesType"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setPitchesType">[docs]</a>    <span class="k">def</span> <span class="nf">setPitchesType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the pitchesType to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getArrayTypeNow"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getArrayTypeNow">[docs]</a>    <span class="k">def</span> <span class="nf">getArrayTypeNow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current arrayType based on the pitchesType.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The current arrayTypeNow list based on the pitchesType.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">==</span> <span class="s2">&quot;pitchesNames&quot;</span><span class="p">:</span>
+            <span class="n">pitchValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesNames</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">==</span> <span class="s2">&quot;pitchesWithOctave&quot;</span><span class="p">:</span>
+            <span class="n">pitchValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesWithOctave</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesType</span> <span class="o">==</span> <span class="s2">&quot;pitchesScaleDegrees&quot;</span><span class="p">:</span>
+            <span class="n">pitchValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesScaleDegrees</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span> <span class="o">=</span> <span class="n">pitchValue</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.getArrayTypeNowAt"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getArrayTypeNowAt">[docs]</a>    <span class="k">def</span> <span class="nf">getArrayTypeNowAt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value at the specified index of the arrayTypeNow list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): The index of the value to retrieve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The value at the specified index of the arrayTypeNow list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getArrayTypeNow</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.setArrayTypeNow"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setArrayTypeNow">[docs]</a>    <span class="k">def</span> <span class="nf">setArrayTypeNow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the arrayTypeNow to the current array type.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.emptyArrayTypeNow"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyArrayTypeNow">[docs]</a>    <span class="k">def</span> <span class="nf">emptyArrayTypeNow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the arrayTypeNow list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrayTypeNow</span> <span class="o">=</span> <span class="p">[]</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.getCurrentPitchesIndex"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getCurrentPitchesIndex">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentPitchesIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current pitchesIndex.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.getPitchIndex"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getPitchIndex">[docs]</a>    <span class="k">def</span> <span class="nf">getPitchIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the index of the value at arrayTypeNow List.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getArrayTypeNow</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.addPitchesIndex"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.addPitchesIndex">[docs]</a>    <span class="k">def</span> <span class="nf">addPitchesIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds the specified amount to the pitchesIndex.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span> <span class="o">+=</span> <span class="n">amount</span></div>
+
+<div class="viewcode-block" id="PitchCollection.setPitchesIndex"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setPitchesIndex">[docs]</a>    <span class="k">def</span> <span class="nf">setPitchesIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the pitchesIndex to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span> <span class="o">=</span> <span class="n">value</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.getFrets"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getFrets">[docs]</a>    <span class="k">def</span> <span class="nf">getFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the frets list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frets</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getFretsAt"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getFretsAt">[docs]</a>    <span class="k">def</span> <span class="nf">getFretsAt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value at the specified index of the frets list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): The index of the value to retrieve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The value at the specified index of the frets list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PitchCollection.appendFrets"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.appendFrets">[docs]</a>    <span class="k">def</span> <span class="nf">appendFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Appends a value to the frets list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.setFrets"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setFrets">[docs]</a>    <span class="k">def</span> <span class="nf">setFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the frets list to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frets</span> <span class="o">=</span> <span class="n">value</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.emptyFrets"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyFrets">[docs]</a>    <span class="k">def</span> <span class="nf">emptyFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the frets list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frets</span> <span class="o">=</span> <span class="p">[]</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.emptyStrings"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.emptyStrings">[docs]</a>    <span class="k">def</span> <span class="nf">emptyStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empties the strings list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getStrings"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getStrings">[docs]</a>    <span class="k">def</span> <span class="nf">getStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the strings list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">strings</span></div>
+    
+<div class="viewcode-block" id="PitchCollection.getStringsAt"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getStringsAt">[docs]</a>    <span class="k">def</span> <span class="nf">getStringsAt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value at the specified index of the strings list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): The index of the value to retrieve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The value at the specified index of the strings list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">strings</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PitchCollection.appendStrings"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.appendStrings">[docs]</a>    <span class="k">def</span> <span class="nf">appendStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Appends a value to the strings list.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PitchCollection.setStrings"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.setStrings">[docs]</a>    <span class="k">def</span> <span class="nf">setStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the strings list to the given value.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strings</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="PitchCollection.getFretStringCurrentPitch"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.PitchCollection.PitchCollection.getFretStringCurrentPitch">[docs]</a>    <span class="k">def</span> <span class="nf">getFretStringCurrentPitch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current fret, string, and pitch values based on the pitchesIndex.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing the current fret, string, and pitch values.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFretsAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getStringsAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getArrayTypeNowAt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitchesIndex</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">seeFretboard</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">seeFretboard</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Linda Rong Zhang.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>seeFretboard.Videos.Frame &#8212; seeFretboard  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for seeFretboard.Videos.Frame</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Frame"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Frame.Frame">[docs]</a><span></span><span class="k">class</span> <span class="nc">Frame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Frame class is designed to represent a frame in a video. </span>
+<span class="sd">    It stores the frame rate and frame period, which are important parameters</span>
+<span class="sd">    for determining the timing and smoothness of the animation. </span>
+<span class="sd">    The main functionalities of the class are to set and get the frame rate </span>
+<span class="sd">    and frame period, which can be used to control the speed and duration of the video.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        frameRate (int or float): The frame rate of the frame.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        frameRate (int or float): The frame rate of the frame.</span>
+<span class="sd">        framePeriod (float): The time duration of each frame in seconds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameRate</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a Frame object with the specified frame rate.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frameRate (int or float): The frame rate of the frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span> <span class="o">=</span> <span class="n">frameRate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">framePeriod</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span>
+
+<div class="viewcode-block" id="Frame.getFrameRate"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Frame.Frame.getFrameRate">[docs]</a>    <span class="k">def</span> <span class="nf">getFrameRate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the frame rate of the frame.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int or float: The frame rate of the frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span></div>
+
+<div class="viewcode-block" id="Frame.setFrameRate"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Frame.Frame.setFrameRate">[docs]</a>    <span class="k">def</span> <span class="nf">setFrameRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fr</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the frame rate of the frame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fr (int or float): The new frame rate for the frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span> <span class="o">=</span> <span class="n">fr</span></div>
+
+<div class="viewcode-block" id="Frame.getFramePeriod"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Frame.Frame.getFramePeriod">[docs]</a>    <span class="k">def</span> <span class="nf">getFramePeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the time duration of each frame.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The time duration of each frame in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span></div>
+
+<div class="viewcode-block" id="Frame.setFramePeriod"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Frame.Frame.setFramePeriod">[docs]</a>    <span class="k">def</span> <span class="nf">setFramePeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fp</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the time duration of each frame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fp (float): The new frame period for the frame in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">framePeriod</span> <span class="o">=</span> <span class="n">fp</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">seeFretboard</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Linda Rong Zhang.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

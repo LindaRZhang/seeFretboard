@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>seeFretboard.Designs.FretboardStyle &#8212; seeFretboard  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for seeFretboard.Designs.FretboardStyle</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">seeFretboard.Utilities.Constants</span> <span class="kn">import</span> <span class="n">STANDARD_TUNING</span><span class="p">,</span> <span class="n">STANDARD_TUNING_MIDI</span>
+<span class="kn">from</span> <span class="nn">seeFretboard.Designs.CirlceNote</span> <span class="kn">import</span> <span class="n">CircleNote</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">These classes can be used to configure and customize the settings of a guitar fretboard for various purposes.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="FretboardTheme"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardTheme">[docs]</a><span class="k">class</span> <span class="nc">FretboardTheme</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a theme for the fretboard visualization.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a FretboardTheme object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            theme (str): The theme to apply (&quot;blue, dark, wood, or green&quot;). If None, a custom theme (light basically) is applied.</span>
+<span class="sd">            **kwargs: Additional keyword arguments for custom theme settings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">theme</span> <span class="o">=</span> <span class="n">theme</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">customTheme</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">theme</span> <span class="o">==</span> <span class="s2">&quot;blue&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">BlueTheme</span><span class="p">()</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">theme</span><span class="o">==</span> <span class="s2">&quot;dark&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">darkTheme</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">theme</span> <span class="o">==</span> <span class="s2">&quot;wood&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">woodTheme</span><span class="p">()</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">theme</span> <span class="o">==</span> <span class="s2">&quot;green&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">greenTheme</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FretboardTheme.customTheme"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardTheme.customTheme">[docs]</a>    <span class="k">def</span> <span class="nf">customTheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies a custom theme to the FretboardTheme object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            **kwargs: Keyword arguments for custom theme settings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">orientation</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;orientation&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">orientation</span><span class="p">,</span> <span class="n">FretboardOrientation</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">orientation</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">FretboardOrientation</span><span class="p">(</span><span class="n">orientation</span><span class="p">)</span>
+
+        <span class="n">tuning</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tuning&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tuning</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tuning</span><span class="p">,</span> <span class="n">Tuning</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid tuning input. Expected instance of Tuning.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tuning</span><span class="p">,</span> <span class="n">Tuning</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tuning</span> <span class="o">=</span> <span class="n">tuning</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tuning</span> <span class="o">=</span> <span class="n">Tuning</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            
+        <span class="n">fretboardRange</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretboardRange&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fretboardRange</span><span class="p">,</span> <span class="n">FretboardRange</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fretboardRange</span> <span class="o">=</span> <span class="n">fretboardRange</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fretboardRange</span> <span class="o">=</span> <span class="n">FretboardRange</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretFrom&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                                                    <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretTo&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+                                                     <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;numOfString&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+        
+        <span class="n">fretboardDesign</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretboardDesign&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fretboardDesign</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fretboardDesign</span><span class="p">,</span> <span class="n">FretboardDesign</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid fretboardDesign input. Expected instance of FretboardDesign.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fretboardDesign</span><span class="p">,</span> <span class="n">FretboardDesign</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span> <span class="o">=</span> <span class="n">fretboardDesign</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span> <span class="o">=</span> <span class="n">FretboardDesign</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="FretboardTheme.BlueTheme"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardTheme.BlueTheme">[docs]</a>    <span class="k">def</span> <span class="nf">BlueTheme</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">stringsColor</span> <span class="o">=</span> <span class="s2">&quot;#5188D4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretColor</span> <span class="o">=</span> <span class="s2">&quot;#5188D4&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretboardMarkerColor</span> <span class="o">=</span> <span class="s2">&quot;#F2F9FC&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="s2">&quot;#ADC7EC&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">setNoteType</span><span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">tuningLabelColor</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretLabelColor</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span></div>
+        
+
+<div class="viewcode-block" id="FretboardTheme.darkTheme"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardTheme.darkTheme">[docs]</a>    <span class="k">def</span> <span class="nf">darkTheme</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">stringsColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretboardMarkerColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="s2">&quot;#001f3f&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">setNoteType</span><span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">tuningLabelColor</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretLabelColor</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span></div>
+
+<div class="viewcode-block" id="FretboardTheme.woodTheme"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardTheme.woodTheme">[docs]</a>    <span class="k">def</span> <span class="nf">woodTheme</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">stringsColor</span> <span class="o">=</span> <span class="s2">&quot;#DFFFED&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretColor</span> <span class="o">=</span> <span class="s2">&quot;#DFFFED&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretboardMarkerColor</span> <span class="o">=</span> <span class="s2">&quot;#223447&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="s2">&quot;#63462D&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">setNoteType</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">tuningLabelColor</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretLabelColor</span> <span class="o">=</span> <span class="s2">&quot;white&quot;</span></div>
+
+<div class="viewcode-block" id="FretboardTheme.greenTheme"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardTheme.greenTheme">[docs]</a>    <span class="k">def</span> <span class="nf">greenTheme</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">stringsColor</span> <span class="o">=</span> <span class="s2">&quot;#001f3f&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretColor</span> <span class="o">=</span> <span class="s2">&quot;#001f3f&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">fretboardMarkerColor</span> <span class="o">=</span> <span class="s2">&quot;#1F2421&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="s2">&quot;#DFFFED&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">setNoteType</span><span class="p">(</span><span class="s2">&quot;darkBlue&quot;</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="FretboardOrientation"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardOrientation">[docs]</a><span class="k">class</span> <span class="nc">FretboardOrientation</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the orientation (horizontal or vertical) of the fretboard.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a FretboardOrientation object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            orientation (str): The orientation of the fretboard (&quot;horizontal&quot; or &quot;vertical&quot;).</span>
+<span class="sd">                               Defaults to &quot;horizontal&quot; if not specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">orientation</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the orientation of the fretboard.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The orientation of the fretboard.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orientation</span>
+    
+    <span class="nd">@orientation</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the orientation of the fretboard.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            orientation (str): The orientation of the fretboard.</span>
+<span class="sd">                               Must be &quot;horizontal&quot; (&quot;h&quot;) or &quot;vertical&quot; (&quot;v&quot;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">orientation</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">orientation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid orientation value. Must be &#39;horizontal&#39;, &#39;h&#39;, &#39;vertical&#39;, or &#39;v&#39;.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orientation</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Tuning"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.Tuning">[docs]</a><span class="k">class</span> <span class="nc">Tuning</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the tuning of the strings on the fretboard.</span>
+<span class="sd">       &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a Tuning object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            **kwargs: Keyword arguments for tuning settings.</span>
+<span class="sd">            letterTuning (list) A list of letter based tuning</span>
+<span class="sd">            midiTuning (list) A list of midi based tuning</span>
+<span class="sd">            numOfString (int) Number of Strings on Guitar</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">letterTuning</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;letterTuning&quot;</span><span class="p">,</span> <span class="n">STANDARD_TUNING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">midiTuning</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;midiTuning&quot;</span><span class="p">,</span> <span class="n">STANDARD_TUNING_MIDI</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numOfStrings</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;numOfStrings&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">letterTuning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the letter-based tuning of the strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The letter-based tuning of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_letterTuning</span>
+    
+    <span class="nd">@letterTuning</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">letterTuning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the letter-based tuning of the strings.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (list): The letter-based tuning of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_letterTuning</span> <span class="o">=</span> <span class="n">value</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">midiTuning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the MIDI note-based tuning of the strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The MIDI note-based tuning of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_midiTuning</span>
+    
+    <span class="nd">@midiTuning</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">midiTuning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the MIDI note-based tuning of the strings.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (list): The MIDI note-based tuning of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_midiTuning</span> <span class="o">=</span> <span class="n">value</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">numOfStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of strings on the fretboard.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of strings on the fretboard.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numOfStrings</span>
+    
+    <span class="nd">@numOfStrings</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">numOfStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the number of strings on the fretboard.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (int): The number of strings on the fretboard.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numOfStrings</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="FretboardRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardRange">[docs]</a><span class="k">class</span> <span class="nc">FretboardRange</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the range of frets and strings on the fretboard.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fretFrom</span><span class="p">,</span> <span class="n">fretTo</span><span class="p">,</span> <span class="n">numOfString</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a FretboardRange object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            fretFrom (int): The starting fret number.</span>
+<span class="sd">            fretTo (int): The ending fret number.</span>
+<span class="sd">            numOfString (int): The number of strings on the fretboard.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fretFrom</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;fretFrom must be a positive integer.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fretTo</span> <span class="o">&lt;=</span> <span class="n">fretFrom</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;fretTo must be greater than fretFrom.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numOfString</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;numOfString must be a positive integer.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretFrom</span> <span class="o">=</span> <span class="n">fretFrom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretTo</span> <span class="o">=</span> <span class="n">fretTo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numOfFrets</span> <span class="o">=</span> <span class="n">fretTo</span> <span class="o">-</span> <span class="n">fretFrom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numOfStrings</span> <span class="o">=</span> <span class="n">numOfString</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretFrom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the starting fret number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The starting fret number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretFrom</span>
+
+    <span class="nd">@fretFrom</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretFrom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newFretFrom</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the starting fret number.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            newFretFrom (int): The new starting fret number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretFrom</span> <span class="o">=</span> <span class="n">newFretFrom</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretTo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the ending fret number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The ending fret number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretTo</span>
+
+    <span class="nd">@fretTo</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretTo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newFretTo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the ending fret number.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            newFretTo (int): The new ending fret number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretTo</span> <span class="o">=</span> <span class="n">newFretTo</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">numOfFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of frets in the range.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of frets in the range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fretTo</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">fretFrom</span><span class="p">)</span>
+
+    <span class="nd">@numOfFrets</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">numOfFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numOfFrets</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the number of frets in the range.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            numOfFrets (int): The new number of frets in the range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numOfFrets</span> <span class="o">=</span> <span class="n">numOfFrets</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">numOfStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of strings on the fretboard.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of strings on the fretboard.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numOfStrings</span>
+
+    <span class="nd">@numOfStrings</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">numOfStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numOfStrings</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the number of strings on the fretboard.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            numOfStrings (int): The new number of strings on the fretboard.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numOfStrings</span> <span class="o">=</span> <span class="n">numOfStrings</span></div>
+
+<div class="viewcode-block" id="FretboardDesign"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardDesign">[docs]</a><span class="k">class</span> <span class="nc">FretboardDesign</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the design settings of the fretboard.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a FretboardDesign object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            **kwargs: Keyword arguments for design settings.</span>
+<span class="sd">            showTuning (bool): Determines whether the tuning of the strings is displayed on the fretboard. Default is True.</span>
+<span class="sd">            showFretboardNumber (bool): Determines whether the fretboard number is displayed on the fretboard. Default is True.</span>
+<span class="sd">            toolBar (str): Determines whether a toolbar is displayed on the fretboard. &quot;right&quot; is default and means display on right side. None means don&#39;t display. Other Options: &#39;above&#39;, &#39;below&#39;, &#39;left&#39;</span>
+<span class="sd">            distanceBetweenFrets (int): The distance between two consecutive frets on the fretboard. Default is 5.</span>
+<span class="sd">            distanceBetweenStrings (int): The distance between two consecutive strings on the fretboard. Default is 2.</span>
+<span class="sd">            fretColor (str): The color of the frets on the fretboard. Default is &quot;black&quot;.</span>
+<span class="sd">            fretThinkness (int): The thickness of the fret lines on the fretboard. Default is 1.</span>
+<span class="sd">            stringsColor (str): The color of the strings on the fretboard. Default is &quot;black&quot;.</span>
+<span class="sd">            stringThinkness (float): The thickness of the string lines on the fretboard. Default is 1.5.</span>
+<span class="sd">            fretOpacity (float): The opacity of the frets on the fretboard. Default is 0.3.</span>
+<span class="sd">            stringsOpacity (float): The opacity of the strings on the fretboard. Default is 1.0.</span>
+<span class="sd">            backgroundColor (str): The background color of the fretboard. Default is &quot;white&quot;.</span>
+<span class="sd">            fretboardMarkerColor (str): The color of the fretboard markers. Default is &quot;#DCDCDC&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># display</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showTuning</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;showTuning&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showFretboardNumber</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;showFretboardNumber&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolBar</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;toolBar&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span>
+
+        <span class="c1"># fretboard design</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distanceBetweenFrets</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;distanceBetweenFrets&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distanceBetweenStrings</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;distanceBetweenStrings&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretColor&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretThinkness</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stringThinkness&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stringsColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stringsColor&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stringThinkness</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stringThinkness&quot;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretOpacity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretOpacity&quot;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stringsOpacity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stringsOpacity&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;backgroundColor&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretboardMarkerColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretboardMarkerColor&quot;</span><span class="p">,</span> <span class="s2">&quot;#DCDCDC&quot;</span><span class="p">)</span>
+
+        <span class="c1">#notes colors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noteType</span> <span class="o">=</span> <span class="s2">&quot;prediction&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">noteTypes</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;prediction&#39;</span><span class="p">:</span> <span class="n">CircleNote</span><span class="p">(),</span> <span class="c1">#default using that</span>
+            <span class="s1">&#39;groundTruth&#39;</span><span class="p">:</span> <span class="n">CircleNote</span><span class="p">(</span><span class="n">noteFaceColor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">),</span>
+            <span class="s1">&#39;white&#39;</span><span class="p">:</span><span class="n">CircleNote</span><span class="p">(</span><span class="n">noteFaceColor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">noteTextColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">),</span>
+            <span class="s1">&#39;black&#39;</span><span class="p">:</span><span class="n">CircleNote</span><span class="p">(</span><span class="n">noteFaceColor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">noteTextColor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span><span class="n">noteEdgeColor</span><span class="o">=</span><span class="s2">&quot;#DFFFED&quot;</span><span class="p">,</span> <span class="n">noteEdgeWidth</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> 
+            <span class="s1">&#39;darkBlue&#39;</span><span class="p">:</span><span class="n">CircleNote</span><span class="p">(</span><span class="n">noteFaceColor</span><span class="o">=</span><span class="s2">&quot;#001f3f&quot;</span><span class="p">,</span> <span class="n">noteTextColor</span><span class="o">=</span><span class="s2">&quot;#DFFFED&quot;</span><span class="p">),</span>
+            <span class="s1">&#39;green&#39;</span><span class="p">:</span><span class="n">CircleNote</span><span class="p">(</span><span class="n">noteFaceColor</span><span class="o">=</span><span class="s2">&quot;#DFFFED&quot;</span><span class="p">,</span><span class="n">noteTextColor</span><span class="o">=</span><span class="s2">&quot;#001f3f&quot;</span><span class="p">,</span><span class="n">noteEdgeColor</span><span class="o">=</span><span class="s2">&quot;#white&quot;</span> <span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tuningLabelColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tuningLabelFontSize</span> <span class="o">=</span> <span class="s2">&quot;10pt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretLabelColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretLabelFontsize</span> <span class="o">=</span> <span class="s2">&quot;10pt&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">backgroundColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the background color.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The background color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backgroundColor</span>
+
+    <span class="nd">@backgroundColor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">backgroundColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the background color.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (str): The background color to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_backgroundColor</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">showTuning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the flag indicating whether to display tuning information.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if tuning information should be displayed, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showTuning</span>
+
+    <span class="nd">@showTuning</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">showTuning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the flag indicating whether to display tuning information.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (bool): True to display tuning information, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showTuning</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">showFretboardNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the flag indicating whether to display fretboard numbers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if fretboard numbers should be displayed, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showFretboardNumber</span>
+
+    <span class="nd">@showFretboardNumber</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">showFretboardNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the flag indicating whether to display fretboard numbers.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (bool): True to display fretboard numbers, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_showFretboardNumber</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">toolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the position indicating whether to display the toolbar.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: None, right, left, above, below</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_toolBar</span>
+
+    <span class="nd">@toolBar</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">toolBar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the position indicating whether to display the toolbar.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (str): None, right, left, above, below</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_toolBar</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">distanceBetweenFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the distance between frets.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The distance between frets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distanceBetweenFrets</span>
+
+    <span class="nd">@distanceBetweenFrets</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">distanceBetweenFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the distance between frets.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (float): The distance between frets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distanceBetweenFrets</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">distanceBetweenStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the distance between strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The distance between strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distanceBetweenStrings</span>
+
+    <span class="nd">@distanceBetweenStrings</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">distanceBetweenStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the distance between strings.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (float): The distance between strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distanceBetweenStrings</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the color of the frets.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The color of the frets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretColor</span>
+
+    <span class="nd">@fretColor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the color of the frets.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (str): The color of the frets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretColor</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stringsColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the color of the strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The color of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringsColor</span>
+
+    <span class="nd">@stringsColor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">stringsColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the color of the strings.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (str): The color of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stringsColor</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretOpacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the opacity of the frets.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The opacity of the frets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretOpacity</span>
+
+    <span class="nd">@fretOpacity</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretOpacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the opacity of the frets.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (float): The opacity of the frets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretOpacity</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stringsOpacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the opacity of the strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The opacity of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringsOpacity</span>
+
+    <span class="nd">@stringsOpacity</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">stringsOpacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the opacity of the strings.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (float): The opacity of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stringsOpacity</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretboardMarkerColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the color of the fretboard markers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The color of the fretboard markers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretboardMarkerColor</span>
+
+    <span class="nd">@fretboardMarkerColor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretboardMarkerColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the color of the fretboard markers.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (str): The color of the fretboard markers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretboardMarkerColor</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stringThinkness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the thickness of the strings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringThinkness</span>
+    
+    <span class="nd">@stringThinkness</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">stringThinkness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the thickness of the strings.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (float): The thickness of the strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stringThinkness</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretThinkness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the thickness of the frets.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretThinkness</span>
+
+    <span class="nd">@fretThinkness</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretThinkness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the thickness of the frets.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            value (float): The thickness of the frets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretThinkness</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="FretboardDesign.getNoteTypes"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardDesign.getNoteTypes">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteTypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the note types dictionary.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteTypes</span></div>
+    
+<div class="viewcode-block" id="FretboardDesign.getNoteType"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardDesign.getNoteType">[docs]</a>    <span class="k">def</span> <span class="nf">getNoteType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the note types associated with a specific key.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteTypes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FretboardDesign.setNoteTypes"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardDesign.setNoteTypes">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteTypes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the note types for a specific key.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noteTypes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="FretboardDesign.getCurrentNoteType"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardDesign.getCurrentNoteType">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentNoteType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current note type.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noteType</span></div>
+
+<div class="viewcode-block" id="FretboardDesign.setNoteType"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardDesign.setNoteType">[docs]</a>    <span class="k">def</span> <span class="nf">setNoteType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noteType</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the current note type.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noteType</span> <span class="o">=</span> <span class="n">noteType</span></div>
+
+<div class="viewcode-block" id="FretboardDesign.getCurrentNoteTypeValue"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardDesign.getCurrentNoteTypeValue">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentNoteTypeValue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the note types associated with the current note type.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNoteType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getCurrentNoteType</span><span class="p">())</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tuningLabelColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the color of the tuning labels.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuningLabelColor</span>
+
+    <span class="nd">@tuningLabelColor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">tuningLabelColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the color of the tuning labels.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tuningLabelColor</span> <span class="o">=</span> <span class="n">color</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tuningLabelFontSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the font size of the tuning labels.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuningLabelFontSize</span>
+
+    <span class="nd">@tuningLabelFontSize</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">tuningLabelFontSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the font size of the tuning labels.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tuningLabelFontSize</span> <span class="o">=</span> <span class="n">size</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretLabelColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the color of the fret labels.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretLabelColor</span>
+
+    <span class="nd">@fretLabelColor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretLabelColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the color of the fret labels.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretLabelColor</span> <span class="o">=</span> <span class="n">color</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fretLabelFontSize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the font size of the fret labels.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fretLabelFontSize</span>
+
+    <span class="nd">@fretLabelFontSize</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fretLabelFontSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the font size of the fret labels.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fretLabelFontSize</span> <span class="o">=</span> <span class="n">size</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">seeFretboard</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#designs">Designs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Linda Rong Zhang.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

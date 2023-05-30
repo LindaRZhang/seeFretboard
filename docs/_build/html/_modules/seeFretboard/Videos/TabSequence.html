@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>seeFretboard.Videos.TabSequence &#8212; seeFretboard  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for seeFretboard.Videos.TabSequence</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">mirdata</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">.Frame</span> <span class="kn">import</span> <span class="n">Frame</span>
+<span class="kn">from</span> <span class="nn">.VideoNote</span> <span class="kn">import</span> <span class="n">VideoNote</span>
+<span class="kn">import</span> <span class="nn">seeFretboard.Utilities.Functions</span> <span class="k">as</span> <span class="nn">Functions</span>
+<span class="kn">from</span> <span class="nn">seeFretboard.Utilities.Constants</span> <span class="kn">import</span> <span class="n">BASE_PATH</span><span class="p">,</span><span class="n">FRAMERATE</span>
+<span class="c1"># set for 6 string in standard tuning for now</span>
+
+<span class="c1"># tab consist of many frames or the frames in certain period</span>
+
+
+<div class="viewcode-block" id="TabSequence"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence">[docs]</a><span class="k">class</span> <span class="nc">TabSequence</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    The TabSequence class is responsible for generating sequences of frame from audio files. </span>
+<span class="sd">    It uses the GuitarSet dataset to extract note information from audio tracks and converts </span>
+<span class="sd">    this information into tablature frames. The class can generate frames in either fret or </span>
+<span class="sd">    MIDI format and can convert between the two. It also provides methods for adding tablature </span>
+<span class="sd">    frames and converting frames to notes with time information.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trackNum</span><span class="p">,</span> <span class="n">frameRate</span><span class="o">=</span><span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">filePath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_PATH</span><span class="p">,</span> <span class="s1">&#39;GuitarSet&#39;</span><span class="p">)):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            trackNum (int): The index of the track to load from the dataset.</span>
+<span class="sd">            frameRate (float, optional): The frame rate of the tab sequence. Default is FRAMERATE.</span>
+<span class="sd">            filePath (str, optional): The file path to the GuitarSet dataset. Default is &#39;BASE_PATH/GuitarSet&#39;.</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">frameRate</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">filePath</span> <span class="o">=</span> <span class="n">filePath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">guitarset</span> <span class="o">=</span> <span class="n">mirdata</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span>
+            <span class="s1">&#39;guitarset&#39;</span><span class="p">,</span> <span class="n">data_home</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filePath</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">guitarsetIds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guitarset</span><span class="o">.</span><span class="n">track_ids</span>  <span class="c1"># the list of guitar&#39;s track ids</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">guitarsetData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guitarset</span><span class="o">.</span><span class="n">load_tracks</span><span class="p">()</span>  <span class="c1"># Load all tracks in the dataset</span>
+        <span class="c1"># Get the first track</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">track</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guitarsetData</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">guitarsetIds</span><span class="p">[</span><span class="n">trackNum</span><span class="p">]]</span>
+        <span class="c1"># trackNum starts at 0</span>
+
+        <span class="c1"># strings and their Midi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Elow</span> <span class="o">=</span> <span class="mi">40</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="mi">45</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G</span> <span class="o">=</span> <span class="mi">55</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="mi">59</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EHigh</span> <span class="o">=</span> <span class="mi">64</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">EStringFrets</span> <span class="o">=</span> <span class="n">Functions</span><span class="o">.</span><span class="n">midiToFret</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Elow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ETimeStamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AStringFrets</span> <span class="o">=</span> <span class="n">Functions</span><span class="o">.</span><span class="n">midiToFret</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ATimeStamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DStringFrets</span> <span class="o">=</span> <span class="n">Functions</span><span class="o">.</span><span class="n">midiToFret</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DTimeStamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GStringFrets</span> <span class="o">=</span> <span class="n">Functions</span><span class="o">.</span><span class="n">midiToFret</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">G</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GTimeStamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s1">&#39;G&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BStringFrets</span> <span class="o">=</span> <span class="n">Functions</span><span class="o">.</span><span class="n">midiToFret</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BTimeStamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eStringFrets</span> <span class="o">=</span> <span class="n">Functions</span><span class="o">.</span><span class="n">midiToFret</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">EHigh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;e&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eTimeStamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span>
+
+        <span class="c1"># guitarSet is automatically in midi notes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EMidiPitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;E&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AMidiPitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DMidiPitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GMidiPitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BMidiPitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eMidiPitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s2">&quot;e&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pitches</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxEndTime</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ETimeStamp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATimeStamp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">DTimeStamp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">GTimeStamp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">BTimeStamp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">eTimeStamp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">numOfStrings</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxFrames</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxEndTime</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretFrames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">midiFrames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notesWithTimeFrames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameType</span> <span class="o">=</span> <span class="s2">&quot;fret&quot;</span>
+
+<div class="viewcode-block" id="TabSequence.getNumOfStrings"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getNumOfStrings">[docs]</a>    <span class="k">def</span> <span class="nf">getNumOfStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of strings in the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numOfStrings</span></div>
+
+<div class="viewcode-block" id="TabSequence.setNumOfStrings"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setNumOfStrings">[docs]</a>    <span class="k">def</span> <span class="nf">setNumOfStrings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strings</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the number of strings in the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            strings (int): The number of strings to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numOfStrings</span> <span class="o">=</span> <span class="n">strings</span></div>
+    
+<div class="viewcode-block" id="TabSequence.getMaxFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getMaxFrames">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the maximum number of frames in the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The maximum number of frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getMaxEndTime</span><span class="p">())</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFrameRate</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TabSequence.setMaxFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setMaxFrames">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxFrames</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the maximum number of frames in the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            maxFrames (int): The maximum number of frames to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxFrames</span> <span class="o">=</span> <span class="n">maxFrames</span></div>
+    
+<div class="viewcode-block" id="TabSequence.getMaxEndTime"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getMaxEndTime">[docs]</a>    <span class="k">def</span> <span class="nf">getMaxEndTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the maximum end time of the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The maximum end time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxEndTime</span></div>
+
+<div class="viewcode-block" id="TabSequence.setMaxEndTime"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setMaxEndTime">[docs]</a>    <span class="k">def</span> <span class="nf">setMaxEndTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxEndTime</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the maximum end time of the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            maxEndTime (float): The maximum end time to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxEndTime</span> <span class="o">=</span> <span class="n">maxEndTime</span></div>
+
+<div class="viewcode-block" id="TabSequence.getStringFrets"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getStringFrets">[docs]</a>    <span class="k">def</span> <span class="nf">getStringFrets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the fret positions of each string in the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of lists representing the fret positions of each string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">EStringFrets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">AStringFrets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DStringFrets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">GStringFrets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BStringFrets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eStringFrets</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TabSequence.getStringMidi"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getStringMidi">[docs]</a>    <span class="k">def</span> <span class="nf">getStringMidi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the MIDI pitches of each string in the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of MIDI pitches of each string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">Elow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">G</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EHigh</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="TabSequence.getMidiPitches"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getMidiPitches">[docs]</a>    <span class="k">def</span> <span class="nf">getMidiPitches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the MIDI pitches of all strings in the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of lists representing the MIDI pitches of all strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">EMidiPitches</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">AMidiPitches</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DMidiPitches</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">GMidiPitches</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BMidiPitches</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eMidiPitches</span><span class="p">]</span>
+        <span class="n">roundedArray</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">round</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">innerArr</span><span class="p">]</span> <span class="k">for</span> <span class="n">innerArr</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">roundedArray</span></div>
+
+<div class="viewcode-block" id="TabSequence.makingFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.makingFrames">[docs]</a>    <span class="k">def</span> <span class="nf">makingFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the frames for the tab sequence based on the string frets or MIDI pitches.</span>
+
+<span class="sd">        This method populates the `fretFrames` attribute if the frame type is &quot;fret&quot;,</span>
+<span class="sd">        otherwise it populates the `midiFrames` attribute.</span>
+
+<span class="sd">        Note: The method assumes that the frets or MIDI pitches have already been initialized.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frames</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">numOfStrings</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getMaxFrames</span><span class="p">())]</span>
+        <span class="n">pitchesArr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getStringFrets</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameType</span> <span class="o">==</span> <span class="s2">&quot;fret&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMidiPitches</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">pitchesArr</span><span class="p">,</span>
+                                              <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ETimeStamp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATimeStamp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DTimeStamp</span><span class="p">,</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">GTimeStamp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BTimeStamp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eTimeStamp</span><span class="p">])):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pitch</span><span class="p">)):</span>
+                <span class="n">startFrame</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span><span class="p">)</span>
+                <span class="n">endFrame</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">startFrame</span><span class="p">,</span> <span class="n">endFrame</span><span class="p">):</span>
+                    <span class="n">frames</span><span class="p">[</span><span class="n">frame</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitch</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameType</span> <span class="o">==</span> <span class="s2">&quot;fret&quot;</span><span class="p">:</span>
+            <span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">frame</span><span class="p">])</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setFretFrames</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setMidiFrames</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TabSequence.framesToNotesWithTime"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.framesToNotesWithTime">[docs]</a>    <span class="k">def</span> <span class="nf">framesToNotesWithTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the frames to video notes with time information.</span>
+
+<span class="sd">        This method populates the `notesWithTimeFrames` attribute based on the `midiFrames` attribute.</span>
+<span class="sd">        The video notes represent the notes being played along with their start and end times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pitchesPlaying</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">midiFrames</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">pitch</span> <span class="o">!=</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span>
+                    <span class="c1"># Note being played</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pitchesPlaying</span><span class="p">:</span>
+                        <span class="c1"># Note is already being played</span>
+                        <span class="c1"># not should be string index and the note pitch</span>
+                        <span class="n">pitchesPlaying</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)]</span><span class="o">.</span><span class="n">setEndTime</span><span class="p">(</span><span class="n">pitchesPlaying</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)]</span><span class="o">.</span><span class="n">getEndTime</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFramePeriod</span><span class="p">())</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Note is starting to be played</span>
+                        <span class="n">pitchesPlaying</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)]</span> <span class="o">=</span> <span class="n">VideoNote</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span><span class="n">i</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span><span class="p">,</span><span class="n">i</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span><span class="p">)</span>
+
+            <span class="c1"># Loop through notes currently being played and check if it&#39;s in current frame, if not end time</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">pitchesPlaying</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">midiFrames</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">pitch</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midiFrames</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]):</span>
+                    <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pitchesPlaying</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)])</span>
+                    <span class="k">del</span> <span class="n">pitchesPlaying</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setNotesWithTimeFrames</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TabSequence.addTab"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.addTab">[docs]</a>    <span class="k">def</span> <span class="nf">addTab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">tab</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a tab to the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            seconds (float): The duration of the tab in seconds.</span>
+<span class="sd">            tab (str or list): The tab to add. If it&#39;s a string, it represents a single frame.</span>
+<span class="sd">                               If it&#39;s a list, it represents multiple frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frames</span> <span class="o">=</span> <span class="n">seconds</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameRate</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">frames</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addFretFrame</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">getFretFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the fret frames of the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of strings representing the fret frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fretFrames</span>
+
+<div class="viewcode-block" id="TabSequence.getFramesAsString"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getFramesAsString">[docs]</a>    <span class="k">def</span> <span class="nf">getFramesAsString</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the fret frames of the tab sequence as strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of strings representing the fret frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stringFrames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">])</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fretFrames</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">stringFrames</span></div>
+
+<div class="viewcode-block" id="TabSequence.addFretFrame"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.addFretFrame">[docs]</a>    <span class="k">def</span> <span class="nf">addFretFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a fret frame to the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            frame (str or list): The fret frame to add. If it&#39;s a string, it represents a single frame.</span>
+<span class="sd">                                 If it&#39;s a list, it represents multiple frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretFrames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TabSequence.setFretFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setFretFrames">[docs]</a>    <span class="k">def</span> <span class="nf">setFretFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the fret frames of the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            frames (list): A list of strings representing the fret frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretFrames</span> <span class="o">=</span> <span class="n">frames</span></div>
+
+<div class="viewcode-block" id="TabSequence.getFretFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getFretFrames">[docs]</a>    <span class="k">def</span> <span class="nf">getFretFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the fret frames of the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of strings representing the fret frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fretFrames</span></div>
+
+<div class="viewcode-block" id="TabSequence.addMidiFrame"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.addMidiFrame">[docs]</a>    <span class="k">def</span> <span class="nf">addMidiFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a MIDI frame to the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            frame (str or list): The MIDI frame to add. If it&#39;s a string, it represents a single frame.</span>
+<span class="sd">                                 If it&#39;s a list, it represents multiple frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">midiFrames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TabSequence.setMidiFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setMidiFrames">[docs]</a>    <span class="k">def</span> <span class="nf">setMidiFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the MIDI frames of the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            frames (list): A list of strings representing the MIDI frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">midiFrames</span> <span class="o">=</span> <span class="n">frames</span></div>
+
+<div class="viewcode-block" id="TabSequence.getMidiFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getMidiFrames">[docs]</a>    <span class="k">def</span> <span class="nf">getMidiFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the MIDI frames of the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of strings representing the MIDI frames.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">midiFrames</span></div>
+
+<div class="viewcode-block" id="TabSequence.getNotesWithTimeFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getNotesWithTimeFrames">[docs]</a>    <span class="k">def</span> <span class="nf">getNotesWithTimeFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the video notes with time information of the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of VideoNote objects representing the notes being played along with their start and end times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">notesWithTimeFrames</span></div>
+
+<div class="viewcode-block" id="TabSequence.setNotesWithTimeFrames"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setNotesWithTimeFrames">[docs]</a>    <span class="k">def</span> <span class="nf">setNotesWithTimeFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the video notes with time information of the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            notes (list): A list of VideoNote objects representing the notes being played along with their start and end times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notesWithTimeFrames</span> <span class="o">=</span> <span class="n">notes</span></div>
+
+<div class="viewcode-block" id="TabSequence.getFrameType"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.getFrameType">[docs]</a>    <span class="k">def</span> <span class="nf">getFrameType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the frame type of the tab sequence.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The frame type, either &quot;fret&quot; or &quot;midi&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameType</span></div>
+
+<div class="viewcode-block" id="TabSequence.setFrameType"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setFrameType">[docs]</a>    <span class="k">def</span> <span class="nf">setFrameType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameType</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the frame type of the tab sequence.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            frameType (str): The frame type to set, either &quot;fret&quot; or &quot;midi&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frameType</span> <span class="o">=</span> <span class="n">frameType</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">seeFretboard</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Linda Rong Zhang.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

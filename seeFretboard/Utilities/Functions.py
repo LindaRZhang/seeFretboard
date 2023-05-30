@@ -317,4 +317,82 @@ def getDictionaryName(dictionary):
         if value is dictionary:
             return name
     return None
+
+class customShapes():
+    """
+    A class representing a collection of custom shapes.
+
+    Custom shapes can be added to the collection and retrieved based on their shape name.
+
+    Attributes:
+        customShapes (dict): A dictionary containing custom guitar shapes.
+            The dictionary structure should be as follows:
+            {
+                shapeName1: {
+                    note: [list of notes],
+                    position: [list of positions],
+                    scaleDegree: [list of scale degrees]
+                },
+                shapeName2: {
+                    note: [list of notes],
+                    position: [list of positions],
+                    scaleDegree: [list of scale degrees]
+                },
+                ...
+            }
+    """
+    def __init__(self):
+        """
+        Initializes a new instance of the CustomShape class.
+        """
+        self.customShapes = {
+
+        }
+        
+    def addShape(self, shapeName, notes, positions, scaleDegrees):
+        """Add a custom guitar shape to the customShapes dictionary.
+
+        Args:
+            shape_name (str): The name of the custom shape.
+            notes (list): A list of notes for the custom shape.
+            positions (list): A list of positions for the custom shape.
+            scale_degrees (list): A list of scale degrees for the custom shape.
+
+        Returns:
+            None
+        """
+        self.customShapes[shapeName] = {
+            'note': notes,
+            'position': positions,
+            'scaleDegree': scaleDegrees
+        }
+
+    def getShape(self, shapeName):
+        """Retrieve a custom guitar shape from the customShapes dictionary.
+
+        Args:
+            shape_name (str): The name of the custom shape.
+
+        Returns:
+            dict: A dictionary representing the custom shape, containing the following keys:
+                - 'note': List of notes
+                - 'position': List of positions
+                - 'scaleDegree': List of scale degrees
+        """
+        return self.customShapes.get(shapeName, None)
+
+    def removeShape(self, shapeName):
+        """Remove a custom guitar shape from the customShapes dictionary.
+
+        Args:
+            shape_name (str): The name of the custom shape.
+
+        Returns:
+            bool: True if the shape was successfully removed, False otherwise.
+        """
+        if shapeName in self.customShapes:
+            del self.customShapes[shapeName]
+            return True
+        else:
+            return False
     

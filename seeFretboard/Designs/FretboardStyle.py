@@ -13,10 +13,10 @@ class FretboardTheme:
         Initializes a FretboardTheme object.
 
         Parameters:
-            theme (str): The theme to apply ("light" or custom). If None, a custom theme is applied.
+            theme (str): The theme to apply ("blue, dark, wood, or green"). If None, a custom theme (light basically) is applied.
             **kwargs: Additional keyword arguments for custom theme settings.
         """
-        
+        theme = theme.lower()
         self.customTheme(**kwargs)
         if(theme == "blue"):
             self.BlueTheme()

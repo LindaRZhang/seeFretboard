@@ -11,12 +11,10 @@ class CircleNote():
     - noteOpacity (float): The opacity of the note. Default is 1.
     - noteTextColor (str): The color of the text inside note.
     - noteTextFont (str): The font of the text inside note.
-
     - intervals (list): List of intervals associated with the note.
     - scaleDegrees (list): List of scale degrees associated with the note.
     - name (str): The name of the note.
     - nameWithOctave (str): The name of the note with octave information.
-
     - fret (int): The fret position of the note.
     - string (int): The string position of the note.
     '''

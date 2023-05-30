@@ -10,12 +10,14 @@ The seeFretboard Python library allows users to visualize guitar fretboards. Pro
 
 
 ## Installation
-
+[Anaconda Installation/Docunmentation](https://docs.anaconda.com/free/anaconda/install/index.html)
+<br>
 Install With Conda Environment
 ```bash
 conda create --name <env> --file Conda-package-list.txt
 ```
-
+[Pip Installation/Docunmentation](https://pip.pypa.io/en/stable/)
+<br>
 Install with Pip Files
 ```bash
 pip install -r requirements.txt
@@ -24,8 +26,7 @@ pip install -r requirements.txt
 Install with Pip
 
 ```bash
-  npm install my-project
-  cd my-project
+pip install seeFretboard
 ```
 ## Features
 
@@ -54,11 +55,12 @@ See [CONTRIBUTING.rst](CONTRIBUTING.rst) for ways to get started.
 
 
 ## Credits
-
+Thank you for your contributions! We appreciate it!
 
 ## Creator
 This project was created by Linda Rong Zhang.
-- [@LindaRZhang](https://github.com/LindaRZhang) 
+- [Github](https://github.com/LindaRZhang) 
+- [Email](mailto:ronglindaz@gmail.com)
 
 ## History
 [HISTORY](HISTORY.rst)

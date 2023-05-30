@@ -12,7 +12,7 @@ fretboard.drawFretboard("v")#this function can change from h to v
 '''
 Drop2 String6
 '''
-# fretboard.addDropChord("c","maj7")
+fretboard.addDropChord("c","maj7")
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "maj7","Drop2", "2")
 # fretboard.setNoteType("prediction")
@@ -215,12 +215,12 @@ Drop3 String5
 # fretboard.setNoteType("groundTruth")
 # fretboard.addDropChord("c", "min7b5","Drop3", "4","5")
 
-fretboard.addDropChord("c","dim7","Drop3","1","5")
-fretboard.theme.fretboardDesign.setNoteType("groundTruth")
-fretboard.addDropChord("c", "dim7","Drop3", "2","5")
-fretboard.theme.fretboardDesign.setNoteType("prediction")
-fretboard.addDropChord("c", "dim7","Drop3", "3","5")
-fretboard.theme.fretboardDesign.setNoteType("groundTruth")
-fretboard.addDropChord("c", "dim7","Drop3", "4","5")
+# fretboard.addDropChord("c","dim7","Drop3","1","5")
+# fretboard.theme.fretboardDesign.setNoteType("groundTruth")
+# fretboard.addDropChord("c", "dim7","Drop3", "2","5")
+# fretboard.theme.fretboardDesign.setNoteType("prediction")
+# fretboard.addDropChord("c", "dim7","Drop3", "3","5")
+# fretboard.theme.fretboardDesign.setNoteType("groundTruth")
+# fretboard.addDropChord("c", "dim7","Drop3", "4","5")
 
 fretboard.showFretboard()

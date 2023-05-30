@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>seeFretboard.Designs package &#8212; seeFretboard  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="seeFretboard.Utilities package" href="seeFretboard.Utilities.html" />
+    <link rel="prev" title="seeFretboard package" href="seeFretboard.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="seefretboard-designs-package">
+<h1>seeFretboard.Designs package<a class="headerlink" href="#seefretboard-designs-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="seefretboard-designs-buttons-module">
+<h2>seeFretboard.Designs.Buttons module<a class="headerlink" href="#seefretboard-designs-buttons-module" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-seeFretboard.Designs.CirlceNote">
+<span id="seefretboard-designs-cirlcenote-module"></span><h2>seeFretboard.Designs.CirlceNote module<a class="headerlink" href="#module-seeFretboard.Designs.CirlceNote" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.CirlceNote.</span></span><span class="sig-name descname"><span class="pre">CircleNote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>CircleNote is a class for displaying notes with customizable properties.</p>
+<p>Attributes:
+- noteFaceColor (str): The color of the note face. Default is ‘blue’.
+- noteFill (bool): Indicates whether the note should be filled. Default is True.
+- noteEdgeColor (str): The color of the note edge. Default is ‘black’.
+- noteEdgeWidth (int): The width of the note edge. Default is 2.
+- noteRadius (float): The radius of the note. Default is 0.4.
+- noteOpacity (float): The opacity of the note. Default is 1.
+- noteTextColor (str): The color of the text inside note.
+- noteTextFont (str): The font of the text inside note.
+- intervals (list): List of intervals associated with the note.
+- scaleDegrees (list): List of scale degrees associated with the note.
+- name (str): The name of the note.
+- nameWithOctave (str): The name of the note with octave information.
+- fret (int): The fret position of the note.
+- string (int): The string position of the note.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getIntervals">
+<span class="sig-name descname"><span class="pre">getIntervals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getIntervals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getIntervals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the intervals associated with the note.</p>
+<p>Returns:
+- intervals (list): List of intervals associated with the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getName">
+<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the note.</p>
+<p>Returns:
+- name (str): The name of the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNameWithOctave">
+<span class="sig-name descname"><span class="pre">getNameWithOctave</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNameWithOctave"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNameWithOctave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the note with octave information.</p>
+<p>Returns:
+- nameWithOctave (str): The name of the note with octave information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteEdgeColor">
+<span class="sig-name descname"><span class="pre">getNoteEdgeColor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteEdgeColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the note edge.</p>
+<p>Returns:
+- noteEdgeColor (str): The color of the note edge.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteEdgeWidth">
+<span class="sig-name descname"><span class="pre">getNoteEdgeWidth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteEdgeWidth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteEdgeWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the width of the note edge.</p>
+<p>Returns:
+- noteEdgeWidth (int): The width of the note edge.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteFaceColor">
+<span class="sig-name descname"><span class="pre">getNoteFaceColor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteFaceColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteFaceColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the note face.</p>
+<p>Returns:
+- noteFaceColor (str): The color of the note face.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteFill">
+<span class="sig-name descname"><span class="pre">getNoteFill</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteFill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteFill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the note is filled.</p>
+<p>Returns:
+- noteFill (bool): True if the note is filled, False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteOpacity">
+<span class="sig-name descname"><span class="pre">getNoteOpacity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteOpacity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteOpacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the opacity of the note.</p>
+<p>Returns:
+- noteOpacity (float): The opacity of the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteRadius">
+<span class="sig-name descname"><span class="pre">getNoteRadius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteRadius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteRadius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the radius of the note.</p>
+<p>Returns:
+- noteRadius (float): The radius of the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteTextColor">
+<span class="sig-name descname"><span class="pre">getNoteTextColor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteTextColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteTextColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the note text.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getNoteTextFont">
+<span class="sig-name descname"><span class="pre">getNoteTextFont</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getNoteTextFont"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getNoteTextFont" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the font of the note text.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.getScaleDegrees">
+<span class="sig-name descname"><span class="pre">getScaleDegrees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.getScaleDegrees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.getScaleDegrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the scale degrees associated with the note.</p>
+<p>Returns:
+- scaleDegrees (list): List of scale degrees associated with the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setIntervals">
+<span class="sig-name descname"><span class="pre">setIntervals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setIntervals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setIntervals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the intervals associated with the note.</p>
+<p>Parameters:
+- interval (list): List of intervals to associate with the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setName">
+<span class="sig-name descname"><span class="pre">setName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of the note.</p>
+<p>Parameters:
+- name (str): The name of the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNameWithOctave">
+<span class="sig-name descname"><span class="pre">setNameWithOctave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameWithOctave</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNameWithOctave"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNameWithOctave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of the note with octave information.</p>
+<p>Parameters:
+- nameWithOctave (str): The name of the note with octave information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteEdgeColor">
+<span class="sig-name descname"><span class="pre">setNoteEdgeColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteEdgeColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteEdgeColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the color of the note edge.</p>
+<p>Parameters:
+- color (str): The color of the note edge.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteEdgeWidth">
+<span class="sig-name descname"><span class="pre">setNoteEdgeWidth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteEdgeWidth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteEdgeWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the width of the note edge.</p>
+<p>Parameters:
+- lw (int): The width of the note edge.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteFaceColor">
+<span class="sig-name descname"><span class="pre">setNoteFaceColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteFaceColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteFaceColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the color of the note face.</p>
+<p>Parameters:
+- color (str): The color of the note face.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteFill">
+<span class="sig-name descname"><span class="pre">setNoteFill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noteFill</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteFill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteFill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether the note should be filled.</p>
+<p>Parameters:
+- noteFill (bool): True to fill the note, False to leave it empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteOpacity">
+<span class="sig-name descname"><span class="pre">setNoteOpacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noteOpacity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteOpacity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteOpacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the opacity of the note.</p>
+<p>Parameters:
+- noteOpacity (float): The opacity of the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteRadius">
+<span class="sig-name descname"><span class="pre">setNoteRadius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteRadius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteRadius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the radius of the note.</p>
+<p>Parameters:
+- radius (float): The radius of the note.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteTextColor">
+<span class="sig-name descname"><span class="pre">setNoteTextColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteTextColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteTextColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the color of the note text.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setNoteTextFont">
+<span class="sig-name descname"><span class="pre">setNoteTextFont</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setNoteTextFont"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setNoteTextFont" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the font of the note text.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.CirlceNote.CircleNote.setScaleDegrees">
+<span class="sig-name descname"><span class="pre">setScaleDegrees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scaleDegree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/CirlceNote.html#CircleNote.setScaleDegrees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.CirlceNote.CircleNote.setScaleDegrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scale degrees associated with the note.</p>
+<p>Parameters:
+- scaleDegree (list): List of scale degrees to associate with the note.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-seeFretboard.Designs.FretboardFigure">
+<span id="seefretboard-designs-fretboardfigure-module"></span><h2>seeFretboard.Designs.FretboardFigure module<a class="headerlink" href="#module-seeFretboard.Designs.FretboardFigure" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.FretboardFigure.</span></span><span class="sig-name descname"><span class="pre">FretboardFigure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'h'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The FretboardFigure class is responsible for creating a Bokeh figure object that represents a guitar fretboard.
+It allows for customization of the figure’s orientation, size, and range, as well as the addition of string and fret labels.
+The class also includes methods for switching the orientation of the figure and getting/setting the x and y ranges.</p>
+<p>Attributes:
+- fig (figure): The Bokeh figure object.
+- figHorXRange (Range1d): The x-range for the horizontal orientation.
+- figHorYRange (Range1d): The y-range for the horizontal orientation.
+- figVerXRange (Range1d): The x-range for the vertical orientation.
+- figVerYRange (Range1d): The y-range for the vertical orientation.
+- orientation (str): The orientation of the fretboard figure (‘h’ for horizontal, ‘v’ for vertical).
+- stringLabel (str): The string label layout.
+- fretLabel (str): The fret label layout.
+- width (int): The width of the figure.
+- height (int): The height of the figure.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.addFretLabelLayout">
+<span class="sig-name descname"><span class="pre">addFretLabelLayout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.addFretLabelLayout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.addFretLabelLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the fret label layout to the figure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.addStringLabelLayout">
+<span class="sig-name descname"><span class="pre">addStringLabelLayout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.addStringLabelLayout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.addStringLabelLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the string label layout to the figure.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.fig">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fig</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.fig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.fig_x_range">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fig_x_range</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.fig_x_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.fig_y_range">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fig_y_range</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.fig_y_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.fretLabel">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretLabel</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.fretLabel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigHorXRange">
+<span class="sig-name descname"><span class="pre">getFigHorXRange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.getFigHorXRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigHorXRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the x-range for the horizontal orientation.</p>
+<p>Returns:
+- Range1d: The x-range for the horizontal orientation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigHorYRange">
+<span class="sig-name descname"><span class="pre">getFigHorYRange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.getFigHorYRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigHorYRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the y-range for the horizontal orientation.</p>
+<p>Returns:
+- Range1d: The y-range for the horizontal orientation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigVerXRange">
+<span class="sig-name descname"><span class="pre">getFigVerXRange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.getFigVerXRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigVerXRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the x-range for the vertical orientation.</p>
+<p>Returns:
+- Range1d: The x-range for the vertical orientation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigVerYRange">
+<span class="sig-name descname"><span class="pre">getFigVerYRange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.getFigVerYRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.getFigVerYRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the y-range for the vertical orientation.</p>
+<p>Returns:
+- Range1d: The y-range for the vertical orientation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.height">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigHorXRange">
+<span class="sig-name descname"><span class="pre">setFigHorXRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.setFigHorXRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigHorXRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the x-range for the horizontal orientation.</p>
+<p>Parameters:
+- v1: The starting value of the x-range.
+- v2: The ending value of the x-range.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigHorYRange">
+<span class="sig-name descname"><span class="pre">setFigHorYRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.setFigHorYRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigHorYRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the y-range for the horizontal orientation.</p>
+<p>Parameters:
+- v1: The starting value of the y-range.
+- v2: The ending value of the y-range.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigVerXRange">
+<span class="sig-name descname"><span class="pre">setFigVerXRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.setFigVerXRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigVerXRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the x-range for the vertical orientation.</p>
+<p>Parameters:
+- v1: The starting value of the x-range.
+- v2: The ending value of the x-range.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigVerYRange">
+<span class="sig-name descname"><span class="pre">setFigVerYRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.setFigVerYRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.setFigVerYRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the y-range for the vertical orientation.</p>
+<p>Parameters:
+- v1: The starting value of the y-range.
+- v2: The ending value of the y-range.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.stringLabel">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stringLabel</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.stringLabel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.switchOrientation">
+<span class="sig-name descname"><span class="pre">switchOrientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orientation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardFigure.html#FretboardFigure.switchOrientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.switchOrientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switches the orientation of the fretboard figure.</p>
+<p>Parameters:
+- orientation (str): The new orientation (‘h’ for horizontal, ‘v’ for vertical).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardFigure.FretboardFigure.width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardFigure.FretboardFigure.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-seeFretboard.Designs.FretboardStyle">
+<span id="seefretboard-designs-fretboardstyle-module"></span><h2>seeFretboard.Designs.FretboardStyle module<a class="headerlink" href="#module-seeFretboard.Designs.FretboardStyle" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.FretboardStyle.</span></span><span class="sig-name descname"><span class="pre">FretboardDesign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardDesign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the design settings of the fretboard.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.backgroundColor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">backgroundColor</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.backgroundColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the background color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The background color.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.distanceBetweenFrets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distanceBetweenFrets</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.distanceBetweenFrets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the distance between frets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The distance between frets.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.distanceBetweenStrings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distanceBetweenStrings</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.distanceBetweenStrings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the distance between strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The distance between strings.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.fretColor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretColor</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.fretColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the frets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The color of the frets.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.fretLabelColor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretLabelColor</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.fretLabelColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the fret labels.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.fretLabelFontSize">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretLabelFontSize</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.fretLabelFontSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the font size of the fret labels.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.fretOpacity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretOpacity</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.fretOpacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the opacity of the frets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The opacity of the frets.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.fretThinkness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretThinkness</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.fretThinkness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the thickness of the frets.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.fretboardMarkerColor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretboardMarkerColor</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.fretboardMarkerColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the fretboard markers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The color of the fretboard markers.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.getCurrentNoteType">
+<span class="sig-name descname"><span class="pre">getCurrentNoteType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardDesign.getCurrentNoteType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.getCurrentNoteType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current note type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.getCurrentNoteTypeValue">
+<span class="sig-name descname"><span class="pre">getCurrentNoteTypeValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardDesign.getCurrentNoteTypeValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.getCurrentNoteTypeValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the note types associated with the current note type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.getNoteType">
+<span class="sig-name descname"><span class="pre">getNoteType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardDesign.getNoteType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.getNoteType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the note types associated with a specific key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.getNoteTypes">
+<span class="sig-name descname"><span class="pre">getNoteTypes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardDesign.getNoteTypes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.getNoteTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the note types dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.setNoteType">
+<span class="sig-name descname"><span class="pre">setNoteType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noteType</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardDesign.setNoteType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.setNoteType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current note type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.setNoteTypes">
+<span class="sig-name descname"><span class="pre">setNoteTypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardDesign.setNoteTypes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.setNoteTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the note types for a specific key.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.showFretboardNumber">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">showFretboardNumber</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.showFretboardNumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the flag indicating whether to display fretboard numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if fretboard numbers should be displayed, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.showTuning">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">showTuning</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.showTuning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the flag indicating whether to display tuning information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if tuning information should be displayed, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.stringThinkness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stringThinkness</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.stringThinkness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the thickness of the strings.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.stringsColor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stringsColor</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.stringsColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The color of the strings.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.stringsOpacity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stringsOpacity</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.stringsOpacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the opacity of the strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The opacity of the strings.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.toolBar">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">toolBar</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.toolBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the position indicating whether to display the toolbar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None, right, left, above, below</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.tuningLabelColor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tuningLabelColor</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.tuningLabelColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the color of the tuning labels.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardDesign.tuningLabelFontSize">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tuningLabelFontSize</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardDesign.tuningLabelFontSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the font size of the tuning labels.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardOrientation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.FretboardStyle.</span></span><span class="sig-name descname"><span class="pre">FretboardOrientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'h'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardOrientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardOrientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the orientation (horizontal or vertical) of the fretboard.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardOrientation.orientation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">orientation</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardOrientation.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the orientation of the fretboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The orientation of the fretboard.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardRange">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.FretboardStyle.</span></span><span class="sig-name descname"><span class="pre">FretboardRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fretFrom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fretTo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numOfString</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the range of frets and strings on the fretboard.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardRange.fretFrom">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretFrom</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardRange.fretFrom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the starting fret number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The starting fret number.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardRange.fretTo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fretTo</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardRange.fretTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ending fret number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ending fret number.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardRange.numOfFrets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numOfFrets</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardRange.numOfFrets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of frets in the range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of frets in the range.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardRange.numOfStrings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numOfStrings</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardRange.numOfStrings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of strings on the fretboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of strings on the fretboard.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardTheme">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.FretboardStyle.</span></span><span class="sig-name descname"><span class="pre">FretboardTheme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardTheme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a theme for the fretboard visualization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardTheme.BlueTheme">
+<span class="sig-name descname"><span class="pre">BlueTheme</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardTheme.BlueTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardTheme.BlueTheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardTheme.customTheme">
+<span class="sig-name descname"><span class="pre">customTheme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardTheme.customTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardTheme.customTheme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a custom theme to the FretboardTheme object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for custom theme settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardTheme.darkTheme">
+<span class="sig-name descname"><span class="pre">darkTheme</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardTheme.darkTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardTheme.darkTheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardTheme.greenTheme">
+<span class="sig-name descname"><span class="pre">greenTheme</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardTheme.greenTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardTheme.greenTheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.FretboardTheme.woodTheme">
+<span class="sig-name descname"><span class="pre">woodTheme</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#FretboardTheme.woodTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.FretboardTheme.woodTheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.Tuning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Designs.FretboardStyle.</span></span><span class="sig-name descname"><span class="pre">Tuning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Designs/FretboardStyle.html#Tuning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.Tuning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the tuning of the strings on the fretboard.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.Tuning.letterTuning">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">letterTuning</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.Tuning.letterTuning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the letter-based tuning of the strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The letter-based tuning of the strings.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.Tuning.midiTuning">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">midiTuning</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.Tuning.midiTuning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the MIDI note-based tuning of the strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The MIDI note-based tuning of the strings.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="seeFretboard.Designs.FretboardStyle.Tuning.numOfStrings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numOfStrings</span></span><a class="headerlink" href="#seeFretboard.Designs.FretboardStyle.Tuning.numOfStrings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of strings on the fretboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of strings on the fretboard.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-seeFretboard.Designs">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-seeFretboard.Designs" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">seeFretboard</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#designs">Designs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">seeFretboard</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Tests.html">Tests package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="seeFretboard.html">seeFretboard package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="seeFretboard.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.NotePosition">seeFretboard.NotePosition module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.PitchCollection">seeFretboard.PitchCollection module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.SeeFretboard">seeFretboard.SeeFretboard module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#seefretboard-generaltest-module">seeFretboard.generalTest module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">seeFretboard</a><ul>
+  <li><a href="seeFretboard.html">seeFretboard package</a><ul>
+      <li>Previous: <a href="seeFretboard.html" title="previous chapter">seeFretboard package</a></li>
+      <li>Next: <a href="seeFretboard.Utilities.html" title="next chapter">seeFretboard.Utilities package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Linda Rong Zhang.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/seeFretboard.Designs.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
