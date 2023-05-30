@@ -32,7 +32,6 @@ class FretboardFigure():
         - height (int): The height of the figure. Default is None.
         '''
 
-        print("noteeee",note)
         self.fig = figure()
         self.figHorXRange = Range1d(-8*note.getNoteRadius(),
                                         (theme.fretboardRange.numOfFrets+1.3)*theme.fretboardDesign.distanceBetweenFrets)

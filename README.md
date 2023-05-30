@@ -1,45 +1,52 @@
+
 # seeFretboard
 
-To show with curdoc need to run server at directory of file<br />
-bokeh serve --show fileName.py<br /><br />
+<p align="center">
+  <img width="460" height="300" src="logo.png">
+</p>
 
-###dependencies
-*python
-*bokeh
-*selenium, firefox or chrome driver
-*opencv
-*ffmpeg
-*mirdata only versions >=3.7,<3.11 are supported as of 2023
-pretty_midi
-*fluidSynth
-*pyfluidsynth
-*tempfile
-*sox
-soundfile
-*os
-*glob
-*re
-*librosa
-*PIL
-*Music21
+Unlocking Boundless Possibilities for Music Education, Research, and Creative Exploration. The seeFretboard Python library allows users to visualize guitar fretboards. Providing foundational music theory displays with intervals, chords, arpeggios, and scales. It also has features such as dynamic video creation of the visualized fretboards with integration of audio.
 
-<br />
-<br />
-To use bokeh.io image export functions you need selenium ('conda install selenium' or 'pip install selenium')<br />
-If firefox: conda install firefox -c conda-forge<br />
-If chrome: conda install selenium python-chromedriver-binary -c conda-forge
-<br />
-<br />
 
-Problem with chrome driver Run locally for mac first<br />
-Run chromedriver executable file<br />
-Use Homebrew to download chromedriver<br />
-And ran executable in /opt/homebrew/Caskroom/chromedriver/110.0.5481.77
+## Installation
 
-<br />
-* Video download: pip install opencv-python
+Install With Conda Environment
+```bash
+conda create --name <env> --file Conda-package-list.txt
+```
 
-<br />
-mac sometime permission issue: chmod 777 seeFretboard
+Install with Pip Files
+```bash
+pip install -r requirements.txt
+```
 
-conda list shows dependiences
+Install with Pip
+
+```bash
+  npm install my-project
+  cd my-project
+```
+## Features
+
+- 
+
+
+## Documentations
+
+- [ReadTheDocs](https://linktodocumentation)
+- [Colab](https://colab.research.google.com/drive/1ph2_gWhY4UMN_gLa4Ab9w2uEYFbGuFOA?usp=sharing)
+
+## Contributing
+
+Contributions are always welcome! We appreciate it! 
+
+See [CONTRIBUTING.RST](CONTRIBUTING.RST) for ways to get started.
+
+
+## Credits
+
+
+## Creator
+This project was created by Linda Rong Zhang.
+- [@LindaRZhang](https://github.com/LindaRZhang) 
+
