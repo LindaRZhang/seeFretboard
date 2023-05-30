@@ -18,7 +18,7 @@ class TabSequence(Frame):
     MIDI format and can convert between the two. It also provides methods for adding tablature 
     frames and converting frames to notes with time information.
     '''
-    def __init__(self, trackNum, frameRate=FRAMERATE, filePath=os.path.join(BASE_PATH, 'GuitarSet')):
+    def __init__(self, trackNum=0, frameRate=FRAMERATE, filePath=os.path.join(BASE_PATH, 'GuitarSet')):
         '''
         Parameters:
             trackNum (int): The index of the track to load from the dataset.
@@ -341,7 +341,7 @@ class TabSequence(Frame):
         Returns:
             str: The frame type, either "fret" or "midi".
         """
-        return self.frameType
+        return self.frameType.lower()
 
     def setFrameType(self, frameType):
         """

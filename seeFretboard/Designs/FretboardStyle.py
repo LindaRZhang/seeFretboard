@@ -218,7 +218,7 @@ class Tuning:
 class FretboardRange:
     """Represents the range of frets and strings on the fretboard."""
 
-    def __init__(self, fretFrom, fretTo, numOfString):
+    def __init__(self, fretFrom=0, fretTo=0, numOfString=6):
         """
         Initializes a FretboardRange object.
 

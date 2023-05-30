@@ -348,6 +348,84 @@
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">dictionary</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">name</span>
     <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="customShapes"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.customShapes">[docs]</a><span class="k">class</span> <span class="nc">customShapes</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a collection of custom shapes.</span>
+
+<span class="sd">    Custom shapes can be added to the collection and retrieved based on their shape name.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        customShapes (dict): A dictionary containing custom guitar shapes.</span>
+<span class="sd">            The dictionary structure should be as follows:</span>
+<span class="sd">            {</span>
+<span class="sd">                shapeName1: {</span>
+<span class="sd">                    note: [list of notes],</span>
+<span class="sd">                    position: [list of positions],</span>
+<span class="sd">                    scaleDegree: [list of scale degrees]</span>
+<span class="sd">                },</span>
+<span class="sd">                shapeName2: {</span>
+<span class="sd">                    note: [list of notes],</span>
+<span class="sd">                    position: [list of positions],</span>
+<span class="sd">                    scaleDegree: [list of scale degrees]</span>
+<span class="sd">                },</span>
+<span class="sd">                ...</span>
+<span class="sd">            }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a new instance of the CustomShape class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">customShapes</span> <span class="o">=</span> <span class="p">{</span>
+
+        <span class="p">}</span>
+        
+<div class="viewcode-block" id="customShapes.addShape"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.customShapes.addShape">[docs]</a>    <span class="k">def</span> <span class="nf">addShape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shapeName</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">scaleDegrees</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a custom guitar shape to the customShapes dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape_name (str): The name of the custom shape.</span>
+<span class="sd">            notes (list): A list of notes for the custom shape.</span>
+<span class="sd">            positions (list): A list of positions for the custom shape.</span>
+<span class="sd">            scale_degrees (list): A list of scale degrees for the custom shape.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">customShapes</span><span class="p">[</span><span class="n">shapeName</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;note&#39;</span><span class="p">:</span> <span class="n">notes</span><span class="p">,</span>
+            <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="n">positions</span><span class="p">,</span>
+            <span class="s1">&#39;scaleDegree&#39;</span><span class="p">:</span> <span class="n">scaleDegrees</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="customShapes.getShape"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.customShapes.getShape">[docs]</a>    <span class="k">def</span> <span class="nf">getShape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shapeName</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve a custom guitar shape from the customShapes dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape_name (str): The name of the custom shape.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary representing the custom shape, containing the following keys:</span>
+<span class="sd">                - &#39;note&#39;: List of notes</span>
+<span class="sd">                - &#39;position&#39;: List of positions</span>
+<span class="sd">                - &#39;scaleDegree&#39;: List of scale degrees</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">customShapes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shapeName</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="customShapes.removeShape"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.customShapes.removeShape">[docs]</a>    <span class="k">def</span> <span class="nf">removeShape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shapeName</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a custom guitar shape from the customShapes dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape_name (str): The name of the custom shape.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the shape was successfully removed, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">shapeName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">customShapes</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">customShapes</span><span class="p">[</span><span class="n">shapeName</span><span class="p">]</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div></div>
     
 </pre></div>
 
@@ -367,9 +445,15 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#designs">Designs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
 </ul>
 
 <div class="relations">

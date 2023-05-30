@@ -38,104 +38,6 @@
 </section>
 <section id="module-seeFretboard.Utilities.Constants">
 <span id="seefretboard-utilities-constants-module"></span><h2>seeFretboard.Utilities.Constants module<a class="headerlink" href="#module-seeFretboard.Utilities.Constants" title="Permalink to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="seeFretboard.Utilities.Constants.customShapes">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Utilities.Constants.</span></span><span class="sig-name descname"><span class="pre">customShapes</span></span><a class="reference internal" href="_modules/seeFretboard/Utilities/Constants.html#customShapes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Constants.customShapes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A class representing a collection of custom shapes.</p>
-<p>Custom shapes can be added to the collection and retrieved based on their shape name.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="seeFretboard.Utilities.Constants.customShapes.customShapes">
-<span class="sig-name descname"><span class="pre">customShapes</span></span><a class="headerlink" href="#seeFretboard.Utilities.Constants.customShapes.customShapes" title="Permalink to this definition">¶</a></dt>
-<dd><p>A dictionary containing custom guitar shapes.
-The dictionary structure should be as follows:
-{</p>
-<blockquote>
-<div><dl class="simple">
-<dt>shapeName1: {</dt><dd><p>note: [list of notes],
-position: [list of positions],
-scaleDegree: [list of scale degrees]</p>
-</dd>
-</dl>
-<p>},
-shapeName2: {</p>
-<blockquote>
-<div><p>note: [list of notes],
-position: [list of positions],
-scaleDegree: [list of scale degrees]</p>
-</div></blockquote>
-</div></blockquote>
-<p>}</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Utilities.Constants.customShapes.addShape">
-<span class="sig-name descname"><span class="pre">addShape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapeName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaleDegrees</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Constants.html#customShapes.addShape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Constants.customShapes.addShape" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a custom guitar shape to the customShapes dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>shape_name</strong> (<em>str</em>) – The name of the custom shape.</p></li>
-<li><p><strong>notes</strong> (<em>list</em>) – A list of notes for the custom shape.</p></li>
-<li><p><strong>positions</strong> (<em>list</em>) – A list of positions for the custom shape.</p></li>
-<li><p><strong>scale_degrees</strong> (<em>list</em>) – A list of scale degrees for the custom shape.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Utilities.Constants.customShapes.getShape">
-<span class="sig-name descname"><span class="pre">getShape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapeName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Constants.html#customShapes.getShape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Constants.customShapes.getShape" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve a custom guitar shape from the customShapes dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>shape_name</strong> (<em>str</em>) – The name of the custom shape.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A dictionary representing the custom shape, containing the following keys:</dt><dd><ul class="simple">
-<li><p>’note’: List of notes</p></li>
-<li><p>’position’: List of positions</p></li>
-<li><p>’scaleDegree’: List of scale degrees</p></li>
-</ul>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Utilities.Constants.customShapes.removeShape">
-<span class="sig-name descname"><span class="pre">removeShape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapeName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Constants.html#customShapes.removeShape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Constants.customShapes.removeShape" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove a custom guitar shape from the customShapes dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>shape_name</strong> (<em>str</em>) – The name of the custom shape.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the shape was successfully removed, False otherwise.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 <section id="module-seeFretboard.Utilities.Functions">
 <span id="seefretboard-utilities-functions-module"></span><h2>seeFretboard.Utilities.Functions module<a class="headerlink" href="#module-seeFretboard.Utilities.Functions" title="Permalink to this heading">¶</a></h2>
@@ -174,6 +76,104 @@ scaleDegree: [list of scale degrees]</p>
 <dd class="field-even"><p><strong>ValueError</strong> – If the provided chord type is not valid.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="seeFretboard.Utilities.Functions.customShapes">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Utilities.Functions.</span></span><span class="sig-name descname"><span class="pre">customShapes</span></span><a class="reference internal" href="_modules/seeFretboard/Utilities/Functions.html#customShapes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Functions.customShapes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a collection of custom shapes.</p>
+<p>Custom shapes can be added to the collection and retrieved based on their shape name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="seeFretboard.Utilities.Functions.customShapes.customShapes">
+<span class="sig-name descname"><span class="pre">customShapes</span></span><a class="headerlink" href="#seeFretboard.Utilities.Functions.customShapes.customShapes" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary containing custom guitar shapes.
+The dictionary structure should be as follows:
+{</p>
+<blockquote>
+<div><dl class="simple">
+<dt>shapeName1: {</dt><dd><p>note: [list of notes],
+position: [list of positions],
+scaleDegree: [list of scale degrees]</p>
+</dd>
+</dl>
+<p>},
+shapeName2: {</p>
+<blockquote>
+<div><p>note: [list of notes],
+position: [list of positions],
+scaleDegree: [list of scale degrees]</p>
+</div></blockquote>
+</div></blockquote>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Utilities.Functions.customShapes.addShape">
+<span class="sig-name descname"><span class="pre">addShape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapeName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaleDegrees</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Functions.html#customShapes.addShape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Functions.customShapes.addShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a custom guitar shape to the customShapes dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape_name</strong> (<em>str</em>) – The name of the custom shape.</p></li>
+<li><p><strong>notes</strong> (<em>list</em>) – A list of notes for the custom shape.</p></li>
+<li><p><strong>positions</strong> (<em>list</em>) – A list of positions for the custom shape.</p></li>
+<li><p><strong>scale_degrees</strong> (<em>list</em>) – A list of scale degrees for the custom shape.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Utilities.Functions.customShapes.getShape">
+<span class="sig-name descname"><span class="pre">getShape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapeName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Functions.html#customShapes.getShape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Functions.customShapes.getShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a custom guitar shape from the customShapes dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shape_name</strong> (<em>str</em>) – The name of the custom shape.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dictionary representing the custom shape, containing the following keys:</dt><dd><ul class="simple">
+<li><p>’note’: List of notes</p></li>
+<li><p>’position’: List of positions</p></li>
+<li><p>’scaleDegree’: List of scale degrees</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seeFretboard.Utilities.Functions.customShapes.removeShape">
+<span class="sig-name descname"><span class="pre">removeShape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapeName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Utilities/Functions.html#customShapes.removeShape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Utilities.Functions.customShapes.removeShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a custom guitar shape from the customShapes dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shape_name</strong> (<em>str</em>) – The name of the custom shape.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the shape was successfully removed, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -538,13 +538,26 @@ scaleDegree: [list of scale degrees]</p>
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">seeFretboard</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="Tests.html">Tests package</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="seeFretboard.html">seeFretboard package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="seeFretboard.html">seeFretboard package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="seeFretboard.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.NotePosition">seeFretboard.NotePosition module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.PitchCollection">seeFretboard.PitchCollection module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard.SeeFretboard">seeFretboard.SeeFretboard module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#seefretboard-generaltest-module">seeFretboard.generalTest module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard">Module contents</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 </ul>
 
 <div class="relations">

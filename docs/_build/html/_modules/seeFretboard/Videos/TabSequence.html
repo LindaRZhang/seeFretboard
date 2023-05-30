@@ -49,7 +49,7 @@
 <span class="sd">    MIDI format and can convert between the two. It also provides methods for adding tablature </span>
 <span class="sd">    frames and converting frames to notes with time information.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trackNum</span><span class="p">,</span> <span class="n">frameRate</span><span class="o">=</span><span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">filePath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_PATH</span><span class="p">,</span> <span class="s1">&#39;GuitarSet&#39;</span><span class="p">)):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trackNum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">frameRate</span><span class="o">=</span><span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">filePath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_PATH</span><span class="p">,</span> <span class="s1">&#39;GuitarSet&#39;</span><span class="p">)):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Parameters:</span>
 <span class="sd">            trackNum (int): The index of the track to load from the dataset.</span>
@@ -372,7 +372,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The frame type, either &quot;fret&quot; or &quot;midi&quot;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameType</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameType</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TabSequence.setFrameType"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence.setFrameType">[docs]</a>    <span class="k">def</span> <span class="nf">setFrameType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameType</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -400,9 +400,17 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setupInstallation.html">Setting up seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#designs">Designs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#videos">Videos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#utilities">Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
 </ul>
 
 <div class="relations">

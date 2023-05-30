@@ -602,29 +602,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">currentNotesPositionOnFretboard</span> <span class="o">=</span> <span class="n">notes</span></div>
     
     <span class="c1">#adding scale, arpeggio, interval, chord</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Availible/builtin scales</span>
-<span class="sd">        Major</span>
-<span class="sd">        NaturalMinor</span>
-<span class="sd">        HarmonicMinor</span>
-<span class="sd">        MelodicMinor</span>
-<span class="sd">        PentatonicMajor</span>
-<span class="sd">        PentatonicMinor</span>
-<span class="sd">        Blues</span>
-<span class="sd">        WholeTone</span>
-<span class="sd">        Octatonic</span>
-<span class="sd">        BebopDominant</span>
-<span class="sd">        BebopDorian</span>
-<span class="sd">        BebopMajor</span>
-<span class="sd">        BebopMelodicMinor</span>
-<span class="sd">        BebopMinor</span>
-<span class="sd">        Dorian</span>
-<span class="sd">        Mixolydian</span>
-<span class="sd">        Lydian</span>
-<span class="sd">        Locrian</span>
-<span class="sd">        Phrygian</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+    
     <span class="c1">#rootNote = &quot;c&quot;, type=&quot;major&quot;</span>
 <div class="viewcode-block" id="SeeFretboard.addScale"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.SeeFretboard.SeeFretboard.addScale">[docs]</a>    <span class="k">def</span> <span class="nf">addScale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rootNote</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">intervalsDegrees</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         
@@ -787,71 +765,8 @@
                 <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stringIndex</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">frets</span><span class="p">,</span> <span class="n">strings</span></div>
-<span class="w">    </span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    (&#39;major&#39;, [&#39;1,3,5&#39;, [&#39;&#39;, &#39;M&#39;, &#39;maj&#39;]]), </span>
-<span class="sd">    (&#39;minor&#39;, [&#39;1,-3,5&#39;, [&#39;m&#39;, &#39;min&#39;]]),  </span>
-<span class="sd">    (&#39;augmented&#39;, [&#39;1,3,#5&#39;, [&#39;+&#39;, &#39;aug&#39;]]),  </span>
-<span class="sd">    (&#39;diminished&#39;, [&#39;1,-3,-5&#39;, [&#39;dim&#39;, &#39;o&#39;]]),</span>
-
-<span class="sd">    # sevenths</span>
-<span class="sd">    (&#39;dominant-seventh&#39;, [&#39;1,3,5,-7&#39;, [&#39;7&#39;, &#39;dom7&#39;, ]]),  </span>
-<span class="sd">    (&#39;major-seventh&#39;, [&#39;1,3,5,7&#39;, [&#39;maj7&#39;, &#39;M7&#39;]]), </span>
-<span class="sd">    (&#39;minor-major-seventh&#39;, [&#39;1,-3,5,7&#39;, [&#39;mM7&#39;, &#39;m#7&#39;, &#39;minmaj7&#39;]]),  </span>
-<span class="sd">    (&#39;minor-seventh&#39;, [&#39;1,-3,5,-7&#39;, [&#39;m7&#39;, &#39;min7&#39;]]), </span>
-<span class="sd">    (&#39;augmented-major-seventh&#39;, [&#39;1,3,#5,7&#39;, [&#39;+M7&#39;, &#39;augmaj7&#39;]]),  </span>
-<span class="sd">    (&#39;augmented-seventh&#39;, [&#39;1,3,#5,-7&#39;, [&#39;7+&#39;, &#39;+7&#39;, &#39;aug7&#39;]]), </span>
-<span class="sd">    (&#39;half-diminished-seventh&#39;, [&#39;1,-3,-5,-7&#39;, [&#39;ø7&#39;, &#39;m7b5&#39;]]),  </span>
-<span class="sd">    (&#39;diminished-seventh&#39;, [&#39;1,-3,-5,--7&#39;, [&#39;o7&#39;, &#39;dim7&#39;]]), </span>
-<span class="sd">    (&#39;seventh-flat-five&#39;, [&#39;1,3,-5,-7&#39;, [&#39;dom7dim5&#39;]]),  </span>
-
-<span class="sd">    # sixths</span>
-<span class="sd">    (&#39;major-sixth&#39;, [&#39;1,3,5,6&#39;, [&#39;6&#39;]]),  </span>
-<span class="sd">    (&#39;minor-sixth&#39;, [&#39;1,-3,5,6&#39;, [&#39;m6&#39;, &#39;min6&#39;]]),  </span>
-
-<span class="sd">    # ninths</span>
-<span class="sd">    (&#39;major-ninth&#39;, [&#39;1,3,5,7,9&#39;, [&#39;M9&#39;, &#39;Maj9&#39;]]),  </span>
-<span class="sd">    (&#39;dominant-ninth&#39;, [&#39;1,3,5,-7,9&#39;, [&#39;9&#39;, &#39;dom9&#39;]]),  </span>
-<span class="sd">    (&#39;minor-major-ninth&#39;, [&#39;1,-3,5,7,9&#39;, [&#39;mM9&#39;, &#39;minmaj9&#39;]]),  </span>
-<span class="sd">    (&#39;minor-ninth&#39;, [&#39;1,-3,5,-7,9&#39;, [&#39;m9&#39;, &#39;min9&#39;]]),  </span>
-<span class="sd">    (&#39;augmented-major-ninth&#39;, [&#39;1,3,#5,7,9&#39;, [&#39;+M9&#39;, &#39;augmaj9&#39;]]),  </span>
-<span class="sd">    (&#39;augmented-dominant-ninth&#39;, [&#39;1,3,#5,-7,9&#39;, [&#39;9#5&#39;, &#39;+9&#39;, &#39;aug9&#39;]]),  </span>
-<span class="sd">    (&#39;half-diminished-ninth&#39;, [&#39;1,-3,-5,-7,9&#39;, [&#39;ø9&#39;]]),  </span>
-<span class="sd">    (&#39;half-diminished-minor-ninth&#39;, [&#39;1,-3,-5,-7,-9&#39;, [&#39;øb9&#39;]]),  </span>
-<span class="sd">    (&#39;diminished-ninth&#39;, [&#39;1,-3,-5,--7,9&#39;, [&#39;o9&#39;, &#39;dim9&#39;]]),  </span>
-<span class="sd">    (&#39;diminished-minor-ninth&#39;, [&#39;1,-3,-5,--7,-9&#39;, [&#39;ob9&#39;, &#39;dimb9&#39;]]),  </span>
-
-<span class="sd">    # elevenths</span>
-<span class="sd">    (&#39;dominant-11th&#39;, [&#39;1,3,5,-7,9,11&#39;, [&#39;11&#39;, &#39;dom11&#39;]]),  </span>
-<span class="sd">    (&#39;major-11th&#39;, [&#39;1,3,5,7,9,11&#39;, [&#39;M11&#39;, &#39;Maj11&#39;]]),  </span>
-<span class="sd">    (&#39;minor-major-11th&#39;, [&#39;1,-3,5,7,9,11&#39;, [&#39;mM11&#39;, &#39;minmaj11&#39;]]),  </span>
-<span class="sd">    (&#39;minor-11th&#39;, [&#39;1,-3,5,-7,9,11&#39;, [&#39;m11&#39;, &#39;min11&#39;]]),  </span>
-<span class="sd">    (&#39;augmented-major-11th&#39;, [&#39;1,3,#5,7,9,11&#39;, [&#39;+M11&#39;, &#39;augmaj11&#39;]]),  </span>
-<span class="sd">    (&#39;augmented-11th&#39;, [&#39;1,3,#5,-7,9,11&#39;, [&#39;+11&#39;, &#39;aug11&#39;]]),  </span>
-<span class="sd">    (&#39;half-diminished-11th&#39;, [&#39;1,-3,-5,-7,9,11&#39;, [&#39;ø11&#39;]]),  </span>
-<span class="sd">    (&#39;diminished-11th&#39;, [&#39;1,-3,-5,--7,9,11&#39;, [&#39;o11&#39;, &#39;dim11&#39;]]),  </span>
-
-<span class="sd">    # thirteenths</span>
-<span class="sd">    (&#39;major-13th&#39;, [&#39;1,3,5,7,9,11,13&#39;, [&#39;M13&#39;, &#39;Maj13&#39;]]),  </span>
-<span class="sd">    (&#39;dominant-13th&#39;, [&#39;1,3,5,-7,9,11,13&#39;, [&#39;13&#39;, &#39;dom13&#39;]]),  </span>
-<span class="sd">    (&#39;minor-major-13th&#39;, [&#39;1,-3,5,7,9,11,13&#39;, [&#39;mM13&#39;, &#39;minmaj13&#39;]]),  </span>
-<span class="sd">    (&#39;minor-13th&#39;, [&#39;1,-3,5,-7,9,11,13&#39;, [&#39;m13&#39;, &#39;min13&#39;]]),  </span>
-<span class="sd">    (&#39;augmented-major-13th&#39;, [&#39;1,3,#5,7,9,11,13&#39;, [&#39;+M13&#39;, &#39;augmaj13&#39;]]),  </span>
-<span class="sd">    (&#39;augmented-dominant-13th&#39;, [&#39;1,3,#5,-7,9,11,13&#39;, [&#39;+13&#39;, &#39;aug13&#39;]]),  </span>
-<span class="sd">    (&#39;half-diminished-13th&#39;, [&#39;1,-3,-5,-7,9,11,13&#39;, [&#39;ø13&#39;]]),  </span>
-
-<span class="sd">    # other</span>
-<span class="sd">    (&#39;suspended-second&#39;, [&#39;1,2,5&#39;, [&#39;sus2&#39;]]),  </span>
-<span class="sd">    (&#39;suspended-fourth&#39;, [&#39;1,4,5&#39;, [&#39;sus&#39;, &#39;sus4&#39;]]),  </span>
-<span class="sd">    (&#39;suspended-fourth-seventh&#39;, [&#39;1,4,5,-7&#39;, [&#39;7sus&#39;, &#39;7sus4&#39;]]),  </span>
-<span class="sd">    (&#39;Neapolitan&#39;, [&#39;1,2-,3,5-&#39;, [&#39;N6&#39;]]),  </span>
-<span class="sd">    (&#39;Italian&#39;, [&#39;1,#4,-6&#39;, [&#39;It+6&#39;, &#39;It&#39;]]),  </span>
-<span class="sd">    (&#39;French&#39;, [&#39;1,2,#4,-6&#39;, [&#39;Fr+6&#39;, &#39;Fr&#39;]]),  </span>
-<span class="sd">    (&#39;German&#39;, [&#39;1,-3,#4,-6&#39;, [&#39;Gr+6&#39;, &#39;Ger&#39;]]),  </span>
-<span class="sd">    (&#39;pedal&#39;, [&#39;1&#39;, [&#39;pedal&#39;]]),  </span>
-<span class="sd">    (&#39;power&#39;, [&#39;1,5&#39;, [&#39;power&#39;]]),  </span>
-<span class="sd">    (&#39;Tristan&#39;, [&#39;1,#4,#6,#9&#39;, [&#39;tristan&#39;]]),  </span>
-<span class="sd">    &#39;&#39;&#39;</span>
+    
+   
 <div class="viewcode-block" id="SeeFretboard.getArpeggioPitches"><a class="viewcode-back" href="../../seeFretboard.html#seeFretboard.SeeFretboard.SeeFretboard.getArpeggioPitches">[docs]</a>    <span class="k">def</span> <span class="nf">getArpeggioPitches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rootNote</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">chordPitches</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bass</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">type</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="n">chordObj</span> <span class="o">=</span> <span class="n">harmony</span><span class="o">.</span><span class="n">ChordSymbol</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">rootNote</span><span class="p">,</span> <span class="n">bass</span><span class="o">=</span><span class="n">bass</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="nb">type</span><span class="p">)</span>
@@ -862,7 +777,7 @@
                     <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intervalObj</span><span class="o">.</span><span class="n">directedName</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">intervals</span> <span class="o">=</span> <span class="n">chordPitches</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>    
             <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;P1&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">theme</span><span class="o">.</span><span class="n">fretboardDesign</span><span class="o">.</span><span class="n">getCurrentNoteTypeValue</span><span class="p">()</span><span class="o">.</span><span class="n">setIntervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
             <span class="n">scalePitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">m21Pitch</span><span class="o">.</span><span class="n">Pitch</span><span class="p">(</span><span class="n">rootNote</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
@@ -1011,8 +926,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../setupInstallation.html">Setting up seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../configuration.html#designs">Designs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration For Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">seeFretboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
