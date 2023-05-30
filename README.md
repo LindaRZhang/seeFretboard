@@ -2,9 +2,11 @@
   <img width="500" height="400" src="logo.png">
 </p>
 
-# seeFretboard
+<div align="center">
+<h1>seeFretboard: Unlocking Boundless Possibilities for Music Education, Research, and Creative Exploration</h1>
+</div>
 
-Unlocking Boundless Possibilities for Music Education, Research, and Creative Exploration. The seeFretboard Python library allows users to visualize guitar fretboards. Providing foundational music theory displays with intervals, chords, arpeggios, and scales. It also has features such as dynamic video creation of the visualized fretboards with integration of audio.
+The seeFretboard Python library allows users to visualize guitar fretboards. Providing foundational music theory displays with intervals, chords, arpeggios, and scales. It also has features such as dynamic video creation of the visualized fretboards with integration of audio.
 
 
 ## Installation
