@@ -447,7 +447,7 @@ class SeeFretboard():
                 fret = int(fret)
                 note = Circle(x=(fret)*self.fretboardTheme.fretboardDesign.distanceBetweenFrets-self.fretboardTheme.fretboardDesign.distanceBetweenFrets/2,
                               y=(string)*self.fretboardTheme.fretboardDesign.distanceBetweenStrings,
-                              radius=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius*2,
+                              radius=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius*2.2,
                               fill_color=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteFaceColor,
                               line_width=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteEdgeWidth,
                               line_color=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteEdgeColor,
@@ -456,7 +456,7 @@ class SeeFretboard():
                               )
                 
                 label = Label(x=(fret)*self.fretboardTheme.fretboardDesign.distanceBetweenFrets-self.fretboardTheme.fretboardDesign.distanceBetweenFrets/2,
-                              y=(string)*self.fretboardTheme.fretboardDesign.distanceBetweenStrings-self.fretboardTheme.fretboardDesign.distanceBetweenStrings/12-self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius/1.5,
+                              y=(string)*self.fretboardTheme.fretboardDesign.distanceBetweenStrings-self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius/1.5,
                                         text=textValue, text_align='center',text_font_size=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().getNoteTextFont(),text_color=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().getNoteTextColor())
                 self.labels.append(label)
                 self.fretboardFig.fig.add_layout(label)
@@ -489,7 +489,7 @@ class SeeFretboard():
                 fret = int(fret)
                 note = Circle(x=(fret)*self.fretboardTheme.fretboardDesign.distanceBetweenFrets-self.fretboardTheme.fretboardDesign.distanceBetweenFrets/2,
                               y=(string)*self.fretboardTheme.fretboardDesign.distanceBetweenStrings,
-                              radius=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius*2,
+                              radius=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius*2.2,
                               fill_color=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteFaceColor,
                               line_width=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteEdgeWidth,
                               line_color=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteEdgeColor,

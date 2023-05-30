@@ -218,7 +218,7 @@ class Tuning:
 class FretboardRange:
     """Represents the range of frets and strings on the fretboard."""
 
-    def __init__(self, fretFrom=0, fretTo=0, numOfString=6):
+    def __init__(self, fretFrom=1, fretTo=12, numOfString=6):
         """
         Initializes a FretboardRange object.
 
@@ -231,7 +231,7 @@ class FretboardRange:
             raise ValueError("fretFrom must be a positive integer.")
         if fretTo <= fretFrom:
             raise ValueError("fretTo must be greater than fretFrom.")
-        if numOfString < 0:
+        if numOfString <= 0:
             raise ValueError("numOfString must be a positive integer.")
         self.fretFrom = fretFrom
         self.fretTo = fretTo
