@@ -100,9 +100,28 @@ def fretToMidi(string, fret):
     Returns:
         midi (int): The MIDI note number corresponding to the fret on the string.
     """
-    midi = int(string) + int(fret)
+    if(isinstance(fret, str) and fret.lower() == "x"):
+        midi = ""
+    else:
+        midi = int(string) + int(fret)
     
     return midi
+
+def midisToNoteNameWithOctaves(midiNote):
+    """Converts a list of MIDI note number to a list of note name with octave.
+    
+    Args:
+        midiNote (list): The list of MIDI note number.
+        
+    Returns:
+        noteNameWithOctave (list): The list of note name and octave (e.g. "C4", "F#5") corresponding to the MIDI note number.
+    """
+    nameOctaves = []
+    for midiNote in midiNote:
+        octave = midiToNoteNameWithOctave(midiNote)
+        nameOctaves.append(octave)
+
+    return nameOctaves
 
 def midiToNoteNameWithOctave(midiNote):
     """Converts a MIDI note number to a note name with octave.
@@ -113,9 +132,13 @@ def midiToNoteNameWithOctave(midiNote):
     Returns:
         noteNameWithOctave (str): The note name and octave (e.g. "C4", "F#5") corresponding to the MIDI note number.
     """
-    note = music21.note.Note()
-    note.pitch.midi = midiNote
-    return note.nameWithOctave
+    if(isinstance(midiNote, str) and midiNote.lower() == ""):
+        nameWithOctave = ""
+    else:
+        note = music21.note.Note()
+        note.pitch.midi = float(midiNote)
+        nameWithOctave = note.nameWithOctave
+    return nameWithOctave
 
 def calculateHalfSteps(startNote, endNote):
     """

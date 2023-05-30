@@ -33,7 +33,7 @@ class FretboardFigure():
         '''
 
         self.fig = figure()
-        self.figHorXRange = Range1d(-8*note.getNoteRadius(),
+        self.figHorXRange = Range1d(-10*note.getNoteRadius(),
                                         (theme.fretboardRange.numOfFrets+1.3)*theme.fretboardDesign.distanceBetweenFrets)
         self.figHorYRange = Range1d(-3*note.getNoteRadius(),
                                         theme.fretboardDesign.distanceBetweenStrings*theme.tuning.numOfStrings)
@@ -45,7 +45,7 @@ class FretboardFigure():
         self.orientation = orientation
         if (orientation == "h"):
             if(width == None or height == None):
-                self.fig.width = 800
+                self.fig.width = 900
                 self.fig.height = 400
             else:
                 self.fig.width = width
@@ -56,7 +56,7 @@ class FretboardFigure():
         else:
             if(width == None or height == None):
                 self.fig.width = 400
-                self.fig.height = 800
+                self.fig.height = 900
             else:
                 self.fig.width = width
                 self.fig.height = height

@@ -1,5 +1,5 @@
 class PitchCollection():
-    def __init__(self, pitchesType = "pitchesNames"):
+    def __init__(self, pitchesType = ""):
         """
         A class representing a collection of pitches musically.
         
@@ -10,7 +10,8 @@ class PitchCollection():
             pitchesNames (list): A list of pitch names.
             pitchesWithOctave (list): A list of pitches with octave.
             pitchesScaleDegrees (list): A list of pitch scale degrees.
-            pitchesType (str): The type of pitches being stored.
+            pitchesEmpty (list): A list of pitches for displaying nothing
+            pitchesType (str): The type of pitches being stored: "pitchesNames",pitchesWithOctave", or "pitchesScaleDegrees":
             pitchesIndex (int): The current index for accessing pitches.
             frets (list): A list of fret values that correspond to the pitches.
             strings (list): A list of string values that correspond to the pitches.
@@ -19,6 +20,7 @@ class PitchCollection():
         self.pitchesNames = [""]
         self.pitchesWithOctave = [""]
         self.pitchesScaleDegrees = [""]
+        self.pitchesEmpty = [""]
         self.pitchesType = pitchesType
         self.pitchesIndex = 0
 
@@ -81,6 +83,22 @@ class PitchCollection():
         """Sets the pitchesWithOctave list to the given value."""
         self.pitchesWithOctave = value
     
+    def getPitchesEmpty(self):
+        """Returns the pitchesEmpty list."""
+        return self.pitchesEmpty
+    
+    def setPitchesEmpty(self, value):
+        """Sets the pitchesEmpty list to the given value."""
+        self.pitchesEmpty = value
+
+    def appendPitchesEmpty(self, value):
+        """Appends a value to the pitchesEmpty list."""
+        self.pitchesEmpty.append(value)
+    
+    def emptyPitchesEmpty(self):
+        """Empties the pitchesEmpty list."""
+        self.pitchesEmpty = []
+
     def emptyPitchesWithOctaves(self):
         """Empties the pitchesWithOctave list."""
         self.pitcheshWithOctave = []
@@ -116,12 +134,15 @@ class PitchCollection():
         Returns:
             list: The current arrayTypeNow list based on the pitchesType.
         """
+        pitchValue = []
         if self.pitchesType == "pitchesNames":
             pitchValue = self.pitchesNames
         elif self.pitchesType == "pitchesWithOctave":
             pitchValue = self.pitchesWithOctave
         elif self.pitchesType == "pitchesScaleDegrees":
             pitchValue = self.pitchesScaleDegrees
+        else:
+            pitchValue = self.pitchesEmpty
         
         self.arrayTypeNow = pitchValue
         
