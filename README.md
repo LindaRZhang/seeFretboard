@@ -46,6 +46,7 @@ pip install seeFretboard
 
 - [ReadTheDocs](https://seefretboard.readthedocs.io/en/latest/)
 - [Colab Examples](https://colab.research.google.com/drive/1ph2_gWhY4UMN_gLa4Ab9w2uEYFbGuFOA?usp=sharing)
+- [Youtube](https://www.youtube.com/channel/UCbJuZ7lAg96_zMXpdW528rg)
 
 ## Contributing
 
@@ -64,6 +65,9 @@ This project was created by Linda Rong Zhang.
 
 ## History
 [HISTORY](HISTORY.rst)
+
+## LinkTree Links
+[LinkTree](https://linktr.ee/seeFretboard)
 
 
 
