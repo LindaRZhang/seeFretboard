@@ -56,6 +56,8 @@ See [CONTRIBUTING.rst](CONTRIBUTING.rst) for ways to get started.
 
 
 ## Credits
+Special thanks to [Andrew Wiggins](mailto:awiggins@drexel.edu) and [Youngmoo Kim](mailto:ykim@drexel.edu) for advising on this project!
+
 Thank you for your contributions! We appreciate it!
 
 ## Creator
