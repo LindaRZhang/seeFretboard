@@ -13,7 +13,7 @@
     <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="setup module" href="setup.html" />
+    <link rel="next" title="Credits" href="credits.html" />
     <link rel="prev" title="seeFretboard.Utilities package" href="seeFretboard.Utilities.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -617,7 +617,7 @@ otherwise it populates the <cite>midiFrames</cite> attribute.</p>
 <span id="seefretboard-videos-video-module"></span><h2>seeFretboard.Videos.Video module<a class="headerlink" href="#module-seeFretboard.Videos.Video" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Videos.Video.</span></span><span class="sig-name descname"><span class="pre">Video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">startTime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endTime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currentFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frameStep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frameRate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'defaultVid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileExtension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.mp4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mp4v'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoWAudioName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'defaultVideoWAudio'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seeFretboard.Videos.Video.</span></span><span class="sig-name descname"><span class="pre">Video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frameRate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'defaultVid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileExtension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.mp4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mp4v'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoWAudioName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'defaultVideoWAudio'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#seeFretboard.Videos.Frame.Frame" title="seeFretboard.Videos.Frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a></p>
 <p>The Video class is designed to represent a video and inherits from the Frame class.
 It stores information about the video such as the start and end times, current frame,
@@ -630,50 +630,6 @@ of the class are to add frames to the video, set and get the video properties, a
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.startTime">
-<span class="sig-name descname"><span class="pre">startTime</span></span><a class="headerlink" href="#seeFretboard.Videos.Video.Video.startTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>The start time of the video in seconds.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.endTime">
-<span class="sig-name descname"><span class="pre">endTime</span></span><a class="headerlink" href="#seeFretboard.Videos.Video.Video.endTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>The end time of the video in seconds.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.currentFrame">
-<span class="sig-name descname"><span class="pre">currentFrame</span></span><a class="headerlink" href="#seeFretboard.Videos.Video.Video.currentFrame" title="Permalink to this definition">¶</a></dt>
-<dd><p>The current frame of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.frameStep">
-<span class="sig-name descname"><span class="pre">frameStep</span></span><a class="headerlink" href="#seeFretboard.Videos.Video.Video.frameStep" title="Permalink to this definition">¶</a></dt>
-<dd><p>The step size between frames in seconds.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -881,40 +837,12 @@ of the class are to add frames to the video, set and get the video properties, a
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.getCurrentFrame">
-<span class="sig-name descname"><span class="pre">getCurrentFrame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.getCurrentFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.getCurrentFrame" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the current frame of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The current frame.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.getCurrentSecond">
 <span class="sig-name descname"><span class="pre">getCurrentSecond</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.getCurrentSecond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.getCurrentSecond" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the current second of the video based on the current frame and frame rate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The current second.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.getEndTime">
-<span class="sig-name descname"><span class="pre">getEndTime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.getEndTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.getEndTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the end time frame of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The end time frame.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>float</p>
@@ -949,20 +877,6 @@ of the class are to add frames to the video, set and get the video properties, a
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>object</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.getFrameStep">
-<span class="sig-name descname"><span class="pre">getFrameStep</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.getFrameStep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.getFrameStep" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the frame step of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The frame step.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1033,20 +947,6 @@ of the class are to add frames to the video, set and get the video properties, a
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.getStartTime">
-<span class="sig-name descname"><span class="pre">getStartTime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.getStartTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.getStartTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the start time frame of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The start time frame.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1147,12 +1047,6 @@ of the class are to add frames to the video, set and get the video properties, a
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.saveVideo">
-<span class="sig-name descname"><span class="pre">saveVideo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.saveVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.saveVideo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save the video.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.setAudioName">
 <span class="sig-name descname"><span class="pre">setAudioName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.setAudioName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.setAudioName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the name of the audio file.</p>
@@ -1197,28 +1091,6 @@ of the class are to add frames to the video, set and get the video properties, a
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.setCurrentFrame">
-<span class="sig-name descname"><span class="pre">setCurrentFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.setCurrentFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.setCurrentFrame" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the current frame of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>frame</strong> (<em>float</em>) – The current frame.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.setEndTime">
-<span class="sig-name descname"><span class="pre">setEndTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.setEndTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.setEndTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the end time frame of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>frame</strong> (<em>float</em>) – The end time frame.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.setFileExtension">
 <span class="sig-name descname"><span class="pre">setFileExtension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.setFileExtension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.setFileExtension" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the file extension of the video.</p>
@@ -1230,34 +1102,12 @@ of the class are to add frames to the video, set and get the video properties, a
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.setFrameStep">
-<span class="sig-name descname"><span class="pre">setFrameStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.setFrameStep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.setFrameStep" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the frame step of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>step</strong> (<em>float</em>) – The frame step.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.setFrames">
 <span class="sig-name descname"><span class="pre">setFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.setFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.setFrames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the frames of the video.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>frames</strong> (<em>dict</em>) – A dictionary of frames with their associated notes.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="seeFretboard.Videos.Video.Video.setStartTime">
-<span class="sig-name descname"><span class="pre">setStartTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/seeFretboard/Videos/Video.html#Video.setStartTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#seeFretboard.Videos.Video.Video.setStartTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the start time frame of the video.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>frame</strong> (<em>float</em>) – The start time frame.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1602,7 +1452,6 @@ and saves it with a specified name.</p>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration For Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">seeFretboard</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="Tests.html">Tests package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="seeFretboard.html">seeFretboard package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="seeFretboard.html#subpackages">Subpackages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#submodules">Submodules</a></li>
@@ -1612,7 +1461,6 @@ and saves it with a specified name.</p>
 <li class="toctree-l3"><a class="reference internal" href="seeFretboard.html#module-seeFretboard">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
@@ -1627,7 +1475,7 @@ and saves it with a specified name.</p>
   <li><a href="modules.html">seeFretboard</a><ul>
   <li><a href="seeFretboard.html">seeFretboard package</a><ul>
       <li>Previous: <a href="seeFretboard.Utilities.html" title="previous chapter">seeFretboard.Utilities package</a></li>
-      <li>Next: <a href="setup.html" title="next chapter">setup module</a></li>
+      <li>Next: <a href="credits.html" title="next chapter">Credits</a></li>
   </ul></li>
   </ul></li>
   </ul></li>

@@ -77,6 +77,7 @@ class SeeFretboard():
         self.layout = layout([self.fretboardFig.fig,
                          self.toggleButtons, self.notesOptions])
 
+
     def getFretboardFig(self):
         return self.fretboardFig
     
@@ -383,6 +384,7 @@ class SeeFretboard():
         
         self.labels = []
         self.currentNotesPositionOnFretboard = []
+        self.pitchCollection.setAllEmpty()
 
     def removeFigure(self):
         self.currentNotesPositionOnFretboard = []
@@ -398,8 +400,6 @@ class SeeFretboard():
         midiNotes = []
         strings = []
         frets = []
-        len(notes)
-        self.pitchCollection.setAllEmpty()
         for i in range(len(notes)):
             self.pitchCollection.appendPitchesEmpty("")
             strings.append(i)

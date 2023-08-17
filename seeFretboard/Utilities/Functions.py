@@ -1,5 +1,6 @@
 import music21 
 from .Constants import *
+from bokeh.io import export_png, export_svg
 
 #helper functions
 
@@ -100,13 +101,12 @@ def fretToMidi(stringMidi, fret):
     Returns:
         midi (int): The MIDI note number corresponding to the fret on the string.
     """
+    print(fret,"fret")
     if(isinstance(fret, str) and fret.lower() == "x"):
-        midi = "x"
+        return "x"
     else:
-        midi = int(stringMidi) + int(fret)
+        return int(stringMidi) + int(fret)
     
-    return midi
-
 def midisToNoteNameWithOctaves(midiNote):
     """Converts a list of MIDI note number to a list of note name with octave.
     
@@ -122,6 +122,38 @@ def midisToNoteNameWithOctaves(midiNote):
         nameOctaves.append(octave)
 
     return nameOctaves
+
+def noteNameToMidi(noteName):
+    """Converts a note name to a MIDI note number.
+    
+    Args:
+        noteName (str): The note name (e.g. "C", "F#").
+        
+    Returns:
+        midiNote (int): The MIDI note number corresponding to the note name.
+    """
+    octave = 2  # Assuming standard guitar tuning starting from the 2nd octave
+    note = music21.note.Note()
+    note.pitch.nameWithOctave = noteName + str(octave)
+    midiNote = note.pitch.midi
+    return midiNote
+
+
+def noteNamesToMidis(noteNames):
+    """Converts a list of note names to a list of corresponding MIDI note numbers.
+    
+    Args:
+        noteNames (list): The list of note names (e.g. ["C", "F#"]).
+        
+    Returns:
+        midiNotes (list): The list of MIDI note numbers corresponding to the note names.
+    """
+    midiNotes = []
+    for noteName in noteNames:
+        midiNote = noteNameToMidi(noteName)
+        midiNotes.append(midiNote)
+
+    return midiNotes
 
 def midiToNoteNameWithOctave(midiNote):
     """Converts a MIDI note number to a note name with octave.
@@ -341,6 +373,25 @@ def getDictionaryName(dictionary):
             return name
     return None
 
+def saveImage(fretboardFig, fileName, meta):
+        """
+        Saves the fretboard visualization as an image.
+
+        This method saves the current state of the fretboard visualization as an image file.
+        The image format is determined by the file extension specified in the Images object.
+        png and svg for now.
+
+        Raises:
+            FileNotFoundError: If the output directory specified in the Images object does not exist.
+        """
+        if (meta.lower() == "png"):
+            export_png(fretboardFig, filename=fileName)
+
+        elif (meta.lower() == "svg"):
+            export_svg(fretboardFig, filename=fileName)
+        
+        print("IMAGE SAVED")
+
 class customShapes():
     """
     A class representing a collection of custom shapes.
@@ -418,4 +469,5 @@ class customShapes():
             return True
         else:
             return False
+        
     

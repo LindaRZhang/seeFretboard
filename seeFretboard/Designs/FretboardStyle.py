@@ -360,7 +360,7 @@ class FretboardDesign:
         self.fretboardMarkerColor = kwargs.get("fretboardMarkerColor", "#DCDCDC")
 
         #notes colors
-        self.noteType = "prediction"
+        self.noteType = kwargs.get("noteType","prediction")
 
         self.noteTypes = {
             'prediction': CircleNote(), #default using that
@@ -371,10 +371,10 @@ class FretboardDesign:
             'green':CircleNote(noteFaceColor="#DFFFED",noteTextColor="#001f3f",noteEdgeColor="#white" ),
         }
 
-        self.tuningLabelColor = "black"
-        self.tuningLabelFontSize = "10pt"
-        self.fretLabelColor = "black"
-        self.fretLabelFontsize = "10pt"
+        self.tuningLabelColor = kwargs.get("tuningLabelColor","black")
+        self.tuningLabelFontSize = kwargs.get("tuningLabelFontSize","10pt")
+        self.fretLabelColor = kwargs.get("fretLabelColor","black")
+        self.fretLabelFontsize = kwargs.get("fretLabelFontsize","10pt")
 
     @property
     def backgroundColor(self):

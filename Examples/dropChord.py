@@ -13,12 +13,12 @@ fretboard.drawFretboard("v")#this function can change from h to v
 Drop2 String6
 """
 fretboard.addDropChord("c","maj7")
-# fretboard.setNoteType("groundTruth")
-# fretboard.addDropChord("c", "maj7","Drop2", "2")
-# fretboard.setNoteType("prediction")
-# fretboard.addDropChord("c", "maj7","Drop2", "3")
-# fretboard.setNoteType("groundTruth")
-# fretboard.addDropChord("c", "maj7","Drop2", "4")
+fretboard.setNoteType("groundTruth")
+fretboard.addDropChord("c", "maj7","Drop2", "2")
+fretboard.setNoteType("prediction")
+fretboard.addDropChord("c", "maj7","Drop2", "3")
+fretboard.setNoteType("groundTruth")
+fretboard.addDropChord("c", "maj7","Drop2", "4")
 
 # fretboard.addDropChord("c","dom7")
 # fretboard.setNoteType("groundTruth")

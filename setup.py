@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='seeFretboard',
-    version='0.1.5.4',
+    version='0.1.5.5',
     author='Linda Rong Zhang',
     author_email='ronglindaz@gmail.com',
     description='For Release',
@@ -22,7 +22,9 @@ setup(
                          'Outputs/Audios/*',
                          'Outputs/Embeds/*',
                          'Outputs/Images/*',
-                         'Outputs/Videos/*'
+                         'Outputs/Videos/*',
+                         'GuitarSet/annotation/*',
+                         'GuitarSet/audio_mono-pickup_mix/*',
                         ],
     },
     install_requires=['requests'],

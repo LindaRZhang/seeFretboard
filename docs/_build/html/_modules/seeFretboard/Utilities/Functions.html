@@ -131,13 +131,12 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        midi (int): The MIDI note number corresponding to the fret on the string.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fret</span><span class="p">,</span><span class="s2">&quot;fret&quot;</span><span class="p">)</span>
     <span class="k">if</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">fret</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fret</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span>
-        <span class="n">midi</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;x&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">midi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stringMidi</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">fret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">stringMidi</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">fret</span><span class="p">)</span></div>
     
-    <span class="k">return</span> <span class="n">midi</span></div>
-
 <div class="viewcode-block" id="midisToNoteNameWithOctaves"><a class="viewcode-back" href="../../../seeFretboard.Utilities.html#seeFretboard.Utilities.Functions.midisToNoteNameWithOctaves">[docs]</a><span class="k">def</span> <span class="nf">midisToNoteNameWithOctaves</span><span class="p">(</span><span class="n">midiNote</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a list of MIDI note number to a list of note name with octave.</span>
 <span class="sd">    </span>

@@ -42,10 +42,6 @@
 <span class="sd">    </span>
 <span class="sd">    Attributes:</span>
 <span class="sd">        frames (dict): A dictionary of frames with their corresponding time frames.</span>
-<span class="sd">        startTime (float): The start time of the video in seconds.</span>
-<span class="sd">        endTime (float): The end time of the video in seconds.</span>
-<span class="sd">        currentFrame (float): The current frame of the video.</span>
-<span class="sd">        frameStep (float): The step size between frames in seconds.</span>
 <span class="sd">        currentAddTabFrames (int): The number of frames added through the `addTab` method.</span>
 <span class="sd">        fileExtension (str): The file extension of the video.</span>
 <span class="sd">        codec (str): The video codec.</span>
@@ -59,18 +55,11 @@
 <span class="sd">        videoWAudioName (str): The name of the video with audio.</span>
 <span class="sd">        videoWAudioPathWithName (str): The path to the video with audio file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">startTime</span><span class="p">,</span> <span class="n">endTime</span><span class="p">,</span> <span class="n">currentFrame</span><span class="p">,</span> <span class="n">frameStep</span><span class="p">,</span> <span class="n">frameRate</span><span class="o">=</span><span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">videoName</span><span class="o">=</span><span class="s2">&quot;defaultVid&quot;</span><span class="p">,</span> <span class="n">fileExtension</span><span class="o">=</span><span class="s2">&quot;.mp4&quot;</span><span class="p">,</span> <span class="n">codec</span><span class="o">=</span><span class="s2">&quot;mp4v&quot;</span><span class="p">,</span> <span class="n">videoWAudioName</span><span class="o">=</span><span class="s2">&quot;defaultVideoWAudio&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameRate</span><span class="o">=</span><span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">videoName</span><span class="o">=</span><span class="s2">&quot;defaultVid&quot;</span><span class="p">,</span> <span class="n">fileExtension</span><span class="o">=</span><span class="s2">&quot;.mp4&quot;</span><span class="p">,</span> <span class="n">codec</span><span class="o">=</span><span class="s2">&quot;mp4v&quot;</span><span class="p">,</span> <span class="n">videoWAudioName</span><span class="o">=</span><span class="s2">&quot;defaultVideoWAudio&quot;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">frameRate</span><span class="p">)</span>
 
         <span class="c1"># format = {{frameNumber:chordString},{0:&quot;5,0,5,5,0,0&quot;},{1:&quot;5,0,5,5,0,0&quot;}}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frames</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="c1"># all these are digits or the keys</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">startTime</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">startTime</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">endTime</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">endTime</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">currentFrame</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">currentFrame</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">frameStep</span> <span class="o">=</span> <span class="n">frameStep</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">currentAddTabFrames</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fileExtension</span> <span class="o">=</span> <span class="n">fileExtension</span>
@@ -81,7 +70,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">videoName</span> <span class="o">=</span> <span class="n">videoName</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">videoPathWithName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">videoPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">videoName</span><span class="p">)</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">audioPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_PATH</span><span class="p">,</span> <span class="s1">&#39;GuitarSet&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">audioPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_PATH</span><span class="p">,</span> <span class="s1">&#39;GuitarSet&#39;</span><span class="p">,</span><span class="s2">&quot;audio_mono-pickup_mix&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">audioName</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">audioPathWithName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">audioPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">audioName</span><span class="p">)</span>
 
@@ -273,84 +262,6 @@
 <span class="sd">            ext (str): The file extension.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fileExtension</span> <span class="o">=</span> <span class="n">ext</span></div>
-
-<div class="viewcode-block" id="Video.saveVideo"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.saveVideo">[docs]</a>    <span class="k">def</span> <span class="nf">saveVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Save the video.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
-
-<div class="viewcode-block" id="Video.getStartTime"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.getStartTime">[docs]</a>    <span class="k">def</span> <span class="nf">getStartTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the start time frame of the video.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            float: The start time frame.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">startTime</span></div>
-
-<div class="viewcode-block" id="Video.setStartTime"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.setStartTime">[docs]</a>    <span class="k">def</span> <span class="nf">setStartTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the start time frame of the video.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            frame (float): The start time frame.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">startTime</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Video.getEndTime"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.getEndTime">[docs]</a>    <span class="k">def</span> <span class="nf">getEndTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the end time frame of the video.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            float: The end time frame.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">endTime</span></div>
-
-<div class="viewcode-block" id="Video.setEndTime"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.setEndTime">[docs]</a>    <span class="k">def</span> <span class="nf">setEndTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the end time frame of the video.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            frame (float): The end time frame.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">endTime</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Video.getCurrentFrame"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.getCurrentFrame">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the current frame of the video.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            float: The current frame.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentFrame</span></div>
-
-<div class="viewcode-block" id="Video.setCurrentFrame"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.setCurrentFrame">[docs]</a>    <span class="k">def</span> <span class="nf">setCurrentFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the current frame of the video.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            frame (float): The current frame.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">currentFrame</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Video.getFrameStep"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.getFrameStep">[docs]</a>    <span class="k">def</span> <span class="nf">getFrameStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the frame step of the video.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            float: The frame step.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameStep</span></div>
-
-<div class="viewcode-block" id="Video.setFrameStep"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.setFrameStep">[docs]</a>    <span class="k">def</span> <span class="nf">setFrameStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the frame step of the video.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            step (float): The frame step.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frameStep</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Video.getVideoName"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.Video.Video.getVideoName">[docs]</a>    <span class="k">def</span> <span class="nf">getVideoName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

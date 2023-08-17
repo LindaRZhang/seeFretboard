@@ -42,20 +42,20 @@
 
 
 <div class="viewcode-block" id="TabSequence"><a class="viewcode-back" href="../../../seeFretboard.Videos.html#seeFretboard.Videos.TabSequence.TabSequence">[docs]</a><span class="k">class</span> <span class="nc">TabSequence</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    The TabSequence class is responsible for generating sequences of frame from audio files. </span>
 <span class="sd">    It uses the GuitarSet dataset to extract note information from audio tracks and converts </span>
 <span class="sd">    this information into tablature frames. The class can generate frames in either fret or </span>
 <span class="sd">    MIDI format and can convert between the two. It also provides methods for adding tablature </span>
 <span class="sd">    frames and converting frames to notes with time information.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trackNum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">frameRate</span><span class="o">=</span><span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">filePath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_PATH</span><span class="p">,</span> <span class="s1">&#39;GuitarSet&#39;</span><span class="p">)):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Parameters:</span>
 <span class="sd">            trackNum (int): The index of the track to load from the dataset.</span>
 <span class="sd">            frameRate (float, optional): The frame rate of the tab sequence. Default is FRAMERATE.</span>
 <span class="sd">            filePath (str, optional): The file path to the GuitarSet dataset. Default is &#39;BASE_PATH/GuitarSet&#39;.</span>
-<span class="sd">            &quot;&quot;&quot;</span>
+<span class="sd">            &#39;&#39;&#39;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">frameRate</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">filePath</span> <span class="o">=</span> <span class="n">filePath</span>
@@ -405,7 +405,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration For Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">docs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>

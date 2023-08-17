@@ -249,7 +249,7 @@
 <div class="viewcode-block" id="FretboardRange"><a class="viewcode-back" href="../../../seeFretboard.Designs.html#seeFretboard.Designs.FretboardStyle.FretboardRange">[docs]</a><span class="k">class</span> <span class="nc">FretboardRange</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the range of frets and strings on the fretboard.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fretFrom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fretTo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">numOfString</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fretFrom</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fretTo</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">numOfString</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes a FretboardRange object.</span>
 
@@ -262,7 +262,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;fretFrom must be a positive integer.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fretTo</span> <span class="o">&lt;=</span> <span class="n">fretFrom</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;fretTo must be greater than fretFrom.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">numOfString</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">numOfString</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;numOfString must be a positive integer.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fretFrom</span> <span class="o">=</span> <span class="n">fretFrom</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fretTo</span> <span class="o">=</span> <span class="n">fretTo</span>
@@ -391,7 +391,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fretboardMarkerColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretboardMarkerColor&quot;</span><span class="p">,</span> <span class="s2">&quot;#DCDCDC&quot;</span><span class="p">)</span>
 
         <span class="c1">#notes colors</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">noteType</span> <span class="o">=</span> <span class="s2">&quot;prediction&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noteType</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;noteType&quot;</span><span class="p">,</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">noteTypes</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;prediction&#39;</span><span class="p">:</span> <span class="n">CircleNote</span><span class="p">(),</span> <span class="c1">#default using that</span>
@@ -402,10 +402,10 @@
             <span class="s1">&#39;green&#39;</span><span class="p">:</span><span class="n">CircleNote</span><span class="p">(</span><span class="n">noteFaceColor</span><span class="o">=</span><span class="s2">&quot;#DFFFED&quot;</span><span class="p">,</span><span class="n">noteTextColor</span><span class="o">=</span><span class="s2">&quot;#001f3f&quot;</span><span class="p">,</span><span class="n">noteEdgeColor</span><span class="o">=</span><span class="s2">&quot;#white&quot;</span> <span class="p">),</span>
         <span class="p">}</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">tuningLabelColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tuningLabelFontSize</span> <span class="o">=</span> <span class="s2">&quot;10pt&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fretLabelColor</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fretLabelFontsize</span> <span class="o">=</span> <span class="s2">&quot;10pt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tuningLabelColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tuningLabelColor&quot;</span><span class="p">,</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tuningLabelFontSize</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tuningLabelFontSize&quot;</span><span class="p">,</span><span class="s2">&quot;10pt&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretLabelColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretLabelColor&quot;</span><span class="p">,</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fretLabelFontsize</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fretLabelFontsize&quot;</span><span class="p">,</span><span class="s2">&quot;10pt&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">backgroundColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -741,7 +741,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../dependencies.html">Dependencies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration For Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../configuration.html#configuration-for-theory-related">Configuration For Theory Related</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">seeFretboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">docs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>

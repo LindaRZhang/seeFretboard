@@ -3,7 +3,7 @@ Setting up seeFretboard
 
 Install With Conda Environment
 -----------------------------
-`Anaconda Installation/Docunmentation <https://docs.anaconda.com/free/anaconda/install/index.html>`_.
+`Anaconda Installation/Documentation <https://docs.anaconda.com/free/anaconda/install/index.html>`_.
 
 ```
 conda create --name <env> --file Conda-package-list.txt
@@ -11,7 +11,7 @@ conda create --name <env> --file Conda-package-list.txt
 
 Install with Pip
 -----------------
-`Pip Installation/Docunmentation <https://pip.pypa.io/en/stable/>`_.
+`Pip Installation/Documentation <https://pip.pypa.io/en/stable/>`_.
 
 Install Library
 

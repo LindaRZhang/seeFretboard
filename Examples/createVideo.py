@@ -10,7 +10,7 @@ from seeFretboard.Videos import Video, TabSequence, Audio, VideoManager, Images
 
 fretboard = SeeFretboard("v", 1, 12)
 tabSeq = TabSequence(8)
-video = Video(0, 0, 0, 0)
+video = Video()
 fretboard.drawVerticalFretboard()
 video.setVideoName("OpenStringG")
 
@@ -22,5 +22,5 @@ video.setVideoName("video_00_BN3-119-G_comp_hex_cln")
 
 videoManager = VideoManager(fretboard,video,Images())
 
-#videoManager.saveAsVideoImagesNoSeconds()
+videoManager.saveAsVideoImagesNoSeconds()
 videoManager.saveAsVideo()

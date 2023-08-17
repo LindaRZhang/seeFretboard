@@ -11,10 +11,6 @@ class Video(Frame):
     
     Attributes:
         frames (dict): A dictionary of frames with their corresponding time frames.
-        startTime (float): The start time of the video in seconds.
-        endTime (float): The end time of the video in seconds.
-        currentFrame (float): The current frame of the video.
-        frameStep (float): The step size between frames in seconds.
         currentAddTabFrames (int): The number of frames added through the `addTab` method.
         fileExtension (str): The file extension of the video.
         codec (str): The video codec.
@@ -28,18 +24,11 @@ class Video(Frame):
         videoWAudioName (str): The name of the video with audio.
         videoWAudioPathWithName (str): The path to the video with audio file.
     """
-    def __init__(self, startTime, endTime, currentFrame, frameStep, frameRate=FRAMERATE, videoName="defaultVid", fileExtension=".mp4", codec="mp4v", videoWAudioName="defaultVideoWAudio"):
+    def __init__(self, frameRate=FRAMERATE, videoName="defaultVid", fileExtension=".mp4", codec="mp4v", videoWAudioName="defaultVideoWAudio"):
         super().__init__(frameRate)
 
         # format = {{frameNumber:chordString},{0:"5,0,5,5,0,0"},{1:"5,0,5,5,0,0"}}
         self.frames = {}
-
-        # all these are digits or the keys
-        self.startTime = round(startTime, 2)
-        self.endTime = round(endTime, 2)
-        self.currentFrame = round(currentFrame, 2)
-
-        self.frameStep = frameStep
 
         self.currentAddTabFrames = 0
         self.fileExtension = fileExtension
@@ -50,7 +39,7 @@ class Video(Frame):
         self.videoName = videoName
         self.videoPathWithName = os.path.join(self.videoPath, self.videoName)
         
-        self.audioPath = os.path.join(BASE_PATH, 'GuitarSet')
+        self.audioPath = os.path.join(BASE_PATH, 'GuitarSet',"audio_mono-pickup_mix")
         self.audioName = ""
         self.audioPathWithName = os.path.join(self.audioPath, self.audioName)
 
@@ -242,84 +231,6 @@ class Video(Frame):
             ext (str): The file extension.
         """
         self.fileExtension = ext
-
-    def saveVideo(self):
-        """
-        Save the video.
-        """
-        pass
-
-    def getStartTime(self):
-        """
-        Get the start time frame of the video.
-
-        Returns:
-            float: The start time frame.
-        """
-        return self.startTime
-
-    def setStartTime(self, frame):
-        """
-        Set the start time frame of the video.
-
-        Args:
-            frame (float): The start time frame.
-        """
-        self.startTime = round(frame, 2)
-
-    def getEndTime(self):
-        """
-        Get the end time frame of the video.
-
-        Returns:
-            float: The end time frame.
-        """
-        return self.endTime
-
-    def setEndTime(self, frame):
-        """
-        Set the end time frame of the video.
-
-        Args:
-            frame (float): The end time frame.
-        """
-        self.endTime = round(frame, 2)
-
-    def getCurrentFrame(self):
-        """
-        Get the current frame of the video.
-
-        Returns:
-            float: The current frame.
-        """
-        return self.currentFrame
-
-    def setCurrentFrame(self, frame):
-        """
-        Set the current frame of the video.
-
-        Args:
-            frame (float): The current frame.
-        """
-        self.currentFrame = round(frame, 2)
-
-    def getFrameStep(self):
-        """
-        Get the frame step of the video.
-
-        Returns:
-            float: The frame step.
-        """
-        return self.frameStep
-
-    def setFrameStep(self, step):
-        """
-        Set the frame step of the video.
-
-        Args:
-            step (float): The frame step.
-        """
-        self.frameStep = round(step, 2)
 
     def getVideoName(self):
         """
