@@ -8,7 +8,7 @@ from seeFretboard import SeeFretboard
 fretboard = SeeFretboard("v", 1, 12)
 
 tabSeq = TabSequence(8)#guitar set track 8
-video = Video(0, 0, 0, 0)
+video = Video()
 
 fretboard.drawVerticalFretboard()
 

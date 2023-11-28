@@ -1,6 +1,7 @@
 import mirdata
 import math
 import os
+import numpy as np
 from .Frame import Frame
 from .VideoNote import VideoNote
 import seeFretboard.Utilities.Functions as Functions
@@ -82,6 +83,8 @@ class TabSequence(Frame):
         self.midiFrames = []
         self.notesWithTimeFrames = []
         self.frameType = "fret"
+
+        self.currentTime = 0
 
     def getNumOfStrings(self):
         """
@@ -225,8 +228,27 @@ class TabSequence(Frame):
                 if (i == len(self.midiFrames)-1) or (pitch != self.midiFrames[i+1][j]):
                     output.append(pitchesPlaying[(j, pitch)])
                     del pitchesPlaying[(j, pitch)]
+        
+        self.setNotesWithTimeFrames(output)
+
+    def framesToNotesWithTimeForTabsNonGuitarSet(self):
+        output = []
+        string_data = [
+            (self.EMidiPitches, self.ETimeStamp),
+            (self.AMidiPitches, self.ATimeStamp),
+            (self.DMidiPitches, self.DTimeStamp),
+            (self.GMidiPitches, self.GTimeStamp),
+            (self.BMidiPitches, self.BTimeStamp),
+            (self.eMidiPitches, self.eTimeStamp),
+        ]
+
+        for pitchs, timestamps in string_data:        
+            for pitch, timestamp in zip(pitchs, timestamps):
+                startTime, endTime = timestamp
+                output.append(VideoNote(pitch, startTime, endTime))
 
         self.setNotesWithTimeFrames(output)
+
 
     def addTab(self, seconds, tab):
         """
@@ -237,10 +259,47 @@ class TabSequence(Frame):
             tab (str or list): The tab to add. If it's a string, it represents a single frame.
                                If it's a list, it represents multiple frames.
         """
+        
         frames = seconds * self.frameRate
         for i in range(1, frames+1):
             self.addFretFrame(tab)
+        
+        tab = list(map(int, tab.split(',')))
+        print(tab)
 
+        timeStampes = [self.currentTime,self.currentTime+seconds]
+         # Assign the lists to instance variables
+        self.EStringFrets.append(tab[0])
+        self.ETimeStamp.append(timeStampes)
+        self.AStringFrets.append(tab[1])
+        self.ATimeStamp.append(timeStampes)
+        self.DStringFrets.append(tab[2])
+        self.DTimeStamp.append(timeStampes)
+        self.GStringFrets.append(tab[3])
+        self.GTimeStamp.append(timeStampes)
+        self.BStringFrets.append(tab[4])
+        self.BTimeStamp.append(timeStampes)
+        self.eStringFrets.append(tab[5])
+        self.eTimeStamp.append(timeStampes)
+
+
+        self.currentTime+=seconds
+        print("HEREEE")
+        print(self.EStringFrets, self.ETimeStamp)
+
+        # Convert frets to MIDI pitches
+        self.EMidiPitches = [Functions.fretToMidi(self.Elow, fret) for fret in self.EStringFrets]
+        self.AMidiPitches = [Functions.fretToMidi(self.A, fret) for fret in self.AStringFrets]
+        self.DMidiPitches = [Functions.fretToMidi(self.D, fret) for fret in self.DStringFrets]
+        self.GMidiPitches = [Functions.fretToMidi(self.G, fret) for fret in self.GStringFrets]
+        self.BMidiPitches = [Functions.fretToMidi(self.B, fret) for fret in self.BStringFrets]
+        self.eMidiPitches = [Functions.fretToMidi(self.EHigh, fret) for fret in self.eStringFrets]
+
+        self.maxEndTime = max(self.ETimeStamp[-1][-1], self.ATimeStamp[-1][-1],
+                            self.DTimeStamp[-1][-1], self.GTimeStamp[-1][-1], self.BTimeStamp[-1][-1],
+                            self.eTimeStamp[-1][-1])
+
+    
     def getFretFrames(self):
         """
         Get the fret frames of the tab sequence.
@@ -351,3 +410,30 @@ class TabSequence(Frame):
             frameType (str): The frame type to set, either "fret" or "midi".
         """
         self.frameType = frameType
+    
+    def resetTabAttributes(self):
+        """Reset all tab attributes to empty or initial state."""
+        # Set frets and timestamps to empty lists
+        self.EStringFrets = []
+        self.ETimeStamp = []
+        self.AStringFrets = []
+        self.ATimeStamp = []
+        self.DStringFrets = []
+        self.DTimeStamp = []
+        self.GStringFrets = []
+        self.GTimeStamp = []
+        self.BStringFrets = []
+        self.BTimeStamp = []
+        self.eStringFrets = []
+        self.eTimeStamp = []
+
+        # Set MidiPitches to empty lists or initial state
+        self.EMidiPitches = []
+        self.AMidiPitches = []
+        self.DMidiPitches = []
+        self.GMidiPitches = []
+        self.BMidiPitches = []
+        self.eMidiPitches = []
+
+        # Set maxEndTime to initial state or appropriate value
+        self.maxEndTime = 0  # You can adjust this based on your needs

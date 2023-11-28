@@ -95,14 +95,14 @@ def fretToMidi(stringMidi, fret):
     """Converts a fret number on a string to a MIDI note number.
     
     Args:
-        string (int): The string number, is the midi string corresponding to that string the fret is on.
+        stringMidi (int): The string midi corresponding to that string the fret is on.
         fret (int): The fret number on the string. 
         
     Returns:
         midi (int): The MIDI note number corresponding to the fret on the string.
     """
     print(fret,"fret")
-    if(isinstance(fret, str) and fret.lower() == "x"):
+    if((isinstance(fret, str) and fret.lower() == "x"))or fret == "-1":
         return "x"
     else:
         return int(stringMidi) + int(fret)

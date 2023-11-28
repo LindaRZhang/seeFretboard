@@ -6,10 +6,10 @@ from seeFretboard import Utilities
 from seeFretboard import SeeFretboard, Constants, Functions
 
 #veritcal fretboard option
-fretboard = SeeFretboard("h", 1, 12,theme="blue")
-fretboard.getTheme().tuning.letterTuning = ["C", "F", "D", "F", "A", "C"]
-# fretboard.getTheme().tuning.midiTuning = Functions.noteNamesToMidis(["E", "G", "E", "G", "A", "D"])
-fretboard.getTheme().tuning.midiTuning = Functions.noteNamesToMidis(["C", "F", "D", "F", "A", "C"])
+fretboard = SeeFretboard("h", 1, 12,theme="green")
+fretboard.getTheme().tuning.letterTuning = ["C", "G", "D", "G", "A", "D"]
+fretboard.getTheme().tuning.midiTuning = Functions.noteNamesToMidis(["C", "G", "D", "G", "A", "D"])
+# fretboard.getTheme().tuning.midiTuning = Functions.noteNamesToMidis(["D", "A", "D", "G", "A", "D"])
 
 fretboard.drawHorizontalFretboard()
 
@@ -23,13 +23,24 @@ saveImageAt="/Users/lindazhang/Downloads/"
 # Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+"GChromatic.png", "png")
 # fretboard.clearFretboard()
 
-# fretboard.addScale("C","major")
-# Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+"CMajorScale.png", "png")
-# fretboard.clearFretboard()
 
-fretboard.addOctave("C")
-Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+"COct.png", "png")
+#ADD ALL KEYS
+#keys = Utilities.allKeys#
+# for key in keys:
+#     fretboard.addScale(key,"major")
+#     Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+key+"MajorScale.png", "png")
+#     fretboard.clearFretboard()
+
+#fretboard.getPitchCollection().setPitchesType("pitchesScaleDegrees")
+
+key="G"
+fretboard.addScale(key,"majorpentatonic")
+Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+key+"p.png", "png")
 fretboard.clearFretboard()
+
+# fretboard.addOctave("D")
+# Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+"DOct.png", "png")
+# fretboard.clearFretboard()
 
 # fretboard.addOctave("G")
 # Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+"GOct.png", "png")
@@ -50,7 +61,7 @@ fretboard.clearFretboard()
 # fretboard.clearFretboard()
 
 
-fretboard.addArpeggio("C","major")
-Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+"CMajArpeggio.png", "png")
+fretboard.addArpeggio(key,"major")
+Functions.saveImage(fretboard.getFretboardFig().fig, saveImageAt+key+"MajArpeggio.png", "png")
 
 fretboard.showFretboard()
