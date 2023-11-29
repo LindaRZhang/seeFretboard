@@ -14,7 +14,7 @@ tabSeq = TabSequence(8)  # Use track 8 from the GuitarSet dataset
 
 # Add the tabs for the chords
 tabSeq.resetTabAttributes()
-tabSeq.addTab(3, "-1,3,2,-1,1,-1")  # Add the 032010 chord for 3 seconds
+tabSeq.addTab(3, "-1,-1,-1,-1,1,-1")  # Add the 032010 chord for 3 seconds
 tabSeq.addTab(3, "-1,3,3,-1,1,-1")  # Add the 033010 chord for 3 seconds
 tabSeq.addTab(2, "0,2,2,1,0,0")  # Add the 033010 chord for 2 seconds
 
@@ -33,7 +33,11 @@ tabSeq.setFrameType("midi")
 tabSeq.makingFrames()
 # tabSeq.framesToNotesWithTime()
 tabSeq.framesToNotesWithTimeForTabsNonGuitarSet()
+print("tabSeq.getFretFrames()")
+print(tabSeq.getFretFrames())
 noteframes = tabSeq.getNotesWithTimeFrames()
+print("noteframes)")
+print(noteframes)
 
 audio = Audio(video.getAudioPathWithName())
 audio.sonifyJams(noteframes)

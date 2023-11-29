@@ -421,10 +421,10 @@ class SeeFretboard():
 
     # -1 = x
     def addNote(self, string, fret):
-        note = ""
-        
         textValue = str(self.pitchCollection.getArrayTypeNowAt(self.pitchCollection.getCurrentPitchesIndex()))
         textValue = textValue.replace("-","b")
+        
+        note = ""
 
         notePos = NotePositionsOnCurrentFretboard(string, fret)
         self.appendCurrentNotesOnFretboard(notePos)
@@ -432,7 +432,7 @@ class SeeFretboard():
         if(fret=="" or fret==''):
             return None
 
-        elif isinstance(fret, str) and fret.lower() == 'x':
+        elif isinstance(fret, str) and fret.lower() == 'x' or fret == '-1' or fret == -1:
             print("")
 
         elif(int(fret) > self.fretboardTheme.fretboardRange.fretTo or int(fret) < self.fretboardTheme.fretboardRange.fretFrom and (int(fret) != 0)):
@@ -461,7 +461,7 @@ class SeeFretboard():
                 self.labels.append(label)
                 self.fretboardFig.fig.add_layout(label)
                 
-            elif (isinstance(fret, str) and fret.lower() == 'x'):
+            elif (isinstance(fret, str) and fret.lower() == 'x' or fret == '-1' or fret == -1 ):
                 fret = 0
                 xPos = (fret)*self.fretboardTheme.fretboardDesign.distanceBetweenFrets-self.fretboardTheme.fretboardDesign.distanceBetweenFrets/2
                 yPos = (string)*self.fretboardTheme.fretboardDesign.distanceBetweenStrings+self.fretboardTheme.fretboardDesign.distanceBetweenStrings/6
@@ -524,7 +524,7 @@ class SeeFretboard():
                 self.labels.append(label)
                 self.fretboardFig.fig.add_layout(label)
 
-            elif (isinstance(fret, str) and fret.lower() == 'x'):
+            elif (isinstance(fret, str) and fret.lower() == 'x' or fret == '-1' or fret == -1):
                 fret = 0
                 xPos = (string)*self.fretboardTheme.fretboardDesign.distanceBetweenStrings
                 yPos = self.fretboardTheme.fretboardDesign.distanceBetweenFrets * \

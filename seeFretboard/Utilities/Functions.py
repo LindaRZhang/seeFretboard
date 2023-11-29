@@ -101,9 +101,11 @@ def fretToMidi(stringMidi, fret):
     Returns:
         midi (int): The MIDI note number corresponding to the fret on the string.
     """
-    print(fret,"fret")
-    if((isinstance(fret, str) and fret.lower() == "x"))or fret == "-1":
+    
+    if(isinstance(fret, str) and fret.lower() == "x"):
         return "x"
+    elif(fret == "-1" or fret == -1):
+        return -1
     else:
         return int(stringMidi) + int(fret)
     

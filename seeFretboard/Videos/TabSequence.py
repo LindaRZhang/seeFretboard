@@ -295,6 +295,9 @@ class TabSequence(Frame):
         self.BMidiPitches = [Functions.fretToMidi(self.B, fret) for fret in self.BStringFrets]
         self.eMidiPitches = [Functions.fretToMidi(self.EHigh, fret) for fret in self.eStringFrets]
 
+        print("self.EMidiPitches")
+        print(self.EMidiPitches)
+
         self.maxEndTime = max(self.ETimeStamp[-1][-1], self.ATimeStamp[-1][-1],
                             self.DTimeStamp[-1][-1], self.GTimeStamp[-1][-1], self.BTimeStamp[-1][-1],
                             self.eTimeStamp[-1][-1])
