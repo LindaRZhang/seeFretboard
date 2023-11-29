@@ -256,8 +256,7 @@ class TabSequence(Frame):
 
         Parameters:
             seconds (float): The duration of the tab in seconds.
-            tab (str or list): The tab to add. If it's a string, it represents a single frame.
-                               If it's a list, it represents multiple frames.
+            tab (str): The tab to add. Format like this "-1,3,2,0,1,-1", each corresponding to a string. That is C maj in standard tuning
         """
         
         frames = seconds * self.frameRate
@@ -265,7 +264,6 @@ class TabSequence(Frame):
             self.addFretFrame(tab)
         
         tab = list(map(int, tab.split(',')))
-        print(tab)
 
         timeStampes = [self.currentTime,self.currentTime+seconds]
          # Assign the lists to instance variables
@@ -284,8 +282,6 @@ class TabSequence(Frame):
 
 
         self.currentTime+=seconds
-        print("HEREEE")
-        print(self.EStringFrets, self.ETimeStamp)
 
         # Convert frets to MIDI pitches
         self.EMidiPitches = [Functions.fretToMidi(self.Elow, fret) for fret in self.EStringFrets]
@@ -294,9 +290,6 @@ class TabSequence(Frame):
         self.GMidiPitches = [Functions.fretToMidi(self.G, fret) for fret in self.GStringFrets]
         self.BMidiPitches = [Functions.fretToMidi(self.B, fret) for fret in self.BStringFrets]
         self.eMidiPitches = [Functions.fretToMidi(self.EHigh, fret) for fret in self.eStringFrets]
-
-        print("self.EMidiPitches")
-        print(self.EMidiPitches)
 
         self.maxEndTime = max(self.ETimeStamp[-1][-1], self.ATimeStamp[-1][-1],
                             self.DTimeStamp[-1][-1], self.GTimeStamp[-1][-1], self.BTimeStamp[-1][-1],

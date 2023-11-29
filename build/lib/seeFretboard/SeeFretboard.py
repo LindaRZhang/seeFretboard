@@ -408,7 +408,6 @@ class SeeFretboard():
         self.pitchCollection.setStrings(strings)
         self.pitchCollection.setFrets(frets)
         notesWithOctaveName = Functions.midisToNoteNameWithOctaves(midiNotes)
-        print(notesWithOctaveName)
         self.pitchCollection.setPitchWithOctave(notesWithOctaveName)
         
         
