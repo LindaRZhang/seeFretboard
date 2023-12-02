@@ -572,8 +572,9 @@ class SeeFretboard():
                 label = Label(x=(string)*self.fretboardTheme.fretboardDesign.distanceBetweenStrings,
                               y=self.fretboardTheme.fretboardDesign.distanceBetweenFrets *
                               (self.fretboardTheme.fretboardRange.numOfFrets+2) - (fret) *
-                              self.fretboardTheme.fretboardDesign.distanceBetweenFrets - self.fretboardTheme.fretboardDesign.distanceBetweenFrets/1.7-self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius/2,
+                              self.fretboardTheme.fretboardDesign.distanceBetweenFrets - self.fretboardTheme.fretboardDesign.distanceBetweenFrets/1.85-self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().noteRadius/2,
                                         text=textValue, text_align='center', text_font_size=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().getNoteTextFont(),text_color=self.fretboardTheme.fretboardDesign.getCurrentNoteTypeValue().getNoteTextColor())
+                
                 self.labels.append(label)
                 self.fretboardFig.fig.add_layout(label)
                 
@@ -833,14 +834,14 @@ class SeeFretboard():
             self.pitchCollection.setPitchesIndex(i)
             self.addNote(self.pitchCollection.getStringsAt(i),self.pitchCollection.getFretsAt(i))
 
-    def addDropChord(self, rootNote, type="", drop="Drop2", pos="1", string="6"):
+    def addDropChord(self, rootNote, type="", drop="Drop2", pos="1", string="6", octHigher="No"):
         chordType = type.lower()
         drop = drop.upper()
 
         Functions.checkChordType(chordType,True)
         Functions.ifInDict(drop, Functions.DROPShapes)
 
-        processedShape = Functions.processDropShape(drop.upper(), rootNote, chordType, string,pos)
+        processedShape = Functions.processDropShape(drop.upper(), rootNote, chordType, string, pos, octHigher)
 
         note = processedShape["note"][chordType]
         pos = processedShape["position"][chordType]

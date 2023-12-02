@@ -276,7 +276,7 @@ def processCAGEDShape(caged, rootNote, type="major"):
 
     return processedShape
 
-def processDropShape(drop, rootNote, type, string, shapePos):
+def processDropShape(drop, rootNote, type, string, shapePos, octHigher):
     """
     Processes a drop shape by calculating the corresponding notes, positions, and scale degrees.
 
@@ -317,7 +317,11 @@ def processDropShape(drop, rootNote, type, string, shapePos):
     for i in range(len(processedShape["scaleDegree"][type])):
         note = shape[drop+"String"+string][type + "Note" + str(shapePos)][i]
         newNote = getNoteFromInterval(note, interval, rootNote)
-        pos = shape[drop+"String"+string][type + "Position"+shapePos][i]
+
+        if(octHigher.lower() == "yes"):
+            pos = addOctaveHigher(shape[drop+"String"+string][type + "Position"+shapePos][i])
+        else:
+            pos = shape[drop+"String"+string][type + "Position"+shapePos][i]
 
         if not(isinstance(pos, str) and pos.lower() == 'x'):
             pos = int(pos) + interval
@@ -326,6 +330,16 @@ def processDropShape(drop, rootNote, type, string, shapePos):
         processedShape["position"][type].append(str(pos))
 
     return processedShape
+
+def addOctaveHigher(inputStr):
+    if inputStr.upper() == "X":
+        return inputStr  # Keep "X" unchanged
+    else:
+        try:
+            num_val = int(inputStr)
+            return str(num_val + 12)  # Add 12 and convert back to string
+        except ValueError:
+            raise ValueError('Input must be a numeric value or "X"')
 
 def checkChordType(type,seve=False):
     """
